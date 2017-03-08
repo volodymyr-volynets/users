@@ -34,7 +34,7 @@ class numbers_users_users_model_users extends object_table {
 		'um_user_login_enabled' => ['name' => 'Login Enabled', 'type' => 'boolean'],
 		'um_user_login_username' => ['name' => 'Username', 'domain' => 'login', 'null' => true],
 		'um_user_login_password' => ['name' => 'Password', 'domain' => 'password', 'null' => true],
-		'um_user_login_date_password_last_set' => ['name' => 'Date Password Last Set', 'type' => 'date', 'null' => true],
+		'um_user_login_last_set' => ['name' => 'Last Set', 'type' => 'date', 'null' => true],
 		// inactive & hold
 		'um_user_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'um_user_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

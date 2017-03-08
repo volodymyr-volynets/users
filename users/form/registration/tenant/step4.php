@@ -15,7 +15,7 @@ class numbers_users_users_form_registration_tenant_step4 {
 				i18n(null, 'Congratulations! You have successfully registered.'),
 				i18n(null, 'You can now sign in into your account. [signin].', [
 					'replace' => [
-						'[signin]' => html::a(['href' => '/numbers/users/users/controller/login', 'value' => i18n(null, 'Sign In')])
+						'[signin]' => html::a(['href' => $input['url'] ?? null, 'value' => i18n(null, 'Sign In')])
 					]
 				])
 			]

@@ -19,7 +19,7 @@ class numbers_users_users_form_registration_tenant_step1 extends object_form_wra
 		'default' => [
 			'um_regten_tenant_name' => [
 				'um_regten_tenant_name' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Tenant Name', 'domain' => 'name', 'percent' => 50, 'required' => true, 'autofocus' => true],
-				'um_regten_tenant_code' => ['order' => 2, 'label_name' => 'Domain Name', 'domain' => 'domain_part', 'percent' => 50, 'required' => true],
+				'um_regten_tenant_code' => ['order' => 2, 'label_name' => 'Domain Name', 'domain' => 'domain_part', 'percent' => 50, 'required' => true, 'validator_method' => 'object_validator_uppercase2::validate'],
 			],
 			'um_regten_tenant_email' => [
 				'um_regten_tenant_email' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Email', 'domain' => 'email', 'percent' => 50, 'required' => true],
@@ -41,17 +41,34 @@ class numbers_users_users_form_registration_tenant_step1 extends object_form_wra
 			],
 			'um_user_email' => [
 				'um_regten_user_email' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Email', 'domain' => 'email', 'percent' => 50, 'required' => true],
-				'um_regten_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'percent' => 50]
+				'um_regten_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'percent' => 50, 'null' => true]
 			],
 			'um_regten_user_phone' => [
 				'um_regten_user_phone' => ['order' => 1, 'row_order' => 800, 'label_name' => 'Phone', 'domain' => 'phone', 'percent' => 50],
 				'um_regten_user_cell' => ['order' => 2, 'label_name' => 'Cell', 'domain' => 'phone', 'percent' => 50]
+			],
+			'captcha' => [
+				'captcha' => ['order' => 1, 'row_order' => 900, 'label_name' => 'Security Question', 'type' => 'text', 'required' => true, 'percent' => 50, 'method' => 'captcha', 'empty_value' => true],
 			],
 			self::buttons => [
 				self::button_submit => self::button_submit_data
 			]
 		]
 	];
+
+	public function validate(& $form) {
+		if (!empty($form->values['um_regten_tenant_code'])) {
+			$tenant_result = numbers_tenants_tenants_model_tenants::get_static([
+				'where' => [
+					'tm_tenant_code' => $form->values['um_regten_tenant_code']
+				],
+				'single_row' => true
+			]);
+			if (!empty($tenant_result)) {
+				$form->error('danger', 'This domain name is already taken!', 'um_regten_tenant_code');
+			}
+		}
+	}
 
 	public function save(& $form) {
 		// save the record

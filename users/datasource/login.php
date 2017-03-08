@@ -34,15 +34,15 @@ class numbers_users_users_datasource_login extends object_datasource {
 			'cell' => 'a.um_user_cell',
 			'fax' => 'a.um_user_fax',
 			// login
-			'login_enabled' => 'a.um_user_login_enabled',
 			'login_username' => 'a.um_user_login_username',
 			'login_password' => 'a.um_user_login_password',
-			'login_date_password_last_set' => 'a.um_user_login_date_password_last_set',
+			'login_last_set' => 'a.um_user_login_last_set',
 			// inactive & hold
 			'hold' => 'a.um_user_hold',
 			'inactive' => 'a.um_user_inactive'
 		]);
 		// where
+		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
 		if (strpos($parameters['username'], '@') !== false) {
 			$this->query->where('AND', ['a.um_user_email', '=', $parameters['username'] . '']);

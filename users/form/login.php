@@ -7,7 +7,7 @@ class numbers_users_users_form_login extends object_form_wrapper_base {
 			'type' => 'primary',
 			'header' => [
 				'icon' => ['type' => 'sign-in'],
-				'title' => 'Sign in:'
+				'title' => 'Sign In:'
 			]
 		],
 		'no_ajax_form_reload' => true
@@ -19,7 +19,7 @@ class numbers_users_users_form_login extends object_form_wrapper_base {
 	public $elements = [
 		'login' => [
 			'username' => [
-				'username' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Username or Email Address', 'type' => 'varchar', 'length' => 255, 'row_order' => 100, 'percent' => 50, 'required' => true, 'autofocus' => true]
+				'username' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Username or Email Address', 'type' => 'varchar', 'length' => 255, 'percent' => 50, 'required' => true, 'autofocus' => true]
 			],
 			'password' => [
 				'password' => ['order' => 2, 'row_order' => 200, 'label_name' => 'Password', 'type' => 'varchar', 'percent' => 50, 'method' => 'password', 'required' => true, 'empty_value' => true]
@@ -32,27 +32,20 @@ class numbers_users_users_form_login extends object_form_wrapper_base {
 	];
 
 	public function save(& $form) {
-		do {
-			$datasource = new numbers_users_users_datasource_login();
-			$user = $datasource->get(['where' => ['username' => $form->values['username']]]);
-			if (empty($user)) break;
-			// validate password
-			$crypt = new crypt();
-			if (!$crypt->password_verify($form->values['password'], $user['login_password'])) break;
-			// todo: process password reset based on em_entpass_last_set date
-			// authorize entity if we got here
-			user::user_authorize($user);
+		$authorize = numbers_users_users_model_user_authorize::authorize_with_credentials($form->values['username'], $form->values['password']);
+		if ($authorize['success']) {
 			// if we need to redirect to post login page
 			$url = application::get('flag.global.default_postlogin_page');
 			if (!empty($url)) {
-				request::redirect($postlogin);
+				request::redirect($url);
 			}
-			$form->error('success', 'You have successfully logged in!');
+			$form->error('success', 'You have successfully signed in!');
 			return true;
-		} while(0);
-		$form->error('danger', 'Provided credentials do not match our records!');
-		$form->error('danger', null, 'username');
-		$form->error('danger', null, 'password');
-		return false;
+		} else {
+			$form->error('danger', 'Provided credentials do not match our records!');
+			$form->error('danger', null, 'username');
+			$form->error('danger', null, 'password');
+			return false;
+		}
 	}
 }
