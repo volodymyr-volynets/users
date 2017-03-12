@@ -66,6 +66,8 @@ class numbers_users_users_datasource_acl_menu extends object_datasource {
 		$this->query->where('AND', ['a.sm_resource_inactive', '=', 0]);
 		
 		// todo - limit by activated modules/fatures
+		// orderby
+		$this->query->orderby(['a.sm_resource_type' => SORT_DESC]);
 	}
 
 	public function process($data, $options = []) {
@@ -78,12 +80,25 @@ class numbers_users_users_datasource_acl_menu extends object_datasource {
 				// check if group exists
 				$existing = array_key_get($result, $key);
 				if (empty($existing)) {
-					$group = [
-						'name' => $v['group' . $i],
-						'title' => null,
-						'icon' => null,
-						'options' => []
-					];
+					// grab icon & title
+					$group = [];
+					if ($v['type'] !== 299) {
+						$key2 = $key;
+						array_shift($key2);
+						array_unshift($key2, 299);
+						$group = array_key_get($result, $key2);
+						if (!empty($group)) {
+							$group['options'] = [];
+						}
+					}
+					if (empty($group)) {
+						$group = [
+							'name' => $v['group' . $i],
+							'title' => null,
+							'icon' => null,
+							'options' => []
+						];
+					}
 					array_key_set($result, $key, $group);
 				}
 				$key[] = 'options';
