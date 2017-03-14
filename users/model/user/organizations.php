@@ -6,7 +6,7 @@ class numbers_users_users_model_user_organizations extends object_table {
 	public $module_code = 'UM';
 	public $title = 'U/M User Organizations';
 	public $name = 'um_user_organizations';
-	public $pk = ['um_usrorg_structure_code', 'um_usrorg_user_id', 'um_usrorg_organization_id'];
+	public $pk = ['um_usrorg_tenant_id', 'um_usrorg_structure_code', 'um_usrorg_user_id', 'um_usrorg_organization_id'];
 	public $tenant = true;
 	public $orderby;
 	public $limit;

@@ -62,7 +62,8 @@ class numbers_users_users_form_registration_tenant_step1 extends object_form_wra
 				'where' => [
 					'tm_tenant_code' => $form->values['um_regten_tenant_code']
 				],
-				'single_row' => true
+				'single_row' => true,
+				'no_cache' => true
 			]);
 			if (!empty($tenant_result)) {
 				$form->error('danger', 'This domain name is already taken!', 'um_regten_tenant_code');

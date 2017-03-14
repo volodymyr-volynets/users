@@ -6,7 +6,7 @@ class numbers_users_rbac_model_role_organizations extends object_table {
 	public $module_code = 'RC';
 	public $title = 'R/C Role Organizations';
 	public $name = 'rc_role_organizations';
-	public $pk = ['rc_rolorg_structure_code', 'rc_rolorg_user_id', 'rc_rolorg_organization_id'];
+	public $pk = ['rc_rolorg_structure_code', 'rc_rolorg_role_id', 'rc_rolorg_organization_id'];
 	public $tenant = true;
 	public $orderby;
 	public $limit;

@@ -20,7 +20,7 @@ class numbers_users_users_override_acl_resources {
 		],
 		'menu' => [
 			'primary' => [
-				'datasource' => 'numbers_users_users_datasource_acl_menu'
+				'datasource' => 'numbers_users_users_datasource_acl_menu_permissions'
 			]
 		],
 		'user_roles' => [

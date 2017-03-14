@@ -35,7 +35,10 @@ class numbers_users_users_datasource_acl_menu extends object_datasource {
 			'group6' => 'sm_resource_group6_name',
 			'group7' => 'sm_resource_group7_name',
 			'group8' => 'sm_resource_group8_name',
-			'group9' => 'sm_resource_group9_name'
+			'group9' => 'sm_resource_group9_name',
+			'acl_public' => 'sm_resource_acl_public',
+			'acl_authorized' => 'sm_resource_acl_authorized',
+			'acl_permission' => 'sm_resource_acl_permission',
 		]);
 		// join
 		/*
@@ -68,57 +71,5 @@ class numbers_users_users_datasource_acl_menu extends object_datasource {
 		// todo - limit by activated modules/fatures
 		// orderby
 		$this->query->orderby(['a.sm_resource_type' => SORT_DESC]);
-	}
-
-	public function process($data, $options = []) {
-		$result = [];
-		foreach ($data as $k => $v) {
-			$key = [$v['type']];
-			for ($i = 1; $i <= 9; $i++) {
-				if (empty($v['group' . $i])) break;
-				$key[] = $v['group' . $i];
-				// check if group exists
-				$existing = array_key_get($result, $key);
-				if (empty($existing)) {
-					// grab icon & title
-					$group = [];
-					if ($v['type'] !== 299) {
-						$key2 = $key;
-						array_shift($key2);
-						array_unshift($key2, 299);
-						$group = array_key_get($result, $key2);
-						if (!empty($group)) {
-							$group['options'] = [];
-						}
-					}
-					if (empty($group)) {
-						$group = [
-							'name' => $v['group' . $i],
-							'title' => null,
-							'icon' => null,
-							'options' => []
-						];
-					}
-					array_key_set($result, $key, $group);
-				}
-				$key[] = 'options';
-			}
-			$key[] = $v['name'];
-			$item = [
-				'name' => $v['name'],
-				'title' => $v['description'],
-				'icon' => $v['icon'],
-				'url' => $v['url']
-			];
-			$existing = array_key_get($result, $key);
-			if (!empty($existing)) {
-				$existing = array_merge($existing, $item);
-			} else {
-				$existing = $item;
-				$existing['options'] = [];
-			}
-			array_key_set($result, $key, $existing);
-		}
-		return $result;
 	}
 }

@@ -112,7 +112,7 @@ class numbers_users_users_form_registration_tenant_step3 extends object_form_wra
 			$crypt = new crypt();
 			$user_result = numbers_users_users_model_users::collection_static()->merge([
 				'um_user_code' => null,
-				'um_user_type' => 10,
+				'um_user_type_id' => 10,
 				'um_user_name' => $this->tenant_registration_data['um_regten_user_first_name'] . ' ' . $this->tenant_registration_data['um_regten_user_last_name'],
 				'um_user_first_name' => $this->tenant_registration_data['um_regten_user_first_name'],
 				'um_user_last_name' => $this->tenant_registration_data['um_regten_user_last_name'],

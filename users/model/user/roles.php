@@ -6,7 +6,7 @@ class numbers_users_users_model_user_roles extends object_table {
 	public $module_code = 'UM';
 	public $title = 'U/M User Roles';
 	public $name = 'um_user_roles';
-	public $pk = ['um_usrrol_structure_code', 'um_usrrol_user_id', 'um_usrrol_role_id'];
+	public $pk = ['um_usrrol_tenant_id', 'um_usrrol_structure_code', 'um_usrrol_user_id', 'um_usrrol_role_id'];
 	public $tenant = true;
 	public $orderby;
 	public $limit;

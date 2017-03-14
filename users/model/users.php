@@ -15,9 +15,9 @@ class numbers_users_users_model_users extends object_table {
 	public $columns = [
 		'um_user_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_user_id' => ['name' => 'User #', 'domain' => 'user_id_sequence'],
-		'um_user_code' => ['name' => 'Code', 'domain' => 'code', 'null' => true],
-		'um_user_type' => ['name' => 'Type', 'domain' => 'type_id'],
-		'um_user_name' => ['name' => 'Screen Name', 'domain' => 'name'],
+		'um_user_code' => ['name' => 'User Number', 'domain' => 'group_code', 'null' => true],
+		'um_user_type_id' => ['name' => 'Type', 'domain' => 'type_id'],
+		'um_user_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_user_company' => ['name' => 'Company', 'domain' => 'name', 'null' => true],
 		// personal information
 		'um_user_title' => ['name' => 'Title', 'domain' => 'personal_title', 'null' => true],
@@ -44,9 +44,9 @@ class numbers_users_users_model_users extends object_table {
 		'um_user_code_un' => ['type' => 'unique', 'columns' => ['um_user_tenant_id', 'um_user_code']],
 		'um_user_email_un' => ['type' => 'unique', 'columns' => ['um_user_tenant_id', 'um_user_email']],
 		'um_user_login_username_un' => ['type' => 'unique', 'columns' => ['um_user_tenant_id', 'um_user_login_username']],
-		'um_user_type_fk' => [
+		'um_user_type_id_fk' => [
 			'type' => 'fk',
-			'columns' => ['um_user_type'],
+			'columns' => ['um_user_type_id'],
 			'foreign_model' => 'numbers_users_users_model_user_types',
 			'foreign_columns' => ['um_usrtype_id']
 		],
@@ -58,7 +58,7 @@ class numbers_users_users_model_users extends object_table {
 		],
 	];
 	public $indexes = [
-		'um_users_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['um_user_code', 'um_user_name', 'um_user_phone', 'um_user_email']],
+		'um_users_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['um_user_code', 'um_user_name', 'um_user_phone', 'um_user_email', 'um_user_company', 'um_user_login_username']],
 		'um_users_fulltext_simple_idx' => ['type' => 'fulltext', 'columns' => ['um_user_name']]
 	];
 	public $history = false;

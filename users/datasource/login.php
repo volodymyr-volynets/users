@@ -22,10 +22,13 @@ class numbers_users_users_datasource_login extends object_datasource {
 	];
 
 	public function query($parameters, $options = []) {
+		// convert username to lowercase
+		$parameters['username'] = strtolower($parameters['username'] . '');
+		// columns
 		$this->query->columns([
 			'id' => 'a.um_user_id',
 			'code' => 'a.um_user_code',
-			'type' => 'a.um_user_type',
+			'type' => 'a.um_user_type_id',
 			'name' => 'a.um_user_name',
 			'company' => 'a.um_user_company',
 			// contact

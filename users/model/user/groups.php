@@ -6,7 +6,7 @@ class numbers_users_users_model_user_groups extends object_table {
 	public $module_code = 'UM';
 	public $title = 'U/M Groups';
 	public $name = 'um_user_groups';
-	public $pk = ['um_usrgrp_id'];
+	public $pk = ['um_usrgrp_tenant_id', 'um_usrgrp_id'];
 	public $tenant = true;
 	public $orderby;
 	public $limit;
