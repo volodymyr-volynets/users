@@ -8,15 +8,18 @@ class numbers_users_users_model_user_roles extends object_table {
 	public $name = 'um_user_roles';
 	public $pk = ['um_usrrol_tenant_id', 'um_usrrol_structure_code', 'um_usrrol_user_id', 'um_usrrol_role_id'];
 	public $tenant = true;
-	public $orderby;
+	public $orderby = [
+		'um_usrrol_inserted_timestamp' => SORT_ASC
+	];
 	public $limit;
 	public $column_prefix = 'um_usrrol_';
 	public $columns = [
 		'um_usrrol_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_usrrol_structure_code' => ['name' => 'Structure Code', 'domain' => 'type_code'],
 		'um_usrrol_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
-		'um_usrrol_role_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
+		'um_usrrol_role_id' => ['name' => 'Role #', 'domain' => 'group_id'],
 		'um_usrrol_unique' => ['name' => 'Unique', 'type' => 'smallint', 'null' => true],
+		'um_usrrol_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'um_user_roles_pk' => ['type' => 'pk', 'columns' => ['um_usrrol_tenant_id', 'um_usrrol_structure_code', 'um_usrrol_user_id', 'um_usrrol_role_id']],
@@ -52,6 +55,10 @@ class numbers_users_users_model_user_roles extends object_table {
 	public $cache = true;
 	public $cache_tags = [];
 	public $cache_memory = false;
+
+	public $who = [
+		'inserted' => true
+	];
 
 	public $data_asset = [
 		'classification' => 'client_confidential',

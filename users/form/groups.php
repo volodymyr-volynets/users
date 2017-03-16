@@ -18,7 +18,7 @@ class numbers_users_users_form_groups extends object_form_wrapper_base {
 	public $elements = [
 		'top' => [
 			'um_usrgrp_id' => [
-				'um_usrgrp_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id_sequence', 'percent' => 75, 'required' => 'c', 'navigation' => true],
+				'um_usrgrp_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Group #', 'domain' => 'user_id_sequence', 'percent' => 75, 'required' => 'c', 'navigation' => true],
 				'um_usrgrp_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 25]
 			],
 			'um_usrgrp_name' => [

@@ -90,7 +90,8 @@ class numbers_users_users_form_list_users extends object_form_wrapper_list {
 		'um_user_id' => ['name' => 'User #'],
 		'um_user_name' => ['name' => 'Name'],
 		'um_user_email' => ['name' => 'Email'],
-		'um_user_phone' => ['name' => 'Phone']
+		'um_user_phone' => ['name' => 'Phone'],
+		'um_user_company' => ['name' => 'Company']
 	];
 
 	public function list_query(& $form) {

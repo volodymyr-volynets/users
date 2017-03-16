@@ -18,6 +18,14 @@ class numbers_users_users_form_users extends object_form_wrapper_base {
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'permissions_container' => ['default_row_type' => 'grid', 'order' => 34000],
+		'roles_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 3,
+			'details_key' => 'numbers_users_users_model_user_roles',
+			'details_pk' => ['um_usrrol_role_id'],
+			'order' => 35000
+		],
 		/*
 		'login_container' => [
 			'type' => 'details',
@@ -46,20 +54,21 @@ class numbers_users_users_form_users extends object_form_wrapper_base {
 		],
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
-			'login' => ['order' => 200, 'label_name' => 'Login / Permissions'],
-			object_widgets::addresses => object_widgets::addresses_data,
-			object_widgets::attributes => object_widgets::attributes_data
+			'login' => ['order' => 200, 'label_name' => 'Login'],
+			'roles' => ['order' => 300, 'label_name' => 'Roles'],
+			//object_widgets::addresses => object_widgets::addresses_data,
+			//object_widgets::attributes => object_widgets::attributes_data
 		]
 	];
 	public $elements = [
 		'top' => [
 			'um_user_id' => [
-				'um_user_id' => ['order' => 100, 'label_name' => 'User #', 'domain' => 'user_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => true],
-				'um_user_code' => ['order' => 200, 'label_name' => 'User Number', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => true]
+				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => true],
+				'um_user_code' => ['order' => 2, 'label_name' => 'User Number', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => true]
 			],
 			'um_user_name' => [
-				'um_user_name' => ['order' => 100, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => 'c'],
-			],
+				'um_user_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => 'c'],
+			]
 		],
 		'tabs' => [
 			'general' => [
@@ -67,61 +76,60 @@ class numbers_users_users_form_users extends object_form_wrapper_base {
 				'contact' => ['container' => 'contact_container', 'order' => 200]
 			],
 			'login' => [
-				//'login' => ['container' => 'login_container', 'order' => 100],
-				//'permissions' => ['container' => 'permissions_container', 'order' => 200],
-				//'locale_container' => ['container' => 'locale_container', 'order' => 300]
+				'login' => ['container' => 'login_container', 'order' => 100],
+			],
+			'roles' => [
+				'roles' => ['container' => 'roles_container', 'order' => 100],
 			]
 		],
 		'general_container' => [
 			'um_user_type_id' => [
-				'um_user_type_id' => ['order' => 100, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'default' => 10, 'percent' => 20, 'required' => true, 'no_choose' => true, 'method' => 'select', 'options_model' => 'numbers_users_users_model_user_types'],
-				'numbers_users_users_model_user_group_map' => ['order' => 200, 'label_name' => 'Groups', 'domain' => 'group_id', 'multiple_column' => 'um_usrgrmap_group_id', 'percent' => 30, 'method' => 'multiselect', 'options_model' => 'numbers_users_users_model_user_groups::options_active'],
-				'um_user_hold' => ['order' => 300, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 25],
-				'um_user_inactive' => ['order' => 400, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 25]
+				'um_user_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'default' => 10, 'percent' => 20, 'required' => true, 'no_choose' => true, 'method' => 'select', 'options_model' => 'numbers_users_users_model_user_types'],
+				'numbers_users_users_model_user_group_map' => ['order' => 2, 'label_name' => 'Groups', 'domain' => 'group_id', 'multiple_column' => 'um_usrgrmap_group_id', 'percent' => 30, 'method' => 'multiselect', 'options_model' => 'numbers_users_users_model_user_groups::options_active'],
+				'um_user_hold' => ['order' => 3, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 25],
+				'um_user_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 25]
 			],
 			'um_user_title' => [
-				'um_user_title' => ['order' => 100, 'row_order' => 200, 'label_name' => 'Title', 'domain' => 'personal_title', 'null' => true, 'percent' => 20, 'required' => false, 'method' => 'select', 'options_model' => 'numbers_users_users_model_user_titles::options_active'],
-				'em_entity_first_name' => ['order' => 200, 'label_name' => 'First Name', 'domain' => 'personal_name', 'null' => true, 'percent' => 40, 'required' => 'c'],
-				'em_entity_last_name' => ['order' => 300, 'label_name' => 'Last Name', 'domain' => 'personal_name', 'null' => true, 'percent' => 40, 'required' => 'c'],
+				'um_user_title' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Title', 'domain' => 'personal_title', 'null' => true, 'percent' => 20, 'required' => false, 'method' => 'select', 'options_model' => 'numbers_users_users_model_user_titles::options_active'],
+				'um_user_first_name' => ['order' => 2, 'label_name' => 'First Name', 'domain' => 'personal_name', 'null' => true, 'percent' => 40, 'required' => 'c'],
+				'um_user_last_name' => ['order' => 3, 'label_name' => 'Last Name', 'domain' => 'personal_name', 'null' => true, 'percent' => 40, 'required' => 'c'],
 			],
-			'em_entity_company' => [
-				'em_entity_company' => ['order' => 100, 'row_order' => 300, 'label_name' => 'Company', 'domain' => 'name', 'null' => true, 'percent' => 100, 'required' => 'c'],
+			'um_user_company' => [
+				'um_user_company' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Company', 'domain' => 'name', 'null' => true, 'percent' => 100, 'required' => 'c'],
 			],
 			'separator_1' => [
 				self::separator_horisontal => ['order' => 100, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'envelope-o', 'percent' => 100],
 			],
-			'em_entity_email' => [
-				'em_entity_email' => ['order' => 100, 'row_order' => 500, 'label_name' => 'Primary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
-				'em_entity_email2' => ['order' => 200, 'label_name' => 'Secondary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
+			'um_user_email' => [
+				'um_user_email' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
+				'um_user_email2' => ['order' => 2, 'label_name' => 'Secondary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
 			],
-			'em_entity_phone' => [
-				'em_entity_phone' => ['order' => 100, 'row_order' => 500, 'label_name' => 'Primary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
-				'em_entity_phone2' => ['order' => 200, 'label_name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+			'um_user_phone' => [
+				'um_user_phone' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+				'um_user_phone2' => ['order' => 2, 'label_name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 			],
-			'em_entity_cell' => [
-				'em_entity_cell' => ['order' => 100, 'row_order' => 600, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
-				'em_entity_fax' => ['order' => 200, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+			'um_user_cell' => [
+				'um_user_cell' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+				'um_user_fax' => ['order' => 2, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+			]
+		],
+		'login_container' => [
+			'um_user_login_enabled' => [
+				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 50],
+				'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c']
 			],
+			'um_user_login_last_set' => [
+				'um_user_login_last_set' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password Last Changed', 'type' => 'date', 'persistent' => true, 'method' => 'calendar', 'calendar_icon' => 'right', 'percent' => 50, 'readonly' => true],
+				//'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false]
+			]
+		],
+		'roles_container' => [
+			'row1' => [
+				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'percent' => 75, 'method' => 'select', 'options_model' => 'numbers_users_rbac_model_roles'],
+				'um_usrrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 25]
+			]
 		],
 		/*
-		'login_container' => [
-			'em_entpass_login' => [
-				'em_entpass_login' => ['order' => 100, 'row_order' => 100, 'label_name' => 'Login', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c'],
-				'em_entpass_password_new' => ['order' => 200, 'row_order' => 100, 'label_name' => 'Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false]
-			],
-			'em_entpass_last_set' => [
-				'em_entpass_last_set' => ['order' => 100, 'row_order' => 200, 'label_name' => 'Last Changed', 'type' => 'date', 'persistent' => true, 'method' => 'calendar', 'calendar_icon' => 'right', 'percent' => 50, 'readonly' => true],
-				'em_entpass_inactive' => ['order' => 200, 'label_name' => 'Suspended', 'type' => 'boolean', 'percent' => 50]
-			]
-		],
-		'permissions_container' => [
-			'separator_1' => [
-				self::separator_horisontal => ['order' => 1, 'row_order' => 100, 'label_name' => 'Roles & Permissions', 'icon' => 'universal-access', 'percent' => 100],
-			],
-			'numbers_data_entities_entities_model_rolemap' => [
-				'numbers_data_entities_entities_model_rolemap' => ['order' => 200, 'row_order' => 200, 'label_name' => 'Roles', 'domain' => 'group_id', 'multiple_column' => 'em_entrlmp_role_id', 'percent' => 100, 'method' => 'multiselect', 'options_model' => 'numbers_data_entities_entities_model_roles::options_active']
-			]
-		],
 		'locale_container' => [
 			'separator_1' => [
 				self::separator_horisontal => ['order' => 1, 'row_order' => 100, 'label_name' => 'Locale & Settings', 'icon' => 'wrench', 'percent' => 100],
@@ -150,17 +158,22 @@ class numbers_users_users_form_users extends object_form_wrapper_base {
 	public $collection = [
 		'model' => 'numbers_users_users_model_users',
 		'details' => [
+			'numbers_users_users_model_user_group_map' => [
+				'pk' => ['um_usrgrmap_tenant_id', 'um_usrgrmap_user_id', 'um_usrgrmap_group_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
+			],
+			'numbers_users_users_model_user_roles' => [
+				'pk' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id'],
+				'sql' => [
+					'where' => [
+						'um_usrrol_structure_code' => 'BELONGS_TO'
+					]
+				]
+			],
 			/*
-			'numbers_data_entities_entities_model_groupmap' => [
-				'pk' => ['em_entgrmp_entity_id', 'em_entgrmp_group_id'],
-				'type' => '1M',
-				'map' => ['em_entity_id' => 'em_entgrmp_entity_id']
-			],
-			'numbers_data_entities_entities_model_rolemap' => [
-				'pk' => ['em_entrlmp_entity_id', 'em_entrlmp_role_id'],
-				'type' => '1M',
-				'map' => ['em_entity_id' => 'em_entrlmp_entity_id']
-			],
 			'numbers_data_entities_entities_model_passwords' => [
 				'pk' => ['em_entpass_entity_id'],
 				'type' => '11',
