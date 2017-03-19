@@ -143,7 +143,7 @@ class numbers_users_users_form_registration_tenant_step3 extends object_form_wra
 			$assignment_result = numbers_users_users_model_user_roles::collection_static()->merge([
 				'um_usrrol_structure_code' => 'BELONGS_TO',
 				'um_usrrol_user_id' => $user_id,
-				'um_usrrol_role_id' => numbers_users_rbac_model_roles::get_by_column_static('rc_role_code', 'SUPER_ADMIN', 'rc_role_id')
+				'um_usrrol_role_id' => numbers_users_users_model_roles::get_by_column_static('um_role_code', 'SUPER_ADMIN', 'um_role_id')
 			]);
 			if (!$assignment_result['success']) {
 				$form->error('danger', $error_message);

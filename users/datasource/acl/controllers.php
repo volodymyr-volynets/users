@@ -17,7 +17,9 @@ class numbers_users_users_datasource_acl_controllers extends object_datasource {
 	public $cache_memory = false;
 
 	public $primary_model = 'numbers_backend_system_modules_model_resources';
-	public $parameters = [];
+	public $parameters = [
+		'sm_resource_acl_permission' => ['name' => 'Acl Permission', 'type' => 'boolean'],
+	];
 
 	public function query($parameters, $options = []) {
 		$this->query->columns([
@@ -57,7 +59,11 @@ class numbers_users_users_datasource_acl_controllers extends object_datasource {
 		// where
 		$this->query->where('AND', ['a.sm_resource_type', '=', 100]);
 		$this->query->where('AND', ['a.sm_resource_inactive', '=', 0]);
-		
+		if (!empty($parameters)) {
+			foreach ($parameters as $k => $v) {
+				$this->query->where('AND', ["a.{$k}", '=', $v]);
+			}
+		}
 		// todo - limit by activated modules/fatures
 	}
 

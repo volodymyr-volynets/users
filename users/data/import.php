@@ -42,6 +42,35 @@ class numbers_users_users_data_import extends object_import {
 				]
 			]
 		],
+		'role_types' => [
+			'options' => [
+				'pk' => ['um_roltype_id'],
+				'model' => 'numbers_users_users_model_role_types',
+				'method' => 'save'
+			],
+			'data' => [
+				[
+					'um_roltype_id' => 10,
+					'um_roltype_name' => 'Abstract Role',
+					'um_roltype_inactive' => 0
+				],
+				[
+					'um_roltype_id' => 20,
+					'um_roltype_name' => 'Job Role',
+					'um_roltype_inactive' => 0
+				],
+				[
+					'um_roltype_id' => 30,
+					'um_roltype_name' => 'Duty Role',
+					'um_roltype_inactive' => 0
+				],
+				[
+					'um_roltype_id' => 40,
+					'um_roltype_name' => 'Data Role',
+					'um_roltype_inactive' => 0
+				]
+			]
+		],
 		'features' => [
 			'options' => [
 				'pk' => ['sm_feature_code'],
@@ -49,6 +78,20 @@ class numbers_users_users_data_import extends object_import {
 				'method' => 'save'
 			],
 			'data' => [
+				[
+					'sm_feature_module_code' => 'UM',
+					'sm_feature_code' => 'UM::RBAC',
+					'sm_feature_type' => 10,
+					'sm_feature_name' => 'U/M RBAC',
+					'sm_feature_activation_model' => null,
+					'sm_feature_inactive' => 0,
+					'numbers_backend_system_modules_model_module_dependencies' => [
+						[
+							'sm_mdldep_child_module_code' => 'ON',
+							'sm_mdldep_child_feature_code' => 'ON::ORGANIZATIONS'
+						]
+					]
+				],
 				[
 					'sm_feature_module_code' => 'UM',
 					'sm_feature_code' => 'UM::USERS',
@@ -60,9 +103,13 @@ class numbers_users_users_data_import extends object_import {
 						[
 							'sm_mdldep_child_module_code' => 'ON',
 							'sm_mdldep_child_feature_code' => 'ON::ORGANIZATIONS'
+						],
+						[
+							'sm_mdldep_child_module_code' => 'UM',
+							'sm_mdldep_child_feature_code' => 'UM::RBAC'
 						]
 					]
-				],
+				]
 			]
 		],
 	];

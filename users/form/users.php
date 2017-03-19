@@ -26,16 +26,15 @@ class numbers_users_users_form_users extends object_form_wrapper_base {
 			'details_pk' => ['um_usrrol_role_id'],
 			'order' => 35000
 		],
-		/*
-		'login_container' => [
+		'organizations_container' => [
 			'type' => 'details',
-			'details_11' => true,
-			'details_rendering_type' => 'grid_with_label',
-			'details_new_rows' => 1,
-			'details_key' => 'numbers_data_entities_entities_model_passwords',
-			'details_pk' => ['em_entpass_entity_id'],
-			'order' => 35000
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 3,
+			'details_key' => 'numbers_users_users_model_user_organizations',
+			'details_pk' => ['um_usrorg_organization_id'],
+			'order' => 35001
 		],
+		/*
 		'locale_container' => [
 			'type' => 'details',
 			'details_11' => true,
@@ -55,7 +54,8 @@ class numbers_users_users_form_users extends object_form_wrapper_base {
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'login' => ['order' => 200, 'label_name' => 'Login'],
-			'roles' => ['order' => 300, 'label_name' => 'Roles'],
+			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
+			'roles' => ['order' => 400, 'label_name' => 'Roles'],
 			//object_widgets::addresses => object_widgets::addresses_data,
 			//object_widgets::attributes => object_widgets::attributes_data
 		]
@@ -80,6 +80,9 @@ class numbers_users_users_form_users extends object_form_wrapper_base {
 			],
 			'roles' => [
 				'roles' => ['container' => 'roles_container', 'order' => 100],
+			],
+			'organizations' => [
+				'organizations' => ['container' => 'organizations_container', 'order' => 100],
 			]
 		],
 		'general_container' => [
@@ -125,8 +128,14 @@ class numbers_users_users_form_users extends object_form_wrapper_base {
 		],
 		'roles_container' => [
 			'row1' => [
-				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'percent' => 75, 'method' => 'select', 'options_model' => 'numbers_users_rbac_model_roles'],
+				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 75, 'method' => 'select', 'options_model' => 'numbers_users_users_model_roles', 'onchange' => 'this.form.submit();'],
 				'um_usrrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 25]
+			]
+		],
+		'organizations_container' => [
+			'row1' => [
+				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 75, 'method' => 'select', 'options_model' => 'numbers_users_organizations_model_organizations', 'onchange' => 'this.form.submit();'],
+				'um_usrorg_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 25]
 			]
 		],
 		/*
@@ -173,12 +182,17 @@ class numbers_users_users_form_users extends object_form_wrapper_base {
 					]
 				]
 			],
-			/*
-			'numbers_data_entities_entities_model_passwords' => [
-				'pk' => ['em_entpass_entity_id'],
-				'type' => '11',
-				'map' => ['em_entity_id' => 'em_entpass_entity_id']
+			'numbers_users_users_model_user_organizations' => [
+				'pk' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id'],
+				'sql' => [
+					'where' => [
+						'um_usrorg_structure_code' => 'BELONGS_TO'
+					]
+				]
 			],
+			/*
 			'numbers_data_entities_entities_model_locales' => [
 				'pk' => ['em_entloc_entity_id'],
 				'type' => '11',

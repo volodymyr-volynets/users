@@ -8,15 +8,19 @@ class numbers_users_users_model_user_organizations extends object_table {
 	public $name = 'um_user_organizations';
 	public $pk = ['um_usrorg_tenant_id', 'um_usrorg_structure_code', 'um_usrorg_user_id', 'um_usrorg_organization_id'];
 	public $tenant = true;
-	public $orderby;
+	public $orderby = [
+		'um_usrorg_id' => SORT_ASC
+	];
 	public $limit;
 	public $column_prefix = 'um_usrorg_';
 	public $columns = [
 		'um_usrorg_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
+		'um_usrorg_id' => ['name' => '#', 'type' => 'bigserial'],
 		'um_usrorg_structure_code' => ['name' => 'Structure Code', 'domain' => 'type_code'],
 		'um_usrorg_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'um_usrorg_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
-		'um_usrorg_unique' => ['name' => 'Unique', 'type' => 'smallint', 'null' => true],
+		'um_usrorg_unique' => ['name' => 'Unique', 'type' => 'smallint', 'null' => true, 'default' => null],
+		'um_usrorg_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'um_user_organizations_pk' => ['type' => 'pk', 'columns' => ['um_usrorg_tenant_id', 'um_usrorg_structure_code', 'um_usrorg_user_id', 'um_usrorg_organization_id']],
@@ -49,7 +53,7 @@ class numbers_users_users_model_user_organizations extends object_table {
 		'mysqli' => 'InnoDB'
 	];
 
-	public $cache = true;
+	public $cache = false;
 	public $cache_tags = [];
 	public $cache_memory = false;
 
