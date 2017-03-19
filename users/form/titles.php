@@ -21,8 +21,8 @@ class numbers_users_users_form_titles extends object_form_wrapper_base {
 				'um_usrtitle_name' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Name', 'domain' => 'personal_title', 'percent' => 100, 'required' => true, 'navigation' => true],
 			],
 			'um_usrtitle_order' => [
-				'um_usrtitle_order' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Order', 'domain' => 'order', 'percent' => 50, 'default' => 0],
-				'um_usrtitle_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50]
+				'um_usrtitle_order' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Order', 'domain' => 'order', 'percent' => 95, 'default' => 0],
+				'um_usrtitle_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'buttons' => [
