@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_form_registration_tenant_step3 extends \Object\Form\Wrapper\Base {
+namespace Numbers\Users\Users\Form\Registration\Tenant;
+class Step3 extends \Object\Form\Wrapper\Base {
 	public $form_link = 'tenant_registration_step3';
 	public $options = [
 		'segment' => [
@@ -43,8 +44,8 @@ class numbers_users_users_form_registration_tenant_step3 extends \Object\Form\Wr
 		if (empty($token)) {
 			$form->error('danger', $token_error_message);
 		} else {
-			$crypt = new crypt();
-			$token_data = $crypt->token_validate($token);
+			$crypt = new \Crypt();
+			$token_data = $crypt->tokenValidate($token);
 			if ($token_data === false || $token_data['token'] != 'registration.tenant') {
 				$form->error('danger', $token_error_message);
 			} else {
@@ -90,7 +91,7 @@ class numbers_users_users_form_registration_tenant_step3 extends \Object\Form\Wr
 			}
 			// use new tenant
 			$tenant_id = $tenant_result['new_serials']['tm_tenant_id'];
-			tenant::set_override_tenant_id($tenant_id);
+			\Tenant::setOverrideTenantId($tenant_id);
 			// step 2 create organization
 			$organization_result = \Numbers\Users\Organizations\Model\Organizations::collectionStatic()->merge([
 				'on_organization_code' => $this->tenant_registration_data['um_regten_organization_code'],
@@ -102,14 +103,14 @@ class numbers_users_users_form_registration_tenant_step3 extends \Object\Form\Wr
 			}
 			$organization_id = $organization_result['new_serials']['on_organization_id'];
 			// step 3 import tenant related settings
-			$activation_model = new numbers_users_users_data_activation_tenant();
+			$activation_model = new \Numbers\Users\Users\Data\Activation\Tenant();
 			$activation_result = $activation_model->process();
 			if (!$activation_result['success']) {
 				$form->error('danger', $error_message);
 				break;
 			}
 			// step 4 create a user
-			$crypt = new crypt();
+			$crypt = new \Crypt();
 			$user_result = \Numbers\Users\Users\Model\Users::collectionStatic()->merge([
 				'um_user_code' => null,
 				'um_user_type_id' => 10,
@@ -121,8 +122,8 @@ class numbers_users_users_form_registration_tenant_step3 extends \Object\Form\Wr
 				'um_user_cell' => $this->tenant_registration_data['um_regten_user_cell'],
 				'um_user_login_enabled' => 1,
 				'um_user_login_username' => $this->tenant_registration_data['um_regten_user_login_username'],
-				'um_user_login_password' => $crypt->password_hash($form->values['um_user_login_password']),
-				'um_user_login_date_password_last_set' => Format::now('date'),
+				'um_user_login_password' => $crypt->passwordHash($form->values['um_user_login_password']),
+				'um_user_login_date_password_last_set' => \Format::now('date'),
 			]);
 			if (!$user_result['success']) {
 				$form->error('danger', $error_message);
@@ -143,7 +144,7 @@ class numbers_users_users_form_registration_tenant_step3 extends \Object\Form\Wr
 			$assignment_result = \Numbers\Users\Users\Model\User\Roles::collectionStatic()->merge([
 				'um_usrrol_structure_code' => 'BELONGS_TO',
 				'um_usrrol_user_id' => $user_id,
-				'um_usrrol_role_id' => \Numbers\Users\Users\Model\Roles::get_by_column_static('um_role_code', 'SUPER_ADMIN', 'um_role_id')
+				'um_usrrol_role_id' => \Numbers\Users\Users\Model\Roles::getByColumnStatic('um_role_code', 'SUPER_ADMIN', 'um_role_id')
 			]);
 			if (!$assignment_result['success']) {
 				$form->error('danger', $error_message);
@@ -159,19 +160,19 @@ class numbers_users_users_form_registration_tenant_step3 extends \Object\Form\Wr
 				break;
 			}
 			// use old tenant
-			tenant::set_override_tenant_id(null);
+			\Tenant::setOverrideTenantId(null);
 			$tenant_model->db_object->commit();
 			// regirect to success step
-			$domain_level = (int) Application::get('application.structure.tenant_domain_level');
+			$domain_level = (int) \Application::get('application.structure.tenant_domain_level');
 			if ($domain_level) {
 				$host_parts = \Request::host_parts();
 				$host_parts[$domain_level] = $this->tenant_registration_data['um_regten_tenant_code'];
 				krsort($host_parts);
-				$url = \Request::host(['host_parts' => $host_parts]) . 'numbers/users/users/controller/login';
+				$url = \Request::host(['host_parts' => $host_parts]) . 'Numbers/Users/Users/Controller/Login';
 			} else {
-				$url = '/numbers/users/users/controller/login';
+				$url = '/Numbers/Users/Users/Controller/Login';
 			}
-			\Request::redirect(Application::get('mvc.full') . '?__wizard_step=4&url=' . $url);
+			\Request::redirect(\Application::get('mvc.full') . '?__wizard_step=4&url=' . $url);
 		} while(0);
 		return false;
 	}

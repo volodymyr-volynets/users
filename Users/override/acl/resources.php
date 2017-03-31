@@ -5,7 +5,7 @@ class Resources {
 	public $data = [
 		'application_structure' => [
 			'tenant' => [
-				'tenant_datasource' => 'numbers_tenants_tenants_datasource_tenants',
+				'tenant_datasource' => '\Numbers\Tenants\Tenants\DataSource\Tenants',
 				'column_prefix' => 'tm_tenant_'
 			]
 		],

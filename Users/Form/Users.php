@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_form_users extends \Object\Form\Wrapper\Base {
+namespace Numbers\Users\Users\Form;
+class Users extends \Object\Form\Wrapper\Base {
 	public $form_link = 'users';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
@@ -88,12 +89,12 @@ class numbers_users_users_form_users extends \Object\Form\Wrapper\Base {
 		'general_container' => [
 			'um_user_type_id' => [
 				'um_user_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'default' => 10, 'percent' => 20, 'required' => true, 'no_choose' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Types'],
-				'\Numbers\Users\Users\Model\User\Group\Map' => ['order' => 2, 'label_name' => 'Groups', 'domain' => 'group_id', 'multiple_column' => 'um_usrgrmap_group_id', 'percent' => 70, 'method' => 'multiselect', 'options_model' => '\Numbers\Users\Users\Model\User\Groups::options_active'],
+				'\Numbers\Users\Users\Model\User\Group\Map' => ['order' => 2, 'label_name' => 'Groups', 'domain' => 'group_id', 'multiple_column' => 'um_usrgrmap_group_id', 'percent' => 70, 'method' => 'multiselect', 'options_model' => '\Numbers\Users\Users\Model\User\Groups::optionsActive'],
 				'um_user_hold' => ['order' => 3, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
 				'um_user_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'um_user_title' => [
-				'um_user_title' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Title', 'domain' => 'personal_title', 'null' => true, 'percent' => 20, 'required' => false, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Titles::options_active'],
+				'um_user_title' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Title', 'domain' => 'personal_title', 'null' => true, 'percent' => 20, 'required' => false, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Titles::optionsActive'],
 				'um_user_first_name' => ['order' => 2, 'label_name' => 'First Name', 'domain' => 'personal_name', 'null' => true, 'percent' => 40, 'required' => 'c'],
 				'um_user_last_name' => ['order' => 3, 'label_name' => 'Last Name', 'domain' => 'personal_name', 'null' => true, 'percent' => 40, 'required' => 'c'],
 			],
@@ -144,7 +145,7 @@ class numbers_users_users_form_users extends \Object\Form\Wrapper\Base {
 				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 100, 'label_name' => 'Locale & Settings', 'icon' => 'wrench', 'percent' => 100],
 			],
 			'em_entloc_locale' => [
-				'em_entloc_language_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Language', 'domain' => 'language_code', 'percent' => 33, 'null' => true, 'method' => 'select', 'searchable' => true, 'options_model' => 'numbers_backend_i18n_languages_model_languages::options_active'],
+				'em_entloc_language_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Language', 'domain' => 'language_code', 'percent' => 33, 'null' => true, 'method' => 'select', 'searchable' => true, 'options_model' => 'numbers_backend_i18n_languages_model_languages::optionsActive'],
 				'em_entloc_locale' => ['order' => 2, 'label_name' => 'Locale', 'domain' => 'code', 'percent' => 33, 'null' => true, 'method' => 'select', 'preset' => true, 'options_model' => 'numbers_data_entities_entities_model_locales::presets', 'options_options' => ['columns' => 'em_entloc_locale']],
 				'em_entloc_timezone' => ['order' => 3, 'label_name' => 'Timezone', 'domain' => 'code', 'percent' => 34, 'null' => true, 'method' => 'select', 'searchable' => true, 'options_model' => 'numbers_backend_i18n_languages_model_timezones::options'],
 			],

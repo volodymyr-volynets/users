@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_form_titles extends \Object\Form\Wrapper\Base {
+namespace Numbers\Users\Users\Form;
+class Titles extends \Object\Form\Wrapper\Base {
 	public $form_link = 'titles';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,

@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_form_registration_tenant_step2 {
+namespace Numbers\Users\Users\Form\Registration\Tenant;
+class Step2 {
 
 	/**
 	 * Render

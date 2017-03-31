@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_form_login extends \Object\Form\Wrapper\Base {
+namespace Numbers\Users\Users\Form;
+class Login extends \Object\Form\Wrapper\Base {
 	public $form_link = 'login';
 	public $options = [
 		'segment' => [
@@ -32,10 +33,10 @@ class numbers_users_users_form_login extends \Object\Form\Wrapper\Base {
 	];
 
 	public function save(& $form) {
-		$authorize = \Numbers\Users\Users\Model\User\Authorize::authorize_with_credentials($form->values['username'], $form->values['password']);
+		$authorize = \Numbers\Users\Users\Model\User\Authorize::authorizeWithCredentials($form->values['username'], $form->values['password']);
 		if ($authorize['success']) {
 			// if we need to redirect to post login page
-			$url = Application::get('flag.global.default_postlogin_page');
+			$url = \Application::get('flag.global.default_postlogin_page');
 			if (!empty($url)) {
 				\Request::redirect($url);
 			}

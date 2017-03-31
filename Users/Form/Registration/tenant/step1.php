@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_form_registration_tenant_step1 extends \Object\Form\Wrapper\Base {
+namespace Numbers\Users\Users\Form\Registration\Tenant;
+class Step1 extends \Object\Form\Wrapper\Base {
 	public $form_link = 'tenant_registration_step1';
 	public $options = [
 		'segment' => [
@@ -73,7 +74,7 @@ class numbers_users_users_form_registration_tenant_step1 extends \Object\Form\Wr
 
 	public function save(& $form) {
 		// save the record
-		$form->values['um_regten_inserted'] = Format::now('timestamp');
+		$form->values['um_regten_inserted'] = \Format::now('timestamp');
 		$result = \Numbers\Users\Users\Model\Registration\Tenants::collectionStatic()->merge($form->values);
 		if (!$result['success']) {
 			$form->error('danger', 'Registration error, please try again later!');
@@ -95,19 +96,19 @@ Please note that this link is only active for [token_valid_hours] hours after re
 Thank you!
 TTT;
 			// generate token
-			$crypt = new crypt();
+			$crypt = new \Crypt();
 			$replaces = [
-				'[url]' => Application::get('mvc.full_with_host') . '?__wizard_step=3&token=' . $crypt->token_create($result['new_serials']['um_regten_id'], 'registration.tenant'),
-				'[token_valid_hours]' => $crypt->object->token_valid_hours
+				'[url]' => \Application::get('mvc.full_with_host') . '?__wizard_step=3&token=' . $crypt->tokenCreate($result['new_serials']['um_regten_id'], 'registration.tenant'),
+				'[token_valid_hours]' => $crypt->object->valid_hours
 			];
 			// send mail
-			$mail_result = mail::send_simple($form->values['um_regten_user_email'], i18n(null, $subject), i18n(null, nl2br($message), ['replace' => $replaces]));
+			$mail_result = \Mail::sendSimple($form->values['um_regten_user_email'], i18n(null, $subject), i18n(null, nl2br($message), ['replace' => $replaces]));
 			if (!$mail_result['success']) {
 				$form->error('danger', 'Registration error, please try again later!');
 				return false;
 			}
-			$mask = new object_mask_email();
-			\Request::redirect(Application::get('mvc.full') . '?__wizard_step=2&email=' . $mask->mask($form->values['um_regten_user_email']));
+			$mask = new \Object\Mask\Email();
+			\Request::redirect(\Application::get('mvc.full') . '?__wizard_step=2&email=' . $mask->mask($form->values['um_regten_user_email']));
 		}
 		return false;
 	}

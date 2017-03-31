@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_data_activation_tenant extends \Object\Import {
+namespace Numbers\Users\Users\Data\Activation;
+class Tenant extends \Object\Import {
 	public $data = [
 		'structure_types' => [
 			'options' => [

@@ -27,6 +27,6 @@ class Organizations extends \Object\Datasource {
 	];
 
 	public function query($parameters, $options = []) {
-		$this->query->where_multiple('AND', $parameters);
+		$this->query->whereMultiple('AND', $parameters);
 	}
 }

@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_form_list_users extends \Object\Form\Wrapper\List2 {
+namespace Numbers\Users\Users\Form\List2;
+class Users extends \Object\Form\Wrapper\List2 {
 	public $form_link = 'users_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,

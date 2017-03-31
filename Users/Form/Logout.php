@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_form_logout extends \Object\Form\Wrapper\Base {
+namespace Numbers\Users\Users\Form;
+class Logout extends \Object\Form\Wrapper\Base {
 	public $form_link = 'login';
 	public $options = [
 		'segment' => [
@@ -28,8 +29,8 @@ class numbers_users_users_form_logout extends \Object\Form\Wrapper\Base {
 	];
 
 	public function save(& $form) {
-		\Numbers\Users\Users\Model\User\Authorize::sign_out();
-		\Request::redirect('/numbers/users/users/controller/logout/confirmed');
+		\Numbers\Users\Users\Model\User\Authorize::signOut();
+		\Request::redirect('/Numbers/Users/Users/Controller/Logout/Confirmed');
 		return true;
 	}
 }

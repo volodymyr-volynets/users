@@ -1,6 +1,7 @@
 <?php
 
-class numbers_users_users_form_groups extends \Object\Form\Wrapper\Base {
+namespace Numbers\Users\Users\Form;
+class Groups extends \Object\Form\Wrapper\Base {
 	public $form_link = 'groups';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,

@@ -3,7 +3,7 @@
 namespace Numbers\Users\Users\Controller\Registration;
 class Tenant extends \Object\Controller {
 	public function actionIndex() {
-		$form = new numbers_users_users_form_registration_tenant_collection([
+		$form = new \Numbers\Users\Users\Form\Registration\Tenant\Collection([
 			'input' => \Request::input()
 		]);
 		echo $form->render();

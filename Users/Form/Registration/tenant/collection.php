@@ -1,8 +1,9 @@
 <?php
 
-class numbers_users_users_form_registration_tenant_collection extends object_form_wrapper_collection {
+namespace Numbers\Users\Users\Form\Registration\Tenant;
+class Collection extends \Object\Form\Wrapper\Collection {
 	public $collection_link = 'tenant_registration_collection';
-	const global_wizard = [
+	const GLOBAL_WIZARD = [
 		'model' => 'object_form_wrapper_wizard',
 		'options' => [
 			'segment' => null,
@@ -19,7 +20,7 @@ class numbers_users_users_form_registration_tenant_collection extends object_for
 		],
 		'order' => 1
 	];
-	const global_options = [
+	const GLOBAL_OPTIONS = [
 		'segment' => [
 			'type' => 'primary',
 			'header' => [
@@ -30,20 +31,20 @@ class numbers_users_users_form_registration_tenant_collection extends object_for
 	];
 	public $data = [
 		'step1' => [
-			'options' => self::global_options,
+			'options' => self::GLOBAL_OPTIONS,
 			'order' => 1000,
-			self::rows => [
-				self::header_row => [
+			self::ROWS => [
+				self::HEADER_ROW => [
 					'order' => 100,
-					self::forms => [
-						'tenant_registration_step1' => self::global_wizard
+					self::FORMS => [
+						'tenant_registration_step1' => self::GLOBAL_WIZARD
 					]
 				],
-				self::main_row => [
+				self::MAIN_ROW => [
 					'order' => 200,
-					self::forms => [
+					self::FORMS => [
 						'tenant_registration_step1' => [
-							'model' => 'numbers_users_users_form_registration_tenant_step1',
+							'model' => '\Numbers\Users\Users\Form\Registration\Tenant\Step1',
 							'options' => [
 								'segment' => null,
 								'percent' => 100
@@ -55,20 +56,20 @@ class numbers_users_users_form_registration_tenant_collection extends object_for
 			]
 		],
 		'step2' => [
-			'options' => self::global_options,
+			'options' => self::GLOBAL_OPTIONS,
 			'order' => 2000,
-			self::rows => [
-				self::header_row => [
+			self::ROWS => [
+				self::HEADER_ROW => [
 					'order' => 100,
-					self::forms => [
-						'tenant_registration_step2' => self::global_wizard
+					self::FORMS => [
+						'tenant_registration_step2' => self::GLOBAL_WIZARD
 					]
 				],
-				self::main_row => [
+				self::MAIN_ROW => [
 					'order' => 200,
-					self::forms => [
+					self::FORMS => [
 						'tenant_registration_step2' => [
-							'model' => 'numbers_users_users_form_registration_tenant_step2',
+							'model' => '\Numbers\Users\Users\Form\Registration\Tenant\Step2',
 							'options' => [
 								'segment' => null,
 								'percent' => 100
@@ -80,20 +81,20 @@ class numbers_users_users_form_registration_tenant_collection extends object_for
 			]
 		],
 		'step3' => [
-			'options' => self::global_options,
+			'options' => self::GLOBAL_OPTIONS,
 			'order' => 2000,
-			self::rows => [
-				self::header_row => [
+			self::ROWS => [
+				self::HEADER_ROW => [
 					'order' => 100,
-					self::forms => [
-						'tenant_registration_step2' => self::global_wizard
+					self::FORMS => [
+						'tenant_registration_step2' => self::GLOBAL_WIZARD
 					]
 				],
-				self::main_row => [
+				self::MAIN_ROW => [
 					'order' => 200,
-					self::forms => [
+					self::FORMS => [
 						'tenant_registration_step3' => [
-							'model' => 'numbers_users_users_form_registration_tenant_step3',
+							'model' => '\Numbers\Users\Users\Form\Registration\Tenant\Step3',
 							'options' => [
 								'segment' => null,
 								'percent' => 100,
@@ -106,20 +107,20 @@ class numbers_users_users_form_registration_tenant_collection extends object_for
 			]
 		],
 		'step4' => [
-			'options' => self::global_options,
+			'options' => self::GLOBAL_OPTIONS,
 			'order' => 2000,
-			self::rows => [
-				self::header_row => [
+			self::ROWS => [
+				self::HEADER_ROW => [
 					'order' => 100,
-					self::forms => [
-						'tenant_registration_step4' => self::global_wizard
+					self::FORMS => [
+						'tenant_registration_step4' => self::GLOBAL_WIZARD
 					]
 				],
-				self::main_row => [
+				self::MAIN_ROW => [
 					'order' => 200,
-					self::forms => [
+					self::FORMS => [
 						'tenant_registration_step4' => [
-							'model' => 'numbers_users_users_form_registration_tenant_step4',
+							'model' => '\Numbers\Users\Users\Form\Registration\Tenant\Step4',
 							'options' => [
 								'segment' => null,
 								'percent' => 100
@@ -138,7 +139,7 @@ class numbers_users_users_form_registration_tenant_collection extends object_for
 		$this->values['collection_screen_link'] = 'step' . $this->values['__wizard_step'];
 		// make everything look success
 		if ($this->values['__wizard_step'] == 4) {
-			$this->data['step4'][$this::rows][self::header_row][$this::forms]['tenant_registration_step4']['options']['wizard']['type'] = 'success';
+			$this->data['step4'][$this::ROWS][self::HEADER_ROW][$this::FORMS]['tenant_registration_step4']['options']['wizard']['type'] = 'success';
 			$this->data['step4']['options']['segment']['type'] = 'success';
 		}
 	}

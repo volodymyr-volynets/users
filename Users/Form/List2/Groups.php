@@ -1,12 +1,13 @@
 <?php
 
-class numbers_users_users_form_list_titles extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'titles_list';
+namespace Numbers\Users\Users\Form\List2;
+class Groups extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'groups_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
 			'refresh' => true,
-			'new' => true,
+			'new' => ['onclick' => null],
 			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
 		]
 	];
@@ -40,11 +41,12 @@ class numbers_users_users_form_list_titles extends \Object\Form\Wrapper\List2 {
 		],
 		'filter' => [
 			'um_usrgrp_id' => [
-				'um_usrtitle_order1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Order #', 'domain' => 'order', 'percent' => 50, 'null' => true, 'query_builder' => 'a.um_usrtitle_order'],
-				'um_usrtitle_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_usrtitle_inactive;=']
+				'um_usrgrp_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Group #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_usrgrp_id;>='],
+				'um_usrgrp_id2' => ['order' => 2, 'label_name' => 'Group #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_usrgrp_id;<='],
+				'um_usrgrp_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_usrgrp_inactive;=']
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_usrtitle_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_usrgrp_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -56,24 +58,24 @@ class numbers_users_users_form_list_titles extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'um_usrtitle_name' => ['order' => 1, 'label_name' => 'Name', 'domain' => 'personal_title', 'percent' => 65, 'url_edit' => true],
-				'um_usrtitle_order' => ['order' => 2, 'label_name' => 'Order', 'domain' => 'order', 'percent' => 30],
-				'um_usrtitle_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_usrgrp_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Group #', 'domain' => 'group_id', 'percent' => 10, 'url_edit' => true],
+				'um_usrgrp_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 85],
+				'um_usrgrp_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Users\Model\User\Titles';
+	public $query_primary_model = '\Numbers\Users\Users\Model\User\Groups';
 	public $list_options = [
 		'pagination_top' => 'numbers_frontend_html_form_renderers_html_pagination_base',
 		'pagination_bottom' => 'numbers_frontend_html_form_renderers_html_pagination_base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'um_usrtitle_order' => SORT_ASC
+			'um_usrgrp_id' => SORT_ASC
 		]
 	];
 	const list_sort_options = [
-		'um_usrtitle_order' => ['name' => 'Order'],
-		'um_usrtitle_name' => ['name' => 'Name']
+		'um_usrgrp_id' => ['name' => 'Group #'],
+		'um_usrgrp_name' => ['name' => 'Name']
 	];
 
 	public function list_query(& $form) {
