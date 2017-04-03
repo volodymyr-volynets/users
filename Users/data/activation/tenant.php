@@ -30,12 +30,47 @@ class Tenant extends \Object\Import {
 			],
 			'data' => [
 				[
-					'um_role_code' => 'SUPER_ADMIN',
+					'um_role_code' => 'SA',
 					'um_role_type_id' => 20,
 					'um_role_name' => 'Super Administrator',
 					'um_role_global' => 1,
 					'um_role_super_admin' => 1,
+					'um_role_icon' => 'user-secret',
 					'um_role_inactive' => 0
+				]
+			]
+		],
+		'titles' => [
+			'options' => [
+				'pk' => ['um_usrtitle_name'],
+				'model' => '\Numbers\Users\Users\Model\User\Titles',
+				'method' => 'save_insert_new'
+			],
+			'data' => [
+				[
+					'um_usrtitle_name' => 'Mr.',
+					'um_usrtitle_order' => 1000,
+					'um_usrtitle_inactive' => 0
+				],
+				[
+					'um_usrtitle_name' => 'Ms.',
+					'um_usrtitle_order' => 1100,
+					'um_usrtitle_inactive' => 0
+				],
+				[
+					'um_usrtitle_name' => 'Mrs.',
+					'um_usrtitle_order' => 1200,
+					'um_usrtitle_inactive' => 0
+				],
+				[
+					'um_usrtitle_name' => 'Miss',
+					'um_usrtitle_order' => 1300,
+					'um_usrtitle_inactive' => 0
+				],
+				[
+					'um_usrtitle_name' => 'Dr.',
+					'um_usrtitle_order' => 1500,
+					'um_usrtitle_inactive' => 0
 				]
 			]
 		]

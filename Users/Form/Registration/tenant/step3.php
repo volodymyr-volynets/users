@@ -144,7 +144,7 @@ class Step3 extends \Object\Form\Wrapper\Base {
 			$assignment_result = \Numbers\Users\Users\Model\User\Roles::collectionStatic()->merge([
 				'um_usrrol_structure_code' => 'BELONGS_TO',
 				'um_usrrol_user_id' => $user_id,
-				'um_usrrol_role_id' => \Numbers\Users\Users\Model\Roles::getByColumnStatic('um_role_code', 'SUPER_ADMIN', 'um_role_id')
+				'um_usrrol_role_id' => \Numbers\Users\Users\Model\Roles::getByColumnStatic('um_role_code', 'SA', 'um_role_id')
 			]);
 			if (!$assignment_result['success']) {
 				$form->error('danger', $error_message);
@@ -165,7 +165,7 @@ class Step3 extends \Object\Form\Wrapper\Base {
 			// regirect to success step
 			$domain_level = (int) \Application::get('application.structure.tenant_domain_level');
 			if ($domain_level) {
-				$host_parts = \Request::host_parts();
+				$host_parts = \Request::hostParts();
 				$host_parts[$domain_level] = $this->tenant_registration_data['um_regten_tenant_code'];
 				krsort($host_parts);
 				$url = \Request::host(['host_parts' => $host_parts]) . 'Numbers/Users/Users/Controller/Login';

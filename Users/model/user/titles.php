@@ -9,7 +9,9 @@ class Titles extends \Object\Table {
 	public $name = 'um_user_titles';
 	public $pk = ['um_usrtitle_tenant_id', 'um_usrtitle_name'];
 	public $tenant = true;
-	public $orderby;
+	public $orderby = [
+		'um_usrtitle_order' => SORT_ASC
+	];
 	public $limit;
 	public $column_prefix = 'um_usrtitle_';
 	public $columns = [

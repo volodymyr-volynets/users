@@ -124,7 +124,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'um_user_login_last_set' => [
 				'um_user_login_last_set' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password Last Changed', 'type' => 'date', 'persistent' => true, 'method' => 'calendar', 'calendar_icon' => 'right', 'percent' => 50, 'readonly' => true],
-				//'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false]
+				'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Reset Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false, 'empty_value' => true]
 			]
 		],
 		'roles_container' => [
@@ -204,6 +204,37 @@ class Users extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
-		
+		// personal type
+		if ($form->values['um_user_type_id'] == 10) {
+			if (empty($form->values['um_user_first_name'])) $form->error('danger', \Object\Content\Messages::REQUIRED_FIELD, 'um_user_first_name');
+			if (empty($form->values['um_user_last_name'])) $form->error('danger', \Object\Content\Messages::REQUIRED_FIELD, 'um_user_last_name');
+			$name = concat_ws(' ', $form->values['um_user_title'], $form->values['um_user_first_name'], $form->values['um_user_last_name']);
+		} else if ($form->values['um_user_type_id'] == 20) { // business
+			if (empty($form->values['um_user_company'])) $form->error('danger', \Object\Content\Messages::REQUIRED_FIELD, 'um_user_company');
+			$name = $form->values['um_user_company'];
+		}
+		// set name
+		if (!$form->hasErrors() && empty($form->values['um_user_name'])) {
+			$form->values['um_user_name'] = $name;
+		}
+		// login enabled
+		if (!empty($form->values['um_user_login_enabled'])) {
+			if (empty($form->values['um_user_email']) && empty($form->values['um_user_login_username'])) {
+				$form->error('danger', 'You must provide Email or Username!', 'um_user_email');
+				$form->error('danger', 'You must provide Email or Username!', 'um_user_login_username');
+			}
+		}
+		// password
+		if (!empty($form->values['um_user_login_password_new'])) {
+			$crypt = new \Crypt();
+			$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
+		}
+	}
+
+	public function post(& $form) {
+		// send password reset email
+		if (!empty($form->values['um_user_login_password_new'])) {
+			\Numbers\Users\Users\Model\User\Notifications::sendChangeEmail($form->values['um_user_id'], $form->values['um_user_email'], $form->values['um_user_name']);
+		}
 	}
 }

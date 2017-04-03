@@ -27,7 +27,7 @@ class Login extends \Object\Form\Wrapper\Base {
 			],
 			self::BUTTONS => [
 				self::BUTTON_SUBMIT => self::BUTTON_SUBMIT_DATA,
-				'forgot' => ['order' => 99, 'button_group' => 'left', 'href' => '/numbers/data/entities/misc/login/controller/password', 'value' => 'Forgot Password?', 'method' => 'a']
+				'forgot' => ['order' => 99, 'button_group' => 'left', 'href' => '/Numbers/Users/Users/Controller/Password/Reset', 'value' => 'Forgot Password?', 'method' => 'a']
 			]
 		]
 	];
