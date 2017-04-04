@@ -19,6 +19,16 @@ class Tenant extends \Object\Import {
 					'tm_structure_code' => 'OWNER',
 					'tm_structure_name' => 'Owner',
 					'tm_structure_inactive' => 0
+				],
+				[
+					'tm_structure_code' => 'MANAGES',
+					'tm_structure_name' => 'Manages',
+					'tm_structure_inactive' => 0
+				],
+				[
+					'tm_structure_code' => 'PARENT',
+					'tm_structure_name' => 'Parent',
+					'tm_structure_inactive' => 0
 				]
 			]
 		],

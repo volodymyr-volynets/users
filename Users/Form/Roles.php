@@ -31,7 +31,15 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 3,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Children',
 			'details_pk' => ['um_rolrol_parent_role_id'],
-			'order' => 35001
+			'order' => 35000
+		],
+		'manages_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'grid_with_label',
+			'details_new_rows' => 3,
+			'details_key' => '\Numbers\Users\Users\Model\Role\Manages',
+			'details_pk' => ['um_rolrol_child_role_id'],
+			'order' => 35000
 		],
 		'notifications_container' => [
 			'type' => 'details',
@@ -52,6 +60,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'parents' => ['order' => 200, 'label_name' => 'Parent Roles'],
 			'permissions' => ['order' => 300, 'label_name' => 'Permisions'],
 			'notifications' => ['order' => 400, 'label_name' => 'Notifications'],
+			'manages' => ['order' => 500, 'label_name' => 'Manage Roles'],
 			//\Object\Widgets::addresses => \Object\Widgets::addresses_data,
 			//\Object\Widgets::attributes => \Object\Widgets::attributes_data
 		]
@@ -79,6 +88,9 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'notifications' => [
 				'notifications' => ['container' => 'notifications_container', 'order' => 100],
 			],
+			'manages' => [
+				'manages' => ['container' => 'manages_container', 'order' => 100],
+			]
 		],
 		'general_container' => [
 			'um_role_type_id' => [
@@ -95,6 +107,16 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'row1' => [
 				'um_rolrol_parent_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles', 'onchange' => 'this.form.submit();'],
 				'um_rolrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			]
+		],
+		'manages_container' => [
+			'row1' => [
+				'um_rolman_child_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles', 'onchange' => 'this.form.submit();'],
+				'um_rolman_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'um_rolman_assign_roles' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Assign Roles', 'type' => 'boolean', 'percent' => 15],
+				'um_rolman_reset_password' => ['order' => 2, 'label_name' => 'Reset Password', 'type' => 'boolean', 'percent' => 15],
 			]
 		],
 		'permissions_container' => [
@@ -129,9 +151,14 @@ class Roles extends \Object\Form\Wrapper\Base {
 				'map' => ['um_role_tenant_id' => 'um_rolrol_tenant_id', 'um_role_id' => 'um_rolrol_child_role_id'],
 				'sql' => [
 					'where' => [
-						'um_rolrol_structure_code' => 'BELONGS_TO'
+						'um_rolrol_structure_code' => 'PARENT'
 					]
 				]
+			],
+			'\Numbers\Users\Users\Model\Role\Manages' => [
+				'pk' => ['um_rolman_tenant_id', 'um_rolman_parent_role_id', 'um_rolman_child_role_id'],
+				'type' => '1M',
+				'map' => ['um_role_tenant_id' => 'um_rolman_tenant_id', 'um_role_id' => 'um_rolman_parent_role_id']
 			],
 			'\Numbers\Users\Users\Model\Role\Permissions' => [
 				'pk' => ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'],

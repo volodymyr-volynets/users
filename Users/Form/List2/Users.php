@@ -80,8 +80,8 @@ class Users extends \Object\Form\Wrapper\List2 {
 	];
 	public $query_primary_model = '\Numbers\Users\Users\Model\Users';
 	public $list_options = [
-		'pagination_top' => 'numbers_frontend_html_form_renderers_html_pagination_base',
-		'pagination_bottom' => 'numbers_frontend_html_form_renderers_html_pagination_base',
+		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
+		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
 			'um_user_id' => SORT_ASC

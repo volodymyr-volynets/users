@@ -43,7 +43,28 @@ class Login extends \Object\Datasource {
 			'login_last_set' => 'a.um_user_login_last_set',
 			// inactive & hold
 			'hold' => 'a.um_user_hold',
-			'inactive' => 'a.um_user_inactive'
+			'inactive' => 'a.um_user_inactive',
+			'roles' => 'b.roles',
+			'super_admin' => 'b.super_admin'
+		]);
+		// join
+		$this->query->join('LEFT', function (& $query) {
+			// need to see if modules have not been activated
+			$query = \Numbers\Users\Users\Model\User\Roles::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query->columns([
+				'inner_a.um_usrrol_user_id',
+				'roles' => $query->db_object->sqlHelper('string_agg', ['expression' => "inner_b.um_role_code", 'delimiter' => ';;']),
+				'super_admin' => 'SUM(inner_b.um_role_super_admin)'
+			]);
+			// join
+			$query->join('INNER', new \Numbers\Users\Users\Model\Roles(), 'inner_b', 'ON', [
+				['AND', ['inner_a.um_usrrol_role_id', '=', 'inner_b.um_role_id', true], false]
+			]);
+			$query->groupby(['inner_a.um_usrrol_user_id']);
+			$query->where('AND', ['inner_a.um_usrrol_inactive', '=', 0]);
+			$query->where('AND', ['inner_b.um_role_inactive', '=', 0]);
+		}, 'b', 'ON', [
+			['AND', ['a.um_user_id', '=', 'b.um_usrrol_user_id', true], false]
 		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
@@ -53,5 +74,12 @@ class Login extends \Object\Datasource {
 		} else {
 			$this->query->where('AND', ['a.um_user_login_username', '=', $parameters['username'] . '']);
 		}
+	}
+
+	public function process($data, $options = []) {
+		foreach ($data as $k => $v) {
+			$data[$k]['roles'] = explode(';;', $v['roles']);
+		}
+		return $data;
 	}
 }

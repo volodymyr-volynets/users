@@ -85,7 +85,7 @@ class System extends \Object\Import {
 					'sm_resource_group7_name' => null,
 					'sm_resource_group8_name' => null,
 					'sm_resource_group9_name' => null,
-					'sm_resource_acl_public' => 0,
+					'sm_resource_acl_public' => 1,
 					'sm_resource_acl_authorized' => 1,
 					'sm_resource_acl_permission' => 0,
 					'sm_resource_menu_acl_resource_id' => null,
