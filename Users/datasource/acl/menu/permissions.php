@@ -13,11 +13,18 @@ class Permissions {
 		$datasource = new \Numbers\Users\Users\DataSource\ACL\Menu();
 		$data = $datasource->get();
 		$result = [];
+		$always_show = \Application::get('flag.numbers.frontend.menu.always_show');
 		foreach ($data as $k => $v) {
 			// handle permission
 			if ($v['type'] !== 299) {
 				if (!empty($v['acl_permission'])) {
-
+					if (!\Application::$controller->canExtended($v['acl_resource_id'], $v['acl_method_code'], $v['acl_action_id'])) {
+						if (!$always_show) {
+							continue;
+						} else {
+							$v['name'].= ' (Hidden)';
+						}
+					}
 				} else { // public & authorized
 					if (\User::authorized()) {
 						if (empty($v['acl_authorized'])) continue;

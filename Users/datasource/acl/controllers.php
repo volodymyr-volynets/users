@@ -1,7 +1,7 @@
 <?php
 
 namespace Numbers\Users\Users\DataSource\ACL;
-class Controllers extends \Object\Datasource {
+class Controllers extends \Object\DataSource {
 	public $db_link;
 	public $db_link_flag;
 	public $pk = ['code'];

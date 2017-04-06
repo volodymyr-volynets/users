@@ -11,12 +11,17 @@ class Resources {
 		],
 		'authorization' => [
 			'login' => [
-				'url' => '/numbers/users/users/controller/login'
+				'url' => '/Numbers/Users/Users/Controller/Login'
 			]
 		],
 		'controllers' => [
 			'primary' => [
 				'datasource' => '\Numbers\Users\Users\DataSource\ACL\Controllers'
+			]
+		],
+		'roles' => [
+			'primary' => [
+				'datasource' => '\Numbers\Users\Users\DataSource\ACL\Roles'
 			]
 		],
 		'menu' => [

@@ -119,12 +119,36 @@ class Import extends \Object\Import {
 				[
 					'sm_feature_module_code' => 'UM',
 					'sm_feature_code' => 'UM::EMAIL_PASSWORD_CHANGED',
-					'sm_feature_type' => 20,
+					'sm_feature_type' => 21,
 					'sm_feature_name' => 'U/M Email Password Changed',
 					'sm_feature_icon' => 'envelope-o',
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_activation_model' => null,
 					'sm_feature_inactive' => 0
+				]
+			]
+		],
+		'notifications' => [
+			'options' => [
+				'pk' => ['sm_notification_code'],
+				'model' => '\Numbers\Backend\System\Modules\Model\Notifications',
+				'method' => 'save'
+			],
+			'data' => [
+				[
+					'sm_notification_code' => 'UM::EMAIL_PASSWORD_CHANGED',
+					'sm_notification_name' => 'U/M Email Password Changed',
+					'sm_notification_subject' => 'Your password has changed',
+					'sm_notification_body' => "Hello [Name],
+
+We wanted to let you know that your password was changed.
+
+If you did not perform this action, you can recover access by entering [Email] into the form at [Password_Reset_Url].
+
+Please do not reply to this email.
+
+Thank you!",
+					'sm_notification_inactive' => 0
 				]
 			]
 		],
