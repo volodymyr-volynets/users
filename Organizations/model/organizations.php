@@ -17,7 +17,6 @@ class Organizations extends \Object\Table {
 		'on_organization_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'on_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id_sequence'],
 		'on_organization_code' => ['name' => 'Code', 'domain' => 'group_code'],
-		'on_organization_type_code' => ['name' => 'Type', 'domain' => 'type_code', 'null' => true],
 		'on_organization_name' => ['name' => 'Screen Name', 'domain' => 'name'],
 		// contact
 		'on_organization_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],
@@ -32,13 +31,7 @@ class Organizations extends \Object\Table {
 	];
 	public $constraints = [
 		'on_organizations_pk' => ['type' => 'pk', 'columns' => ['on_organization_tenant_id', 'on_organization_id']],
-		'on_organization_code_un' => ['type' => 'unique', 'columns' => ['on_organization_tenant_id', 'on_organization_code']],
-		'on_organization_type_code_fk' => [
-			'type' => 'fk',
-			'columns' => ['on_organization_tenant_id', 'on_organization_type_code'],
-			'foreign_model' => '\Numbers\Users\Organizations\Model\Organization\Types',
-			'foreign_columns' => ['on_orgtype_tenant_id', 'on_orgtype_code']
-		]
+		'on_organization_code_un' => ['type' => 'unique', 'columns' => ['on_organization_tenant_id', 'on_organization_code']]
 	];
 	public $indexes = [
 		'on_organizations_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['on_organization_code', 'on_organization_name', 'on_organization_phone', 'on_organization_email']],
@@ -66,8 +59,7 @@ class Organizations extends \Object\Table {
 	];
 
 	public $who = [
-		'inserted' => true,
-		'updated' => true
+		'inserted' => true
 	];
 
 	public $addresses = [

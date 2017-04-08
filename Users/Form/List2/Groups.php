@@ -18,7 +18,7 @@ class Groups extends \Object\Form\Wrapper\List2 {
 			'type' => 'details',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 3,
-			'details_key' => 'numbers_framework_object_form_model_dummy_sort',
+			'details_key' => '\Object\Form\Model\Dummy\Sort',
 			'details_pk' => ['__sort'],
 			'order' => 1600
 		],

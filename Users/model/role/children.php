@@ -20,12 +20,10 @@ class Children extends \Object\Table {
 		'um_rolrol_structure_code' => ['name' => 'Structure Code', 'domain' => 'type_code'],
 		'um_rolrol_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'group_id'],
 		'um_rolrol_child_role_id' => ['name' => 'Child Role #', 'domain' => 'group_id'],
-		'um_rolrol_unique' => ['name' => 'Unique', 'type' => 'smallint', 'null' => true, 'default' => null],
 		'um_rolrol_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'um_role_children_pk' => ['type' => 'pk', 'columns' => ['um_rolrol_tenant_id', 'um_rolrol_structure_code', 'um_rolrol_parent_role_id', 'um_rolrol_child_role_id']],
-		'um_rolrol_unique_un' => ['type' => 'unique', 'columns' => ['um_rolrol_tenant_id', 'um_rolrol_structure_code', 'um_rolrol_parent_role_id', 'um_rolrol_unique']],
 		'um_rolrol_structure_code_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_rolrol_tenant_id', 'um_rolrol_structure_code'],

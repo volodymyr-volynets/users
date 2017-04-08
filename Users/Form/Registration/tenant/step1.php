@@ -20,7 +20,7 @@ class Step1 extends \Object\Form\Wrapper\Base {
 		'default' => [
 			'um_regten_tenant_name' => [
 				'um_regten_tenant_name' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Tenant Name', 'domain' => 'name', 'percent' => 50, 'required' => true, 'autofocus' => true],
-				'um_regten_tenant_code' => ['order' => 2, 'label_name' => 'Domain Name', 'domain' => 'domain_part', 'percent' => 50, 'required' => true, 'validator_method' => 'object_validator_uppercase2::validate'],
+				'um_regten_tenant_code' => ['order' => 2, 'label_name' => 'Domain Name', 'domain' => 'domain_part', 'percent' => 50, 'required' => true, 'validator_method' => '\Object\Validator\UpperCase2::validate'],
 			],
 			'um_regten_tenant_email' => [
 				'um_regten_tenant_email' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Email', 'domain' => 'email', 'percent' => 50, 'required' => true],
@@ -81,28 +81,18 @@ class Step1 extends \Object\Form\Wrapper\Base {
 			return false;
 		} else {
 			// send email message
-			$subject = "Tenant Registration Confirmation";
-			$message = <<<TTT
-Thank you for registering new tenant,
-
-<a href="[url]" target="_parent">Click here</a> to continue the registration process.
-
-Or paste this into a browser:
-
-[url]
-
-Please note that this link is only active for [token_valid_hours] hours after receipt. After this time limit has expired the token will not work and you will need to resubmit the registration request.
-
-Thank you!
-TTT;
-			// generate token
 			$crypt = new \Crypt();
-			$replaces = [
-				'[url]' => \Application::get('mvc.full_with_host') . '?__wizard_step=3&token=' . $crypt->tokenCreate($result['new_serials']['um_regten_id'], 'registration.tenant'),
-				'[token_valid_hours]' => $crypt->object->valid_hours
-			];
-			// send mail
-			$mail_result = \Mail::sendSimple($form->values['um_regten_user_email'], i18n(null, $subject), i18n(null, nl2br($message), ['replace' => $replaces]));
+			$model = new \Numbers\Backend\System\Modules\Model\Notification\Sender();
+			$mail_result = $model->send('UM::EMAIL_TENANT_CONFIRMATION', [
+				'email' => $form->values['um_regten_user_email'],
+				'user_id' => null,
+				'replace' => [
+					'body' => [
+						'[url]' => \Application::get('mvc.full_with_host') . '?__wizard_step=3&token=' . $crypt->tokenCreate($result['new_serials']['um_regten_id'], 'registration.tenant'),
+						'[token_valid_hours]' => $crypt->object->valid_hours
+					]
+				]
+			]);
 			if (!$mail_result['success']) {
 				$form->error('danger', 'Registration error, please try again later!');
 				return false;

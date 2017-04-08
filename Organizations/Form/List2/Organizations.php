@@ -1,8 +1,8 @@
 <?php
 
-namespace Numbers\Users\Users\Form\List2;
-class Users extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'users_list';
+namespace Numbers\Users\Organizations\Form\List2;
+class Organizations extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'organizations_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
@@ -40,6 +40,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
+			/*
 			'um_user_id' => [
 				'um_user_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_user_id;>='],
 				'um_user_id2' => ['order' => 2, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_user_id;<='],
@@ -49,8 +50,9 @@ class Users extends \Object\Form\Wrapper\List2 {
 				'um_user_hold1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;='],
 				'um_user_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;=']
 			],
+			*/
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_user_name', 'a.um_user_code', 'a.um_user_phone', 'a.um_user_email', 'a.um_user_company', 'a.um_user_login_username'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_organization_name', 'a.on_organization_code', 'a.on_organization_phone', 'a.on_organization_email'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -62,40 +64,79 @@ class Users extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 10, 'url_edit' => true],
-				'um_user_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
-				'um_user_code' => ['order' => 3, 'label_name' => 'User Number', 'domain' => 'group_code', 'null' => true, 'percent' => 15],
-				'um_user_type_id' => ['order' => 4, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 10, 'options_model' => '\Numbers\Users\Users\Model\User\Types'],
-				'um_user_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+				'on_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization #', 'domain' => 'organization_id', 'percent' => 10, 'url_edit' => true],
+				'on_organization_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
+				'on_organization_code' => ['order' => 3, 'label_name' => 'Organization Code', 'domain' => 'group_code', 'percent' => 25],
+				'on_organization_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
 			'row2' => [
 				'blank' => ['order' => 1, 'row_order' => 200, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10],
-				'um_user_company' => ['order' => 2, 'label_name' => 'Company', 'domain' => 'name', 'null' => true, 'percent' => 20],
-				'um_user_email' => ['order' => 3, 'label_name' => 'Email', 'domain' => 'email', 'null' => true, 'percent' => 25],
-				'um_user_phone' => ['order' => 4, 'label_name' => 'Phone', 'domain' => 'phone', 'null' => true, 'percent' => 25],
-				'um_user_login_username' => ['order' => 5, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 15],
-				'um_user_hold' => ['order' => 6, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
+				'types' => ['order' => 2, 'label_name' => 'Types', 'domain' => 'type_code', 'null' => true, 'percent' => 35, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Types'],
+				'on_organization_email' => ['order' => 3, 'label_name' => 'Email', 'domain' => 'email', 'null' => true, 'percent' => 25],
+				'on_organization_phone' => ['order' => 4, 'label_name' => 'Phone', 'domain' => 'phone', 'null' => true, 'percent' => 25],
+				'on_organization_hold' => ['order' => 6, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Users\Model\Users';
+	public $query_primary_model = '\Numbers\Users\Organizations\Model\Organizations';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'um_user_id' => SORT_ASC
+			'on_organization_id' => SORT_ASC
 		]
 	];
 	const list_sort_options = [
-		'um_user_id' => ['name' => 'User #'],
-		'um_user_name' => ['name' => 'Name'],
-		'um_user_email' => ['name' => 'Email'],
-		'um_user_phone' => ['name' => 'Phone'],
-		'um_user_company' => ['name' => 'Company']
+		'on_organization_id' => ['name' => 'Organization #'],
+		'on_organization_name' => ['name' => 'Name']
 	];
 
-	public function list_query(& $form) {
-		
+	public function listQuery(& $form) {
+		$result = [
+			'success' => false,
+			'error' => [],
+			'total' => 0,
+			'rows' => []
+		];
+		// joins
+		$form->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Organizations\Model\Organization\Type\Map::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query->columns([
+				'inner_a.on_orgtpmap_organization_id',
+				'types' => $query->db_object->sqlHelper('string_agg', ['expression' => 'on_orgtpmap_type_code', 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_a.on_orgtpmap_organization_id']);
+		}, 'b', 'ON', [
+			['AND', ['a.on_organization_id', '=', 'b.on_orgtpmap_organization_id', true], false]
+		]);
+		// query #1 get counter
+		$counter_query = clone $form->query;
+		$counter_query->columns(['counter' => 'COUNT(*)'], ['empty_existing' => true]);
+		$temp = $counter_query->query();
+		if (!$temp['success']) {
+			array_merge3($result['error'], $temp['error']);
+			return $result;
+		}
+		$result['total'] = $temp['rows'][0]['counter'];
+		// query #2 get rows
+		$form->processListQueryOrderBy();
+		$form->query->offset($form->values['__offset'] ?? 0);
+		$form->query->limit($form->values['__limit']);
+		$temp = $form->query->query();
+		if (!$temp['success']) {
+			array_merge3($result['error'], $temp['error']);
+			return $result;
+		}
+		foreach ($temp['rows'] as $k => $v) {
+			if (empty($v['types'])) {
+				$temp['rows'][$k]['types'] = [];
+			} else {
+				$temp['rows'][$k]['types'] = explode(';;', $v['types']);
+			}
+		}
+		$result['rows'] = & $temp['rows'];
+		$result['success'] = true;
+		return $result;
 	}
 }

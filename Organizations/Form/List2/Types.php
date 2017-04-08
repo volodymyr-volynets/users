@@ -1,13 +1,13 @@
 <?php
 
-namespace Numbers\Users\Users\Form\List2;
-class Titles extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'titles_list';
+namespace Numbers\Users\Organizations\Form\List2;
+class Types extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'types_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
 			'refresh' => true,
-			'new' => true,
+			'new' => ['onclick' => null],
 			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
 		]
 	];
@@ -40,12 +40,12 @@ class Titles extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			'um_usrgrp_id' => [
-				'um_usrtitle_order1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Order #', 'domain' => 'order', 'percent' => 50, 'null' => true, 'query_builder' => 'a.um_usrtitle_order'],
-				'um_usrtitle_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_usrtitle_inactive;=']
+			'on_orgtype_parent_type_code' => [
+				'on_orgtype_parent_type_code1' => ['order' => 1, 'label_name' => 'Parent', 'type' => 'type_code', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Types', 'query_builder' => 'a.on_orgtype_parent_type_code;='],
+				'on_orgtype_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_orgtype_inactive;=']
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_usrtitle_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_orgtype_code', 'a.on_orgtype_name', 'a.on_orgtype_parent_type_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -57,23 +57,23 @@ class Titles extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'um_usrtitle_name' => ['order' => 1, 'label_name' => 'Name', 'domain' => 'personal_title', 'percent' => 65, 'url_edit' => true],
-				'um_usrtitle_order' => ['order' => 2, 'label_name' => 'Order', 'domain' => 'order', 'percent' => 30],
-				'um_usrtitle_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'on_orgtype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_code', 'percent' => 15, 'url_edit' => true],
+				'on_orgtype_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 65],
+				'on_orgtype_parent_type_code' => ['order' => 3, 'label_name' => 'Parent Type', 'domain' => 'type_code', 'null' => true, 'percent' => 15, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Types'],
+				'on_orgtype_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Users\Model\User\Titles';
+	public $query_primary_model = '\Numbers\Users\Organizations\Model\Organization\Types';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'um_usrtitle_order' => SORT_ASC
+			'on_orgtype_name' => SORT_ASC
 		]
 	];
 	const list_sort_options = [
-		'um_usrtitle_order' => ['name' => 'Order'],
-		'um_usrtitle_name' => ['name' => 'Name']
+		'on_orgtype_name' => ['name' => 'Name']
 	];
 }

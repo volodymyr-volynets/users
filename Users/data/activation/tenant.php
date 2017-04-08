@@ -83,6 +83,69 @@ class Tenant extends \Object\Import {
 					'um_usrtitle_inactive' => 0
 				]
 			]
-		]
+		],
+		'organization_types' => [
+			'options' => [
+				'pk' => ['on_orgtype_code'],
+				'model' => '\Numbers\Users\Organizations\Model\Organization\Types',
+				'method' => 'save_insert_new'
+			],
+			'data' => [
+				[
+					'on_orgtype_code' => 'FORPROFIT',
+					'on_orgtype_name' => 'For-Profit',
+					'on_orgtype_parent_type_code' => null,
+					'on_orgtype_inactive' => 0
+				],
+				[
+					'on_orgtype_code' => 'NONPROFIT',
+					'on_orgtype_name' => 'Nonprofit',
+					'on_orgtype_parent_type_code' => null,
+					'on_orgtype_inactive' => 0
+				],
+				[
+					'on_orgtype_code' => 'SOLEPROP',
+					'on_orgtype_name' => 'Sole Proprietorship',
+					'on_orgtype_parent_type_code' => 'FORPROFIT',
+					'on_orgtype_inactive' => 0
+				],
+				[
+					'on_orgtype_code' => 'PARTNERSHIP',
+					'on_orgtype_name' => 'Partnership',
+					'on_orgtype_parent_type_code' => 'FORPROFIT',
+					'on_orgtype_inactive' => 0
+				],
+				[
+					'on_orgtype_code' => 'CORPORATION',
+					'on_orgtype_name' => 'Corporation',
+					'on_orgtype_parent_type_code' => 'FORPROFIT',
+					'on_orgtype_inactive' => 0
+				],
+				[
+					'on_orgtype_code' => 'PUBCHARITY',
+					'on_orgtype_name' => 'Public Charity',
+					'on_orgtype_parent_type_code' => 'NONPROFIT',
+					'on_orgtype_inactive' => 0
+				],
+				[
+					'on_orgtype_code' => 'FOUNDATION',
+					'on_orgtype_name' => 'Foundation',
+					'on_orgtype_parent_type_code' => 'NONPROFIT',
+					'on_orgtype_inactive' => 0
+				],
+				[
+					'on_orgtype_code' => 'SOCIALADVOCACY',
+					'on_orgtype_name' => 'Social Advocacy',
+					'on_orgtype_parent_type_code' => 'NONPROFIT',
+					'on_orgtype_inactive' => 0
+				],
+				[
+					'on_orgtype_code' => 'PROFANDTRADE',
+					'on_orgtype_name' => 'Professional and Trade',
+					'on_orgtype_parent_type_code' => 'NONPROFIT',
+					'on_orgtype_inactive' => 0
+				]
+			]
+		],
 	];
 }

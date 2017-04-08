@@ -28,12 +28,7 @@ class Map extends \Object\Table {
 			'type' => 'fk',
 			'columns' => ['um_usrgrmap_tenant_id', 'um_usrgrmap_group_id'],
 			'foreign_model' => '\Numbers\Users\Users\Model\User\Groups',
-			'foreign_columns' => ['um_usrgrp_tenant_id', 'um_usrgrp_id'],
-			'options' => [
-				'match' => 'simple',
-				'update' => 'no action',
-				'delete' => 'no action'
-			]
+			'foreign_columns' => ['um_usrgrp_tenant_id', 'um_usrgrp_id']
 		]
 	];
 	public $history = false;

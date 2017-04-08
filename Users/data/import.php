@@ -125,6 +125,16 @@ class Import extends \Object\Import {
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_activation_model' => null,
 					'sm_feature_inactive' => 0
+				],
+				[
+					'sm_feature_module_code' => 'UM',
+					'sm_feature_code' => 'UM::EMAIL_TENANT_CONFIRMATION',
+					'sm_feature_type' => 21,
+					'sm_feature_name' => 'U/M Email Tenant Confirmation',
+					'sm_feature_icon' => 'envelope-o',
+					'sm_feature_activated_by_default' => 1,
+					'sm_feature_activation_model' => null,
+					'sm_feature_inactive' => 0
 				]
 			]
 		],
@@ -138,8 +148,8 @@ class Import extends \Object\Import {
 				[
 					'sm_notification_code' => 'UM::EMAIL_PASSWORD_CHANGED',
 					'sm_notification_name' => 'U/M Email Password Changed',
-					'sm_notification_subject' => 'Your password has changed',
-					'sm_notification_body' => "Hello [Name],
+					'sm_notification_subject' => 'Your Password Has Changed',
+					'sm_notification_body' => 'Hello [Name],
 
 We wanted to let you know that your password was changed.
 
@@ -147,7 +157,24 @@ If you did not perform this action, you can recover access by entering [Email] i
 
 Please do not reply to this email.
 
-Thank you!",
+Thank you!',
+					'sm_notification_inactive' => 0
+				],
+				[
+					'sm_notification_code' => 'UM::EMAIL_TENANT_CONFIRMATION',
+					'sm_notification_name' => 'U/M Email Tenant Confirmation',
+					'sm_notification_subject' => 'Tenant Registration Confirmation',
+					'sm_notification_body' => 'Thank you for registering new tenant,
+
+<a href="[url]" target="_parent">Click here</a> to continue the registration process.
+
+Or paste this into a browser:
+
+[url]
+
+Please note that this link is only active for [token_valid_hours] hours after receipt. After this time limit has expired the token will not work and you will need to resubmit the registration request.
+
+Thank you!',
 					'sm_notification_inactive' => 0
 				]
 			]
