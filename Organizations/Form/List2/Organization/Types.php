@@ -1,6 +1,6 @@
 <?php
 
-namespace Numbers\Users\Organizations\Form\List2;
+namespace Numbers\Users\Organizations\Form\List2\Organization;
 class Types extends \Object\Form\Wrapper\List2 {
 	public $form_link = 'types_list';
 	public $options = [

@@ -44,29 +44,6 @@ class Menu extends \Object\DataSource {
 			'acl_method_code' => 'sm_resource_menu_acl_method_code',
 			'acl_action_id' => 'sm_resource_menu_acl_action_id'
 		]);
-		// join
-		/*
-		$this->query->join('LEFT', new \Numbers\Backend\System\Modules\Model\Modules(), 'b', 'ON', [
-			['AND', ['a.sm_resource_module_code', '=', 'b.sm_module_code', true], false]
-		]);
-		$this->query->join('LEFT', function (& $query) {
-			// need to see if modules have not been activated
-			$query = \Numbers\Backend\System\Modules\Model\Resource\Map::queryBuilderStatic(['alias' => 'inner_a'])->select();
-			$query->columns([
-				'inner_a.sm_rsrcmp_resource_id',
-				'actions' => $query->db_object->sql_helper('string_agg', ['expression' => "concat_ws('::', inner_a.sm_rsrcmp_method_code, inner_a.sm_rsrcmp_action_id, inner_b.sm_action_code)", 'delimiter' => ';;'])
-			]);
-			// join
-			$query->join('INNER', new \Numbers\Backend\System\Modules\Model\Resource\Actions(), 'inner_b', 'ON', [
-				['AND', ['inner_a.sm_rsrcmp_action_id', '=', 'inner_b.sm_action_id', true], false]
-			]);
-			$query->groupby(['sm_rsrcmp_resource_id']);
-			$query->where('AND', ['inner_a.sm_rsrcmp_inactive', '=', 0]);
-			$query->where('AND', ['inner_b.sm_action_inactive', '=', 0]);
-		}, 'c', 'ON', [
-			['AND', ['a.sm_resource_id', '=', 'c.sm_rsrcmp_resource_id', true], false]
-		]);
-		*/
 		// where
 		$this->query->where('AND', ['a.sm_resource_type', '>=', 200]);
 		$this->query->where('AND', ['a.sm_resource_type', '<', 300]);

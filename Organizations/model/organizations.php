@@ -18,6 +18,7 @@ class Organizations extends \Object\Table {
 		'on_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id_sequence'],
 		'on_organization_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_organization_name' => ['name' => 'Screen Name', 'domain' => 'name'],
+		'on_organization_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		// contact
 		'on_organization_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],
 		'on_organization_email2' => ['name' => 'Secondary Email', 'domain' => 'email', 'null' => true],

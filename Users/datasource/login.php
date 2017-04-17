@@ -45,11 +45,11 @@ class Login extends \Object\Datasource {
 			'hold' => 'a.um_user_hold',
 			'inactive' => 'a.um_user_inactive',
 			'roles' => 'b.roles',
+			'organizations' => 'c.organizations',
 			'super_admin' => 'b.super_admin'
 		]);
-		// join
+		// joins
 		$this->query->join('LEFT', function (& $query) {
-			// need to see if modules have not been activated
 			$query = \Numbers\Users\Users\Model\User\Roles::queryBuilderStatic(['alias' => 'inner_a'])->select();
 			$query->columns([
 				'inner_a.um_usrrol_user_id',
@@ -66,6 +66,22 @@ class Login extends \Object\Datasource {
 		}, 'b', 'ON', [
 			['AND', ['a.um_user_id', '=', 'b.um_usrrol_user_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\Organizations::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query->columns([
+				'inner_a.um_usrorg_user_id',
+				'organizations' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_usrorg_organization_id)", 'delimiter' => ';;'])
+			]);
+			// join
+			$query->join('INNER', new \Numbers\Users\Organizations\Model\Organizations(), 'inner_b', 'ON', [
+				['AND', ['inner_a.um_usrorg_organization_id', '=', 'inner_b.on_organization_id', true], false]
+			]);
+			$query->groupby(['inner_a.um_usrorg_user_id']);
+			$query->where('AND', ['inner_a.um_usrorg_inactive', '=', 0]);
+			$query->where('AND', ['inner_b.on_organization_inactive', '=', 0]);
+		}, 'c', 'ON', [
+			['AND', ['a.um_user_id', '=', 'c.um_usrorg_user_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
@@ -78,7 +94,19 @@ class Login extends \Object\Datasource {
 
 	public function process($data, $options = []) {
 		foreach ($data as $k => $v) {
-			$data[$k]['roles'] = explode(';;', $v['roles']);
+			if (!empty($v['roles'])) {
+				$data[$k]['roles'] = explode(';;', $v['roles']);
+			} else {
+				$data[$k]['roles'] = [];
+			}
+			if (!empty($v['organizations'])) {
+				$data[$k]['organizations'] = [];
+				foreach (explode(';;', $v['organizations']) as $v2) {
+					$data[$k]['organizations'][] = (int) $v2;
+				}
+			} else {
+				$data[$k]['organizations'] = [];
+			}
 		}
 		return $data;
 	}

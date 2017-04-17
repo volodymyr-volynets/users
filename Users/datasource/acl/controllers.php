@@ -65,7 +65,16 @@ class Controllers extends \Object\DataSource {
 				$this->query->where('AND', ["a.{$k}", '=', $v]);
 			}
 		}
-		// todo - limit by activated modules/fatures
+		// limit by activated modules
+		$this->query->where('AND', function (& $query) {
+			$query->where('OR', ['a.sm_resource_module_code', 'IN', ['SM', 'TM']]);
+			$query->where('OR', function (& $query) {
+				$query = \Numbers\Tenants\Tenants\Model\Modules::queryBuilderStatic(['alias' => 'exists_a'])->select();
+				$query->columns(['exists_a.tm_module_module_code']);
+				$query->where('AND', ['exists_a.tm_module_module_code', '=', 'a.sm_resource_module_code', true]);
+			}, true);
+		});
+		// limit by features
 	}
 
 	public function process($data, $options = []) {

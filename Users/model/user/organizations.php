@@ -20,12 +20,10 @@ class Organizations extends \Object\Table {
 		'um_usrorg_structure_code' => ['name' => 'Structure Code', 'domain' => 'type_code'],
 		'um_usrorg_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'um_usrorg_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
-		'um_usrorg_unique' => ['name' => 'Unique', 'type' => 'smallint', 'null' => true, 'default' => null],
 		'um_usrorg_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'um_user_organizations_pk' => ['type' => 'pk', 'columns' => ['um_usrorg_tenant_id', 'um_usrorg_structure_code', 'um_usrorg_user_id', 'um_usrorg_organization_id']],
-		'um_usrorg_unique_un' => ['type' => 'unique', 'columns' => ['um_usrorg_tenant_id', 'um_usrorg_structure_code', 'um_usrorg_user_id', 'um_usrorg_unique']],
 		'um_usrorg_structure_code_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_usrorg_tenant_id', 'um_usrorg_structure_code'],

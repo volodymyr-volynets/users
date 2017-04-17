@@ -90,7 +90,7 @@ class System extends \Object\Import {
 					'sm_resource_module_code' => 'ON',
 					'sm_resource_group1_name' => 'Operations',
 					'sm_resource_group2_name' => 'Organization Management',
-					'sm_resource_group3_name' => null,
+					'sm_resource_group3_name' => 'Settings',
 					'sm_resource_group4_name' => null,
 					'sm_resource_group5_name' => null,
 					'sm_resource_group6_name' => null,

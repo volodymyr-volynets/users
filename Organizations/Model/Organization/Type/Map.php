@@ -8,6 +8,7 @@ class Map extends \Object\Table {
 	public $title = 'O/N Type Map';
 	public $name = 'on_organization_type_map';
 	public $pk = ['on_orgtpmap_tenant_id', 'on_orgtpmap_organization_id', 'on_orgtpmap_type_code'];
+	public $tenant = true;
 	public $orderby;
 	public $limit;
 	public $column_prefix = 'on_orgtpmap_';

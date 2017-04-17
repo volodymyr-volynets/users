@@ -159,6 +159,17 @@ class Step3 extends \Object\Form\Wrapper\Base {
 				$form->error('danger', $error_message);
 				break;
 			}
+			// step 8 activate organizations and users modules
+			$module_activation_result = \Numbers\Tenants\Tenants\Model\Activation::activateModule('ON', null);
+			if (!$module_activation_result['success']) {
+				$form->error('danger', $error_message);
+				break;
+			}
+			$module_activation_result = \Numbers\Tenants\Tenants\Model\Activation::activateModule('UM', null);
+			if (!$module_activation_result['success']) {
+				$form->error('danger', $error_message);
+				break;
+			}
 			// use old tenant
 			\Tenant::setOverrideTenantId(null);
 			$tenant_model->db_object->commit();

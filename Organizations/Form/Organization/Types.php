@@ -1,6 +1,6 @@
 <?php
 
-namespace Numbers\Users\Organizations\Form;
+namespace Numbers\Users\Organizations\Form\Organization;
 class Types extends \Object\Form\Wrapper\Base {
 	public $form_link = 'types';
 	public $options = [
