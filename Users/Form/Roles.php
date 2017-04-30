@@ -23,6 +23,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 3,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Organizations',
 			'details_pk' => ['um_rolorg_organization_id'],
+			'required' => true,
 			'order' => 35000
 		],
 		'permissions_container' => [

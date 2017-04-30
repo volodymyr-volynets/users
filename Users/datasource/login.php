@@ -1,7 +1,7 @@
 <?php
 
 namespace Numbers\Users\Users\DataSource;
-class Login extends \Object\Datasource {
+class Login extends \Object\DataSource {
 	public $db_link;
 	public $db_link_flag;
 	public $pk = ['id'];
@@ -17,7 +17,7 @@ class Login extends \Object\Datasource {
 	public $cache_tags = [];
 	public $cache_memory = false;
 
-	public $primary_model = '\Numbers\Users\Users\Model\Users';
+	public $primary_model;
 	public $parameters = [
 		'username' => ['name' => 'Username', 'domain' => 'login', 'required' => true],
 	];
@@ -25,6 +25,11 @@ class Login extends \Object\Datasource {
 	public function query($parameters, $options = []) {
 		// convert username to lowercase
 		$parameters['username'] = strtolower($parameters['username'] . '');
+		// create a query object
+		$this->query = \Numbers\Users\Users\Model\Users::queryBuilderStatic([
+			'alias' => 'a',
+			'skip_acl' => true
+		])->select();
 		// columns
 		$this->query->columns([
 			'id' => 'a.um_user_id',

@@ -33,6 +33,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 3,
 			'details_key' => '\Numbers\Users\Users\Model\User\Organizations',
 			'details_pk' => ['um_usrorg_organization_id'],
+			'required' => true,
 			'order' => 35001
 		],
 		/*
@@ -129,7 +130,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'roles_container' => [
 			'row1' => [
-				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles', 'onchange' => 'this.form.submit();'],
+				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\User\Roles', 'onchange' => 'this.form.submit();'],
 				'um_usrrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
@@ -226,6 +227,10 @@ class Users extends \Object\Form\Wrapper\Base {
 		}
 		// password
 		if (!empty($form->values['um_user_login_password_new'])) {
+			// see if we can change password for this role
+			//$roles = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Roles'], 'um_usrrol_role_id');
+			// todo validate if user can reset password for this account
+			// set password
 			$crypt = new \Crypt();
 			$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
 		}
@@ -235,6 +240,12 @@ class Users extends \Object\Form\Wrapper\Base {
 		// send password reset email
 		if (!empty($form->values['um_user_login_password_new'])) {
 			\Numbers\Users\Users\Model\User\Notifications::sendChangeEmail($form->values['um_user_id'], $form->values['um_user_email'], $form->values['um_user_name']);
+		}
+	}
+
+	public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where) {
+		if ($field_name == 'um_usrrol_role_id') {
+			$where['selected_organizations'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['unique' => true]);
 		}
 	}
 }
