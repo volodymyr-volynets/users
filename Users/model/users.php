@@ -91,6 +91,7 @@ class Users extends \Object\Table {
 
 	public $addresses = [
 		'map' => [
+			'um_user_tenant_id' => 'wg_address_tenant_id',
 			'um_user_id' => 'wg_address_user_id'
 		]
 	];

@@ -58,7 +58,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'login' => ['order' => 200, 'label_name' => 'Login'],
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
-			//\Object\Widgets::addresses => \Object\Widgets::addresses_data,
+			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
 			//\Object\Widgets::attributes => \Object\Widgets::attributes_data
 		]
 	];
