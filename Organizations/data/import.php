@@ -37,6 +37,7 @@ class Import extends \Object\Import {
 					'sm_feature_code' => 'ON::ORGANIZATIONS',
 					'sm_feature_type' => 10,
 					'sm_feature_name' => 'O/N Organizations',
+					'sm_feature_icon' => 'home',
 					'sm_feature_activation_model' => null,
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_inactive' => 0,

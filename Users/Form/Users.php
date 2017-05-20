@@ -59,7 +59,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
-			//\Object\Widgets::attributes => \Object\Widgets::attributes_data
+			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
 		]
 	];
 	public $elements = [
@@ -247,5 +247,16 @@ class Users extends \Object\Form\Wrapper\Base {
 		if ($field_name == 'um_usrrol_role_id') {
 			$where['selected_organizations'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['unique' => true]);
 		}
+	}
+
+	/**
+	 * Owners
+	 *
+	 * @param object $form
+	 */
+	public function owners(& $form) {
+		return [
+			'organization_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id'),
+		];
 	}
 }

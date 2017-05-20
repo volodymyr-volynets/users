@@ -72,6 +72,7 @@ class Organizations extends \Object\Table {
 
 	public $attributes = [
 		'map' => [
+			'on_organization_tenant_id' => 'wg_attribute_tenant_id',
 			'on_organization_id' => 'wg_attribute_organization_id'
 		]
 	];
