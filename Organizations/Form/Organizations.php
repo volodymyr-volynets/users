@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form;
 class Organizations extends \Object\Form\Wrapper\Base {
-	public $form_link = 'users';
+	public $form_link = 'organizations';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [
@@ -85,7 +85,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			'row1' => [
 				'on_orgchl_child_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => false, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
 				'on_orgchl_structure_code' => ['order' => 2, 'label_name' => 'Structure Type', 'domain' => 'type_code', 'required' => true, 'null' => true, 'details_unique_select' => false, 'percent' => 45, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Structure\Types::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_rolrol_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'on_orgchl_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'buttons' => [

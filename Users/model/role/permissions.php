@@ -7,7 +7,7 @@ class Permissions extends \Object\Table {
 	public $module_code = 'UM';
 	public $title = 'U/M Role Permissions';
 	public $name = 'um_role_permissions';
-	public $pk = ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'];
+	public $pk = ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_module_id', 'um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'];
 	public $tenant = true;
 	public $orderby = [
 		'um_rolperm_id' => SORT_ASC
@@ -18,13 +18,14 @@ class Permissions extends \Object\Table {
 		'um_rolperm_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_rolperm_id' => ['name' => '#', 'type' => 'bigserial'],
 		'um_rolperm_role_id' => ['name' => 'Role #', 'domain' => 'group_id'],
+		'um_rolperm_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
 		'um_rolperm_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],
 		'um_rolperm_method_code' => ['name' => 'Method Code', 'domain' => 'code'],
 		'um_rolperm_action_id' => ['name' => 'Action #', 'domain' => 'action_id'],
 		'um_rolperm_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'um_role_permissions_pk' => ['type' => 'pk', 'columns' => ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id']],
+		'um_role_permissions_pk' => ['type' => 'pk', 'columns' => ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_module_id', 'um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id']],
 		'um_rolperm_role_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_rolperm_tenant_id', 'um_rolperm_role_id'],
@@ -36,6 +37,12 @@ class Permissions extends \Object\Table {
 			'columns' => ['um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'],
 			'foreign_model' => '\Numbers\Backend\System\Modules\Model\Resource\Map',
 			'foreign_columns' => ['sm_rsrcmp_resource_id', 'sm_rsrcmp_method_code', 'sm_rsrcmp_action_id']
+		],
+		'um_rolperm_module_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_rolperm_tenant_id', 'um_rolperm_module_id'],
+			'foreign_model' => '\Numbers\Tenants\Tenants\Model\Modules',
+			'foreign_columns' => ['tm_module_tenant_id', 'tm_module_id']
 		]
 	];
 	public $indexes = [];

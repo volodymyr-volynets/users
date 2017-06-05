@@ -17,7 +17,7 @@ class Organizations extends \Object\Table {
 		'on_organization_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'on_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id_sequence'],
 		'on_organization_code' => ['name' => 'Code', 'domain' => 'group_code'],
-		'on_organization_name' => ['name' => 'Screen Name', 'domain' => 'name'],
+		'on_organization_name' => ['name' => 'Name', 'domain' => 'name'],
 		'on_organization_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		// contact
 		'on_organization_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],

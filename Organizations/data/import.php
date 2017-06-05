@@ -15,7 +15,6 @@ class Import extends \Object\Import {
 					'sm_module_type' => 20,
 					'sm_module_name' => 'O/N Organization Management',
 					'sm_module_icon' => 'home',
-					'sm_module_parent_module_code' => null,
 					'sm_module_transactions' => 0,
 					'sm_module_multiple' => 0,
 					'sm_module_activation_model' => null,
