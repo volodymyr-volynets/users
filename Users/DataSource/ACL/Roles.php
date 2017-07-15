@@ -52,7 +52,7 @@ class Roles extends \Object\DataSource {
 			$query = \Numbers\Users\Users\Model\Role\Permissions::queryBuilderStatic(['alias' => 'inner_a'])->select();
 			$query->columns([
 				'inner_a.um_rolperm_role_id',
-				'permissions' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_rolperm_resource_id, inner_a.um_rolperm_method_code, inner_a.um_rolperm_action_id, inner_a.um_rolperm_inactive)", 'delimiter' => ';;'])
+				'permissions' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_rolperm_resource_id, inner_a.um_rolperm_method_code, inner_a.um_rolperm_action_id, inner_a.um_rolperm_inactive, inner_a.um_rolperm_module_id)", 'delimiter' => ';;'])
 			]);
 			$query->groupby(['inner_a.um_rolperm_role_id']);
 		}, 'c', 'ON', [
@@ -81,7 +81,7 @@ class Roles extends \Object\DataSource {
 				$temp = explode(';;', $v['permissions']);
 				foreach ($temp as $v2) {
 					$v2 = explode('::', $v2);
-					$data[$k]['permissions'][(int) $v2[0]][$v2[1]][(int )$v2[2]] = (int) $v2[3];
+					$data[$k]['permissions'][(int) $v2[0]][$v2[1]][(int )$v2[2]][(int) $v2[4]] = (int) $v2[3];
 				}
 			} else {
 				$data[$k]['permissions'] = [];

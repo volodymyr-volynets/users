@@ -1,6 +1,6 @@
 <?php
 
-namespace Numbers\Users\Organizations\Data;
+namespace Numbers\Users\TaskScheduler\Data;
 class Import extends \Object\Import {
 	public $data = [
 		'modules' => [
@@ -11,11 +11,11 @@ class Import extends \Object\Import {
 			],
 			'data' => [
 				[
-					'sm_module_code' => 'ON',
+					'sm_module_code' => 'TS',
 					'sm_module_type' => 20,
-					'sm_module_name' => 'O/N Organization Management',
-					'sm_module_abbreviation' => 'O/N',
-					'sm_module_icon' => 'home',
+					'sm_module_name' => 'T/S Task Scheduler',
+					'sm_module_abbreviation' => 'T/S',
+					'sm_module_icon' => 'sun-o',
 					'sm_module_transactions' => 0,
 					'sm_module_multiple' => 0,
 					'sm_module_activation_model' => null,
@@ -33,16 +33,16 @@ class Import extends \Object\Import {
 			],
 			'data' => [
 				[
-					'sm_feature_module_code' => 'ON',
-					'sm_feature_code' => 'ON::ORGANIZATIONS',
+					'sm_feature_module_code' => 'TS',
+					'sm_feature_code' => 'TS::TASK_SCHEDULER',
 					'sm_feature_type' => 10,
-					'sm_feature_name' => 'O/N Organizations',
-					'sm_feature_icon' => 'home',
+					'sm_feature_name' => 'T/S Task Scheduler',
+					'sm_feature_icon' => 'sun-o',
 					'sm_feature_activation_model' => null,
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Module\Dependencies' => []
-				],
+				]
 			]
 		],
 	];

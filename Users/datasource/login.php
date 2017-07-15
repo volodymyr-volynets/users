@@ -19,12 +19,11 @@ class Login extends \Object\DataSource {
 
 	public $primary_model;
 	public $parameters = [
-		'username' => ['name' => 'Username', 'domain' => 'login', 'required' => true],
+		'username' => ['name' => 'Username', 'domain' => 'login'],
+		'user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 	];
 
 	public function query($parameters, $options = []) {
-		// convert username to lowercase
-		$parameters['username'] = strtolower($parameters['username'] . '');
 		// create a query object
 		$this->query = \Numbers\Users\Users\Model\Users::queryBuilderStatic([
 			'alias' => 'a',
@@ -90,10 +89,15 @@ class Login extends \Object\DataSource {
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
-		if (strpos($parameters['username'], '@') !== false) {
-			$this->query->where('AND', ['a.um_user_email', '=', $parameters['username'] . '']);
+		if (!empty($parameters['user_id'])) {
+			$this->query->where('AND', ['a.um_user_id', '=', (int) $parameters['user_id']]);
 		} else {
-			$this->query->where('AND', ['a.um_user_login_username', '=', $parameters['username'] . '']);
+			$parameters['username'] = strtolower($parameters['username'] . '');
+			if (strpos($parameters['username'], '@') !== false) {
+				$this->query->where('AND', ['a.um_user_email', '=', $parameters['username']]);
+			} else {
+				$this->query->where('AND', ['a.um_user_login_username', '=', $parameters['username']]);
+			}
 		}
 	}
 

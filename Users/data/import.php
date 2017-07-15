@@ -14,6 +14,7 @@ class Import extends \Object\Import {
 					'sm_module_code' => 'UM',
 					'sm_module_type' => 20,
 					'sm_module_name' => 'U/M User Management',
+					'sm_module_abbreviation' => 'U/M',
 					'sm_module_icon' => 'user-o',
 					'sm_module_transactions' => 0,
 					'sm_module_multiple' => 0,

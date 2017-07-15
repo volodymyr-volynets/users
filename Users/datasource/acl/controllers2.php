@@ -8,36 +8,43 @@ class Controllers2 extends \Numbers\Users\Users\DataSource\ACL\Controllers {
 	/**
 	 * @see $this->options();
 	 */
-	public function optionsGroupped(array $options = []) : array {
+	public function optionsJson(array $options = []) : array {
+		// load and process modules
+		$temp = \Numbers\Tenants\Tenants\Model\Modules::getStatic([
+			'pk' => ['tm_module_id'],
+			'where' => [
+				'tm_module_inactive' => 0
+			]
+		]);
+		$modules = [];
+		foreach ($temp as $k => $v) {
+			$modules[$v['tm_module_module_code']][$k] = $v;
+		}
+		$sm = \Numbers\Backend\System\Modules\Model\Modules::getStatic();
+		// load controllers
 		$data = $this->get($options);
 		$result = [];
 		foreach ($data as $k => $v) {
-			if (!empty($v['breadcrumbs'])) {
-				// ad parents
-				$previous = null;
-				$first = null;
-				$flag_skip_next = false;
-				foreach ($v['breadcrumbs'] as $k2 => $v2) {
-					if ($flag_skip_next) {
-						$flag_skip_next = false;
-						continue;
-					}
-					if ($v2 == 'Operations') {
-						$flag_skip_next = true;
-						continue;
-					}
-					if (!isset($first)) $first = $v2;
-					$parent = $previous;
-					$previous.= '::' . $v2;
-					if (!isset($result[$previous])) {
-						$result[$previous] = ['name' => $v2, 'parent' => $parent, 'disabled' => true];
-					}
+			if (empty($modules[$v['module_code']])) continue;
+			foreach ($modules[$v['module_code']] as $k2 => $v2) {
+				$parent = \Object\Table\Options::optionJsonFormatKey(['module_id' => $k2]);
+				// add parent
+				if (!isset($result[$parent])) {
+					$result[$parent] = [
+						'name' => $v2['tm_module_name'],
+						'icon_class' => \HTML::icon(['type' => $sm[$v['module_code']]['sm_module_icon'], 'class_only' => true]),
+						'parent' => null,
+						'disabled' => true
+					];
 				}
-				// add actual item
-				$__selected_name = '';
-				if (isset($first)) $__selected_name = i18n(null, $first) . ': ';
-				$__selected_name.= i18n(null, $v['name']);
-				$result[$v['id']] = ['name' => $v['name'], 'icon_class' => \HTML::icon(['type' => $v['icon'], 'class_only' => true]), '__selected_name' => $__selected_name, 'parent' => $previous];
+				// add item
+				$key = \Object\Table\Options::optionJsonFormatKey(['module_id' => $k2, 'resource_id' => $k]);
+				$result[$key] = [
+					'name' => $v['name'],
+					'icon_class' => \HTML::icon(['type' => $v['icon'], 'class_only' => true]),
+					'__selected_name' => i18n(null, $v2['tm_module_name']) . ': ' . i18n(null, $v['name']),
+					'parent' => $parent
+				];
 			}
 		}
 		if (!empty($result)) {

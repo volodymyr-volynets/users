@@ -167,14 +167,17 @@ class Users extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
+		'name' => 'Users',
 		'model' => '\Numbers\Users\Users\Model\Users',
 		'details' => [
 			'\Numbers\Users\Users\Model\User\Group\Map' => [
+				'name' => 'Groups',
 				'pk' => ['um_usrgrmap_tenant_id', 'um_usrgrmap_user_id', 'um_usrgrmap_group_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Roles' => [
+				'name' => 'Roles',
 				'pk' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id'],
@@ -185,6 +188,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				]
 			],
 			'\Numbers\Users\Users\Model\User\Organizations' => [
+				'name' => 'Organizations',
 				'pk' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id'],
