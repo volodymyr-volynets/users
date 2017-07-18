@@ -160,20 +160,12 @@ class Step3 extends \Object\Form\Wrapper\Base {
 				break;
 			}
 			// step 8 activate tenants, organizations and users modules
-			$module_activation_result = \Numbers\Tenants\Tenants\Model\Activation::activateModule('TM', null);
-			if (!$module_activation_result['success']) {
-				$form->error('danger', $error_message);
-				break;
-			}
-			$module_activation_result = \Numbers\Tenants\Tenants\Model\Activation::activateModule('ON', null);
-			if (!$module_activation_result['success']) {
-				$form->error('danger', $error_message);
-				break;
-			}
-			$module_activation_result = \Numbers\Tenants\Tenants\Model\Activation::activateModule('UM', null);
-			if (!$module_activation_result['success']) {
-				$form->error('danger', $error_message);
-				break;
+			foreach (['TM', 'ON', 'CM', 'IN', 'UM'] as $v) {
+				$module_activation_result = \Numbers\Tenants\Tenants\Model\Activation::activateModule($v, null);
+				if (!$module_activation_result['success']) {
+					$form->error('danger', $error_message);
+					goto error;
+				}
 			}
 			// use old tenant
 			\Tenant::setOverrideTenantId(null);
@@ -190,6 +182,7 @@ class Step3 extends \Object\Form\Wrapper\Base {
 			}
 			\Request::redirect(\Application::get('mvc.full') . '?__wizard_step=4&url=' . $url);
 		} while(0);
+error:
 		return false;
 	}
 }

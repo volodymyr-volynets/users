@@ -41,8 +41,11 @@ class Menu extends \Object\DataSource {
 			'acl_authorized' => 'a.sm_resource_acl_authorized',
 			'acl_permission' => 'a.sm_resource_acl_permission',
 			'acl_resource_id' => 'a.sm_resource_menu_acl_resource_id',
-			'acl_method_code' => 'sm_resource_menu_acl_method_code',
-			'acl_action_id' => 'sm_resource_menu_acl_action_id'
+			'acl_method_code' => 'a.sm_resource_menu_acl_method_code',
+			'acl_action_id' => 'a.sm_resource_menu_acl_action_id',
+			'child_ordered' => 'a.sm_resource_menu_child_ordered',
+			'order' => 'a.sm_resource_menu_order',
+			'separator' => 'a.sm_resource_menu_separator'
 		]);
 		// where
 		$this->query->where('AND', ['a.sm_resource_type', '>=', 200]);

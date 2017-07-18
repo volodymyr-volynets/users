@@ -50,7 +50,19 @@ class Login extends \Object\DataSource {
 			'inactive' => 'a.um_user_inactive',
 			'roles' => 'b.roles',
 			'organizations' => 'c.organizations',
-			'super_admin' => 'b.super_admin'
+			'super_admin' => 'b.super_admin',
+			// internalization
+			'i18n_group_id' => 'd.um_usri18n_group_id',
+			'i18n_language_code' => 'd.um_usri18n_language_code',
+			'i18n_locale_code' => 'd.um_usri18n_locale_code',
+			'i18n_timezone_code' => 'd.um_usri18n_timezone_code',
+			'i18n_organization_id' => 'd.um_usri18n_organization_id',
+			'i18n_format_date' => 'd.um_usri18n_format_date',
+			'i18n_format_time' => 'd.um_usri18n_format_time',
+			'i18n_format_datetime' => 'd.um_usri18n_format_datetime',
+			'i18n_format_timestamp' => 'd.um_usri18n_format_timestamp',
+			'i18n_format_amount_frm' => 'd.um_usri18n_format_amount_frm',
+			'i18n_format_amount_fs' => 'd.um_usri18n_format_amount_fs'
 		]);
 		// joins
 		$this->query->join('LEFT', function (& $query) {
@@ -86,6 +98,9 @@ class Login extends \Object\DataSource {
 		}, 'c', 'ON', [
 			['AND', ['a.um_user_id', '=', 'c.um_usrorg_user_id', true], false]
 		]);
+		$this->query->join('LEFT', new \Numbers\Users\Users\Model\User\Internalization(), 'd', 'ON', [
+			['AND', ['a.um_user_id', '=', 'd.um_usri18n_user_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
@@ -115,6 +130,14 @@ class Login extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['organizations'] = [];
+			}
+			// process i18n
+			$data[$k]['internalization'] = [];
+			foreach ($v as $k2 => $v2) {
+				if (strpos($k2, 'i18n_') === 0) {
+					$data[$k]['internalization'][str_replace('i18n_', '', $k2)] = $v2;
+					unset($data[$k][$k2]);
+				}
 			}
 		}
 		return $data;

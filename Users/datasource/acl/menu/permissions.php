@@ -57,6 +57,9 @@ class Permissions {
 							'name' => $v['group' . $i],
 							'title' => null,
 							'icon' => null,
+							'child_ordered' => $v['child_ordered'],
+							'separator' => $v['separator'],
+							'order' => $v['order'],
 							'options' => []
 						];
 					}
@@ -69,7 +72,10 @@ class Permissions {
 				'name' => $v['name'],
 				'title' => $v['description'],
 				'icon' => $v['icon'],
-				'url' => $v['url']
+				'url' => $v['url'],
+				'child_ordered' => $v['child_ordered'],
+				'order' => $v['order'],
+				'separator' => $v['separator']
 			];
 			$existing = array_key_get($result, $key);
 			if (!empty($existing)) {

@@ -1,14 +1,13 @@
 <?php
 
-namespace Numbers\Users\Users\Form;
-class Users extends \Object\Form\Wrapper\Base {
-	public $form_link = 'users';
+namespace Numbers\Users\Users\Form\Account;
+class Profile extends \Object\Form\Wrapper\Base {
+	public $form_link = 'user_profile';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [
 			'refresh' => true,
-			'new' => true,
-			'back' => true
+			'back' => ['href' => '/Numbers/Users/Users/Controller/Account/Profile']
 		]
 	];
 	public $containers = [
@@ -19,23 +18,6 @@ class Users extends \Object\Form\Wrapper\Base {
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'permissions_container' => ['default_row_type' => 'grid', 'order' => 34000],
-		'roles_container' => [
-			'type' => 'details',
-			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
-			'details_key' => '\Numbers\Users\Users\Model\User\Roles',
-			'details_pk' => ['um_usrrol_role_id'],
-			'order' => 35000
-		],
-		'organizations_container' => [
-			'type' => 'details',
-			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
-			'details_key' => '\Numbers\Users\Users\Model\User\Organizations',
-			'details_pk' => ['um_usrorg_organization_id'],
-			'required' => true,
-			'order' => 35001
-		],
 		'internalization_container' => [
 			'type' => 'details',
 			'details_11' => true,
@@ -52,17 +34,14 @@ class Users extends \Object\Form\Wrapper\Base {
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'login' => ['order' => 200, 'label_name' => 'Login'],
-			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
-			'roles' => ['order' => 400, 'label_name' => 'Roles'],
-			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
-			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
+			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA
 		]
 	];
 	public $elements = [
 		'top' => [
 			'um_user_id' => [
-				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => true],
-				'um_user_code' => ['order' => 2, 'label_name' => 'User Number', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => true]
+				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => false, 'persistant' => true, 'readonly' => true],
+				'um_user_code' => ['order' => 2, 'label_name' => 'User Number', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => false, 'persistant' => true, 'readonly' => true]
 			],
 			'um_user_name' => [
 				'um_user_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => 'c'],
@@ -78,19 +57,10 @@ class Users extends \Object\Form\Wrapper\Base {
 				'separator' => ['container' => 'separator_container', 'order' => 200],
 				'internalization' => ['container' => 'internalization_container', 'order' => 300],
 			],
-			'roles' => [
-				'roles' => ['container' => 'roles_container', 'order' => 100],
-			],
-			'organizations' => [
-				'organizations' => ['container' => 'organizations_container', 'order' => 100],
-			]
 		],
 		'general_container' => [
-			'um_user_type_id' => [
-				'um_user_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'default' => 10, 'percent' => 20, 'required' => true, 'no_choose' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Types'],
-				'\Numbers\Users\Users\Model\User\Group\Map' => ['order' => 2, 'label_name' => 'Groups', 'domain' => 'group_id', 'multiple_column' => 'um_usrgrmap_group_id', 'percent' => 70, 'method' => 'multiselect', 'options_model' => '\Numbers\Users\Users\Model\User\Groups::optionsActive'],
-				'um_user_hold' => ['order' => 3, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
-				'um_user_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			self::HIDDEN => [
+				'um_user_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'default' => 10, 'percent' => 20, 'required' => true, 'no_choose' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Types']
 			],
 			'um_user_title' => [
 				'um_user_title' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Title', 'domain' => 'personal_title', 'null' => true, 'percent' => 20, 'required' => false, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Titles::optionsActive'],
@@ -118,12 +88,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'login_container' => [
 			'um_user_login_enabled' => [
-				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 50],
+				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 50, 'persistant' => true, 'readonly' => true],
 				'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c']
-			],
-			'um_user_login_last_set' => [
-				'um_user_login_last_set' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password Last Changed', 'type' => 'date', 'persistent' => true, 'method' => 'calendar', 'calendar_icon' => 'right', 'percent' => 50, 'readonly' => true],
-				'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Reset Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false, 'empty_value' => true]
 			]
 		],
 		'separator_container' => [
@@ -157,20 +123,10 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usri18n_format_amount_fs' => ['order' => 2, 'label_name' => 'Amounts In Financial Statement', 'domain' => 'type_id', 'null' => true, 'method' => 'select', 'options_model' => '\Object\Format\Amounts']
 			]
 		],
-		'roles_container' => [
-			'row1' => [
-				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\User\Roles', 'onchange' => 'this.form.submit();'],
-				'um_usrrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
-			]
-		],
-		'organizations_container' => [
-			'row1' => [
-				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_usrorg_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
-			]
-		],
 		'buttons' => [
-			self::BUTTONS => self::BUTTONS_DATA_GROUP
+			self::BUTTONS => [
+				self::BUTTON_SUBMIT_SAVE => self::BUTTON_SUBMIT_SAVE_DATA
+			]
 		]
 	];
 	public $collection = [
@@ -183,28 +139,6 @@ class Users extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
 			],
-			'\Numbers\Users\Users\Model\User\Roles' => [
-				'name' => 'Roles',
-				'pk' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'],
-				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id'],
-				'sql' => [
-					'where' => [
-						'um_usrrol_structure_code' => 'BELONGS_TO'
-					]
-				]
-			],
-			'\Numbers\Users\Users\Model\User\Organizations' => [
-				'name' => 'Organizations',
-				'pk' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'],
-				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id'],
-				'sql' => [
-					'where' => [
-						'um_usrorg_structure_code' => 'BELONGS_TO'
-					]
-				]
-			],
 			'\Numbers\Users\Users\Model\User\Internalization' => [
 				'name' => 'Internalization',
 				'pk' => ['um_usri18n_tenant_id', 'um_usri18n_user_id'],
@@ -213,6 +147,10 @@ class Users extends \Object\Form\Wrapper\Base {
 			]
 		]
 	];
+
+	public function overrides(& $form) {
+		$form->values['um_user_id'] = \User::id();
+	}
 
 	public function validate(& $form) {
 		// personal type
@@ -235,38 +173,5 @@ class Users extends \Object\Form\Wrapper\Base {
 				$form->error('danger', 'You must provide Email or Username!', 'um_user_login_username');
 			}
 		}
-		// password
-		if (!empty($form->values['um_user_login_password_new'])) {
-			// see if we can change password for this role
-			//$roles = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Roles'], 'um_usrrol_role_id');
-			// todo validate if user can reset password for this account
-			// set password
-			$crypt = new \Crypt();
-			$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
-		}
-	}
-
-	public function post(& $form) {
-		// send password reset email
-		if (!empty($form->values['um_user_login_password_new'])) {
-			\Numbers\Users\Users\Model\User\Notifications::sendPasswordChangeEmail($form->values['um_user_id']);
-		}
-	}
-
-	public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where) {
-		if ($field_name == 'um_usrrol_role_id') {
-			$where['selected_organizations'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['unique' => true]);
-		}
-	}
-
-	/**
-	 * Owners
-	 *
-	 * @param object $form
-	 */
-	public function owners(& $form) {
-		return [
-			'organization_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id'),
-		];
 	}
 }

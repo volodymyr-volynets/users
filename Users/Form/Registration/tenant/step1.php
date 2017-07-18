@@ -88,8 +88,8 @@ class Step1 extends \Object\Form\Wrapper\Base {
 				'user_id' => null,
 				'replace' => [
 					'body' => [
-						'[url]' => \Application::get('mvc.full_with_host') . '?__wizard_step=3&token=' . $crypt->tokenCreate($result['new_serials']['um_regten_id'], 'registration.tenant'),
-						'[token_valid_hours]' => $crypt->object->valid_hours
+						'[URL]' => \Application::get('mvc.full_with_host') . '?__wizard_step=3&token=' . $crypt->tokenCreate($result['new_serials']['um_regten_id'], 'registration.tenant'),
+						'[Token_Valid_Hours]' => $crypt->object->valid_hours
 					]
 				]
 			]);
