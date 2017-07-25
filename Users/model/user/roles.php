@@ -7,7 +7,7 @@ class Roles extends \Object\Table {
 	public $module_code = 'UM';
 	public $title = 'U/M User Roles';
 	public $name = 'um_user_roles';
-	public $pk = ['um_usrrol_tenant_id', 'um_usrrol_structure_code', 'um_usrrol_user_id', 'um_usrrol_role_id'];
+	public $pk = ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'];
 	public $tenant = true;
 	public $orderby = [
 		'um_usrrol_id' => SORT_ASC
@@ -17,21 +17,14 @@ class Roles extends \Object\Table {
 	public $columns = [
 		'um_usrrol_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_usrrol_id' => ['name' => '#', 'type' => 'bigserial'],
-		'um_usrrol_structure_code' => ['name' => 'Structure Code', 'domain' => 'type_code'],
 		'um_usrrol_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'um_usrrol_role_id' => ['name' => 'Role #', 'domain' => 'group_id'],
 		'um_usrrol_unique' => ['name' => 'Unique', 'type' => 'smallint', 'null' => true, 'default' => null],
 		'um_usrrol_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'um_user_roles_pk' => ['type' => 'pk', 'columns' => ['um_usrrol_tenant_id', 'um_usrrol_structure_code', 'um_usrrol_user_id', 'um_usrrol_role_id']],
-		'um_usrrol_unique_un' => ['type' => 'unique', 'columns' => ['um_usrrol_tenant_id', 'um_usrrol_structure_code', 'um_usrrol_user_id', 'um_usrrol_unique']],
-		'um_usrrol_structure_code_fk' => [
-			'type' => 'fk',
-			'columns' => ['um_usrrol_tenant_id', 'um_usrrol_structure_code'],
-			'foreign_model' => '\Numbers\Tenants\Tenants\Model\Structure\Types',
-			'foreign_columns' => ['tm_structure_tenant_id', 'tm_structure_code']
-		],
+		'um_user_roles_pk' => ['type' => 'pk', 'columns' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id']],
+		'um_usrrol_unique_un' => ['type' => 'unique', 'columns' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_unique']],
 		'um_usrrol_user_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_usrrol_tenant_id', 'um_usrrol_user_id'],

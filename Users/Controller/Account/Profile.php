@@ -36,7 +36,8 @@ class Profile extends \Object\Controller\Authorized {
 	public function actionEditProfile() {
 		$form = new \Numbers\Users\Users\Form\Account\Profile([
 			'input' => \Request::input(),
-			'no_ajax_form_reload' => true
+			'no_ajax_form_reload' => true,
+			'skip_acl' => true
 		]);
 		echo $form->render();
 	}

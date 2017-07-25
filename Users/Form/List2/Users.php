@@ -78,7 +78,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Users\Model\Users';
+	public $query_primary_model = '\Numbers\Users\Users\DataSource\Users';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',

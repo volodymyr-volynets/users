@@ -67,12 +67,10 @@ class Roles extends \Object\Form\Wrapper\Base {
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'organizations' => ['order' => 150, 'label_name' => 'Organizations'],
-			'parents' => ['order' => 200, 'label_name' => 'Parent Roles'],
+			'parents' => ['order' => 200, 'label_name' => 'Inherit'],
 			'permissions' => ['order' => 300, 'label_name' => 'Permisions'],
 			'notifications' => ['order' => 400, 'label_name' => 'Notifications'],
-			'manages' => ['order' => 500, 'label_name' => 'Manage Roles'],
-			//\Object\Widgets::addresses => \Object\Widgets::addresses_data,
-			//\Object\Widgets::attributes => \Object\Widgets::attributes_data
+			'manages' => ['order' => 500, 'label_name' => 'Manage'],
 		]
 	];
 	public $elements = [
@@ -102,7 +100,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 				'notifications' => ['container' => 'notifications_container', 'order' => 100],
 			],
 			'manages' => [
-				'manages' => ['container' => 'manages_container', 'order' => 100],
+				'manages' => ['container' => 'manages_container', 'order' => 300],
 			]
 		],
 		'general_container' => [
@@ -114,6 +112,14 @@ class Roles extends \Object\Form\Wrapper\Base {
 			],
 			'um_role_global' => [
 				'um_role_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
+			],
+			'um_role_department_id' => [
+				'um_role_department_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Department', 'domain' => 'department_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Departments::optionsActive', 'searchable' => true],
+			]
+		],
+		'separator_container' => [
+			'separator_1' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Manage Roles', 'icon' => 'user-circle-o', 'percent' => 100],
 			],
 		],
 		'organizations_container' => [
@@ -136,6 +142,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'row2' => [
 				'um_rolman_assign_roles' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Assign Roles', 'type' => 'boolean', 'percent' => 15],
 				'um_rolman_reset_password' => ['order' => 2, 'label_name' => 'Reset Password', 'type' => 'boolean', 'percent' => 15],
+				'um_rolman_assignment_code' => ['order' => 3, 'label_name' => 'Mandatory Assignment', 'domain' => 'type_code', 'null' => true, 'percent' => 70, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types', 'options_depends' => ['um_assigntype_parent_role_id' => 'parent::um_role_id', 'um_assigntype_child_role_id' => 'detail::um_rolman_child_role_id']],
 			]
 		],
 		'permissions_container' => [
@@ -168,12 +175,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'\Numbers\Users\Users\Model\Role\Children' => [
 				'pk' => ['um_rolrol_tenant_id', 'um_rolrol_parent_role_id', 'um_rolrol_child_role_id'],
 				'type' => '1M',
-				'map' => ['um_role_tenant_id' => 'um_rolrol_tenant_id', 'um_role_id' => 'um_rolrol_child_role_id'],
-				'sql' => [
-					'where' => [
-						'um_rolrol_structure_code' => 'PARENT'
-					]
-				]
+				'map' => ['um_role_tenant_id' => 'um_rolrol_tenant_id', 'um_role_id' => 'um_rolrol_child_role_id']
 			],
 			'\Numbers\Users\Users\Model\Role\Manages' => [
 				'pk' => ['um_rolman_tenant_id', 'um_rolman_parent_role_id', 'um_rolman_child_role_id'],
@@ -193,17 +195,18 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'\Numbers\Users\Users\Model\Role\Organizations' => [
 				'pk' => ['um_rolorg_tenant_id', 'um_rolorg_role_id', 'um_rolorg_organization_id'],
 				'type' => '1M',
-				'map' => ['um_role_tenant_id' => 'um_rolorg_tenant_id', 'um_role_id' => 'um_rolorg_role_id'],
-				'sql' => [
-					'where' => [
-						'um_rolorg_structure_code' => 'BELONGS_TO'
-					]
-				]
+				'map' => ['um_role_tenant_id' => 'um_rolorg_tenant_id', 'um_role_id' => 'um_rolorg_role_id']
 			]
 		]
 	];
 
 	public function validate(& $form) {
 		
+	}
+
+	public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where) {
+		if ($field_name == 'um_rolrel_relationship_code') {
+			$where['selected_organizations'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\Role\Organizations'], 'um_rolorg_organization_id', ['unique' => true]);
+		}
 	}
 }

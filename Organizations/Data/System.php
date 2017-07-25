@@ -234,6 +234,231 @@ class System extends \Object\Import {
 							'sm_rsrcmp_inactive' => 0
 						]
 					]
+				],
+				[
+					'sm_resource_id' => '::id::\Numbers\Users\Organizations\Controller\LegalAuthorities',
+					'sm_resource_code' => '\Numbers\Users\Organizations\Controller\LegalAuthorities',
+					'sm_resource_type' => 100,
+					'sm_resource_name' => 'O/N Legal Authorities',
+					'sm_resource_description' => null,
+					'sm_resource_icon' => 'money',
+					'sm_resource_module_code' => 'ON',
+					'sm_resource_group1_name' => 'Operations',
+					'sm_resource_group2_name' => 'Organization Management',
+					'sm_resource_group3_name' => 'Settings',
+					'sm_resource_group4_name' => null,
+					'sm_resource_group5_name' => null,
+					'sm_resource_group6_name' => null,
+					'sm_resource_group7_name' => null,
+					'sm_resource_group8_name' => null,
+					'sm_resource_group9_name' => null,
+					'sm_resource_acl_public' => 0,
+					'sm_resource_acl_authorized' => 1,
+					'sm_resource_acl_permission' => 1,
+					'sm_resource_menu_acl_resource_id' => null,
+					'sm_resource_menu_acl_method_code' => null,
+					'sm_resource_menu_acl_action_id' => null,
+					'sm_resource_menu_url' => null,
+					'sm_resource_menu_options_generator' => null,
+					'sm_resource_inactive' => 0,
+					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
+						[
+							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_inactive' => 0
+						]
+					],
+					'\Numbers\Backend\System\Modules\Model\Resource\Map' => [
+						[
+							'sm_rsrcmp_method_code' => 'AllActions',
+							'sm_rsrcmp_action_id' => '::id::All_Actions',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Index',
+							'sm_rsrcmp_action_id' => '::id::List_View',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Index',
+							'sm_rsrcmp_action_id' => '::id::List_Export',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_View',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_New',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_Edit',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_Inactivate',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_Delete',
+							'sm_rsrcmp_inactive' => 0
+						]
+					]
+				],
+				[
+					'sm_resource_id' => '::id::\Numbers\Users\Organizations\Controller\StrategicBusinessUnits',
+					'sm_resource_code' => '\Numbers\Users\Organizations\Controller\StrategicBusinessUnits',
+					'sm_resource_type' => 100,
+					'sm_resource_name' => 'O/N Strategic Business Units',
+					'sm_resource_description' => null,
+					'sm_resource_icon' => 'hospital-o',
+					'sm_resource_module_code' => 'ON',
+					'sm_resource_group1_name' => 'Operations',
+					'sm_resource_group2_name' => 'Organization Management',
+					'sm_resource_group3_name' => 'Settings',
+					'sm_resource_group4_name' => null,
+					'sm_resource_group5_name' => null,
+					'sm_resource_group6_name' => null,
+					'sm_resource_group7_name' => null,
+					'sm_resource_group8_name' => null,
+					'sm_resource_group9_name' => null,
+					'sm_resource_acl_public' => 0,
+					'sm_resource_acl_authorized' => 1,
+					'sm_resource_acl_permission' => 1,
+					'sm_resource_menu_acl_resource_id' => null,
+					'sm_resource_menu_acl_method_code' => null,
+					'sm_resource_menu_acl_action_id' => null,
+					'sm_resource_menu_url' => null,
+					'sm_resource_menu_options_generator' => null,
+					'sm_resource_inactive' => 0,
+					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
+						[
+							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_inactive' => 0
+						]
+					],
+					'\Numbers\Backend\System\Modules\Model\Resource\Map' => [
+						[
+							'sm_rsrcmp_method_code' => 'AllActions',
+							'sm_rsrcmp_action_id' => '::id::All_Actions',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Index',
+							'sm_rsrcmp_action_id' => '::id::List_View',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Index',
+							'sm_rsrcmp_action_id' => '::id::List_Export',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_View',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_New',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_Edit',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_Inactivate',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_Delete',
+							'sm_rsrcmp_inactive' => 0
+						]
+					]
+				],
+				[
+					'sm_resource_id' => '::id::\Numbers\Users\Organizations\Controller\Departments',
+					'sm_resource_code' => '\Numbers\Users\Organizations\Controller\Departments',
+					'sm_resource_type' => 100,
+					'sm_resource_name' => 'O/N Departments',
+					'sm_resource_description' => null,
+					'sm_resource_icon' => 'address-book',
+					'sm_resource_module_code' => 'ON',
+					'sm_resource_group1_name' => 'Operations',
+					'sm_resource_group2_name' => 'Organization Management',
+					'sm_resource_group3_name' => 'Settings',
+					'sm_resource_group4_name' => null,
+					'sm_resource_group5_name' => null,
+					'sm_resource_group6_name' => null,
+					'sm_resource_group7_name' => null,
+					'sm_resource_group8_name' => null,
+					'sm_resource_group9_name' => null,
+					'sm_resource_acl_public' => 0,
+					'sm_resource_acl_authorized' => 1,
+					'sm_resource_acl_permission' => 1,
+					'sm_resource_menu_acl_resource_id' => null,
+					'sm_resource_menu_acl_method_code' => null,
+					'sm_resource_menu_acl_action_id' => null,
+					'sm_resource_menu_url' => null,
+					'sm_resource_menu_options_generator' => null,
+					'sm_resource_inactive' => 0,
+					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
+						[
+							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_inactive' => 0
+						]
+					],
+					'\Numbers\Backend\System\Modules\Model\Resource\Map' => [
+						[
+							'sm_rsrcmp_method_code' => 'AllActions',
+							'sm_rsrcmp_action_id' => '::id::All_Actions',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Index',
+							'sm_rsrcmp_action_id' => '::id::List_View',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Index',
+							'sm_rsrcmp_action_id' => '::id::List_Export',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_View',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_New',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_Edit',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_Inactivate',
+							'sm_rsrcmp_inactive' => 0
+						],
+						[
+							'sm_rsrcmp_method_code' => 'Edit',
+							'sm_rsrcmp_action_id' => '::id::Record_Delete',
+							'sm_rsrcmp_inactive' => 0
+						]
+					]
 				]
 			]
 		],
@@ -376,6 +601,87 @@ class System extends \Object\Import {
 					'sm_resource_menu_acl_method_code' => 'Index',
 					'sm_resource_menu_acl_action_id' => '::id::List_View',
 					'sm_resource_menu_url' => '/Numbers/Users/Organizations/Controller/Jurisdictions',
+					'sm_resource_menu_options_generator' => null,
+					'sm_resource_inactive' => 0
+				],
+				[
+					'sm_resource_id' => '::id::\Menu\Numbers\Users\Organizations\Controller\LegalAuthorities',
+					'sm_resource_code' => '\Menu\Numbers\Users\Organizations\Controller\LegalAuthorities',
+					'sm_resource_type' => 200,
+					'sm_resource_name' => 'Legal Authorities',
+					'sm_resource_description' => null,
+					'sm_resource_icon' => 'money',
+					'sm_resource_module_code' => 'ON',
+					'sm_resource_group1_name' => 'Operations',
+					'sm_resource_group2_name' => 'Organization Management',
+					'sm_resource_group3_name' => 'Settings',
+					'sm_resource_group4_name' => null,
+					'sm_resource_group5_name' => null,
+					'sm_resource_group6_name' => null,
+					'sm_resource_group7_name' => null,
+					'sm_resource_group8_name' => null,
+					'sm_resource_group9_name' => null,
+					'sm_resource_acl_public' => 0,
+					'sm_resource_acl_authorized' => 0,
+					'sm_resource_acl_permission' => 1,
+					'sm_resource_menu_acl_resource_id' => '::id::\Numbers\Users\Organizations\Controller\LegalAuthorities',
+					'sm_resource_menu_acl_method_code' => 'Index',
+					'sm_resource_menu_acl_action_id' => '::id::List_View',
+					'sm_resource_menu_url' => '/Numbers/Users/Organizations/Controller/LegalAuthorities',
+					'sm_resource_menu_options_generator' => null,
+					'sm_resource_inactive' => 0
+				],
+				[
+					'sm_resource_id' => '::id::\Menu\Numbers\Users\Organizations\Controller\StrategicBusinessUnits',
+					'sm_resource_code' => '\Menu\Numbers\Users\Organizations\Controller\StrategicBusinessUnits',
+					'sm_resource_type' => 200,
+					'sm_resource_name' => 'Strategic Business Units',
+					'sm_resource_description' => null,
+					'sm_resource_icon' => 'hospital-o',
+					'sm_resource_module_code' => 'ON',
+					'sm_resource_group1_name' => 'Operations',
+					'sm_resource_group2_name' => 'Organization Management',
+					'sm_resource_group3_name' => 'Settings',
+					'sm_resource_group4_name' => null,
+					'sm_resource_group5_name' => null,
+					'sm_resource_group6_name' => null,
+					'sm_resource_group7_name' => null,
+					'sm_resource_group8_name' => null,
+					'sm_resource_group9_name' => null,
+					'sm_resource_acl_public' => 0,
+					'sm_resource_acl_authorized' => 0,
+					'sm_resource_acl_permission' => 1,
+					'sm_resource_menu_acl_resource_id' => '::id::\Numbers\Users\Organizations\Controller\StrategicBusinessUnits',
+					'sm_resource_menu_acl_method_code' => 'Index',
+					'sm_resource_menu_acl_action_id' => '::id::List_View',
+					'sm_resource_menu_url' => '/Numbers/Users/Organizations/Controller/StrategicBusinessUnits',
+					'sm_resource_menu_options_generator' => null,
+					'sm_resource_inactive' => 0
+				],
+				[
+					'sm_resource_id' => '::id::\Menu\Numbers\Users\Organizations\Controller\Departments',
+					'sm_resource_code' => '\Menu\Numbers\Users\Organizations\Controller\Departments',
+					'sm_resource_type' => 200,
+					'sm_resource_name' => 'Departments',
+					'sm_resource_description' => null,
+					'sm_resource_icon' => 'address-book',
+					'sm_resource_module_code' => 'ON',
+					'sm_resource_group1_name' => 'Operations',
+					'sm_resource_group2_name' => 'Organization Management',
+					'sm_resource_group3_name' => 'Settings',
+					'sm_resource_group4_name' => null,
+					'sm_resource_group5_name' => null,
+					'sm_resource_group6_name' => null,
+					'sm_resource_group7_name' => null,
+					'sm_resource_group8_name' => null,
+					'sm_resource_group9_name' => null,
+					'sm_resource_acl_public' => 0,
+					'sm_resource_acl_authorized' => 0,
+					'sm_resource_acl_permission' => 1,
+					'sm_resource_menu_acl_resource_id' => '::id::\Numbers\Users\Organizations\Controller\Departments',
+					'sm_resource_menu_acl_method_code' => 'Index',
+					'sm_resource_menu_acl_action_id' => '::id::List_View',
+					'sm_resource_menu_url' => '/Numbers/Users/Organizations/Controller/Departments',
 					'sm_resource_menu_options_generator' => null,
 					'sm_resource_inactive' => 0
 				]

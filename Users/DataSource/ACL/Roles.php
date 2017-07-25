@@ -44,7 +44,6 @@ class Roles extends \Object\DataSource {
 			]);
 			$query->groupby(['inner_a.um_rolrol_child_role_id']);
 			$query->where('AND', ['inner_b.um_role_inactive', '=', 0]);
-			$query->where('AND', ['inner_a.um_rolrol_structure_code', '=', 'PARENT']);
 		}, 'b', 'ON', [
 			['AND', ['a.um_role_id', '=', 'b.um_rolrol_child_role_id', true], false]
 		]);

@@ -15,7 +15,7 @@ class LegalAuthorities extends \Object\Table {
 	public $column_prefix = 'on_authority_';
 	public $columns = [
 		'on_authority_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'on_authority_id' => ['name' => 'Jurisdictions #', 'domain' => 'authority_id_sequence'],
+		'on_authority_id' => ['name' => 'Authority #', 'domain' => 'authority_id_sequence'],
 		'on_authority_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_authority_name' => ['name' => 'Name', 'domain' => 'name'],
 		'on_authority_effective_from' => ['name' => 'Effective From', 'type' => 'date'],

@@ -132,7 +132,6 @@ class Step3 extends \Object\Form\Wrapper\Base {
 			$user_id = $user_result['new_serials']['um_user_id'];
 			// step 5 assign user to organization
 			$assignment_result = \Numbers\Users\Users\Model\User\Organizations::collectionStatic()->merge([
-				'um_usrorg_structure_code' => 'BELONGS_TO',
 				'um_usrorg_user_id' => $user_id,
 				'um_usrorg_organization_id' => $organization_id
 			]);
@@ -142,7 +141,6 @@ class Step3 extends \Object\Form\Wrapper\Base {
 			}
 			// step 6 provision role to user
 			$assignment_result = \Numbers\Users\Users\Model\User\Roles::collectionStatic()->merge([
-				'um_usrrol_structure_code' => 'BELONGS_TO',
 				'um_usrrol_user_id' => $user_id,
 				'um_usrrol_role_id' => \Numbers\Users\Users\Model\Roles::getByColumnStatic('um_role_code', 'SA', 'um_role_id')
 			]);

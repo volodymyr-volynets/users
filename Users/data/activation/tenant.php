@@ -3,35 +3,6 @@
 namespace Numbers\Users\Users\Data\Activation;
 class Tenant extends \Object\Import {
 	public $data = [
-		'structure_types' => [
-			'options' => [
-				'pk' => ['tm_structure_code'],
-				'model' => '\Numbers\Tenants\Tenants\Model\Structure\Types',
-				'method' => 'save_insert_new'
-			],
-			'data' => [
-				[
-					'tm_structure_code' => 'BELONGS_TO',
-					'tm_structure_name' => 'Belongs To',
-					'tm_structure_inactive' => 0
-				],
-				[
-					'tm_structure_code' => 'OWNER',
-					'tm_structure_name' => 'Owner',
-					'tm_structure_inactive' => 0
-				],
-				[
-					'tm_structure_code' => 'MANAGES',
-					'tm_structure_name' => 'Manages',
-					'tm_structure_inactive' => 0
-				],
-				[
-					'tm_structure_code' => 'PARENT',
-					'tm_structure_name' => 'Parent',
-					'tm_structure_inactive' => 0
-				]
-			]
-		],
 		'roles' => [
 			'options' => [
 				'pk' => ['um_role_code'],

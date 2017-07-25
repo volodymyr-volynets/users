@@ -40,17 +40,11 @@ class Organizations extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			/*
-			'um_user_id' => [
-				'um_user_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_user_id;>='],
-				'um_user_id2' => ['order' => 2, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_user_id;<='],
-				'um_user_type_id1' => ['order' => 3, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 50, 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\Model\User\Types', 'query_builder' => 'a.um_user_type_id'],
+			'on_organization_id' => [
+				'on_organization_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization #', 'domain' => 'organization_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_organization_id;>='],
+				'on_organization_id2' => ['order' => 2, 'label_name' => 'Organization #', 'domain' => 'organization_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_organization_id;<='],
+				'on_organization_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_organization_inactive;=']
 			],
-			'tm_module_module_code' => [
-				'um_user_hold1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;='],
-				'um_user_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;=']
-			],
-			*/
 			'full_text_search' => [
 				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_organization_name', 'a.on_organization_code', 'a.on_organization_phone', 'a.on_organization_email'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]

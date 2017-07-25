@@ -21,6 +21,7 @@ class Manages extends \Object\Table {
 		'um_rolman_child_role_id' => ['name' => 'Child Role #', 'domain' => 'group_id'],
 		'um_rolman_assign_roles' => ['name' => 'Assign Roles', 'type' => 'boolean'],
 		'um_rolman_reset_password' => ['name' => 'Reset Password', 'type' => 'boolean'],
+		'um_rolman_assignment_code' => ['name' => 'Assignment Code', 'domain' => 'type_code', 'null' => true],
 		'um_rolman_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

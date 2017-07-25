@@ -83,9 +83,8 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		],
 		'children_container' => [
 			'row1' => [
-				'on_orgchl_child_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => false, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
-				'on_orgchl_structure_code' => ['order' => 2, 'label_name' => 'Structure Type', 'domain' => 'type_code', 'required' => true, 'null' => true, 'details_unique_select' => false, 'percent' => 45, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Structure\Types::optionsActive', 'onchange' => 'this.form.submit();'],
-				'on_orgchl_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'on_orgchl_child_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => false, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'on_orgchl_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'buttons' => [
@@ -101,7 +100,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 				'map' => ['on_organization_tenant_id' => 'on_orgtpmap_tenant_id', 'on_organization_id' => 'on_orgtpmap_organization_id']
 			],
 			'\Numbers\Users\Organizations\Model\Organization\Children' => [
-				'pk' => ['on_orgchl_tenant_id', 'on_orgchl_structure_code', 'on_orgchl_parent_organization_id', 'on_orgchl_child_organization_id'],
+				'pk' => ['on_orgchl_tenant_id', 'on_orgchl_parent_organization_id', 'on_orgchl_child_organization_id'],
 				'type' => '1M',
 				'map' => ['on_organization_tenant_id' => 'on_orgchl_tenant_id', 'on_organization_id' => 'on_orgchl_parent_organization_id'],
 			]

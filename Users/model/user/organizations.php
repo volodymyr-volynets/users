@@ -7,7 +7,7 @@ class Organizations extends \Object\Table {
 	public $module_code = 'UM';
 	public $title = 'U/M User Organizations';
 	public $name = 'um_user_organizations';
-	public $pk = ['um_usrorg_tenant_id', 'um_usrorg_structure_code', 'um_usrorg_user_id', 'um_usrorg_organization_id'];
+	public $pk = ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'];
 	public $tenant = true;
 	public $orderby = [
 		'um_usrorg_id' => SORT_ASC
@@ -17,19 +17,12 @@ class Organizations extends \Object\Table {
 	public $columns = [
 		'um_usrorg_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_usrorg_id' => ['name' => '#', 'type' => 'bigserial'],
-		'um_usrorg_structure_code' => ['name' => 'Structure Code', 'domain' => 'type_code'],
 		'um_usrorg_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'um_usrorg_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'um_usrorg_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'um_user_organizations_pk' => ['type' => 'pk', 'columns' => ['um_usrorg_tenant_id', 'um_usrorg_structure_code', 'um_usrorg_user_id', 'um_usrorg_organization_id']],
-		'um_usrorg_structure_code_fk' => [
-			'type' => 'fk',
-			'columns' => ['um_usrorg_tenant_id', 'um_usrorg_structure_code'],
-			'foreign_model' => '\Numbers\Tenants\Tenants\Model\Structure\Types',
-			'foreign_columns' => ['tm_structure_tenant_id', 'tm_structure_code']
-		],
+		'um_user_organizations_pk' => ['type' => 'pk', 'columns' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id']],
 		'um_usrorg_user_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_usrorg_tenant_id', 'um_usrorg_user_id'],

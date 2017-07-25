@@ -40,8 +40,8 @@ class Profile extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'um_user_id' => [
-				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => false, 'persistant' => true, 'readonly' => true],
-				'um_user_code' => ['order' => 2, 'label_name' => 'User Number', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => false, 'persistant' => true, 'readonly' => true]
+				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => false, 'persistent' => true, 'readonly' => true],
+				'um_user_code' => ['order' => 2, 'label_name' => 'User Number', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => false, 'persistent' => true, 'readonly' => true]
 			],
 			'um_user_name' => [
 				'um_user_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => 'c'],
@@ -88,7 +88,7 @@ class Profile extends \Object\Form\Wrapper\Base {
 		],
 		'login_container' => [
 			'um_user_login_enabled' => [
-				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 50, 'persistant' => true, 'readonly' => true],
+				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 50, 'persistent' => true, 'readonly' => true],
 				'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c']
 			]
 		],

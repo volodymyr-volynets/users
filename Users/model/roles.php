@@ -18,6 +18,7 @@ class Roles extends \Object\Table {
 		'um_role_id' => ['name' => 'Role #', 'domain' => 'group_id_sequence'],
 		'um_role_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'um_role_type_id' => ['name' => 'Type', 'domain' => 'type_id'],
+		'um_role_department_id' => ['name' => 'Department #', 'domain' => 'department_id', 'null' => true],
 		'um_role_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_role_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		'um_role_global' => ['name' => 'Global', 'type' => 'boolean'],
@@ -32,6 +33,12 @@ class Roles extends \Object\Table {
 			'columns' => ['um_role_type_id'],
 			'foreign_model' => '\Numbers\Users\Users\Model\Role\Types',
 			'foreign_columns' => ['um_roltype_id']
+		],
+		'um_role_department_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_role_tenant_id', 'um_role_department_id'],
+			'foreign_model' => '\Numbers\Users\Organizations\Model\Departments',
+			'foreign_columns' => ['on_department_tenant_id', 'on_department_id']
 		],
 	];
 	public $indexes = [

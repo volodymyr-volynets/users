@@ -18,7 +18,7 @@ class Jurisdictions extends \Object\Table {
 		'on_authjuris_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'on_authjuris_id' => ['name' => '#', 'type' => 'bigserial'],
 		'on_authjuris_authority_id' => ['name' => 'Authority #', 'domain' => 'authority_id'],
-		'on_authjuris_jurisdiction_id' => ['name' => 'Jurisdictions #', 'domain' => 'jurisdiction_id'],
+		'on_authjuris_jurisdiction_id' => ['name' => 'Jurisdiction #', 'domain' => 'jurisdiction_id'],
 		'on_authjuris_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

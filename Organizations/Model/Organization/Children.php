@@ -7,7 +7,7 @@ class Children extends \Object\Table {
 	public $module_code = 'ON';
 	public $title = 'O/N Organization Children';
 	public $name = 'on_organization_children';
-	public $pk = ['on_orgchl_tenant_id', 'on_orgchl_structure_code', 'on_orgchl_parent_organization_id', 'on_orgchl_child_organization_id'];
+	public $pk = ['on_orgchl_tenant_id', 'on_orgchl_parent_organization_id', 'on_orgchl_child_organization_id'];
 	public $tenant = true;
 	public $orderby = [
 		'on_orgchl_id' => SORT_ASC
@@ -17,19 +17,12 @@ class Children extends \Object\Table {
 	public $columns = [
 		'on_orgchl_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'on_orgchl_id' => ['name' => '#', 'type' => 'bigserial'],
-		'on_orgchl_structure_code' => ['name' => 'Structure Code', 'domain' => 'type_code'],
 		'on_orgchl_parent_organization_id' => ['name' => 'Parent Organization #', 'domain' => 'organization_id'],
 		'on_orgchl_child_organization_id' => ['name' => 'Child Role #', 'domain' => 'organization_id'],
 		'on_orgchl_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'on_organization_children_pk' => ['type' => 'pk', 'columns' => ['on_orgchl_tenant_id', 'on_orgchl_structure_code', 'on_orgchl_parent_organization_id', 'on_orgchl_child_organization_id']],
-		'on_orgchl_structure_code_fk' => [
-			'type' => 'fk',
-			'columns' => ['on_orgchl_tenant_id', 'on_orgchl_structure_code'],
-			'foreign_model' => '\Numbers\Tenants\Tenants\Model\Structure\Types',
-			'foreign_columns' => ['tm_structure_tenant_id', 'tm_structure_code']
-		],
+		'on_organization_children_pk' => ['type' => 'pk', 'columns' => ['on_orgchl_tenant_id', 'on_orgchl_parent_organization_id', 'on_orgchl_child_organization_id']],
 		'on_orgchl_parent_organization_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['on_orgchl_tenant_id', 'on_orgchl_parent_organization_id'],

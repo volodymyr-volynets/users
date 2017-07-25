@@ -8,7 +8,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		'actions' => [
 			'refresh' => true,
 			'new' => true,
-			'back' => true
+			'back' => true,
+			'import' => true
 		]
 	];
 	public $containers = [
@@ -25,6 +26,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 3,
 			'details_key' => '\Numbers\Users\Users\Model\User\Roles',
 			'details_pk' => ['um_usrrol_role_id'],
+			'required' => true,
 			'order' => 35000
 		],
 		'organizations_container' => [
@@ -159,7 +161,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'roles_container' => [
 			'row1' => [
-				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\User\Roles', 'onchange' => 'this.form.submit();'],
+				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Roles', 'onchange' => 'this.form.submit();'],
 				'um_usrrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
@@ -187,23 +189,13 @@ class Users extends \Object\Form\Wrapper\Base {
 				'name' => 'Roles',
 				'pk' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'],
 				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id'],
-				'sql' => [
-					'where' => [
-						'um_usrrol_structure_code' => 'BELONGS_TO'
-					]
-				]
+				'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Organizations' => [
 				'name' => 'Organizations',
 				'pk' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'],
 				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id'],
-				'sql' => [
-					'where' => [
-						'um_usrorg_structure_code' => 'BELONGS_TO'
-					]
-				]
+				'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Internalization' => [
 				'name' => 'Internalization',
