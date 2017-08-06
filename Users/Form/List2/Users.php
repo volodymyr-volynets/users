@@ -45,7 +45,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 				'um_user_id2' => ['order' => 2, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_user_id;<='],
 				'um_user_type_id1' => ['order' => 3, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 50, 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\Model\User\Types', 'query_builder' => 'a.um_user_type_id'],
 			],
-			'tm_module_module_code' => [
+			'um_user_hold1' => [
 				'um_user_hold1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;='],
 				'um_user_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;=']
 			],
@@ -64,7 +64,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 			'row1' => [
 				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 10, 'url_edit' => true],
 				'um_user_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
-				'um_user_code' => ['order' => 3, 'label_name' => 'User Number', 'domain' => 'group_code', 'null' => true, 'percent' => 15],
+				'um_user_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 15],
 				'um_user_type_id' => ['order' => 4, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 10, 'options_model' => '\Numbers\Users\Users\Model\User\Types'],
 				'um_user_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
@@ -75,10 +75,18 @@ class Users extends \Object\Form\Wrapper\List2 {
 				'um_user_phone' => ['order' => 4, 'label_name' => 'Phone', 'domain' => 'phone', 'null' => true, 'percent' => 25],
 				'um_user_login_username' => ['order' => 5, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 15],
 				'um_user_hold' => ['order' => 6, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
+			],
+			'row3' => [
+				'blank' => ['order' => 1, 'row_order' => 300, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10],
+				'roles' => ['order' => 2, 'label_name' => 'Roles', 'domain' => 'role_id', 'null' => true, 'percent' => 50, 'options_model' => '\Numbers\Users\Users\Model\Roles'],
+				'organizations' => ['order' => 3, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'null' => true, 'percent' => 40, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations'],
 			]
 		]
 	];
 	public $query_primary_model = '\Numbers\Users\Users\DataSource\Users';
+	public $query_primary_options = [
+		'include_all_columns' => true
+	];
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
@@ -98,5 +106,68 @@ class Users extends \Object\Form\Wrapper\List2 {
 	public function renderBecome(& $form, & $options, & $value, & $neighbouring_values) {
 		// todo: implement become functionality
 		return '';
+	}
+
+	public function listQuery(& $form) {
+		$result = [
+			'success' => false,
+			'error' => [],
+			'total' => 0,
+			'rows' => []
+		];
+		// joins
+		$form->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\Roles::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query->columns([
+				'inner_a.um_usrrol_user_id',
+				'roles' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('um_usrrol_role_id', 'character varying'), 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_a.um_usrrol_user_id']);
+		}, 'b', 'ON', [
+			['AND', ['a.um_user_id', '=', 'b.um_usrrol_user_id', true], false]
+		]);
+		$form->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\Organizations::queryBuilderStatic(['alias' => 'inner_b'])->select();
+			$query->columns([
+				'inner_b.um_usrorg_user_id',
+				'organizations' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('um_usrorg_organization_id', 'character varying'), 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_b.um_usrorg_user_id']);
+		}, 'c', 'ON', [
+			['AND', ['a.um_user_id', '=', 'c.um_usrorg_user_id', true], false]
+		]);
+		// query #1 get counter
+		$counter_query = clone $form->query;
+		$counter_query->columns(['counter' => 'COUNT(*)'], ['empty_existing' => true]);
+		$temp = $counter_query->query();
+		if (!$temp['success']) {
+			array_merge3($result['error'], $temp['error']);
+			return $result;
+		}
+		$result['total'] = $temp['rows'][0]['counter'];
+		// query #2 get rows
+		$form->processListQueryOrderBy();
+		$form->query->offset($form->values['__offset'] ?? 0);
+		$form->query->limit($form->values['__limit']);
+		$temp = $form->query->query();
+		if (!$temp['success']) {
+			array_merge3($result['error'], $temp['error']);
+			return $result;
+		}
+		foreach ($temp['rows'] as $k => $v) {
+			if (empty($v['roles'])) {
+				$temp['rows'][$k]['roles'] = [];
+			} else {
+				$temp['rows'][$k]['roles'] = explode(';;', $v['roles']);
+			}
+			if (empty($v['organizations'])) {
+				$temp['rows'][$k]['organizations'] = [];
+			} else {
+				$temp['rows'][$k]['organizations'] = explode(';;', $v['organizations']);
+			}
+		}
+		$result['rows'] = & $temp['rows'];
+		$result['success'] = true;
+		return $result;
 	}
 }

@@ -15,7 +15,7 @@ class Roles extends \Object\Table {
 	public $column_prefix = 'um_role_';
 	public $columns = [
 		'um_role_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_role_id' => ['name' => 'Role #', 'domain' => 'group_id_sequence'],
+		'um_role_id' => ['name' => 'Role #', 'domain' => 'role_id_sequence'],
 		'um_role_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'um_role_type_id' => ['name' => 'Type', 'domain' => 'type_id'],
 		'um_role_department_id' => ['name' => 'Department #', 'domain' => 'department_id', 'null' => true],

@@ -16,13 +16,14 @@ class Types extends \Object\Table {
 		'um_assigntype_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_assigntype_code' => ['name' => 'Type Code', 'domain' => 'type_code'],
 		'um_assigntype_name' => ['name' => 'Name', 'domain' => 'name'],
-		'um_assigntype_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'group_id'],
-		'um_assigntype_child_role_id' => ['name' => 'Child Role #', 'domain' => 'group_id'],
+		'um_assigntype_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'role_id'],
+		'um_assigntype_child_role_id' => ['name' => 'Child Role #', 'domain' => 'role_id'],
 		'um_assigntype_multiple' => ['name' => 'Multiple', 'type' => 'boolean'],
 		'um_assigntype_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'um_user_assignment_types_pk' => ['type' => 'pk', 'columns' => ['um_assigntype_tenant_id', 'um_assigntype_code']],
+		'um_assigntype_code_un' => ['type' => 'unique', 'columns' => ['um_assigntype_tenant_id', 'um_assigntype_code', 'um_assigntype_parent_role_id', 'um_assigntype_child_role_id']],
 		'um_assigntype_parent_role_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_assigntype_tenant_id', 'um_assigntype_parent_role_id'],
@@ -41,8 +42,15 @@ class Types extends \Object\Table {
 	];
 	public $history = false;
 	public $audit = false;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'um_assigntype_name' => 'name',
+		'um_assigntype_parent_role_id' => 'um_assigntype_parent_role_id',
+		'um_assigntype_child_role_id' => 'um_assigntype_child_role_id',
+		'um_assigntype_code' => 'um_assigntype_code'
+	];
+	public $options_active = [
+		'um_assigntype_inactive' => 0
+	];
 	public $engine = [
 		'mysqli' => 'InnoDB'
 	];
@@ -56,4 +64,24 @@ class Types extends \Object\Table {
 		'protection' => 2,
 		'scope' => 'enterprise'
 	];
+
+	/**
+	 * @see $this->options()
+	 */
+	public function optionsJson($options = []) {
+		$data = $this->options($options);
+		$result = [];
+		foreach ($data as $k => $v) {
+			// add item
+			$key = \Object\Table\Options::optionJsonFormatKey([
+				'assignment_code' => $v['um_assigntype_code'],
+				'parent_role_id' => (int) $v['um_assigntype_parent_role_id'],
+				'child_role_id' => (int) $v['um_assigntype_child_role_id']
+			]);
+			// filter
+			if (!\Object\Table\Options::processOptionsExistingValuesAndSkipValues($key, $options['existing_values'] ?? null, $options['skip_values'] ?? null)) continue;
+			$result[$key] = ['name' => $v['name']];
+		}
+		return $result;
+	}
 }

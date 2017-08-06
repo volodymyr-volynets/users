@@ -49,6 +49,7 @@ class Login extends \Object\DataSource {
 			'hold' => 'a.um_user_hold',
 			'inactive' => 'a.um_user_inactive',
 			'roles' => 'b.roles',
+			'role_ids' => 'b.role_ids',
 			'organizations' => 'c.organizations',
 			'super_admin' => 'b.super_admin',
 			// internalization
@@ -70,6 +71,7 @@ class Login extends \Object\DataSource {
 			$query->columns([
 				'inner_a.um_usrrol_user_id',
 				'roles' => $query->db_object->sqlHelper('string_agg', ['expression' => "inner_b.um_role_code", 'delimiter' => ';;']),
+				'role_ids' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('inner_b.um_role_id', 'character varying'), 'delimiter' => ';;']),
 				'super_admin' => 'SUM(inner_b.um_role_super_admin)'
 			]);
 			// join
@@ -118,11 +120,22 @@ class Login extends \Object\DataSource {
 
 	public function process($data, $options = []) {
 		foreach ($data as $k => $v) {
+			// roles
 			if (!empty($v['roles'])) {
 				$data[$k]['roles'] = explode(';;', $v['roles']);
 			} else {
 				$data[$k]['roles'] = [];
 			}
+			// role ids
+			if (!empty($v['role_ids'])) {
+				$data[$k]['role_ids'] = explode(';;', $v['role_ids']);
+				foreach ($data[$k]['role_ids'] as $k2 => $v2) {
+					$data[$k]['role_ids'][$k2] = (int) $v2;
+				}
+			} else {
+				$data[$k]['role_ids'] = [];
+			}
+			// organizations
 			if (!empty($v['organizations'])) {
 				$data[$k]['organizations'] = [];
 				foreach (explode(';;', $v['organizations']) as $v2) {

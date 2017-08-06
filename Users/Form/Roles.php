@@ -20,7 +20,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 		'organizations_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Organizations',
 			'details_pk' => ['um_rolorg_organization_id'],
 			'required' => true,
@@ -29,7 +29,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 		'permissions_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Permissions',
 			'details_pk' => ['um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'],
 			'order' => 35000
@@ -37,7 +37,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 		'parents_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Children',
 			'details_pk' => ['um_rolrol_parent_role_id'],
 			'order' => 35000
@@ -45,9 +45,26 @@ class Roles extends \Object\Form\Wrapper\Base {
 		'manages_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'grid_with_label',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Manages',
 			'details_pk' => ['um_rolrol_child_role_id'],
+			'order' => 35000
+		],
+		'assignments_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\Role\Assignments',
+			'details_pk' => ['um_rolassign_assignment_code'],
+			'order' => 35000
+		],
+		'reverse_assignments_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 0,
+			'details_key' => '\Numbers\Users\Users\Model\Role\Assignment\Reverse',
+			'details_pk' => ['um_rolassign_assignment_code'],
+			'details_cannot_delete' => true,
 			'order' => 35000
 		],
 		'notifications_container' => [
@@ -70,13 +87,14 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'parents' => ['order' => 200, 'label_name' => 'Inherit'],
 			'permissions' => ['order' => 300, 'label_name' => 'Permisions'],
 			'notifications' => ['order' => 400, 'label_name' => 'Notifications'],
+			'assigments' => ['order' => 450, 'label_name' => 'Assignments'],
 			'manages' => ['order' => 500, 'label_name' => 'Manage'],
 		]
 	];
 	public $elements = [
 		'top' => [
 			'um_role_id' => [
-				'um_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'group_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => true],
+				'um_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'role_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => true],
 				'um_role_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 50, 'required' => true, 'navigation' => true]
 			],
 			'um_role_name' => [
@@ -99,8 +117,13 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'notifications' => [
 				'notifications' => ['container' => 'notifications_container', 'order' => 100],
 			],
+			'assigments' => [
+				'assigments' => ['container' => 'assignments_container', 'order' => 100],
+				'separator_container' => ['container' => 'separator_container', 'order' => 150],
+				'assigments_reverse' => ['container' => 'reverse_assignments_container', 'order' => 200],
+			],
 			'manages' => [
-				'manages' => ['container' => 'manages_container', 'order' => 300],
+				'manages' => ['container' => 'manages_container', 'order' => 100],
 			]
 		],
 		'general_container' => [
@@ -117,11 +140,6 @@ class Roles extends \Object\Form\Wrapper\Base {
 				'um_role_department_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Department', 'domain' => 'department_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Departments::optionsActive', 'searchable' => true],
 			]
 		],
-		'separator_container' => [
-			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Manage Roles', 'icon' => 'user-circle-o', 'percent' => 100],
-			],
-		],
 		'organizations_container' => [
 			'row1' => [
 				'um_rolorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
@@ -130,19 +148,47 @@ class Roles extends \Object\Form\Wrapper\Base {
 		],
 		'parents_container' => [
 			'row1' => [
-				'um_rolrol_parent_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_rolrol_parent_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsActive', 'onchange' => 'this.form.submit();'],
 				'um_rolrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			]
+		],
+		'assignments_container' => [
+			'row1' => [
+				'um_rolassign_assignment_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment', 'domain' => 'type_code', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types::optionsJson', 'options_depends' => ['um_assigntype_parent_role_id' => 'parent::um_role_id'], 'onchange' => 'this.form.submit();', 'json_contains' => ['assignment_code' => 'um_rolassign_assignment_code', 'parent_role_id' => 'um_rolassign_parent_role_id', 'child_role_id' => 'um_rolassign_child_role_id']],
+				'um_rolassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'percent' => 5],
+				'um_rolassign_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_rolassign_parent_role_id' => ['label_name' => 'Parent Role #', 'domain' => 'role_id', 'null' => true],
+				'um_rolassign_child_role_id' => ['label_name' => 'Child Role #', 'domain' => 'role_id', 'null' => true],
+			]
+		],
+		'separator_container' => [
+			'separator_1' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Other Assignments', 'icon' => 'cogs', 'percent' => 100],
+			],
+		],
+		'reverse_assignments_container' => [
+			'row1' => [
+				'um_rolassign_assignment_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment', 'domain' => 'type_code', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types::optionsJson', 'options_depends' => ['um_assigntype_child_role_id' => 'parent::um_role_id'], 'onchange' => 'this.form.submit();', 'json_contains' => ['assignment_code' => 'um_rolassign_assignment_code', 'parent_role_id' => 'um_rolassign_parent_role_id', 'child_role_id' => 'um_rolassign_child_role_id'], 'persistent' => true],
+				'um_rolassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'percent' => 5, 'persistent' => true],
+				'um_rolassign_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5, 'persistent' => true]
+			],
+			self::HIDDEN => [
+				'um_rolassign_parent_role_id' => ['label_name' => 'Parent Role #', 'domain' => 'role_id', 'null' => true],
+				'um_rolassign_child_role_id' => ['label_name' => 'Child Role #', 'domain' => 'role_id', 'null' => true],
 			]
 		],
 		'manages_container' => [
 			'row1' => [
-				'um_rolman_child_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_rolman_child_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsActive', 'onchange' => 'this.form.submit();'],
 				'um_rolman_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'row2' => [
 				'um_rolman_assign_roles' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Assign Roles', 'type' => 'boolean', 'percent' => 15],
 				'um_rolman_reset_password' => ['order' => 2, 'label_name' => 'Reset Password', 'type' => 'boolean', 'percent' => 15],
-				'um_rolman_assignment_code' => ['order' => 3, 'label_name' => 'Mandatory Assignment', 'domain' => 'type_code', 'null' => true, 'percent' => 70, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types', 'options_depends' => ['um_assigntype_parent_role_id' => 'parent::um_role_id', 'um_assigntype_child_role_id' => 'detail::um_rolman_child_role_id']],
+				'um_rolman_manage_children' => ['order' => 3, 'label_name' => 'Manage Children', 'type' => 'boolean', 'percent' => 15],
+				'um_rolman_assignment_code' => ['order' => 4, 'label_name' => 'Follow Assignment', 'domain' => 'type_code', 'null' => true, 'percent' => 55, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types::optionsActive', 'options_depends' => ['um_assigntype_parent_role_id' => 'parent::um_role_id', 'um_assigntype_child_role_id' => 'detail::um_rolman_child_role_id']],
 			]
 		],
 		'permissions_container' => [
@@ -181,6 +227,17 @@ class Roles extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_rolman_tenant_id', 'um_rolman_parent_role_id', 'um_rolman_child_role_id'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolman_tenant_id', 'um_role_id' => 'um_rolman_parent_role_id']
+			],
+			'\Numbers\Users\Users\Model\Role\Assignments' => [
+				'pk' => ['um_rolassign_tenant_id', 'um_rolassign_parent_role_id', 'um_rolassign_assignment_code', 'um_rolassign_child_role_id'],
+				'type' => '1M',
+				'map' => ['um_role_tenant_id' => 'um_rolassign_tenant_id', 'um_role_id' => 'um_rolassign_parent_role_id']
+			],
+			'\Numbers\Users\Users\Model\Role\Assignment\Reverse' => [
+				'pk' => ['um_rolassign_tenant_id', 'um_rolassign_parent_role_id', 'um_rolassign_assignment_code', 'um_rolassign_child_role_id'],
+				'type' => '1M',
+				'map' => ['um_role_tenant_id' => 'um_rolassign_tenant_id', 'um_role_id' => 'um_rolassign_child_role_id'],
+				'readonly' => true
 			],
 			'\Numbers\Users\Users\Model\Role\Permissions' => [
 				'pk' => ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_module_id', 'um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'],

@@ -17,7 +17,7 @@ class Permissions extends \Object\Table {
 	public $columns = [
 		'um_rolperm_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_rolperm_id' => ['name' => '#', 'type' => 'bigserial'],
-		'um_rolperm_role_id' => ['name' => 'Role #', 'domain' => 'group_id'],
+		'um_rolperm_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_rolperm_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
 		'um_rolperm_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],
 		'um_rolperm_method_code' => ['name' => 'Method Code', 'domain' => 'code'],

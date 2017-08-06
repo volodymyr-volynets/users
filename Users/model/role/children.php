@@ -17,8 +17,8 @@ class Children extends \Object\Table {
 	public $columns = [
 		'um_rolrol_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_rolrol_id' => ['name' => '#', 'type' => 'bigserial'],
-		'um_rolrol_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'group_id'],
-		'um_rolrol_child_role_id' => ['name' => 'Child Role #', 'domain' => 'group_id'],
+		'um_rolrol_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'role_id'],
+		'um_rolrol_child_role_id' => ['name' => 'Child Role #', 'domain' => 'role_id'],
 		'um_rolrol_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

@@ -17,11 +17,12 @@ class Manages extends \Object\Table {
 	public $columns = [
 		'um_rolman_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_rolman_id' => ['name' => '#', 'type' => 'bigserial'],
-		'um_rolman_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'group_id'],
-		'um_rolman_child_role_id' => ['name' => 'Child Role #', 'domain' => 'group_id'],
+		'um_rolman_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'role_id'],
+		'um_rolman_child_role_id' => ['name' => 'Child Role #', 'domain' => 'role_id'],
 		'um_rolman_assign_roles' => ['name' => 'Assign Roles', 'type' => 'boolean'],
 		'um_rolman_reset_password' => ['name' => 'Reset Password', 'type' => 'boolean'],
 		'um_rolman_assignment_code' => ['name' => 'Assignment Code', 'domain' => 'type_code', 'null' => true],
+		'um_rolman_manage_children' => ['name' => 'Manage Children', 'type' => 'boolean'],
 		'um_rolman_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
@@ -37,6 +38,12 @@ class Manages extends \Object\Table {
 			'columns' => ['um_rolman_tenant_id', 'um_rolman_child_role_id'],
 			'foreign_model' => '\Numbers\Users\Users\Model\Roles',
 			'foreign_columns' => ['um_role_tenant_id', 'um_role_id']
+		],
+		'um_rolman_assignment_code_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_rolman_tenant_id', 'um_rolman_assignment_code', 'um_rolman_parent_role_id', 'um_rolman_child_role_id'],
+			'foreign_model' => '\Numbers\Users\Users\Model\User\Assignment\Types',
+			'foreign_columns' => ['um_assigntype_tenant_id', 'um_assigntype_code', 'um_assigntype_parent_role_id', 'um_assigntype_child_role_id']
 		]
 	];
 	public $indexes = [];
@@ -48,7 +55,7 @@ class Manages extends \Object\Table {
 		'mysqli' => 'InnoDB'
 	];
 
-	public $cache = false;
+	public $cache = true;
 	public $cache_tags = [];
 	public $cache_memory = false;
 

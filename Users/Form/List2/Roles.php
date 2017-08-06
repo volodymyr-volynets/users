@@ -41,8 +41,8 @@ class Roles extends \Object\Form\Wrapper\List2 {
 		],
 		'filter' => [
 			'um_role_id' => [
-				'um_role_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_role_id;>='],
-				'um_role_id2' => ['order' => 2, 'label_name' => 'Role #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_role_id;<='],
+				'um_role_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'role_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_role_id;>='],
+				'um_role_id2' => ['order' => 2, 'label_name' => 'Role #', 'domain' => 'role_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_role_id;<='],
 				'um_role_type_id1' => ['order' => 3, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 50, 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\Model\Role\Types', 'query_builder' => 'a.um_role_type_id'],
 			],
 			'tm_module_module_code' => [
@@ -63,7 +63,7 @@ class Roles extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'um_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'group_id', 'percent' => 10, 'url_edit' => true],
+				'um_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'role_id', 'percent' => 10, 'url_edit' => true],
 				'um_role_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 45],
 				'um_role_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 20],
 				'um_role_type_id' => ['order' => 4, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 10, 'options_model' => '\Numbers\Users\Users\Model\Role\Types'],

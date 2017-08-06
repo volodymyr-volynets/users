@@ -24,7 +24,7 @@ class Types extends \Object\Form\Wrapper\Base {
 			],
 			'um_assigntype_name' => [
 				'um_assigntype_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 95, 'required' => true],
-				'um_assigntype_multiple' => ['order' => 2, 'label_name' => 'Multiple', 'type' => 'boolean', 'percent' => 5]
+				'um_assigntype_multiple' => ['order' => 2, 'label_name' => 'Multiple', 'type' => 'boolean', 'percent' => 5, 'persistent' => 'if_set']
 			],
 			'um_assigntype_parent_role_id' => [
 				'um_assigntype_parent_role_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Parent Role', 'domain' => 'group_id', 'null' => true, 'required' => true, 'persistent' => 'if_set', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsActive'],

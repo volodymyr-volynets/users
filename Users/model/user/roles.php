@@ -18,7 +18,7 @@ class Roles extends \Object\Table {
 		'um_usrrol_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_usrrol_id' => ['name' => '#', 'type' => 'bigserial'],
 		'um_usrrol_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
-		'um_usrrol_role_id' => ['name' => 'Role #', 'domain' => 'group_id'],
+		'um_usrrol_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_usrrol_unique' => ['name' => 'Unique', 'type' => 'smallint', 'null' => true, 'default' => null],
 		'um_usrrol_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];

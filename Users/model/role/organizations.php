@@ -17,7 +17,7 @@ class Organizations extends \Object\Table {
 	public $columns = [
 		'um_rolorg_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_rolorg_id' => ['name' => '#', 'type' => 'bigserial'],
-		'um_rolorg_role_id' => ['name' => 'Role #', 'domain' => 'group_id'],
+		'um_rolorg_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_rolorg_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'um_rolorg_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
