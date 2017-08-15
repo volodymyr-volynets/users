@@ -64,6 +64,14 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_cannot_delete' => true,
 			'details_empty_warning_message' => true,
 			'order' => 35003
+		],
+		'notifications_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Notifications',
+			'details_pk' => ['um_usrnoti_module_id', 'um_usernoti_feature_code'],
+			'order' => 35000
 		]
 	];
 	public $rows = [
@@ -76,6 +84,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'login' => ['order' => 200, 'label_name' => 'Login'],
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
+			'notifications' => ['order' => 450, 'label_name' => 'Notifications'],
 			'assignments' => ['order' => 500, 'label_name' => 'Assignments'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
@@ -106,6 +115,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'organizations' => [
 				'organizations' => ['container' => 'organizations_container', 'order' => 100],
+			],
+			'notifications' => [
+				'notifications' => ['container' => 'notifications_container', 'order' => 100],
 			],
 			'assignments' => [
 				'assignments' => ['container' => 'assignments_container', 'order' => 100],
@@ -193,8 +205,9 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'organizations_container' => [
 			'row1' => [
-				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_usrorg_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 5],
+				'um_usrorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'assignments_container' => [
@@ -228,6 +241,15 @@ class Users extends \Object\Form\Wrapper\Base {
 			self::HIDDEN => [
 				'um_usrassign_parent_role_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Role #', 'domain' => 'role_id'],
 				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id'],
+			]
+		],
+		'notifications_container' => [
+			'row1' => [
+				'um_usrnoti_module_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Notification', 'domain' => 'module_id', 'required' => true, 'details_unique_select' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\DataSource\Module\Features::optionsJson', 'options_params' => ['sm_feature_type' => 20], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrnoti_module_id', 'feature_code' => 'um_usrnoti_feature_code']],
+				'um_usrnoti_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_usrnoti_feature_code' => ['order' => 4, 'label_name' => 'Feature', 'domain' => 'feature_code', 'required' => true, 'null' => true, 'method' => 'hidden']
 			]
 		],
 		'buttons' => [
@@ -269,16 +291,24 @@ class Users extends \Object\Form\Wrapper\Base {
 				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_parent_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Assignment\Reverse' => [
-				'name' => 'Assignments (Reverse)',
+				'name' => 'Assignments (Other)',
 				'pk' => ['um_usrassign_tenant_id', 'um_usrassign_assignment_code', 'um_usrassign_parent_user_id', 'um_usrassign_child_user_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_child_user_id']
+			],
+			'\Numbers\Users\Users\Model\User\Notifications' => [
+				'pk' => ['um_usrnoti_tenant_id', 'um_usrnoti_user_id', 'um_usrnoti_module_id', 'um_usrnoti_feature_code'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrnoti_tenant_id', 'um_user_id' => 'um_usrnoti_user_id']
 			]
 		]
 	];
+	public $notification = [
+		'feature_code' => 'UM::EMAIL_USERS_CHANGED'
+	];
 
 	public function refresh(& $form) {
-		//print_r2($form->values);
+
 	}
 
 	public function validate(& $form) {
@@ -302,6 +332,22 @@ class Users extends \Object\Form\Wrapper\Base {
 				$form->error('danger', 'You must provide Email or Username!', 'um_user_login_username');
 			}
 		}
+		// primary organizations
+		$primary_found = 0;
+		foreach ($form->values['\Numbers\Users\Users\Model\User\Organizations'] as $k => $v) {
+			if (!empty($v['um_usrorg_primary'])) {
+				$primary_found++;
+				if (!empty($v['um_usrorg_inactive'])) {
+					$form->error(DANGER, 'Primary cannot be inactive!', "\Numbers\Users\Users\Model\User\Organizations[{$k}][um_usrorg_inactive]");
+				}
+				if ($primary_found > 1) {
+					$form->error(DANGER, 'There can be only one primary organization!', "\Numbers\Users\Users\Model\User\Organizations[{$k}][um_usrorg_primary]");
+				}
+			}
+		}
+		if ($primary_found == 0) {
+			$form->error(DANGER, 'You must select primary organization!');
+		}
 		// password
 		if (!empty($form->values['um_user_login_password_new'])) {
 			// see if we can change password for this role
@@ -323,7 +369,7 @@ class Users extends \Object\Form\Wrapper\Base {
 	public function post(& $form) {
 		// send password reset email
 		if (!empty($form->values['um_user_login_password_new'])) {
-			\Numbers\Users\Users\Model\User\Notifications::sendPasswordChangeEmail($form->values['um_user_id']);
+			\Numbers\Users\Users\Helper\User\Notifications::sendPasswordChangeEmail($form->values['um_user_id']);
 		}
 	}
 

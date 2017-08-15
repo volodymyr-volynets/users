@@ -20,7 +20,7 @@ class Jurisdictions extends \Object\Form\Wrapper\Base {
 		'countries_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Organizations\Model\Jurisdiction\Countries',
 			'details_pk' => ['on_juriscntr_country_code'],
 			'order' => 35000
@@ -29,7 +29,7 @@ class Jurisdictions extends \Object\Form\Wrapper\Base {
 			'type' => 'subdetails',
 			'label_name' => 'Provinces',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_parent_key' => '\Numbers\Users\Organizations\Model\Jurisdiction\Countries',
 			'details_key' => '\Numbers\Users\Organizations\Model\Jurisdiction\Country\Provinces',
 			'details_pk' => ['on_jurisprov_province_code'],

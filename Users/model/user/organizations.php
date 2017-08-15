@@ -10,15 +10,16 @@ class Organizations extends \Object\Table {
 	public $pk = ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'];
 	public $tenant = true;
 	public $orderby = [
-		'um_usrorg_id' => SORT_ASC
+		'um_usrorg_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'um_usrorg_';
 	public $columns = [
 		'um_usrorg_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_usrorg_id' => ['name' => '#', 'type' => 'bigserial'],
+		'um_usrorg_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_usrorg_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'um_usrorg_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
+		'um_usrorg_primary' => ['name' => 'Primary', 'type' => 'boolean'],
 		'um_usrorg_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

@@ -10,13 +10,13 @@ class Organizations extends \Object\Table {
 	public $pk = ['um_rolorg_tenant_id', 'um_rolorg_role_id', 'um_rolorg_organization_id'];
 	public $tenant = true;
 	public $orderby = [
-		'um_rolorg_id' => SORT_ASC
+		'um_rolorg_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'um_rolorg_';
 	public $columns = [
 		'um_rolorg_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_rolorg_id' => ['name' => '#', 'type' => 'bigserial'],
+		'um_rolorg_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_rolorg_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_rolorg_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'um_rolorg_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

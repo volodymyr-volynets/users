@@ -70,7 +70,7 @@ class Set extends \Object\Form\Wrapper\Base {
 		]);
 		if ($result['success']) {
 			// send email notification
-			\Numbers\Users\Users\Model\User\Notifications::sendPasswordChangeEmail($this->data_user_id);
+			\Numbers\Users\Users\Helper\User\Notifications::sendPasswordChangeEmail($this->data_user_id);
 			// blank fields
 			$form->values['password'] = '';
 			$form->values['password2'] = '';

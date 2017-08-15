@@ -133,7 +133,8 @@ class Step3 extends \Object\Form\Wrapper\Base {
 			// step 5 assign user to organization
 			$assignment_result = \Numbers\Users\Users\Model\User\Organizations::collectionStatic()->merge([
 				'um_usrorg_user_id' => $user_id,
-				'um_usrorg_organization_id' => $organization_id
+				'um_usrorg_organization_id' => $organization_id,
+				'um_usrorg_primary' => 1
 			]);
 			if (!$assignment_result['success']) {
 				$form->error('danger', $error_message);

@@ -10,13 +10,13 @@ class Children extends \Object\Table {
 	public $pk = ['um_rolrol_tenant_id', 'um_rolrol_parent_role_id', 'um_rolrol_child_role_id'];
 	public $tenant = true;
 	public $orderby = [
-		'um_rolrol_id' => SORT_ASC
+		'um_rolrol_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'um_rolrol_';
 	public $columns = [
 		'um_rolrol_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_rolrol_id' => ['name' => '#', 'type' => 'bigserial'],
+		'um_rolrol_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_rolrol_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'role_id'],
 		'um_rolrol_child_role_id' => ['name' => 'Child Role #', 'domain' => 'role_id'],
 		'um_rolrol_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

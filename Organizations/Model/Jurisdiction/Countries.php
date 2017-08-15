@@ -10,13 +10,13 @@ class Countries extends \Object\Table {
 	public $pk = ['on_juriscntr_tenant_id', 'on_juriscntr_jurisdiction_id', 'on_juriscntr_country_code'];
 	public $tenant = true;
 	public $orderby = [
-		'on_juriscntr_id' => SORT_ASC
+		'on_juriscntr_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'on_juriscntr_';
 	public $columns = [
 		'on_juriscntr_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'on_juriscntr_id' => ['name' => '#', 'type' => 'bigserial'],
+		'on_juriscntr_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'on_juriscntr_jurisdiction_id' => ['name' => 'Jurisdictions #', 'domain' => 'jurisdiction_id'],
 		'on_juriscntr_country_code' => ['name' => 'Country Code', 'domain' => 'country_code'],
 		'on_juriscntr_all_provinces' => ['name' => 'Inactive', 'type' => 'boolean'],

@@ -36,6 +36,11 @@ class Resources {
 			'authorized' => [
 				'data' => 'SYSTEM_AUTHORIZED'
 			]
+		],
+		'destroy' => [
+			'log_notifications' => [
+				'method' => '\Numbers\Users\Users\Helper\Notification\Sender::destroy'
+			]
 		]
 	];
 }

@@ -23,7 +23,6 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Organizations',
 			'details_pk' => ['um_rolorg_organization_id'],
-			'required' => true,
 			'order' => 35000
 		],
 		'permissions_container' => [
@@ -70,12 +69,13 @@ class Roles extends \Object\Form\Wrapper\Base {
 		'notifications_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Notifications',
-			'details_pk' => ['um_rolnoti_resource_id'],
+			'details_pk' => ['um_rolnoti_module_id', 'um_rolnoti_feature_code'],
 			'order' => 35000
 		]
 	];
+
 	public $rows = [
 		'top' => [
 			'um_user_id' => ['order' => 100],
@@ -129,11 +129,11 @@ class Roles extends \Object\Form\Wrapper\Base {
 		'general_container' => [
 			'um_role_type_id' => [
 				'um_role_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'default' => 10, 'percent' => 70, 'required' => true, 'no_choose' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Role\Types'],
-				'um_role_global' => ['order' => 2, 'label_name' => 'Global', 'type' => 'boolean', 'percent' => 15],
+				'um_role_global' => ['order' => 2, 'label_name' => 'Global', 'type' => 'boolean', 'percent' => 15, 'onchange' => 'this.form.submit();'],
 				'um_role_super_admin' => ['order' => 3, 'label_name' => 'Super Admin', 'type' => 'boolean', 'percent' => 15],
 				'um_role_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
-			'um_role_global' => [
+			'um_role_icon' => [
 				'um_role_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
 			],
 			'um_role_department_id' => [
@@ -148,7 +148,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 		],
 		'parents_container' => [
 			'row1' => [
-				'um_rolrol_parent_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_rolrol_parent_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsActive', 'options_params' => ['um_role_global' => 1], 'onchange' => 'this.form.submit();'],
 				'um_rolrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
@@ -258,12 +258,37 @@ class Roles extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
-		
+		if (!empty($form->values['um_role_global'])) {
+			if (!empty($form->values['um_role_super_admin'])) {
+				$form->error(DANGER, 'Global roles cannot be super admins!', 'um_role_super_admin');
+			}
+			// empty other values
+			$form->values['\Numbers\Users\Users\Model\Role\Children'] = [];
+			$form->values['\Numbers\Users\Users\Model\Role\Manages'] = [];
+			$form->values['\Numbers\Users\Users\Model\Role\Assignments'] = [];
+			$form->values['\Numbers\Users\Users\Model\Role\Assignment\Reverse'] = [];
+			$form->values['\Numbers\Users\Users\Model\Role\Organizations'] = [];
+		}
+		// roles must have mandatory organizations
+		if (empty($form->values['um_role_global']) && empty($form->values['um_role_super_admin'])) {
+			if (empty($form->values['\Numbers\Users\Users\Model\Role\Organizations'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, '\Numbers\Users\Users\Model\Role\Organizations[1][um_rolorg_organization_id]');
+			}
+		}
 	}
 
 	public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where) {
 		if ($field_name == 'um_rolrel_relationship_code') {
 			$where['selected_organizations'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\Role\Organizations'], 'um_rolorg_organization_id', ['unique' => true]);
+		}
+	}
+
+	public function overrideTabs(& $form, & $tab_options, & $tab_name, & $neighbouring_values = []) {
+		// we hide all tabs if global
+		if (!empty($form->values['um_role_global'])) {
+			if (in_array($tab_name, ['organizations', 'parents', 'assigments', 'manages'])) {
+				return ['hidden' => true];
+			}
 		}
 	}
 }

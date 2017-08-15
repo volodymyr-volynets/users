@@ -10,13 +10,13 @@ class Children extends \Object\Table {
 	public $pk = ['on_orgchl_tenant_id', 'on_orgchl_parent_organization_id', 'on_orgchl_child_organization_id'];
 	public $tenant = true;
 	public $orderby = [
-		'on_orgchl_id' => SORT_ASC
+		'on_orgchl_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'on_orgchl_';
 	public $columns = [
 		'on_orgchl_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'on_orgchl_id' => ['name' => '#', 'type' => 'bigserial'],
+		'on_orgchl_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'on_orgchl_parent_organization_id' => ['name' => 'Parent Organization #', 'domain' => 'organization_id'],
 		'on_orgchl_child_organization_id' => ['name' => 'Child Role #', 'domain' => 'organization_id'],
 		'on_orgchl_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

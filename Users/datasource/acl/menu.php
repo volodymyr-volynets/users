@@ -45,7 +45,8 @@ class Menu extends \Object\DataSource {
 			'acl_action_id' => 'a.sm_resource_menu_acl_action_id',
 			'child_ordered' => 'a.sm_resource_menu_child_ordered',
 			'order' => 'a.sm_resource_menu_order',
-			'separator' => 'a.sm_resource_menu_separator'
+			'separator' => 'a.sm_resource_menu_separator',
+			'name_generator' => 'a.sm_resource_menu_name_generator'
 		]);
 		// where
 		$this->query->where('AND', ['a.sm_resource_type', '>=', 200]);

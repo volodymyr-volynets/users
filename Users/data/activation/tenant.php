@@ -14,7 +14,7 @@ class Tenant extends \Object\Import {
 					'um_role_code' => 'SA',
 					'um_role_type_id' => 20,
 					'um_role_name' => 'Super Administrator',
-					'um_role_global' => 1,
+					'um_role_global' => 0,
 					'um_role_super_admin' => 1,
 					'um_role_icon' => 'user-secret',
 					'um_role_inactive' => 0

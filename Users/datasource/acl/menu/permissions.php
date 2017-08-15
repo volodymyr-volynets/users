@@ -14,6 +14,7 @@ class Permissions {
 		$data = $datasource->get();
 		$result = [];
 		$always_show = \Application::get('flag.numbers.frontend.menu.always_show');
+		$menu_id = 1;
 		foreach ($data as $k => $v) {
 			// handle permission
 			if ($v['type'] !== 299) {
@@ -58,10 +59,13 @@ class Permissions {
 							'title' => null,
 							'icon' => null,
 							'child_ordered' => $v['child_ordered'],
-							'separator' => $v['separator'],
 							'order' => $v['order'],
-							'options' => []
+							'separator' => $v['separator'],
+							'name_generator' => $v['name_generator'],
+							'options' => [],
+							'menu_id' => $menu_id
 						];
+						$menu_id++;
 					}
 					array_key_set($result, $key, $group);
 				}
@@ -75,8 +79,11 @@ class Permissions {
 				'url' => $v['url'],
 				'child_ordered' => $v['child_ordered'],
 				'order' => $v['order'],
-				'separator' => $v['separator']
+				'separator' => $v['separator'],
+				'name_generator' => $v['name_generator'],
+				'menu_id' => $menu_id
 			];
+			$menu_id++;
 			$existing = array_key_get($result, $key);
 			if (!empty($existing)) {
 				$existing = array_merge($existing, $item);

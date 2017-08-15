@@ -34,7 +34,7 @@ class Reset extends \Object\Form\Wrapper\Base {
 		$user = $datasource->get(['where' => ['username' => $form->values['username']]]);
 		if (!empty($user)) {
 			// send email
-			\Numbers\Users\Users\Model\User\Notifications::sendPasswordResetEmail($user['id']);
+			\Numbers\Users\Users\Helper\User\Notifications::sendPasswordResetEmail($user['id']);
 		}
 		$form->error(SUCCESS, 'Please check your email and click the link provided to reset your password.');
 		return true;

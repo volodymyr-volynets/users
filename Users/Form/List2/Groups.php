@@ -77,8 +77,4 @@ class Groups extends \Object\Form\Wrapper\List2 {
 		'um_usrgrp_id' => ['name' => 'Group #'],
 		'um_usrgrp_name' => ['name' => 'Name']
 	];
-
-	public function list_query(& $form) {
-		
-	}
 }

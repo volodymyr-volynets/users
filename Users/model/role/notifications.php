@@ -10,13 +10,13 @@ class Notifications extends \Object\Table {
 	public $pk = ['um_rolnoti_tenant_id', 'um_rolnoti_role_id', 'um_rolnoti_module_id', 'um_rolnoti_feature_code'];
 	public $tenant = true;
 	public $orderby = [
-		'um_rolnoti_id' => SORT_ASC
+		'um_rolnoti_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'um_rolnoti_';
 	public $columns = [
 		'um_rolnoti_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_rolnoti_id' => ['name' => '#', 'type' => 'bigserial'],
+		'um_rolnoti_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_rolnoti_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_rolnoti_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
 		'um_rolnoti_feature_code' => ['name' => 'Feature Code', 'domain' => 'feature_code'],

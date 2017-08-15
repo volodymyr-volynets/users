@@ -10,13 +10,13 @@ class Permissions extends \Object\Table {
 	public $pk = ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_module_id', 'um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'];
 	public $tenant = true;
 	public $orderby = [
-		'um_rolperm_id' => SORT_ASC
+		'um_rolperm_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'um_rolperm_';
 	public $columns = [
 		'um_rolperm_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_rolperm_id' => ['name' => '#', 'type' => 'bigserial'],
+		'um_rolperm_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_rolperm_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_rolperm_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
 		'um_rolperm_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],

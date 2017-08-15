@@ -21,7 +21,7 @@ class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
 		'children_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Organizations\Model\StrategicBusinessUnit\Organizations',
 			'details_pk' => ['on_sborg_organization_id'],
 			'required' => true,

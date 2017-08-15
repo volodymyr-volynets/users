@@ -65,7 +65,7 @@ class ChangePassword extends \Object\Form\Wrapper\Base {
 		]);
 		if ($result['success']) {
 			// send email notification
-			\Numbers\Users\Users\Model\User\Notifications::sendPasswordChangeEmail(\User::id());
+			\Numbers\Users\Users\Helper\User\Notifications::sendPasswordChangeEmail(\User::id());
 			// blank fields
 			$form->values['new_password'] = '';
 			$form->values['new_password2'] = '';

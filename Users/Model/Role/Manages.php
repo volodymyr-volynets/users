@@ -10,13 +10,13 @@ class Manages extends \Object\Table {
 	public $pk = ['um_rolman_tenant_id', 'um_rolman_parent_role_id', 'um_rolman_child_role_id'];
 	public $tenant = true;
 	public $orderby = [
-		'um_rolman_id' => SORT_ASC
+		'um_rolman_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'um_rolman_';
 	public $columns = [
 		'um_rolman_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_rolman_id' => ['name' => '#', 'type' => 'bigserial'],
+		'um_rolman_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_rolman_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'role_id'],
 		'um_rolman_child_role_id' => ['name' => 'Child Role #', 'domain' => 'role_id'],
 		'um_rolman_assign_roles' => ['name' => 'Assign Roles', 'type' => 'boolean'],

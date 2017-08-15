@@ -86,8 +86,4 @@ class Roles extends \Object\Form\Wrapper\List2 {
 		'um_role_id' => ['name' => 'User #'],
 		'um_role_name' => ['name' => 'Name']
 	];
-
-	public function list_query(& $form) {
-		
-	}
 }

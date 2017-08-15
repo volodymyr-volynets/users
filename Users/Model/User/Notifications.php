@@ -1,56 +1,58 @@
 <?php
 
 namespace Numbers\Users\Users\Model\User;
-class Notifications {
+class Notifications extends \Object\Table {
+	public $db_link;
+	public $db_link_flag;
+	public $module_code = 'UM';
+	public $title = 'U/M User Notifications';
+	public $name = 'um_user_notifications';
+	public $pk = ['um_usrnoti_tenant_id', 'um_usrnoti_user_id', 'um_usrnoti_module_id', 'um_usrnoti_feature_code'];
+	public $tenant = true;
+	public $orderby = [
+		'um_usrnoti_timestamp' => SORT_ASC
+	];
+	public $limit;
+	public $column_prefix = 'um_usrnoti_';
+	public $columns = [
+		'um_usrnoti_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
+		'um_usrnoti_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
+		'um_usrnoti_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
+		'um_usrnoti_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
+		'um_usrnoti_feature_code' => ['name' => 'Feature Code', 'domain' => 'feature_code'],
+		'um_usrnoti_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
+	];
+	public $constraints = [
+		'um_user_notifications_pk' => ['type' => 'pk', 'columns' => ['um_usrnoti_tenant_id', 'um_usrnoti_user_id', 'um_usrnoti_module_id', 'um_usrnoti_feature_code']],
+		'um_usrnoti_user_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_usrnoti_tenant_id', 'um_usrnoti_user_id'],
+			'foreign_model' => '\Numbers\Users\Users\Model\Users',
+			'foreign_columns' => ['um_user_tenant_id', 'um_user_id']
+		],
+		'um_usrnoti_module_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_usrnoti_tenant_id', 'um_usrnoti_module_id', 'um_usrnoti_feature_code'],
+			'foreign_model' => '\Numbers\Tenants\Tenants\Model\Module\Features',
+			'foreign_columns' => ['tm_feature_tenant_id', 'tm_feature_module_id', 'tm_feature_feature_code']
+		]
+	];
+	public $indexes = [];
+	public $history = false;
+	public $audit = false;
+	public $options_map = [];
+	public $options_active = [];
+	public $engine = [
+		'mysqli' => 'InnoDB'
+	];
 
-	/**
-	 * Send password change email
-	 *
-	 * @param int $user_id
-	 */
-	public static function sendPasswordChangeEmail(int $user_id) {
-		// load user fields
-		$user = \Numbers\Users\Users\Model\Users::loadById($user_id);
-		// send a message if user has email
-		if (!empty($user['um_user_email'])) {
-			$model = new \Numbers\Backend\System\Modules\Model\Notification\Sender();
-			return $model->send('UM::EMAIL_PASSWORD_CHANGED', [
-				'email' => $user['um_user_email'],
-				'user_id' => $user_id,
-				'replace' => [
-					'body' => [
-						'[Name]' => $user['um_user_name'],
-						'[Email]' => $user['um_user_email'],
-						'[Password_Reset_Url]' => \Request::host() . 'Numbers/Users/Users/Controller/Password/Reset'
-					]
-				]
-			]);
-		}
-	}
+	public $cache = false;
+	public $cache_tags = [];
+	public $cache_memory = false;
 
-	/**
-	 * Send password reset email
-	 *
-	 * @param int $user_id
-	 */
-	public static function sendPasswordResetEmail(int $user_id) {
-		// load user fields
-		$user = \Numbers\Users\Users\Model\Users::loadById($user_id);
-		// send a message if user has email
-		if (!empty($user['um_user_email'])) {
-			$crypt = new \Crypt();
-			$model = new \Numbers\Backend\System\Modules\Model\Notification\Sender();
-			return $model->send('UM::EMAIL_RESET_PASSWORD', [
-				'email' => $user['um_user_email'],
-				'user_id' => $user_id,
-				'replace' => [
-					'body' => [
-						'[Name]' => $user['um_user_name'],
-						'[URL]' => \Request::host() . 'Numbers/Users/Users/Controller/Password/Reset/_SetPassword?token=' . $crypt->tokenCreate($user_id, 'password.reset'),
-						'[Token_Valid_Hours]' => $crypt->object->valid_hours
-					]
-				]
-			]);
-		}
-	}
+	public $data_asset = [
+		'classification' => 'client_confidential',
+		'protection' => 2,
+		'scope' => 'enterprise'
+	];
 }

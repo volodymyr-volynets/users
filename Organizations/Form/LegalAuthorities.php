@@ -20,7 +20,7 @@ class LegalAuthorities extends \Object\Form\Wrapper\Base {
 		'jurisdictions_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Organizations\Model\LegalAuthority\Jurisdictions',
 			'details_pk' => ['on_authjuris_jurisdiction_id'],
 			'order' => 35000

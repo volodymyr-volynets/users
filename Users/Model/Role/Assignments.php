@@ -10,13 +10,13 @@ class Assignments extends \Object\Table {
 	public $pk = ['um_rolassign_tenant_id', 'um_rolassign_parent_role_id', 'um_rolassign_assignment_code', 'um_rolassign_child_role_id'];
 	public $tenant = true;
 	public $orderby = [
-		'um_rolassign_id' => SORT_ASC
+		'um_rolassign_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'um_rolassign_';
 	public $columns = [
 		'um_rolassign_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_rolassign_id' => ['name' => '#', 'type' => 'bigserial'],
+		'um_rolassign_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_rolassign_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'role_id'],
 		'um_rolassign_assignment_code' => ['name' => 'Assignment Code', 'domain' => 'type_code'],
 		'um_rolassign_child_role_id' => ['name' => 'Child Role #', 'domain' => 'role_id'],

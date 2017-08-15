@@ -63,7 +63,9 @@ class Login extends \Object\DataSource {
 			'i18n_format_datetime' => 'd.um_usri18n_format_datetime',
 			'i18n_format_timestamp' => 'd.um_usri18n_format_timestamp',
 			'i18n_format_amount_frm' => 'd.um_usri18n_format_amount_frm',
-			'i18n_format_amount_fs' => 'd.um_usri18n_format_amount_fs'
+			'i18n_format_amount_fs' => 'd.um_usri18n_format_amount_fs',
+			// primary organization
+			'organization_id' => 'e.um_usrorg_organization_id'
 		]);
 		// joins
 		$this->query->join('LEFT', function (& $query) {
@@ -102,6 +104,10 @@ class Login extends \Object\DataSource {
 		]);
 		$this->query->join('LEFT', new \Numbers\Users\Users\Model\User\Internalization(), 'd', 'ON', [
 			['AND', ['a.um_user_id', '=', 'd.um_usri18n_user_id', true], false]
+		]);
+		$this->query->join('LEFT', new \Numbers\Users\Users\Model\User\Organizations(), 'e', 'ON', [
+			['AND', ['a.um_user_id', '=', 'e.um_usrorg_user_id', true], false],
+			['AND', ['e.um_usrorg_primary', '=', 1, false], false]
 		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);

@@ -10,13 +10,13 @@ class Organizations extends \Object\Table {
 	public $pk = ['on_sborg_tenant_id', 'on_sborg_sbu_id', 'on_sborg_organization_id'];
 	public $tenant = true;
 	public $orderby = [
-		'on_sborg_id' => SORT_ASC
+		'on_sborg_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'on_sborg_';
 	public $columns = [
 		'on_sborg_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'on_sborg_id' => ['name' => '#', 'type' => 'bigserial'],
+		'on_sborg_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'on_sborg_sbu_id' => ['name' => 'SBU #', 'domain' => 'sbu_id'],
 		'on_sborg_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'on_sborg_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

@@ -10,13 +10,13 @@ class Roles extends \Object\Table {
 	public $pk = ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'];
 	public $tenant = true;
 	public $orderby = [
-		'um_usrrol_id' => SORT_ASC
+		'um_usrrol_timestamp' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'um_usrrol_';
 	public $columns = [
 		'um_usrrol_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_usrrol_id' => ['name' => '#', 'type' => 'bigserial'],
+		'um_usrrol_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_usrrol_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'um_usrrol_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_usrrol_unique' => ['name' => 'Unique', 'type' => 'smallint', 'null' => true, 'default' => null],
