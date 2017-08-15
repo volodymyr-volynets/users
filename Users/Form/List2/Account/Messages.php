@@ -52,7 +52,7 @@ class Messages extends \Object\Form\Wrapper\List2 {
 			'row2' => [
 				'blank' => ['order' => 1, 'row_order' => 200, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10],
 				'body' => ['order' => 2, 'label_name' => 'Body', 'type' => 'text', 'null' => true, 'percent' => 80, 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Account\Messages::renderSubjectAndBody'],
-				'timestamp' => ['order' => 3, 'label_name' => 'Timestamp', 'type' => 'timestamp', 'percent' => 10, 'format' => 'niceTimestamp'],
+				'timestamp' => ['order' => 3, 'label_name' => 'Timestamp', 'type' => 'timestamp', 'percent' => 10, 'format' => 'niceTimestamp', 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Account\Messages::renderSubjectAndBody'],
 			]
 		]
 	];
@@ -111,6 +111,10 @@ class Messages extends \Object\Form\Wrapper\List2 {
 	}
 
 	public function renderSubjectAndBody(& $form, & $options, & $value, & $neighbouring_values) {
+		// important
+		if (!empty($neighbouring_values['important'])) {
+			$value = \HTML::span(['style' => 'color: red;', 'value' => $value]);
+		}
 		if (empty($neighbouring_values['read'])) {
 			return \HTML::b(['value' => $value]);
 		} else {

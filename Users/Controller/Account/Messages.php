@@ -53,6 +53,11 @@ class Messages extends \Object\Controller\Authorized {
 					'name' => ['value' => i18n(null, 'Subject'), 'width' => '1%'],
 					'sep' => ['value' => ' ', 'width' => '1%'],
 					'value' => \HTML::b(['value' => $data['subject']])
+				],
+				'important' => [
+					'name' => ['value' => i18n(null, 'Important'), 'width' => '1%'],
+					'sep' => ['value' => ' ', 'width' => '1%'],
+					'value' => ($data['important'] ? i18n(null, 'Yes') : i18n(null, 'No'))
 				]
 			],
 			'class' => '',

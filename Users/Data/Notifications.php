@@ -73,6 +73,7 @@ If you did not perform this action, you can recover access by entering [Email] i
 Please do not reply to this email.
 
 Thank you!',
+					'sm_notification_important' => 1,
 					'sm_notification_inactive' => 0
 				],
 				[

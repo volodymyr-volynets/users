@@ -97,12 +97,14 @@ class Sender {
 			'body' => $body,
 			'from_email' => $from['data']['email'] ?? null,
 			'from_name' => $from['data']['name'] ?? null,
+			'important' => self::$cached_notifications[$notification_code]['sm_notification_important']
 		];
 		if (!empty($email)) {
 			$send_options = [
 				'to' => $email,
 				'subject' => $subject,
-				'message' => $body
+				'message' => $body,
+				'important' => self::$cached_notifications[$notification_code]['sm_notification_important']
 			];
 			if ($from['success']) {
 				$send_options['from']['email'] = $from['data']['email'];
@@ -192,7 +194,7 @@ success:
 		$header = [
 			'um_mesheader_type_id' => 10,
 			'um_mesheader_notification_code' => $data['notification_code'],
-			'um_mesheader_important' => 0, // todo
+			'um_mesheader_important' => $data['important'],
 			'um_mesheader_from_email' => $data['from_email'] ?? '',
 			'um_mesheader_from_name' => $data['from_name'] ?? '',
 			'um_mesheader_subject' => $data['subject'],

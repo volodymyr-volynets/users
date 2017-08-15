@@ -40,6 +40,7 @@ class Messages extends \Object\DataSource {
 			'to_type_id' => 'a.um_mesrecip_type_id',
 			'from_name' => 'b.um_mesheader_from_name',
 			'from_email' => 'b.um_mesheader_from_email',
+			'important' => 'b.um_mesheader_important',
 			'body' => 'c.um_mesbody_body',
 			'keywords' => 'b.um_mesheader_keywords'
 		]);

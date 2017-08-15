@@ -82,10 +82,7 @@ class Step1 extends \Object\Form\Wrapper\Base {
 		} else {
 			// send email message
 			$crypt = new \Crypt();
-			$model = new \Numbers\Backend\System\Modules\Model\Notification\Sender();
-			$mail_result = $model->send('UM::EMAIL_TENANT_CONFIRMATION', [
-				'email' => $form->values['um_regten_user_email'],
-				'user_id' => null,
+			$mail_result = \Numbers\Users\Users\Helper\Notification\Sender::notifySingleUser('UM::EMAIL_TENANT_CONFIRMATION', 0, $form->values['um_regten_user_email'], [
 				'replace' => [
 					'body' => [
 						'[URL]' => \Application::get('mvc.full_with_host') . '?__wizard_step=3&token=' . $crypt->tokenCreate($result['new_serials']['um_regten_id'], 'registration.tenant'),
