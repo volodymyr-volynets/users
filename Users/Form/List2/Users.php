@@ -45,6 +45,10 @@ class Users extends \Object\Form\Wrapper\List2 {
 				'um_user_id2' => ['order' => 2, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_user_id;<='],
 				'um_user_type_id1' => ['order' => 3, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 50, 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\Model\User\Types', 'query_builder' => 'a.um_user_type_id'],
 			],
+			'roles_filter' => [
+				'roles_filter' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Roles', 'domain' => 'role_id', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\DataSource\Roles', 'options_params' => ['organizations_for_current_user' => 1, 'skip_acl' => 1]],
+				'organization_filter' => ['order' => 2, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations'],
+			],
 			'um_user_hold1' => [
 				'um_user_hold1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;='],
 				'um_user_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;=']
@@ -143,6 +147,25 @@ class Users extends \Object\Form\Wrapper\List2 {
 		}, 'c', 'ON', [
 			['AND', ['a.um_user_id', '=', 'c.um_usrorg_user_id', true], false]
 		]);
+		// where
+		if (!empty($form->values['roles_filter'])) {
+			$roles_filter = $form->values['roles_filter'];
+			$form->query->where('AND', function (& $query) use ($roles_filter) {
+				$query = \Numbers\Users\Users\Model\User\Roles::queryBuilderStatic(['alias' => 'inner_c'])->select();
+				$query->columns(1);
+				$query->where('AND', ['a.um_user_id', '=', 'inner_c.um_usrrol_user_id', true]);
+				$query->where('AND', ['inner_c.um_usrrol_role_id', '=', $roles_filter, false]);
+			}, 'EXISTS');
+		}
+		if (!empty($form->values['organization_filter'])) {
+			$organization_filter = $form->values['organization_filter'];
+			$form->query->where('AND', function (& $query) use ($organization_filter) {
+				$query = \Numbers\Users\Users\Model\User\Organizations::queryBuilderStatic(['alias' => 'inner_d'])->select();
+				$query->columns(1);
+				$query->where('AND', ['a.um_user_id', '=', 'inner_d.um_usrorg_user_id', true]);
+				$query->where('AND', ['inner_d.um_usrorg_organization_id', '=', $organization_filter, false]);
+			}, 'EXISTS');
+		}
 		// query #1 get counter
 		$counter_query = clone $form->query;
 		$counter_query->columns(['counter' => 'COUNT(*)'], ['empty_existing' => true]);

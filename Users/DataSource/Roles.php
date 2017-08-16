@@ -27,10 +27,16 @@ class Roles extends \Object\DataSource {
 	public $primary_model = '\Numbers\Users\Users\Model\Roles';
 	public $parameters = [
 		'selected_organizations' => ['name' => 'Selected Organizations', 'domain' => 'organization_id', 'multiple_column' => true],
-		'existing_values' => ['name' => 'Existing Values', 'type' => 'mixed']
+		'existing_values' => ['name' => 'Existing Values', 'type' => 'mixed'],
+		'organizations_for_current_user' => ['name' => 'Organizations For Current User', 'type' => 'boolean'],
+		'skip_acl' => ['name' => 'Skip Acl', 'type' => 'boolean']
 	];
 
 	public function query($parameters, $options = []) {
+		// Organizations For Current User
+		if (!empty($parameters['organizations_for_current_user'])) {
+			$parameters['selected_organizations'] = \User::get('organizations');
+		}
 		// columns
 		$this->query->columns(['a.*']);
 		// selected organizations
@@ -52,7 +58,7 @@ class Roles extends \Object\DataSource {
 	}
 
 	public function processNotCached($data, $options = []) {
-		if (!\User::get('super_admin')) {
+		if (!\User::get('super_admin') && empty($options['parameters']['skip_acl'])) {
 			foreach ($data as $k => $v) {
 				// filter
 				if (!\Object\Table\Options::processOptionsExistingValuesAndSkipValues($v['um_role_id'], $options['existing_values'] ?? null, $options['skip_values'] ?? null)) {
