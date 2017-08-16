@@ -69,7 +69,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 				'um_user_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
 			'row2' => [
-				'blank' => ['order' => 1, 'row_order' => 200, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10, 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Users::renderBecome'],
+				'blank' => ['order' => 1, 'row_order' => 200, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10],
 				'um_user_company' => ['order' => 2, 'label_name' => 'Company', 'domain' => 'name', 'null' => true, 'percent' => 20],
 				'um_user_email' => ['order' => 3, 'label_name' => 'Email', 'domain' => 'email', 'null' => true, 'percent' => 25],
 				'um_user_phone' => ['order' => 4, 'label_name' => 'Phone', 'domain' => 'phone', 'null' => true, 'percent' => 25],
@@ -77,7 +77,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 				'um_user_hold' => ['order' => 6, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
 			],
 			'row3' => [
-				'blank' => ['order' => 1, 'row_order' => 300, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10],
+				'blank' => ['order' => 1, 'row_order' => 300, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10, 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Users::renderBecome'],
 				'roles' => ['order' => 2, 'label_name' => 'Roles', 'domain' => 'role_id', 'null' => true, 'percent' => 50, 'options_model' => '\Numbers\Users\Users\Model\Roles'],
 				'organizations' => ['order' => 3, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'null' => true, 'percent' => 40, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations'],
 			]
@@ -104,8 +104,15 @@ class Users extends \Object\Form\Wrapper\List2 {
 	];
 
 	public function renderBecome(& $form, & $options, & $value, & $neighbouring_values) {
-		// todo: implement become functionality
-		return '';
+		// check if we have permissions
+		if (\Numbers\Users\Users\Helper\Role\Manages::can(\User::get('role_ids'), $neighbouring_values['roles'], 'um_rolman_view_users_type_id', 20)) {
+			return \HTML::a([
+				'href' => \Numbers\Users\Users\Helper\LoginWithToken::URL($neighbouring_values['um_user_id']),
+				'value' => i18n(null, 'Become'),
+			]);
+		} else {
+			return '';
+		}
 	}
 
 	public function listQuery(& $form) {

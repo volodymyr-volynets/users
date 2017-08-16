@@ -351,11 +351,13 @@ class Users extends \Object\Form\Wrapper\Base {
 		// password
 		if (!empty($form->values['um_user_login_password_new'])) {
 			// see if we can change password for this role
-			//$roles = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Roles'], 'um_usrrol_role_id');
-			// todo validate if user can reset password for this account
-			// set password
-			$crypt = new \Crypt();
-			$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
+			$roles = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Roles'], 'um_usrrol_role_id');
+			if (\Numbers\Users\Users\Helper\Role\Manages::can(\User::get('role_ids'), $roles, 'um_rolman_reset_password', 1)) {
+				$crypt = new \Crypt();
+				$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
+			} else {
+				$form->error(DANGER, 'You do not have permission to reset password!', 'um_user_login_password_new');
+			}
 		}
 		// validate assigments
 		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'] as $k => $v) {

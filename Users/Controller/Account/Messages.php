@@ -140,7 +140,8 @@ class Messages extends \Object\Controller\Authorized {
 		\Layout::renderAs([
 			'success' => true,
 			'error' => [],
-			'data' => $label
+			'data' => $label,
+			'item' => \Request::input('item')
 		], 'application/json');
 	}
 }

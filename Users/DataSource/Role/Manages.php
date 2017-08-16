@@ -43,8 +43,8 @@ class Manages extends \Object\DataSource {
 				if (empty($manages_data[$v])) continue;
 				// loop through all manages
 				foreach ($manages_data[$v] as $k2 => $v2) {
-					// exclude if we cannot assign roles
-					//if (empty($v2['um_rolman_assign_roles'])) continue;
+					// exclude if we cannot view users
+					if (empty($v2['um_rolman_view_users_type_id'])) continue;
 					// if we do not have assignment
 					if (empty($v2['um_rolman_assignment_code'])) {
 						$query->where('OR', ['a.um_usrrol_role_id', '=', $v2['um_rolman_child_role_id']]);
@@ -63,7 +63,7 @@ class Manages extends \Object\DataSource {
 					if (!empty($v2['um_rolman_manage_children']) && !empty($manages_data[$v2['um_rolman_child_role_id']])) {
 						foreach ($manages_data[$v2['um_rolman_child_role_id']] as $k3 => $v3) {
 							// exclude if we cannot assign roles
-							//if (empty($v3['um_rolman_assign_roles'])) continue;
+							if (empty($v3['um_rolman_view_users_type_id'])) continue;
 							// if we do not have assignment
 							if (empty($v3['um_rolman_assignment_code'])) {
 								$query->where('OR', ['a.um_usrrol_role_id', '=', $v3['um_rolman_child_role_id']]);

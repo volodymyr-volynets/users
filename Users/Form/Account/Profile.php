@@ -24,6 +24,24 @@ class Profile extends \Object\Form\Wrapper\Base {
 			'details_rendering_type' => 'grid_with_label',
 			'details_key' => '\Numbers\Users\Users\Model\User\Internalization',
 			'details_pk' => ['um_usri18n_user_id'],
+		],
+		'roles_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 0,
+			'details_key' => '\Numbers\Users\Users\Model\User\Roles',
+			'details_pk' => ['um_usrrol_role_id'],
+			'details_cannot_delete' => true,
+			'order' => 35000
+		],
+		'organizations_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 0,
+			'details_key' => '\Numbers\Users\Users\Model\User\Organizations',
+			'details_pk' => ['um_usrorg_organization_id'],
+			'details_cannot_delete' => true,
+			'order' => 35001
 		]
 	];
 	public $rows = [
@@ -34,6 +52,8 @@ class Profile extends \Object\Form\Wrapper\Base {
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'login' => ['order' => 200, 'label_name' => 'Login'],
+			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
+			'roles' => ['order' => 400, 'label_name' => 'Roles'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA
 		]
 	];
@@ -57,6 +77,12 @@ class Profile extends \Object\Form\Wrapper\Base {
 				'separator' => ['container' => 'separator_container', 'order' => 200],
 				'internalization' => ['container' => 'internalization_container', 'order' => 300],
 			],
+			'organizations' => [
+				'organizations' => ['container' => 'organizations_container', 'order' => 100],
+			],
+			'roles' => [
+				'roles' => ['container' => 'roles_container', 'order' => 100],
+			]
 		],
 		'general_container' => [
 			self::HIDDEN => [
@@ -123,6 +149,19 @@ class Profile extends \Object\Form\Wrapper\Base {
 				'um_usri18n_format_amount_fs' => ['order' => 2, 'label_name' => 'Amounts In Financial Statement', 'domain' => 'type_id', 'null' => true, 'method' => 'select', 'options_model' => '\Object\Format\Amounts']
 			]
 		],
+		'roles_container' => [
+			'row1' => [
+				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'persistent' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Roles', 'onchange' => 'this.form.submit();'],
+				'um_usrrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5, 'persistent' => true]
+			]
+		],
+		'organizations_container' => [
+			'row1' => [
+				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'persistent' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 5, 'persistent' => true],
+				'um_usrorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5, 'persistent' => true]
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => [
 				self::BUTTON_SUBMIT_SAVE => self::BUTTON_SUBMIT_SAVE_DATA
@@ -138,6 +177,18 @@ class Profile extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_usrgrmap_tenant_id', 'um_usrgrmap_user_id', 'um_usrgrmap_group_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
+			],
+			'\Numbers\Users\Users\Model\User\Roles' => [
+				'name' => 'Roles',
+				'pk' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id']
+			],
+			'\Numbers\Users\Users\Model\User\Organizations' => [
+				'name' => 'Organizations',
+				'pk' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Internalization' => [
 				'name' => 'Internalization',
