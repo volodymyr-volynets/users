@@ -334,7 +334,11 @@ class Users extends \Object\Form\Wrapper\Base {
 		}
 		// primary organizations
 		$primary_found = 0;
+		$primary_first_line = null;
 		foreach ($form->values['\Numbers\Users\Users\Model\User\Organizations'] as $k => $v) {
+			if (!isset($primary_first_line)) {
+				$primary_first_line = "\Numbers\Users\Users\Model\User\Organizations[{$k}][um_usrorg_primary]";
+			}
 			if (!empty($v['um_usrorg_primary'])) {
 				$primary_found++;
 				if (!empty($v['um_usrorg_inactive'])) {
@@ -346,7 +350,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			}
 		}
 		if ($primary_found == 0) {
-			$form->error(DANGER, 'You must select primary organization!');
+			$form->error(DANGER, 'You must select primary organization!', $primary_first_line);
 		}
 		// password
 		if (!empty($form->values['um_user_login_password_new'])) {

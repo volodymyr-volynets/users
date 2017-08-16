@@ -49,28 +49,22 @@ class Roles extends \Object\DataSource {
 				$query->where('OR', 'FALSE');
 			}
 		});
-		// only managed roles should be displayed
+	}
+
+	public function processNotCached($data, $options = []) {
 		if (!\User::get('super_admin')) {
-			$this->query->where('AND', function (& $query) use ($parameters) {
-				if (!empty($parameters['existing_values'])) {
-					$query->where('OR', ['a.um_role_id', '=', $parameters['existing_values']]);
+			foreach ($data as $k => $v) {
+				// filter
+				if (!\Object\Table\Options::processOptionsExistingValuesAndSkipValues($v['um_role_id'], $options['existing_values'] ?? null, $options['skip_values'] ?? null)) {
+					unset($data[$k]);
+					continue;
 				}
-				$roles = \User::get('roles');
-				if (!empty($roles)) {
-					$query->where('OR', function (& $query) use ($roles) {
-						$query = \Numbers\Users\Users\Model\Role\Manages::queryBuilderStatic(['alias' => 'inner_b'])->select();
-						$query->columns(1);
-						$query->join('INNER', new \Numbers\Users\Users\Model\Roles(), 'inner_c', 'ON', [
-							['AND', ['inner_b.um_rolman_parent_role_id', '=', 'inner_c.um_role_id', true], false]
-						]);
-						$query->where('AND', ['inner_b.um_rolman_child_role_id', '=', 'a.um_role_id', true]);
-						$query->where('AND', ['inner_b.um_rolman_assign_roles', '=', 1, false]);
-						$query->where('AND', ['inner_c.um_role_code', 'IN', $roles, false]);
-					}, true);
-				} else {
-					$query->where('OR', 'FALSE');
+				if (!empty($options['existing_values']) && is_scalar($options['existing_values'])) $options['existing_values'] = [$options['existing_values']];
+				if (!\Numbers\Users\Users\Helper\Role\Manages::can(\User::get('role_ids'), [$v['um_role_id']], 'um_rolman_assign_roles', 1) && (empty($options['existing_values']) || (!empty($options['existing_values']) && !in_array($v['um_role_id'], $options['existing_values'])))) {
+					unset($data[$k]);
 				}
-			});
+			}
 		}
+		return $data;
 	}
 }
