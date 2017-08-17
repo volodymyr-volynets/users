@@ -14,14 +14,7 @@ class Types extends \Object\Form\Wrapper\List2 {
 	public $containers = [
 		'tabs' => ['default_row_type' => 'grid', 'order' => 1000, 'type' => 'tabs', 'class' => 'numbers_form_filter_sort_container'],
 		'filter' => ['default_row_type' => 'grid', 'order' => 1500],
-		'sort' => [
-			'type' => 'details',
-			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
-			'details_key' => '\Object\Form\Model\Dummy\Sort',
-			'details_pk' => ['__sort'],
-			'order' => 1600
-		],
+		'sort' => self::LIST_SORT_CONTAINER,
 		self::LIST_CONTAINER => ['default_row_type' => 'grid', 'order' => PHP_INT_MAX],
 	];
 	public $rows = [
