@@ -10,7 +10,8 @@ class Step3 extends \Object\Form\Wrapper\Base {
 				'icon' => ['type' => 'pencil-square-o'],
 				'title' => 'Register New Tenant:'
 			]
-		]
+		],
+		'no_ajax_form_reload' => true
 	];
 	public $containers = [
 		'default' => ['default_row_type' => 'grid', 'order' => 1]
@@ -159,8 +160,9 @@ class Step3 extends \Object\Form\Wrapper\Base {
 				break;
 			}
 			// step 8 activate tenants, organizations and users modules
-			foreach (['TM', 'ON', 'CM', 'IN', 'UM'] as $v) {
+			foreach (['SM', 'TM', 'ON', 'CM', 'IN', 'UM'] as $v) {
 				$module_activation_result = \Numbers\Tenants\Tenants\Model\Activation::activateModule($v, null);
+				print_r2($module_activation_result);
 				if (!$module_activation_result['success']) {
 					$form->error('danger', $error_message);
 					goto error;

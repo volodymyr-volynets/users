@@ -52,6 +52,7 @@ class Login extends \Object\DataSource {
 			'role_ids' => 'b.role_ids',
 			'organizations' => 'c.organizations',
 			'super_admin' => 'b.super_admin',
+			'handle_exceptions' => 'b.handle_exceptions',
 			// internalization
 			'i18n_group_id' => 'd.um_usri18n_group_id',
 			'i18n_language_code' => 'd.um_usri18n_language_code',
@@ -74,7 +75,8 @@ class Login extends \Object\DataSource {
 				'inner_a.um_usrrol_user_id',
 				'roles' => $query->db_object->sqlHelper('string_agg', ['expression' => "inner_b.um_role_code", 'delimiter' => ';;']),
 				'role_ids' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('inner_b.um_role_id', 'character varying'), 'delimiter' => ';;']),
-				'super_admin' => 'SUM(inner_b.um_role_super_admin)'
+				'super_admin' => 'SUM(inner_b.um_role_super_admin)',
+				'handle_exceptions' => 'SUM(inner_b.um_role_handle_exceptions)'
 			]);
 			// join
 			$query->join('INNER', new \Numbers\Users\Users\Model\Roles(), 'inner_b', 'ON', [

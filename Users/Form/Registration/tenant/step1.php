@@ -10,7 +10,8 @@ class Step1 extends \Object\Form\Wrapper\Base {
 				'icon' => ['type' => 'pencil-square-o'],
 				'title' => 'Register New Tenant:'
 			]
-		]
+		],
+		'no_ajax_form_reload' => true
 	];
 	public $containers = [
 		'default' => ['default_row_type' => 'grid', 'order' => 1]

@@ -27,6 +27,7 @@ class Roles extends \Object\DataSource {
 			'type_id' => 'a.um_role_type_id',
 			'name' => 'a.um_role_name',
 			'super_admin' => 'a.um_role_super_admin',
+			//'handle_exceptions' => 'a.um_role_handle_exceptions',
 			'inactive' => 'a.um_role_inactive',
 			'b.parents',
 			'c.permissions'

@@ -37,6 +37,19 @@ class Controllers2 extends \Numbers\Users\Users\DataSource\ACL\Controllers {
 						'disabled' => true
 					];
 				}
+				// add classification, ignore global
+				if (!in_array($v['classification'], ['Global', 'Transactions'])) {
+					$parent2 = \Object\Table\Options::optionJsonFormatKey(['module_id' => $k2, 'classification' => $v['classification']]);
+					if (!isset($result[$parent2])) {
+						$result[$parent2] = [
+							'name' => $v['classification'],
+							'icon_class' => \HTML::icon(['type' => $this->determineClassificationIcon($v['classification']), 'class_only' => true]),
+							'parent' => $parent,
+							'disabled' => true
+						];
+					}
+					$parent = $parent2;
+				}
 				// add item
 				$key = \Object\Table\Options::optionJsonFormatKey(['module_id' => $k2, 'resource_id' => $k]);
 				$result[$key] = [
@@ -53,5 +66,19 @@ class Controllers2 extends \Numbers\Users\Users\DataSource\ACL\Controllers {
 			\Helper\Tree::convertTreeToOptionsMulti($converted, 0, ['name_field' => 'name'], $result);
 		}
 		return $result;
+	}
+
+	/**
+	 * Determine classification icon
+	 *
+	 * @param string $classification
+	 * @return string
+	 */
+	public function determineClassificationIcon(string $classification) : string {
+		if ($classification == 'Settings') return 'cogs';
+		if ($classification == 'Reports') return 'table';
+		if ($classification == 'Tasks') return 'sun-o';
+		if ($classification == 'Miscellaneous') return 'cubes';
+		return 'cubes';
 	}
 }

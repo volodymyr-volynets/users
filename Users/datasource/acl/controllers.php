@@ -28,6 +28,7 @@ class Controllers extends \Object\DataSource {
 			'code' => 'a.sm_resource_code',
 			'name' => 'a.sm_resource_name',
 			'description' => 'a.sm_resource_description',
+			'classification' => 'a.sm_resource_classification',
 			'icon' => 'a.sm_resource_icon',
 			'module_code' => 'a.sm_resource_module_code',
 			'breadcrumbs' => "concat_ws('::', b.sm_module_name, a.sm_resource_group1_name, a.sm_resource_group2_name, sm_resource_group3_name, sm_resource_group4_name, sm_resource_group5_name, sm_resource_group6_name, sm_resource_group7_name, sm_resource_group8_name, sm_resource_group9_name)",
