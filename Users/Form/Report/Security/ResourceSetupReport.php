@@ -69,12 +69,11 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 			'sm_resource_classification' => ['label_name' => 'Classification', 'percent' => 20],
 			'sm_resource_description' => ['label_name' => 'Description', 'percent' => 70]
 		]);
-		$report->addHeader(DEF, 'row3', [
+		$report->addHeader(DEF, 'actions', [
 			'blank' => ['label_name' => ' ', 'percent' => 10],
-			'name' => ['label_name' => ' ', 'percent' => 40],
+			'name' => ['label_name' => 'Actions:', 'percent' => 40],
 			'action_id' => ['label_name' => 'Action #', 'percent' => 10],
-			'action_name' => ['label_name' => 'Action Name', 'percent' => 25],
-			'blank2' => ['label_name' => ' ', 'percent' => 15],
+			'action_name' => ['label_name' => 'Action Name', 'percent' => 40],
 		],
 		[
 			'skip_rendering' => true
@@ -140,18 +139,18 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 			$report->addData(DEF, 'row2', $even, $v);
 			// actions
 			if (!empty($v['actions'])) {
+				$report->addData(DEF, 'separator', $even, ['blank' => ' ']);
+				$report->addData(DEF, 'actions', $even, $report->getHeaderForRender(DEF, 'actions'));
 				$temp = explode(';;', $v['actions']);
-				$report->addData(DEF, 'row3', $even, [
-					'name' => ['value' => i18n(null, 'Actions:'), 'bold' => true, 'as_header' => true],
-					'action_id' => ['value' => i18n(null, 'Action #'), 'bold' => true, 'as_header' => true],
-					'action_name' => ['value' => i18n(null, 'Action Name'), 'bold' => true, 'as_header' => true],
-					'blank2' => ['value' => '', 'bold' => true, 'as_header' => true]
-				]);
+				$counter2 = $even + 1;
 				foreach ($temp as $v0) {
-					$report->addData(DEF, 'row3', $even, [
+					$report->addData(DEF, 'actions', $even, [
 						'action_id' => \Format::id($v0),
 						'action_name' => $actions[(int) $v0]['name']
+					], [
+						'cell_even' => $counter2 % 2 ? ODD : EVEN
 					]);
+					$counter2++;
 				}
 			}
 			$counter++;
@@ -159,7 +158,7 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 		$report->addSeparator(DEF);
 		// add number of rows
 		$rows = count($data['rows']);
-		$report->addLegend(DEF, i18n(null, \Object\Content\Messages::REPORT_ROWS_NUMBER, ['replace' => ['[Number]' => $rows]]));
+		$report->addLegend(DEF, i18n(null, \Object\Content\Messages::REPORT_ROWS_NUMBER, ['replace' => ['[Number]' => \Format::id($rows)]]));
 		// free up memory
 		unset($data);
 		// we must return report object

@@ -129,7 +129,7 @@ class OrganizationAccessReport extends \Object\Form\Wrapper\Report {
 		$report->addSeparator(DEF);
 		// add number of rows
 		$rows = count($data['rows']);
-		$report->addLegend(DEF, i18n(null, \Object\Content\Messages::REPORT_ROWS_NUMBER, ['replace' => ['[Number]' => $rows]]));
+		$report->addLegend(DEF, i18n(null, \Object\Content\Messages::REPORT_ROWS_NUMBER, ['replace' => ['[Number]' => \Format::id($rows)]]));
 		// free up memory
 		unset($data);
 		// we must return report object
