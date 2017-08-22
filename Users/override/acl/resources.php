@@ -12,6 +12,9 @@ class Resources {
 		'authorization' => [
 			'login' => [
 				'url' => '/Numbers/Users/Users/Controller/Login'
+			],
+			'logout' => [
+				'url' => '/Numbers/Users/Users/Controller/Logout/Quick'
 			]
 		],
 		'controllers' => [
