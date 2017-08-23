@@ -75,7 +75,7 @@ class Roles extends \Object\DataSource {
 			} else {
 				$data[$k]['parents'] = [];
 			}
-			// permissions
+			// permissions, the same logic as in login datasource!!!
 			if (!empty($v['permissions'])) {
 				$data[$k]['permissions'] = [];
 				$temp = explode(';;', $v['permissions']);

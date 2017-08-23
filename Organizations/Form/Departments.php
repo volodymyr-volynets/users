@@ -8,7 +8,8 @@ class Departments extends \Object\Form\Wrapper\Base {
 		'actions' => [
 			'refresh' => true,
 			'new' => true,
-			'back' => true
+			'back' => true,
+			'import' => true
 		]
 	];
 	public $containers = [
@@ -60,6 +61,7 @@ class Departments extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
+		'name' => 'Departments',
 		'model' => '\Numbers\Users\Organizations\Model\Departments'
 	];
 }

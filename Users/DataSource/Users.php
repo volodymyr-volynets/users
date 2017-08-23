@@ -31,6 +31,7 @@ class Users extends \Object\DataSource {
 		'existing_values' => ['name' => 'Existing Values', 'type' => 'mixed'],
 		'skip_acl' => ['name' => 'Skip ACL', 'type' => 'boolean'],
 		'include_all_columns' => ['name' => 'Include All Columns', 'type' => 'boolean'],
+		'only_id_column' => ['name' => 'Only ID Column', 'type' => 'boolean'],
 		'include_himself' => ['name' => 'Include Himself', 'type' => 'boolean'],
 	];
 
@@ -38,6 +39,10 @@ class Users extends \Object\DataSource {
 		// columns
 		if (!empty($parameters['include_all_columns'])) {
 			$this->query->columns(['a.*']);
+		} else if (!empty($parameters['only_id_column'])) {
+			$this->query->columns([
+				'um_user_id' => 'a.um_user_id'
+			]);
 		} else {
 			$this->query->columns([
 				'um_user_id' => 'a.um_user_id',

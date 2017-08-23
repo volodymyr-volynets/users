@@ -88,7 +88,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 		]
 	];
 	public $query_primary_model = '\Numbers\Users\Users\DataSource\Users';
-	public $query_primary_options = [
+	public $query_primary_parameters = [
 		'include_all_columns' => true
 	];
 	public $list_options = [

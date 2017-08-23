@@ -14,4 +14,11 @@ class Jurisdictions extends \Object\Controller\Permission {
 		]);
 		echo $form->render();
 	}
+	public function actionImport() {
+		$form = new \Object\Form\Wrapper\Import([
+			'model' => '\Numbers\Users\Organizations\Form\Jurisdictions',
+			'input' => \Request::input()
+		]);
+		echo $form->render();
+	}
 }

@@ -72,7 +72,15 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Users\Model\User\Notifications',
 			'details_pk' => ['um_usrnoti_module_id', 'um_usernoti_feature_code'],
 			'order' => 35000
-		]
+		],
+		'permissions_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Permissions',
+			'details_pk' => ['um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id'],
+			'order' => 35000
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -84,6 +92,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'login' => ['order' => 200, 'label_name' => 'Login'],
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
+			'permissions' => ['order' => 440, 'label_name' => 'Permissions'],
 			'notifications' => ['order' => 450, 'label_name' => 'Notifications'],
 			'assignments' => ['order' => 500, 'label_name' => 'Assignments'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
@@ -115,6 +124,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'organizations' => [
 				'organizations' => ['container' => 'organizations_container', 'order' => 100],
+			],
+			'permissions' => [
+				'permissions' => ['container' => 'permissions_container', 'order' => 100],
 			],
 			'notifications' => [
 				'notifications' => ['container' => 'notifications_container', 'order' => 100],
@@ -252,6 +264,17 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrnoti_feature_code' => ['order' => 4, 'label_name' => 'Feature', 'domain' => 'feature_code', 'required' => true, 'null' => true, 'method' => 'hidden']
 			]
 		],
+		'permissions_container' => [
+			'row1' => [
+				'um_usrperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 60, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'acl_handle_exceptions' => true], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrperm_module_id', 'resource_id' => 'um_usrperm_resource_id']],
+				'um_usrperm_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Resource\Map::optionsJson', 'options_depends' => ['sm_rsrcmp_resource_id' => 'um_usrperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['action_id' => 'um_usrperm_action_id', 'method_code' => 'um_usrperm_method_code']],
+				'um_usrperm_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_usrperm_method_code' => ['order' => 1, 'label_name' => 'Method', 'domain' => 'code', 'required' => true, 'null' => true, 'method' => 'hidden'],
+				'um_usrperm_module_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -259,6 +282,10 @@ class Users extends \Object\Form\Wrapper\Base {
 	public $collection = [
 		'name' => 'Users',
 		'model' => '\Numbers\Users\Users\Model\Users',
+		'acl_datasource' => '\Numbers\Users\Users\DataSource\Users',
+		'acl_parameters' => [
+			'only_id_column' => true
+		],
 		'details' => [
 			'\Numbers\Users\Users\Model\User\Group\Map' => [
 				'name' => 'Groups',
@@ -300,7 +327,13 @@ class Users extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_usrnoti_tenant_id', 'um_usrnoti_user_id', 'um_usrnoti_module_id', 'um_usrnoti_feature_code'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrnoti_tenant_id', 'um_user_id' => 'um_usrnoti_user_id']
-			]
+			],
+			'\Numbers\Users\Users\Model\User\Permissions' => [
+				'name' => 'Permissions',
+				'pk' => ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrperm_tenant_id', 'um_user_id' => 'um_usrperm_user_id']
+			],
 		]
 	];
 	public $notification = [

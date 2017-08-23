@@ -8,7 +8,8 @@ class Jurisdictions extends \Object\Form\Wrapper\Base {
 		'actions' => [
 			'refresh' => true,
 			'new' => true,
-			'back' => true
+			'back' => true,
+			'import' => true
 		]
 	];
 	public $containers = [
@@ -89,14 +90,17 @@ class Jurisdictions extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
+		'name' => 'Jurisdictions',
 		'model' => '\Numbers\Users\Organizations\Model\Jurisdictions',
 		'details' => [
 			'\Numbers\Users\Organizations\Model\Jurisdiction\Countries' => [
+				'name' => 'Countries',
 				'pk' => ['on_juriscntr_tenant_id', 'on_juriscntr_jurisdiction_id', 'on_juriscntr_country_code'],
 				'type' => '1M',
 				'map' => ['on_jurisdiction_tenant_id' => 'on_juriscntr_tenant_id', 'on_jurisdiction_id' => 'on_juriscntr_jurisdiction_id'],
 				'details' => [
 					'\Numbers\Users\Organizations\Model\Jurisdiction\Country\Provinces' => [
+						'name' => 'Provinces',
 						'pk' => ['on_jurisprov_tenant_id', 'on_jurisprov_jurisdiction_id', 'on_jurisprov_country_code', 'on_jurisprov_province_code'],
 						'type' => '1M',
 						'map' => ['on_juriscntr_tenant_id' => 'on_jurisprov_tenant_id', 'on_juriscntr_jurisdiction_id' => 'on_jurisprov_jurisdiction_id', 'on_juriscntr_country_code' => 'on_jurisprov_country_code'],

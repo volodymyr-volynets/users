@@ -8,7 +8,8 @@ class Roles extends \Object\Form\Wrapper\Base {
 		'actions' => [
 			'refresh' => true,
 			'new' => true,
-			'back' => true
+			'back' => true,
+			'import' => true
 		]
 	];
 	public $containers = [
@@ -220,40 +221,48 @@ class Roles extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
+		'name' => 'Roles',
 		'model' => '\Numbers\Users\Users\Model\Roles',
 		'details' => [
 			'\Numbers\Users\Users\Model\Role\Children' => [
+				'name' => 'Children',
 				'pk' => ['um_rolrol_tenant_id', 'um_rolrol_parent_role_id', 'um_rolrol_child_role_id'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolrol_tenant_id', 'um_role_id' => 'um_rolrol_child_role_id']
 			],
 			'\Numbers\Users\Users\Model\Role\Manages' => [
+				'name' => 'Manages',
 				'pk' => ['um_rolman_tenant_id', 'um_rolman_parent_role_id', 'um_rolman_child_role_id'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolman_tenant_id', 'um_role_id' => 'um_rolman_parent_role_id']
 			],
 			'\Numbers\Users\Users\Model\Role\Assignments' => [
+				'name' => 'Assignments',
 				'pk' => ['um_rolassign_tenant_id', 'um_rolassign_parent_role_id', 'um_rolassign_assignment_code', 'um_rolassign_child_role_id'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolassign_tenant_id', 'um_role_id' => 'um_rolassign_parent_role_id']
 			],
 			'\Numbers\Users\Users\Model\Role\Assignment\Reverse' => [
+				'name' => 'Assignments Reverse',
 				'pk' => ['um_rolassign_tenant_id', 'um_rolassign_parent_role_id', 'um_rolassign_assignment_code', 'um_rolassign_child_role_id'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolassign_tenant_id', 'um_role_id' => 'um_rolassign_child_role_id'],
 				'readonly' => true
 			],
 			'\Numbers\Users\Users\Model\Role\Permissions' => [
+				'name' => 'Permissions',
 				'pk' => ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_module_id', 'um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolperm_tenant_id', 'um_role_id' => 'um_rolperm_role_id']
 			],
 			'\Numbers\Users\Users\Model\Role\Notifications' => [
+				'name' => 'Notifications',
 				'pk' => ['um_rolnoti_tenant_id', 'um_rolnoti_role_id', 'um_rolnoti_module_id', 'um_rolnoti_feature_code'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolnoti_tenant_id', 'um_role_id' => 'um_rolnoti_role_id']
 			],
 			'\Numbers\Users\Users\Model\Role\Organizations' => [
+				'name' => 'Organizations',
 				'pk' => ['um_rolorg_tenant_id', 'um_rolorg_role_id', 'um_rolorg_organization_id'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolorg_tenant_id', 'um_role_id' => 'um_rolorg_role_id']

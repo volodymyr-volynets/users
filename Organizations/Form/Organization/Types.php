@@ -8,7 +8,8 @@ class Types extends \Object\Form\Wrapper\Base {
 		'actions' => [
 			'refresh' => true,
 			'back' => true,
-			'new' => true
+			'new' => true,
+			'import' => true
 		]
 	];
 	public $containers = [
@@ -32,6 +33,7 @@ class Types extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
+		'name' => 'Types',
 		'model' => '\Numbers\Users\Organizations\Model\Organization\Types'
 	];
 }

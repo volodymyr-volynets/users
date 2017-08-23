@@ -8,7 +8,8 @@ class LegalAuthorities extends \Object\Form\Wrapper\Base {
 		'actions' => [
 			'refresh' => true,
 			'new' => true,
-			'back' => true
+			'back' => true,
+			'import' => true
 		]
 	];
 	public $containers = [
@@ -72,9 +73,11 @@ class LegalAuthorities extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
+		'name' => 'Legal Authorities',
 		'model' => '\Numbers\Users\Organizations\Model\LegalAuthorities',
 		'details' => [
 			'\Numbers\Users\Organizations\Model\LegalAuthority\Jurisdictions' => [
+				'name' => 'Jurisdictions',
 				'pk' => ['on_authjuris_tenant_id', 'on_authjuris_authority_id', 'on_authjuris_jurisdiction_id'],
 				'type' => '1M',
 				'map' => ['on_authority_tenant_id' => 'on_authjuris_tenant_id', 'on_authority_id' => 'on_authjuris_authority_id'],

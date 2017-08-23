@@ -14,4 +14,11 @@ class Groups extends \Object\Controller\Permission {
 		]);
 		echo $form->render();
 	}
+	public function actionImport() {
+		$form = new \Object\Form\Wrapper\Import([
+			'model' => '\Numbers\Users\Users\Form\Groups',
+			'input' => \Request::input()
+		]);
+		echo $form->render();
+	}
 }

@@ -8,7 +8,8 @@ class Types extends \Object\Form\Wrapper\Base {
 		'actions' => [
 			'refresh' => true,
 			'back' => true,
-			'new' => true
+			'new' => true,
+			'import' => true
 		]
 	];
 	public $containers = [
@@ -36,6 +37,7 @@ class Types extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
+		'name' => 'Assignment Types',
 		'model' => '\Numbers\Users\Users\Model\User\Assignment\Types'
 	];
 }

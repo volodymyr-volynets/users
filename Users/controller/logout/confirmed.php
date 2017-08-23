@@ -4,7 +4,6 @@ namespace Numbers\Users\Users\Controller\Logout;
 class Confirmed extends \Object\Controller {
 	public function actionIndex() {
 		$options = [
-			'type' => 'default',
 			'options' => [
 				i18n(null, 'Congratulations! You have successfully signed out.'),
 				i18n(null, 'You can now sign in into your account. [signin].', [
@@ -20,7 +19,7 @@ class Confirmed extends \Object\Controller {
 				'icon' => ['type' => 'sign-out'],
 				'title' => 'Sign Out:'
 			],
-			'value' => \HTML::message($options)
+			'value' => \HTML::ul($options)
 		]);
 	}
 }

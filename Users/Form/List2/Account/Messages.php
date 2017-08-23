@@ -57,7 +57,7 @@ class Messages extends \Object\Form\Wrapper\List2 {
 		]
 	];
 	public $query_primary_model = '\Numbers\Users\Users\DataSource\Messages';
-	public $query_primary_options = [];
+	public $query_primary_parameters = [];
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',

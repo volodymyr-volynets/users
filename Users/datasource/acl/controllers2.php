@@ -27,6 +27,14 @@ class Controllers2 extends \Numbers\Users\Users\DataSource\ACL\Controllers {
 		foreach ($data as $k => $v) {
 			if (empty($modules[$v['module_code']])) continue;
 			foreach ($modules[$v['module_code']] as $k2 => $v2) {
+				$key = \Object\Table\Options::optionJsonFormatKey(['module_id' => $k2, 'resource_id' => $k]);
+				// handle exceptions
+				if (!empty($options['where']['acl_handle_exceptions']) && !\User::get('super_admin') && !\User::get('handle_exceptions')) {
+					if (!is_array($options['existing_values'])) {
+						$options['existing_values'] = [$options['existing_values']];
+					}
+					if (!in_array($key, $options['existing_values'])) continue;
+				}
 				$parent = \Object\Table\Options::optionJsonFormatKey(['module_id' => $k2]);
 				// add parent
 				if (!isset($result[$parent])) {
@@ -51,7 +59,6 @@ class Controllers2 extends \Numbers\Users\Users\DataSource\ACL\Controllers {
 					$parent = $parent2;
 				}
 				// add item
-				$key = \Object\Table\Options::optionJsonFormatKey(['module_id' => $k2, 'resource_id' => $k]);
 				$result[$key] = [
 					'name' => $v['name'],
 					'icon_class' => \HTML::icon(['type' => $v['icon'], 'class_only' => true]),

@@ -8,7 +8,8 @@ class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
 		'actions' => [
 			'refresh' => true,
 			'new' => true,
-			'back' => true
+			'back' => true,
+			'import' => true
 		]
 	];
 	public $containers = [
@@ -90,9 +91,11 @@ class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
+		'name' => 'Strategic Business Units',
 		'model' => '\Numbers\Users\Organizations\Model\StrategicBusinessUnits',
 		'details' => [
 			'\Numbers\Users\Organizations\Model\StrategicBusinessUnit\Organizations' => [
+				'name' => 'Organizations',
 				'pk' => ['on_sborg_tenant_id', 'on_sborg_sbu_id', 'on_sborg_organization_id'],
 				'type' => '1M',
 				'map' => ['on_sbu_tenant_id' => 'on_sborg_tenant_id', 'on_sbu_id' => 'on_sborg_sbu_id'],

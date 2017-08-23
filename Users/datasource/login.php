@@ -50,6 +50,7 @@ class Login extends \Object\DataSource {
 			'inactive' => 'a.um_user_inactive',
 			'roles' => 'b.roles',
 			'role_ids' => 'b.role_ids',
+			'permissions' => 'f.permissions',
 			'organizations' => 'c.organizations',
 			'super_admin' => 'b.super_admin',
 			'handle_exceptions' => 'b.handle_exceptions',
@@ -111,6 +112,16 @@ class Login extends \Object\DataSource {
 			['AND', ['a.um_user_id', '=', 'e.um_usrorg_user_id', true], false],
 			['AND', ['e.um_usrorg_primary', '=', 1, false], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\Permissions::queryBuilderStatic(['alias' => 'inner_c'])->select();
+			$query->columns([
+				'inner_c.um_usrperm_user_id',
+				'permissions' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_c.um_usrperm_resource_id, inner_c.um_usrperm_method_code, inner_c.um_usrperm_action_id, inner_c.um_usrperm_inactive, inner_c.um_usrperm_module_id)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_c.um_usrperm_user_id']);
+		}, 'f', 'ON', [
+			['AND', ['a.um_user_id', '=', 'f.um_usrperm_user_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
@@ -159,6 +170,17 @@ class Login extends \Object\DataSource {
 					$data[$k]['internalization'][str_replace('i18n_', '', $k2)] = $v2;
 					unset($data[$k][$k2]);
 				}
+			}
+			// process permissions, the same logic as in roles datasource!!!
+			if (!empty($v['permissions'])) {
+				$data[$k]['permissions'] = [];
+				$temp = explode(';;', $v['permissions']);
+				foreach ($temp as $v2) {
+					$v2 = explode('::', $v2);
+					$data[$k]['permissions'][(int) $v2[0]][$v2[1]][(int )$v2[2]][(int) $v2[4]] = (int) $v2[3];
+				}
+			} else {
+				$data[$k]['permissions'] = [];
 			}
 		}
 		return $data;

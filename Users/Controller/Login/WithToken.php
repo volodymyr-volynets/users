@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Users\Controller\Login;
 class WithToken extends \Object\Controller {
+	public $title = 'Single Sign On';
+	public $icon = 'sign-in';
 	public function actionIndex() {
 		$crypt = new \Crypt();
 		$token = \Request::input('token');
