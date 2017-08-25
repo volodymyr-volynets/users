@@ -52,7 +52,6 @@ class Menu extends \Object\DataSource {
 		$this->query->where('AND', ['a.sm_resource_type', '>=', 200]);
 		$this->query->where('AND', ['a.sm_resource_type', '<', 300]);
 		$this->query->where('AND', ['a.sm_resource_inactive', '=', 0]);
-		// todo - limit by activated modules/fatures
 		// orderby
 		$this->query->orderby(['a.sm_resource_type' => SORT_DESC]);
 	}

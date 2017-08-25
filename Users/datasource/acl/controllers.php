@@ -73,9 +73,18 @@ class Controllers extends \Object\DataSource {
 				$query = \Numbers\Tenants\Tenants\Model\Modules::queryBuilderStatic(['alias' => 'exists_a'])->select();
 				$query->columns(['exists_a.tm_module_module_code']);
 				$query->where('AND', ['exists_a.tm_module_module_code', '=', 'a.sm_resource_module_code', true]);
-			}, true);
+			}, 'EXISTS');
 		});
 		// limit by features
+		$this->query->where('AND NOT', function (& $query) {
+			$query = \Numbers\Backend\System\Modules\Model\Resource\Features::queryBuilderStatic(['alias' => 'exists_b'])->select();
+			$query->columns(1);
+			$query->join('LEFT', new \Numbers\Tenants\Tenants\Model\Module\Features(), 'exists_c', 'ON', [
+				['AND', ['exists_c.tm_feature_feature_code', '=', 'exists_b.sm_rsrcftr_feature_code', true]]
+			]);
+			$query->where('AND', ['exists_b.sm_rsrcftr_resource_id', '=', 'a.sm_resource_id', true]);
+			$query->where('AND', ['exists_c.tm_feature_feature_code', 'IS', null, false]);
+		}, 'EXISTS');
 	}
 
 	public function process($data, $options = []) {
