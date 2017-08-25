@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Users\Controller\Logout;
 class Confirmed extends \Object\Controller {
+	public $title = 'Sign Out';
+	public $icon = 'sign-out';
 	public function actionIndex() {
 		$options = [
 			'options' => [

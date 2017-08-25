@@ -4,29 +4,27 @@ namespace Numbers\Users\Monitoring\Model;
 class Usages extends \Object\Table {
 	public $db_link;
 	public $db_link_flag;
-	public $module_code = 'MN';
-	public $title = 'M/N Monitoring';
-	public $name = 'mn_usages';
-	public $pk = ['mn_usage_tenant_id', 'mn_usage_session_id', 'mn_usage_user_id', 'mn_usage_timestamp'];
+	public $module_code = 'SM';
+	public $title = 'S/M Monitoring Usages';
+	public $name = 'sm_monitoring_usages';
+	public $pk = ['sm_monusage_tenant_id', 'sm_monusage_session_id', 'sm_monusage_timestamp'];
 	public $tenant = true;
 	public $orderby;
 	public $limit;
-	public $column_prefix = 'mn_usage_';
+	public $column_prefix = 'sm_monusage_';
 	public $columns = [
-		'mn_usage_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'mn_usage_session_id' => ['name' => 'Session #', 'type' => 'bigint'],
-		'mn_usage_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
-		'mn_usage_timestamp' => ['name' => 'Timestamp', 'type' => 'timestamp'],
-		'mn_usage_actions' => ['name' => 'Actions', 'type' => 'json'],
+		'sm_monusage_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
+		'sm_monusage_session_id' => ['name' => 'Session #', 'type' => 'bigint'],
+		'sm_monusage_timestamp' => ['name' => 'Timestamp', 'type' => 'timestamp'],
+		'sm_monusage_user_id' => ['name' => 'User #', 'domain' => 'user_id', 'null' => true],
+		'sm_monusage_user_ip' => ['name' => 'User IP', 'domain' => 'ip'],
+		'sm_monusage_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id', 'null' => true],
+		'sm_monusage_resource_name' => ['name' => 'Resource Name', 'domain' => 'name', 'null' => true],
+		'sm_monusage_duration' => ['name' => 'Duration (Seconds)', 'domain' => 'quantity'],
+		'sm_monusage_actions' => ['name' => 'Actions', 'type' => 'json'] // array of actions in json format
 	];
 	public $constraints = [
-		'mn_usages_pk' => ['type' => 'pk', 'columns' => ['mn_usage_tenant_id', 'mn_usage_session_id', 'mn_usage_user_id', 'mn_usage_timestamp']],
-		'mn_usage_user_id_fk' => [
-			'type' => 'fk',
-			'columns' => ['mn_usage_tenant_id', 'mn_usage_user_id'],
-			'foreign_model' => '\Numbers\Users\Users\Model\Users',
-			'foreign_columns' => ['um_user_tenant_id', 'um_user_id']
-		]
+		'sm_monitoring_usages_pk' => ['type' => 'pk', 'columns' => ['sm_monusage_tenant_id', 'sm_monusage_session_id', 'sm_monusage_timestamp']],
 	];
 	public $indexes = [];
 	public $history = false;
@@ -38,7 +36,7 @@ class Usages extends \Object\Table {
 		'mysqli' => 'InnoDB'
 	];
 
-	public $cache = true;
+	public $cache = false;
 	public $cache_tags = [];
 	public $cache_memory = false;
 
