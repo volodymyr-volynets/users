@@ -58,6 +58,13 @@ class LegalAuthorities extends \Object\Table {
 		]
 	];
 
+	public $attributes = [
+		'map' => [
+			'on_authority_tenant_id' => 'wg_attribute_tenant_id',
+			'on_authority_id' => 'wg_attribute_authority_id'
+		]
+	];
+
 	public $data_asset = [
 		'classification' => 'client_confidential',
 		'protection' => 2,

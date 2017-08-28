@@ -26,6 +26,8 @@ class Departments extends \Object\Form\Wrapper\Base {
 		],
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
+			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
+			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
 		]
 	];
 	public $elements = [

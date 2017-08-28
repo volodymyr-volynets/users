@@ -63,6 +63,20 @@ class Departments extends \Object\Table {
 		'inserted' => true
 	];
 
+	public $addresses = [
+		'map' => [
+			'on_department_tenant_id' => 'wg_address_tenant_id',
+			'on_department_id' => 'wg_address_department_id'
+		]
+	];
+
+	public $attributes = [
+		'map' => [
+			'on_department_tenant_id' => 'wg_attribute_tenant_id',
+			'on_department_id' => 'wg_attribute_department_id'
+		]
+	];
+
 	public $data_asset = [
 		'classification' => 'client_confidential',
 		'protection' => 2,

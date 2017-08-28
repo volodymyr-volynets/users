@@ -76,6 +76,13 @@ class StrategicBusinessUnits extends \Object\Table {
 		]
 	];
 
+	public $attributes = [
+		'map' => [
+			'on_sbu_tenant_id' => 'wg_attribute_tenant_id',
+			'on_sbu_id' => 'wg_attribute_sbu_id'
+		]
+	];
+
 	public $data_asset = [
 		'classification' => 'client_confidential',
 		'protection' => 2,
