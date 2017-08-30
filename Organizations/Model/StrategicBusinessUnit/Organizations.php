@@ -19,6 +19,7 @@ class Organizations extends \Object\Table {
 		'on_sborg_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'on_sborg_sbu_id' => ['name' => 'SBU #', 'domain' => 'sbu_id'],
 		'on_sborg_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
+		'on_sborg_primary' => ['name' => 'Primary', 'type' => 'boolean'],
 		'on_sborg_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

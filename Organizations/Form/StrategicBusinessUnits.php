@@ -19,7 +19,7 @@ class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
 		// child containers
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
-		'children_container' => [
+		'organizations_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
@@ -57,14 +57,17 @@ class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
 				'contact' => ['container' => 'contact_container', 'order' => 200]
 			],
 			'children' => [
-				'children' => ['container' => 'children_container', 'order' => 100]
+				'children' => ['container' => 'organizations_container', 'order' => 100]
 			]
 		],
 		'general_container' => [
 			'on_sbu_default_organization_id' => [
-				'on_sbu_default_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Default Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive'],
+				'on_sbu_parent_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Parent Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive'],
 				'on_sbu_hold' => ['order' => 3, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
 				'on_sbu_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'on_sbu_parent_division_id' => [
+				'on_sbu_parent_division_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Division/Subdivision', 'domain' => 'division_id', 'null' => true, 'required' => false, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Divisions::optionsActive'],
 			],
 			'separator_1' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'envelope-o', 'percent' => 100],
@@ -82,10 +85,11 @@ class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
 				'on_sbu_fax' => ['order' => 2, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 			]
 		],
-		'children_container' => [
+		'organizations_container' => [
 			'row1' => [
-				'on_sborg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
-				'on_sborg_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'on_sborg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'on_sborg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 5],
+				'on_sborg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'buttons' => [
@@ -104,4 +108,27 @@ class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
 			]
 		]
 	];
+
+	public function validate(& $form) {
+		// primary organizations
+		$primary_found = 0;
+		$primary_first_line = null;
+		foreach ($form->values['\Numbers\Users\Organizations\Model\StrategicBusinessUnit\Organizations'] as $k => $v) {
+			if (!isset($primary_first_line)) {
+				$primary_first_line = "\Numbers\Users\Organizations\Model\StrategicBusinessUnit\Organizations[{$k}][on_sborg_primary]";
+			}
+			if (!empty($v['on_sborg_primary'])) {
+				$primary_found++;
+				if (!empty($v['on_sborg_inactive'])) {
+					$form->error(DANGER, 'Primary cannot be inactive!', "\Numbers\Users\Organizations\Model\StrategicBusinessUnit\Organizations[{$k}][on_sborg_inactive]");
+				}
+				if ($primary_found > 1) {
+					$form->error(DANGER, 'There can be only one primary organization!', "\Numbers\Users\Organizations\Model\StrategicBusinessUnit\Organizations[{$k}][on_sborg_primary]");
+				}
+			}
+		}
+		if ($primary_found == 0) {
+			$form->error(DANGER, 'You must select primary organization!', $primary_first_line);
+		}
+	}
 }

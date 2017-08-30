@@ -33,10 +33,10 @@ class Departments extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			'on_sbu_id' => [
-				'on_sbu_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'SBU #', 'domain' => 'sbu_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_sbu_id;>='],
-				'on_sbu_id2' => ['order' => 2, 'label_name' => 'SBU #', 'domain' => 'sbu_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_sbu_id;<='],
-				'on_sbu_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_sbu_inactive;=']
+			'on_department_id' => [
+				'on_department_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Department #', 'domain' => 'department_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_department_id;>='],
+				'on_department_id2' => ['order' => 2, 'label_name' => 'Department #', 'domain' => 'department_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_department_id;<='],
+				'on_department_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_department_inactive;=']
 			],
 			'full_text_search' => [
 				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_department_name', 'a.on_department_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],

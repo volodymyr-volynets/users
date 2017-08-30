@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form;
 class Departments extends \Object\Form\Wrapper\Base {
-	public $form_link = 'sbu';
+	public $form_link = 'departments';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

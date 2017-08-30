@@ -34,8 +34,8 @@ class Jurisdictions extends \Object\Form\Wrapper\List2 {
 		],
 		'filter' => [
 			'on_jurisdiction_id' => [
-				'on_jurisdiction_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Jurisdiction #', 'domain' => 'jurisdiction_id_sequence', 'percent' => 50, 'null' => true, 'query_builder' => 'a.on_jurisdiction_id;>='],
-				'on_jurisdiction_id2' => ['order' => 2, 'label_name' => 'Jurisdiction #', 'domain' => 'jurisdiction_id_sequence', 'percent' => 50, 'null' => true, 'query_builder' => 'a.on_jurisdiction_id;<='],
+				'on_jurisdiction_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Jurisdiction #', 'domain' => 'jurisdiction_id', 'percent' => 50, 'null' => true, 'query_builder' => 'a.on_jurisdiction_id;>='],
+				'on_jurisdiction_id2' => ['order' => 2, 'label_name' => 'Jurisdiction #', 'domain' => 'jurisdiction_id', 'percent' => 50, 'null' => true, 'query_builder' => 'a.on_jurisdiction_id;<='],
 			],
 			'on_jurisdiction_type' => [
 				'on_jurisdiction_type1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 50, 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Organizations\Model\Jurisdiction\Types', 'query_builder' => 'a.on_jurisdiction_type'],
