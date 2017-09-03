@@ -4,7 +4,7 @@ namespace Numbers\Users\Users\Form\Registration\Tenant;
 class Collection extends \Object\Form\Wrapper\Collection {
 	public $collection_link = 'tenant_registration_collection';
 	const GLOBAL_WIZARD = [
-		'model' => 'object_form_wrapper_wizard',
+		'model' => '\Object\Form\Wrapper\Wizard',
 		'options' => [
 			'segment' => null,
 			'percent' => 100,

@@ -2,6 +2,7 @@
 
 namespace Numbers\Users\TaskScheduler\Controller\External;
 class CronDaemon extends \Object\Controller {
+	public $title = 'Cron Daemon';
 	public function actionIndex() {
 		// process input
 		$input = \Request::input();

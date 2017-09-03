@@ -12,6 +12,7 @@ class CreateJob {
 	public static function create(string $task_code, & $form) {
 		$params = [
 			'ts_job_task_code' => $task_code,
+			'ts_job_name' => $form->title,
 			'\Numbers\Users\TaskScheduler\Model\JobParameters' => []
 		];
 		foreach ($form->values as $k => $v) {

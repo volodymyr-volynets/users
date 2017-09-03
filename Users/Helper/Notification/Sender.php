@@ -84,6 +84,7 @@ class Sender {
 		}
 		// run through translations
 		$subject = i18n(null, self::$cached_notifications[$notification_code]['sm_notification_subject'], ['replace' => $options['replace']['subject'] ?? null]);
+		$subject = strip_tags2($subject); // a must
 		$body = i18n(null, self::$cached_notifications[$notification_code]['sm_notification_body'], ['replace' => $options['replace']['body'] ?? null]);
 		$body = nl2br($body, true);
 		// from

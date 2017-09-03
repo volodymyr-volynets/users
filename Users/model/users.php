@@ -70,8 +70,13 @@ class Users extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'um_user_id' => 'name',
+		'um_user_name' => 'name'
+	];
+	public $options_active = [
+		'um_user_inactive' => 0
+	];
 	public $engine = [
 		'mysqli' => 'InnoDB'
 	];

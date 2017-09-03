@@ -2,6 +2,7 @@
 
 namespace Numbers\Users\TaskScheduler\Controller\External;
 class SingleCronJob extends \Object\Controller {
+	public $title = 'Single Cron Job';
 	public function actionIndex() {
 		$result = [
 			'success' => false,

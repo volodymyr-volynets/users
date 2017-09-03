@@ -16,7 +16,7 @@ class Jobs extends \Object\Form\Wrapper\Base {
 		'parameters_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\TaskScheduler\Model\JobParameters',
 			'details_pk' => ['ts_jbparam_name'],
 			'required' => true,
@@ -95,5 +95,29 @@ class Jobs extends \Object\Form\Wrapper\Base {
 		if (!empty($form->values['ts_job_cron_month']) && !$expression_model->isValidOneExpression($form->values['ts_job_cron_month'])) $form->error(DANGER, \Object\Content\Messages::INVALID_VALUES, 'ts_job_cron_month');
 		if (!empty($form->values['ts_job_cron_day_of_week']) && !$expression_model->isValidOneExpression($form->values['ts_job_cron_day_of_week'])) $form->error(DANGER, \Object\Content\Messages::INVALID_VALUES, 'ts_job_cron_day_of_week');
 		if (!empty($form->values['ts_job_cron_year']) && !$expression_model->isValidOneExpression($form->values['ts_job_cron_year'])) $form->error(DANGER, \Object\Content\Messages::INVALID_VALUES, 'ts_job_cron_year');
+		// validate mandatory values
+		$model = new \Numbers\Users\TaskScheduler\Model\TaskParameters();
+		$mandatory_options = $model->options(['where' => [
+			'ts_tskparam_task_code' => $form->values['ts_job_task_code'],
+			'ts_tskparam_mandatory' => 1
+		]]);
+		foreach ($form->values['\Numbers\Users\TaskScheduler\Model\JobParameters'] as $k => $v) {
+			if (!empty($mandatory_options[$v['ts_jbparam_name']])) {
+				if (empty($v['ts_jbparam_value'])) {
+					$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, "\Numbers\Users\TaskScheduler\Model\JobParameters[$k][ts_jbparam_value]");
+				}
+				unset($mandatory_options[$v['ts_jbparam_name']]);
+			}
+		}
+		if (!empty($mandatory_options)) {
+			foreach ($mandatory_options as $k => $v) {
+				print_r2($v);
+				$form->error(DANGER, 'Missing required parameter [Parameter]!', null, [
+					'replace' => [
+						'[Parameter]' => $v['name']
+					]
+				]);
+			}
+		}
 	}
 }

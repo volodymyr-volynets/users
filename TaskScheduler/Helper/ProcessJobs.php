@@ -21,7 +21,7 @@ class ProcessJobs {
 			$query->join('INNER', new \Numbers\Tenants\Tenants\Model\Tenants(), 'b', 'ON', [
 				['AND', ['a.ts_job_tenant_id', '=', 'b.tm_tenant_id', true]]
 			]);
-			$query->join('INNER', new \Numbers\Users\Users\Model\Users(), 'c', 'ON', [
+			$query->join('INNER', new \Numbers\Users\Users\Model\Users(['skip_tenant' => true]), 'c', 'ON', [
 				['AND', ['a.ts_job_tenant_id', '=', 'c.um_user_tenant_id', true]],
 				['AND', ['a.ts_job_user_id', '=', 'c.um_user_id', true]]
 			]);
@@ -49,8 +49,11 @@ class ProcessJobs {
 				// todo: process timezone
 				if (!$expression_model->isTime($datetime)) continue;
 				// insert into database
+				$sequence_model = new \Numbers\Users\TaskScheduler\Model\Executed\Jobs();
+				$ts_execjb_id = $sequence_model->sequence('ts_execjb_id', 'nextval', $v['ts_job_tenant_id']);
 				$executed_data = [
 					'ts_execjb_tenant_id' => $v['ts_job_tenant_id'],
+					'ts_execjb_id' => $ts_execjb_id,
 					'ts_execjb_job_id' => $v['ts_job_id'],
 					'ts_execjb_status' => 10,
 					'ts_execjb_daemon_code' => $v['ts_job_daemon_code'],
