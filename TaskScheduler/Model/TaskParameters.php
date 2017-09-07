@@ -20,7 +20,7 @@ class TaskParameters extends \Object\Table {
 		'ts_tskparam_mandatory' => ['name' => 'Mandatory', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'ts_tskparam_parameters_pk' => ['type' => 'pk', 'columns' => ['ts_tskparam_task_code', 'ts_tskparam_name']],
+		'ts_task_parameters_pk' => ['type' => 'pk', 'columns' => ['ts_tskparam_task_code', 'ts_tskparam_name']],
 		'ts_tskparam_task_code_fk' => [
 			'type' => 'fk',
 			'columns' => ['ts_tskparam_task_code'],
@@ -38,7 +38,7 @@ class TaskParameters extends \Object\Table {
 	];
 	public $options_active = [];
 	public $engine = [
-		'mysqli' => 'InnoDB'
+		'MySQLi' => 'InnoDB'
 	];
 
 	public $cache = false;

@@ -52,7 +52,7 @@ class Types extends \Object\Table {
 		'um_assigntype_inactive' => 0
 	];
 	public $engine = [
-		'mysqli' => 'InnoDB'
+		'MySQLi' => 'InnoDB'
 	];
 
 	public $cache = true;

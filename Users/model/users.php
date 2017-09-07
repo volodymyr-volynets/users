@@ -78,7 +78,7 @@ class Users extends \Object\Table {
 		'um_user_inactive' => 0
 	];
 	public $engine = [
-		'mysqli' => 'InnoDB'
+		'MySQLi' => 'InnoDB'
 	];
 
 	public $cache = false;

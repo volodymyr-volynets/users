@@ -59,7 +59,7 @@ class Roles extends \Object\Table {
 	];
 	public $options_active = [];
 	public $engine = [
-		'mysqli' => 'InnoDB'
+		'MySQLi' => 'InnoDB'
 	];
 
 	public $cache = false;

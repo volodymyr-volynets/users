@@ -44,7 +44,7 @@ class Types extends \Object\Table {
 		'on_orgtype_inactive' => 0
 	];
 	public $engine = [
-		'mysqli' => 'InnoDB'
+		'MySQLi' => 'InnoDB'
 	];
 
 	public $cache = true;
