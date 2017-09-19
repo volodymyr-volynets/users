@@ -41,7 +41,7 @@ class Step1 extends \Object\Form\Wrapper\Base {
 				'um_regten_user_first_name' => ['order' => 1, 'row_order' => 600, 'label_name' => 'First Name', 'domain' => 'personal_name', 'percent' => 50, 'required' => true],
 				'um_regten_user_last_name' => ['order' => 2, 'label_name' => 'Last Name', 'domain' => 'personal_name', 'percent' => 50, 'required' => true]
 			],
-			'um_user_email' => [
+			'um_regten_user_email' => [
 				'um_regten_user_email' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Email', 'domain' => 'email', 'percent' => 50, 'required' => true],
 				'um_regten_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'percent' => 50, 'null' => true]
 			],

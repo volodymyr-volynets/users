@@ -46,7 +46,7 @@ class Monitor {
 	 * Destroy
 	 */
 	public function destroy() {
-		if (!\Application::get('flag.global.__ajax') && !\Helper\Cmd::isCli()) {
+		if (!empty(self::$usage) && !\Application::get('flag.global.__ajax') && !\Helper\Cmd::isCli()) {
 			self::$usage['sm_monusage_user_id'] = \User::id();
 			self::$usage['sm_monusage_duration'] = round(microtime(true) - self::$usage['sm_monusage_duration'], 4);
 			self::$usage['sm_monusage_resource_id'] = \Application::$controller->controller_id ?? null;
