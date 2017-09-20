@@ -44,6 +44,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_rendering_type' => 'grid_with_label',
 			'details_key' => '\Numbers\Users\Users\Model\User\Internalization',
 			'details_pk' => ['um_usri18n_user_id'],
+			'order' => 35001
 		],
 		'assignments_container' => [
 			'type' => 'details',
