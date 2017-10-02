@@ -628,7 +628,7 @@ class System extends \Object\Import {
 					'sm_resource_classification' => 'Reports',
 					'sm_resource_name' => 'U/M Organization Access Report',
 					'sm_resource_description' => null,
-					'sm_resource_icon' => 'shield',
+					'sm_resource_icon' => 'building-o',
 					'sm_resource_module_code' => 'UM',
 					'sm_resource_group1_name' => 'Operations',
 					'sm_resource_group2_name' => 'User Management',
