@@ -40,6 +40,8 @@ class Login extends \Object\Form\Wrapper\Base {
 			if (!empty($url)) {
 				\Request::redirect($url);
 			}
+			// redirect to dashboard
+			\Request::redirect('/Numbers/Users/Users/Controller/Helper/Dashboard');
 			$form->error('success', 'You have successfully signed in!');
 			return true;
 		} else {

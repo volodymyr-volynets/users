@@ -44,6 +44,19 @@ class Resources {
 			'log_notifications' => [
 				'method' => '\Numbers\Users\Users\Helper\Notification\Sender::destroy'
 			]
+		],
+		'postlogin_dashboard' => [
+			'numbers_users' => [
+				'name' => 'User Management',
+				'icon' => 'user-o',
+				'model' => '\Numbers\Users\Users\Helper\Dashboard\Dashboard',
+				'order' => 32000
+			]
+		],
+		'postlogin_brand_url' => [
+			'url' => [
+				'url' => '/Numbers/Users/Users/Controller/Helper/Dashboard'
+			]
 		]
 	];
 }
