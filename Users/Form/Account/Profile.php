@@ -16,6 +16,7 @@ class Profile extends \Object\Form\Wrapper\Base {
 		'buttons' => ['default_row_type' => 'grid', 'order' => 900],
 		// child containers
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
+		'photo_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'permissions_container' => ['default_row_type' => 'grid', 'order' => 34000],
 		'internalization_container' => [
@@ -54,6 +55,7 @@ class Profile extends \Object\Form\Wrapper\Base {
 			'login' => ['order' => 200, 'label_name' => 'Login'],
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
+			'photo' => ['order' => 500, 'label_name' => 'Photo'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA
 		]
 	];
@@ -82,7 +84,10 @@ class Profile extends \Object\Form\Wrapper\Base {
 			],
 			'roles' => [
 				'roles' => ['container' => 'roles_container', 'order' => 100],
-			]
+			],
+			'photo' => [
+				'photo' => ['container' => 'photo_container', 'order' => 100],
+			],
 		],
 		'general_container' => [
 			self::HIDDEN => [
@@ -162,6 +167,17 @@ class Profile extends \Object\Form\Wrapper\Base {
 				'um_usrorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5, 'persistent' => true]
 			]
 		],
+		'photo_container' => [
+			'__logo_upload' => [
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Photo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'imagesize' => '250x250'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 250x250.'],
+			],
+			'__logo_preview' => [
+				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Photo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'um_user_photo_file_id'],
+			],
+			self::HIDDEN => [
+				'um_user_photo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => [
 				self::BUTTON_SUBMIT_SAVE => self::BUTTON_SUBMIT_SAVE_DATA
@@ -223,6 +239,32 @@ class Profile extends \Object\Form\Wrapper\Base {
 				$form->error('danger', 'You must provide Email or Username!', 'um_user_email');
 				$form->error('danger', 'You must provide Email or Username!', 'um_user_login_username');
 			}
+		}
+		// photo
+		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
+			$model = new \Numbers\Users\Documents\Base\Base();
+			// remove file if exists
+			if (!empty($form->values['um_user_photo_file_id'])) {
+				$result = $model->delete($form->values['um_user_photo_file_id']);
+				if (!$result['success']) {
+					$form->error(DANGER, $result['error']);
+					return;
+				}
+				$form->values['um_user_photo_file_id'] = null;
+			}
+			// add file
+			$primary_organization_id = current(array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['where' => ['um_usrorg_primary' => 1]]));
+			$catalog = $model->fetchPrimaryCatalog($primary_organization_id);
+			if (empty($catalog)) {
+				$form->error(DANGER, 'You must set primary catalog!');
+				return;
+			}
+			$result = $model->upload($form->values['__logo_upload'], $catalog);
+			if (!$result['success']) {
+				$form->error(DANGER, $result['error']);
+				return;
+			}
+			$form->values['um_user_photo_file_id'] = $result['file_id'];
 		}
 	}
 }
