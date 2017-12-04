@@ -13,8 +13,8 @@ class Preview {
 	 * @return string
 	 */
 	public function renderPreview(& $form, & $options, & $value, & $neighbouring_values) {
-		if (!empty($neighbouring_values['on_organization_logo_file_id'])) {
-			return '<div>' . \HTML::img(['src' => \Numbers\Users\Documents\Base\Base::generateURL($neighbouring_values['on_organization_logo_file_id'])]) . '</div>';
+		if (!empty($neighbouring_values[$options['options']['preview_file_id']])) {
+			return '<div>' . \HTML::img(['src' => \Numbers\Users\Documents\Base\Base::generateURL($neighbouring_values[$options['options']['preview_file_id']])]) . '</div>';
 		} else {
 			return '';
 		}

@@ -20,6 +20,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'permissions_container' => ['default_row_type' => 'grid', 'order' => 34000],
+		'photo_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'roles_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -93,6 +94,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'login' => ['order' => 200, 'label_name' => 'Login'],
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
+			'photo' => ['order' => 420, 'label_name' => 'Photo'],
 			'permissions' => ['order' => 440, 'label_name' => 'Permissions'],
 			'notifications' => ['order' => 450, 'label_name' => 'Notifications'],
 			'assignments' => ['order' => 500, 'label_name' => 'Assignments'],
@@ -125,6 +127,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'organizations' => [
 				'organizations' => ['container' => 'organizations_container', 'order' => 100],
+			],
+			'photo' => [
+				'photo' => ['container' => 'photo_container', 'order' => 100],
 			],
 			'permissions' => [
 				'permissions' => ['container' => 'permissions_container', 'order' => 100],
@@ -221,6 +226,17 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
 				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 5],
 				'um_usrorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			]
+		],
+		'photo_container' => [
+			'__logo_upload' => [
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Photo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'imagesize' => '250x250'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 250x250.'],
+			],
+			'__logo_preview' => [
+				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Photo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'um_user_photo_file_id'],
+			],
+			self::HIDDEN => [
+				'um_user_photo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
 			]
 		],
 		'assignments_container' => [
@@ -369,11 +385,13 @@ class Users extends \Object\Form\Wrapper\Base {
 		// primary organizations
 		$primary_found = 0;
 		$primary_first_line = null;
+		$primary_organization_id = null;
 		foreach ($form->values['\Numbers\Users\Users\Model\User\Organizations'] as $k => $v) {
 			if (!isset($primary_first_line)) {
 				$primary_first_line = "\Numbers\Users\Users\Model\User\Organizations[{$k}][um_usrorg_primary]";
 			}
 			if (!empty($v['um_usrorg_primary'])) {
+				$primary_organization_id = $v['um_usrorg_organization_id'];
 				$primary_found++;
 				if (!empty($v['um_usrorg_inactive'])) {
 					$form->error(DANGER, 'Primary cannot be inactive!', "\Numbers\Users\Users\Model\User\Organizations[{$k}][um_usrorg_inactive]");
@@ -403,6 +421,31 @@ class Users extends \Object\Form\Wrapper\Base {
 			if (!empty($v['um_usrassign_mandatory']) && empty($v['um_usrassign_parent_user_id'])) {
 				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, $key);
 			}
+		}
+		// photo
+		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
+			$model = new \Numbers\Users\Documents\Base\Base();
+			// remove file if exists
+			if (!empty($form->values['um_user_photo_file_id'])) {
+				$result = $model->delete($form->values['um_user_photo_file_id']);
+				if (!$result['success']) {
+					$form->error(DANGER, $result['error']);
+					return;
+				}
+				$form->values['um_user_photo_file_id'] = null;
+			}
+			// add file
+			$catalog = $model->fetchPrimaryCatalog($primary_organization_id);
+			if (empty($catalog)) {
+				$form->error(DANGER, 'You must set primary catalog!');
+				return;
+			}
+			$result = $model->upload($form->values['__logo_upload'], $catalog);
+			if (!$result['success']) {
+				$form->error(DANGER, $result['error']);
+				return;
+			}
+			$form->values['um_user_photo_file_id'] = $result['file_id'];
 		}
 	}
 
@@ -527,5 +570,13 @@ class Users extends \Object\Form\Wrapper\Base {
 		return [
 			'organization_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id'),
 		];
+	}
+
+	public function overrideTabs(& $form, & $options, & $tab, & $neighbouring_values) {
+		$result = [];
+		if ($tab == 'photo' && empty($form->values['um_user_id'])) {
+			$result['hidden'] = true;
+		}
+		return $result;
 	}
 }

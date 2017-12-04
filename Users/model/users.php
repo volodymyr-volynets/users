@@ -36,6 +36,8 @@ class Users extends \Object\Table {
 		'um_user_login_username' => ['name' => 'Username', 'domain' => 'login', 'null' => true],
 		'um_user_login_password' => ['name' => 'Password', 'domain' => 'password', 'null' => true],
 		'um_user_login_last_set' => ['name' => 'Last Set', 'type' => 'date', 'null' => true],
+		// photo
+		'um_user_photo_file_id' => ['name' => 'Photo File #', 'domain' => 'file_id', 'null' => true],
 		// inactive & hold
 		'um_user_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'um_user_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
