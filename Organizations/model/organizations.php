@@ -26,6 +26,8 @@ class Organizations extends \Object\Table {
 		'on_organization_phone2' => ['name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true],
 		'on_organization_cell' => ['name' => 'Cell Phone', 'domain' => 'phone', 'null' => true],
 		'on_organization_fax' => ['name' => 'Fax', 'domain' => 'phone', 'null' => true],
+		// logo
+		'on_organization_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true],
 		// inactive & hold
 		'on_organization_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'on_organization_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

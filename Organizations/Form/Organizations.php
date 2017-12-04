@@ -19,6 +19,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		// child containers
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
+		'logo_container' => ['default_row_type' => 'grid', 'order' => 32200],
 		'children_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -36,6 +37,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'children' => ['order' => 200, 'label_name' => 'Children'],
+			'logo' => ['order' => 300, 'label_name' => 'Logo'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
 		]
@@ -57,6 +59,9 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			],
 			'children' => [
 				'children' => ['container' => 'children_container', 'order' => 100]
+			],
+			'logo' => [
+				'logo' => ['container' => 'logo_container', 'order' => 100]
 			]
 		],
 		'general_container' => [
@@ -82,6 +87,17 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			'on_organization_cell' => [
 				'on_organization_cell' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 				'on_organization_fax' => ['order' => 2, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+			]
+		],
+		'logo_container' => [
+			'__logo_upload' => [
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Logo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'imagesize' => '200x80'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 200x80.'],
+			],
+			'__logo_preview' => [
+				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Logo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'on_organization_logo_file_id'],
+			],
+			self::HIDDEN => [
+				'on_organization_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
 			]
 		],
 		'children_container' => [
@@ -112,4 +128,39 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			]
 		]
 	];
+
+	public function validate(& $form) {
+		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
+			$model = new \Numbers\Users\Documents\Base\Base();
+			// remove file if exists
+			if (!empty($form->values['on_organization_logo_file_id'])) {
+				$result = $model->delete($form->values['on_organization_logo_file_id']);
+				if (!$result['success']) {
+					$form->error(DANGER, $result['error']);
+					return;
+				}
+				$form->values['on_organization_logo_file_id'] = null;
+			}
+			// add file
+			$catalog = $model->fetchPrimaryCatalog($form->values['on_organization_id']);
+			if (empty($catalog)) {
+				$form->error(DANGER, 'You must set primary catalog!');
+				return;
+			}
+			$result = $model->upload($form->values['__logo_upload'], $catalog);
+			if (!$result['success']) {
+				$form->error(DANGER, $result['error']);
+				return;
+			}
+			$form->values['on_organization_logo_file_id'] = $result['file_id'];
+		}
+	}
+
+	public function overrideTabs(& $form, & $options, & $tab, & $neighbouring_values) {
+		$result = [];
+		if ($tab == 'logo' && empty($form->values['on_organization_id'])) {
+			$result['hidden'] = true;
+		}
+		return $result;
+	}
 }
