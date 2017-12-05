@@ -119,7 +119,6 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'login' => [
 				'login' => ['container' => 'login_container', 'order' => 100],
-				'separator' => ['container' => 'separator_container', 'order' => 200],
 				'internalization' => ['container' => 'internalization_container', 'order' => 300],
 			],
 			'roles' => [
@@ -139,7 +138,6 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'assignments' => [
 				'assignments' => ['container' => 'assignments_container', 'order' => 100],
-				'separator_container' => ['container' => 'separator_container', 'order' => 200],
 				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 300],
 			]
 		],
@@ -184,12 +182,10 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Reset Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false, 'empty_value' => true]
 			]
 		],
-		'separator_container' => [
+		'internalization_container' => [
 			'separator_1' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Internalization', 'icon' => 'adjust', 'percent' => 100],
 			],
-		],
-		'internalization_container' => [
 			'um_usri18n_group_id' => [
 				'um_usri18n_group_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Group', 'domain' => 'group_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Groups::optionsActive'],
 			],
@@ -213,6 +209,13 @@ class Users extends \Object\Form\Wrapper\Base {
 			'um_usri18n_format_amount_frm' => [
 				'um_usri18n_format_amount_frm' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Amounts In Forms', 'domain' => 'type_id', 'null' => true, 'method' => 'select', 'options_model' => '\Object\Format\Amounts'],
 				'um_usri18n_format_amount_fs' => ['order' => 2, 'label_name' => 'Amounts In Financial Statement', 'domain' => 'type_id', 'null' => true, 'method' => 'select', 'options_model' => '\Object\Format\Amounts']
+			],
+			'print' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'Print', 'icon' => 'print', 'percent' => 100],
+			],
+			'um_usri18n_print_format' => [
+				'um_usri18n_print_format' => ['order' => 1, 'row_order' => 900, 'label_name' => 'Print Format', 'domain' => 'code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Formats::options'],
+				'um_usri18n_print_font' => ['order' => 2, 'label_name' => 'Print Font', 'domain' => 'code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Fonts::options'],
 			]
 		],
 		'roles_container' => [
@@ -253,12 +256,10 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'readonly' => true, 'percent' => 5],
 			]
 		],
-		'separator_container' => [
-			'separator_1' => [
+		'assignments_reverse_container' => [
+			'separator_2' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Other Assignments', 'icon' => 'cogs', 'percent' => 100],
 			],
-		],
-		'assignments_reverse_container' => [
 			'row1' => [
 				'um_usrassign_assignment_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'type_code', 'readonly' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
 				'um_usrassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'readonly' => true, 'percent' => 5],

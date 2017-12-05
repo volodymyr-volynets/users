@@ -69,6 +69,9 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 			'sm_resource_classification' => ['label_name' => 'Classification', 'percent' => 20],
 			'sm_resource_description' => ['label_name' => 'Description', 'percent' => 70]
 		]);
+		$report->addHeader(DEF, 'separator', [
+			'blank' => ['label_name' => ' ', 'percent' => 100]
+		]);
 		$report->addHeader(DEF, 'actions', [
 			'blank' => ['label_name' => ' ', 'percent' => 10],
 			'name' => ['label_name' => 'Actions:', 'percent' => 40],
