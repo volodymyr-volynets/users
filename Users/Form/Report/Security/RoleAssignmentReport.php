@@ -7,7 +7,7 @@ class RoleAssignmentReport extends \Object\Form\Wrapper\Report {
 		'segment' => self::SEGMENT_REPORT,
 		'actions' => [
 			'refresh' => true,
-			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
+			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
 		]
 	];
 	public $containers = [
@@ -74,6 +74,9 @@ class RoleAssignmentReport extends \Object\Form\Wrapper\Report {
 		]);
 		$report->addHeader(DEF, 'separator', [
 			'blank' => ['label_name' => ' ', 'percent' => 100]
+		],
+		[
+			'skip_rendering' => true
 		]);
 		$report->addHeader(DEF, 'organizations', [
 			'blank' => ['label_name' => '', 'percent' => 10],

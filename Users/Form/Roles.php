@@ -167,7 +167,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 		],
 		'separator_container' => [
 			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Other Assignments', 'icon' => 'cogs', 'percent' => 100],
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Other Assignments', 'icon' => 'fas fa-cogs', 'percent' => 100],
 			],
 		],
 		'reverse_assignments_container' => [

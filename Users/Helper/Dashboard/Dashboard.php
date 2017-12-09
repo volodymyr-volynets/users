@@ -12,7 +12,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 		1 => [
 			1 => [
 				'name' => 'Users',
-				'icon' => 'users',
+				'icon' => 'fas fa-users',
 				'acl' => [
 					'resource_id' => '\Numbers\Users\Users\Controller\Users',
 					'method_code' => 'Index',
@@ -21,11 +21,11 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 				'url' => '/Numbers/Users/Users/Controller/Users'
 			],
 			2 => [
-				'icon' => 'arrow-right'
+				'icon' => 'fas fa-arrow-right'
 			],
 			3 => [
 				'name' => 'New User',
-				'icon' => 'user',
+				'icon' => 'fas fa-user',
 				'acl' => [
 					'resource_id' => '\Numbers\Users\Users\Controller\Users',
 					'method_code' => 'Edit',
@@ -42,7 +42,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 		3 => [
 			1 => [
 				'name' => 'Assignment Types',
-				'icon' => 'link',
+				'icon' => 'fas fa-link',
 				'acl' => [
 					'resource_id' => '\Numbers\Users\Users\Controller\Assignment\Types',
 					'method_code' => 'Index',
@@ -52,7 +52,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 			],
 			2 => [
 				'name' => 'Groups',
-				'icon' => 'object-group',
+				'icon' => 'far fa-object-group',
 				'acl' => [
 					'resource_id' => '\Numbers\Users\Users\Controller\Groups',
 					'method_code' => 'Index',
@@ -62,7 +62,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 			],
 			3 => [
 				'name' => 'Roles',
-				'icon' => 'user-circle-o',
+				'icon' => 'far fa-user-circle',
 				'acl' => [
 					'resource_id' => '\Numbers\Users\Users\Controller\Roles',
 					'method_code' => 'Index',
@@ -72,7 +72,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 			],
 			4 => [
 				'name' => 'Titles',
-				'icon' => 'blind',
+				'icon' => 'fas fa-blind',
 				'acl' => [
 					'resource_id' => '\Numbers\Users\Users\Controller\Titles',
 					'method_code' => 'Index',

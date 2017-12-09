@@ -157,7 +157,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_user_company' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Company', 'domain' => 'name', 'null' => true, 'percent' => 100, 'required' => 'c'],
 			],
 			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'envelope-o', 'percent' => 100],
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'far fa-envelope', 'percent' => 100],
 			],
 			'um_user_email' => [
 				'um_user_email' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
@@ -184,7 +184,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'internalization_container' => [
 			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Internalization', 'icon' => 'adjust', 'percent' => 100],
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Internalization', 'icon' => 'fas fa-adjust', 'percent' => 100],
 			],
 			'um_usri18n_group_id' => [
 				'um_usri18n_group_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Group', 'domain' => 'group_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Groups::optionsActive'],
@@ -198,7 +198,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usri18n_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive'],
 			],
 			'format' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 500, 'label_name' => 'Format', 'icon' => 'hourglass-o', 'percent' => 100],
+				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 500, 'label_name' => 'Format', 'icon' => 'far fa-hourglass', 'percent' => 100],
 			],
 			'um_usri18n_format_date' => [
 				'um_usri18n_format_date' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Date Format', 'domain' => 'code', 'null' => true, 'percent' => 25, 'placeholder' => 'Y-m-d', 'description' => 'Y - year, m - month, d - day, H - hour, i - minute, s = second, g - short hour, a - am/pm, u - miliseconds'],
@@ -211,7 +211,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usri18n_format_amount_fs' => ['order' => 2, 'label_name' => 'Amounts In Financial Statement', 'domain' => 'type_id', 'null' => true, 'method' => 'select', 'options_model' => '\Object\Format\Amounts']
 			],
 			'print' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'Print', 'icon' => 'print', 'percent' => 100],
+				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'Print', 'icon' => 'fas fa-print', 'percent' => 100],
 			],
 			'um_usri18n_print_format' => [
 				'um_usri18n_print_format' => ['order' => 1, 'row_order' => 900, 'label_name' => 'Print Format', 'domain' => 'code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Formats::options'],
@@ -258,7 +258,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'assignments_reverse_container' => [
 			'separator_2' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Other Assignments', 'icon' => 'cogs', 'percent' => 100],
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Other Assignments', 'icon' => 'fas fa-cogs', 'percent' => 100],
 			],
 			'row1' => [
 				'um_usrassign_assignment_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'type_code', 'readonly' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],

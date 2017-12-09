@@ -70,7 +70,7 @@ class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
 				'on_sbu_parent_division_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Division/Subdivision', 'domain' => 'division_id', 'null' => true, 'required' => false, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Divisions::optionsActive'],
 			],
 			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'envelope-o', 'percent' => 100],
+				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'far fa-envelope', 'percent' => 100],
 			],
 			'on_sbu_email' => [
 				'on_sbu_email' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],

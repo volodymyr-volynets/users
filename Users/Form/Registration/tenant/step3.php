@@ -20,7 +20,7 @@ class Step3 extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'default' => [
 			'separator_2' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 50, 'label_name' => 'Set Administrator\'s Password', 'icon' => 'user', 'percent' => 100],
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 50, 'label_name' => 'Set Administrator\'s Password', 'icon' => 'fas fa-user', 'percent' => 100],
 			],
 			'um_user_login_password' => [
 				'um_user_login_password' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => true, 'autofocus' => true, 'empty_value' => true],
