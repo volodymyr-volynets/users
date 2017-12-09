@@ -62,7 +62,7 @@ class ActivityLog extends \Object\Form\Wrapper\Report {
 	public function buildReport(& $form) {
 		// create new report
 		$report = new \Object\Form\Builder\Report();
-		$report->addReport(DEF);
+		$report->addReport(DEF, $form);
 		// add header
 		$report->addHeader(DEF, 'row1', [
 			'sm_monusage_session_id' => ['label_name' => 'Session #', 'percent' => 20],

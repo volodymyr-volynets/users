@@ -56,7 +56,7 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 	public function buildReport(& $form) {
 		// create new report
 		$report = new \Object\Form\Builder\Report();
-		$report->addReport(DEF);
+		$report->addReport(DEF, $form);
 		// add header
 		$report->addHeader(DEF, 'row1', [
 			'um_role_id' => ['label_name' => 'Role #', 'percent' => 10],
