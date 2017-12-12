@@ -176,7 +176,7 @@ class Profile extends \Object\Form\Wrapper\Base {
 		],
 		'photo_container' => [
 			'__logo_upload' => [
-				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Photo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'imagesize' => '250x250'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 250x250.'],
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Photo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '250x250', 'thumbnail_size' => '50x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 250x250.'],
 			],
 			'__logo_preview' => [
 				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Photo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'um_user_photo_file_id'],
@@ -249,6 +249,7 @@ class Profile extends \Object\Form\Wrapper\Base {
 		}
 		// photo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
+			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];
 			$model = new \Numbers\Users\Documents\Base\Base();
 			// remove file if exists
 			if (!empty($form->values['um_user_photo_file_id'])) {

@@ -23,6 +23,7 @@ class Files extends \Object\Table {
 		'dt_file_mime' => ['name' => 'File Mime', 'domain' => 'name'],
 		'dt_file_size' => ['name' => 'File Size', 'domain' => 'file_size'],
 		'dt_file_path' => ['name' => 'File Path', 'domain' => 'file_path'],
+		'dt_file_thumbnail_path' => ['name' => 'Thumbnail Path', 'domain' => 'file_path', 'null' => true],
 		'dt_file_language_code' => ['name' => 'Language Code', 'domain' => 'language_code', 'null' => true],
 		'dt_file_readonly' => ['name' => 'Readonly', 'type' => 'boolean'],
 		'dt_file_temporary' => ['name' => 'Temporary', 'type' => 'boolean'],

@@ -57,6 +57,7 @@ class Base {
 			'dt_file_mime' => $file['type'],
 			'dt_file_size' => $file['size'],
 			'dt_file_path' => $file_upload_result['path'],
+			'dt_file_thumbnail_path' => $file_upload_result['thumbnail_path'],
 			'dt_file_language_code' => \I18n::$options['language_code'] ?? null,
 			'dt_file_readonly' => $catalog['dt_catalog_readonly'],
 			'dt_file_temporary' => $catalog['dt_catalog_temporary'],
@@ -127,24 +128,26 @@ class Base {
 			],
 			'pk' => null
 		]);
+		if (empty($file_data[0])) return '';
 		// delete in driver
 		$storages = \Numbers\Users\Documents\Base\Model\Storages::getStatic();
 		$storage = $storages[$file_data[0]['dt_file_storage_id']];
 		$class = $storage['submodule'];
 		$file_upload_model = new $class($storage);
-		return $file_upload_model->download($file_data[0]);
+		return $file_upload_model->download($file_data[0], $options);
 	}
 
 	/**
 	 * Generate URL
 	 *
 	 * @param int $file_id
+	 * @param bool $thumbnail
 	 * @return string
 	 */
-	public static function generateURL(int $file_id) : string {
+	public static function generateURL(int $file_id, bool $thumbnail = false) : string {
 		$crypt = new \Crypt();
 		return \Request::buildURL('/Numbers/Users/Documents/Base/Controller/GetFile', [
-			'token' => urldecode($crypt->tokenCreate($file_id, 'file.view'))
+			'token' => urldecode($crypt->tokenCreate($file_id, $thumbnail ? 'thumbnail.view' : 'file.view'))
 		]);
 	}
 }

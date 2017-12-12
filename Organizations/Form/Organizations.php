@@ -91,7 +91,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		],
 		'logo_container' => [
 			'__logo_upload' => [
-				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Logo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'imagesize' => '200x80'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 200x80.'],
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Logo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '200x80', 'thumbnail_size' => '125x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 200x80.'],
 			],
 			'__logo_preview' => [
 				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Logo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'on_organization_logo_file_id'],
@@ -131,6 +131,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 
 	public function validate(& $form) {
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
+			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];
 			$model = new \Numbers\Users\Documents\Base\Base();
 			// remove file if exists
 			if (!empty($form->values['on_organization_logo_file_id'])) {

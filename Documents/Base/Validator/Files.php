@@ -17,8 +17,8 @@ class Files extends \Object\Validator\Base {
 		if (!$upload_result['success']) {
 			$result['error'][] = $upload_result['error'];
 		} else {
-			if (in_array('images', $options['types']) && !empty($options['imagesize'])) {
-				$temp = explode('x', $options['imagesize']);
+			if (in_array('images', $options['types']) && !empty($options['image_size'])) {
+				$temp = explode('x', $options['image_size']);
 				$size = getimagesize($value['tmp_name']);
 				if ($size[0] != $temp[0] || $size[1] != $temp[1]) {
 					$result['error'][] = 'Invalid image size!';
