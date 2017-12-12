@@ -7,7 +7,7 @@ class Logout extends \Object\Form\Wrapper\Base {
 		'segment' => [
 			'type' => 'danger',
 			'header' => [
-				'icon' => ['type' => 'sign-out'],
+				'icon' => ['type' => 'fas fa-sign-out-alt'],
 				'title' => 'Sign Out:'
 			]
 		],

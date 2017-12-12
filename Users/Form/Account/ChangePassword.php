@@ -7,7 +7,7 @@ class ChangePassword extends \Object\Form\Wrapper\Base {
 		'segment' => [
 			'type' => 'primary',
 			'header' => [
-				'icon' => ['type' => 'asterisk'],
+				'icon' => ['type' => 'fas fa-asterisk'],
 				'title' => 'Change Password:'
 			]
 		],

@@ -7,7 +7,7 @@ class Login extends \Object\Form\Wrapper\Base {
 		'segment' => [
 			'type' => 'primary',
 			'header' => [
-				'icon' => ['type' => 'sign-in'],
+				'icon' => ['type' => 'fas fa-sign-in-alt'],
 				'title' => 'Sign In:'
 			]
 		],

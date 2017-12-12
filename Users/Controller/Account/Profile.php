@@ -5,11 +5,11 @@ class Profile extends \Object\Controller\Authorized {
 	public function actionIndex() {
 		$edit_profile = \HTML::segment([
 			'type' => 'primary',
-			'value' => \HTML::a(['value' => \HTML::icon(['type' => 'users']) . ' ' . i18n(null, 'Update Profile'), 'href' => '/Numbers/Users/Users/Controller/Account/Profile/_EditProfile'])
+			'value' => \HTML::a(['value' => \HTML::icon(['type' => 'fas fa-users']) . ' ' . i18n(null, 'Update Profile'), 'href' => '/Numbers/Users/Users/Controller/Account/Profile/_EditProfile'])
 		]);
 		$change_password = \HTML::segment([
 			'type' => 'primary',
-			'value' => \HTML::a(['value' => \HTML::icon(['type' => 'asterisk']) . ' ' . i18n(null, 'Change Password'), 'href' => '/Numbers/Users/Users/Controller/Account/Profile/_ChangePassword'])
+			'value' => \HTML::a(['value' => \HTML::icon(['type' => 'fas fa-asterisk']) . ' ' . i18n(null, 'Change Password'), 'href' => '/Numbers/Users/Users/Controller/Account/Profile/_ChangePassword'])
 		]);
 		$grid = [
 			'options' => [
