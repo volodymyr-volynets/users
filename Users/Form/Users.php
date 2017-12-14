@@ -486,10 +486,8 @@ class Users extends \Object\Form\Wrapper\Base {
 					'um_usrassign_child_user_id' => $virtual[$k]['um_usrassign_child_user_id'] ?? []
 				];
 				foreach ($form->values['\Numbers\Users\Users\Model\User\Assignments'] ?? [] as $v2) {
-					if ($v['um_rolassign_assignment_code'] == $v2['um_usrassign_assignment_code']
-						&& $v['um_rolassign_parent_role_id'] == $v2['um_usrassign_parent_role_id']
-						&& $v['um_rolassign_child_role_id'] == $v2['um_usrassign_child_role_id']) {
-						$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'][$k]['um_usrassign_child_user_id'][] = $v2['um_usrassign_child_user_id'];
+					if ($v['um_rolassign_assignment_code'] == $v2['um_usrassign_assignment_code'] && $v['um_rolassign_parent_role_id'] == $v2['um_usrassign_parent_role_id'] && $v['um_rolassign_child_role_id'] == $v2['um_usrassign_child_role_id']) {
+						$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'][$k]['um_usrassign_child_user_id'][$v2['um_usrassign_child_user_id']]['um_usrassign_child_user_id'] = $v2['um_usrassign_child_user_id'];
 					}
 				}
 			}
@@ -532,10 +530,8 @@ class Users extends \Object\Form\Wrapper\Base {
 					'um_usrassign_parent_user_id' => $virtual[$k]['um_usrassign_parent_user_id'] ?? []
 				];
 				foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Reverse'] ?? [] as $v2) {
-					if ($v['um_rolassign_assignment_code'] == $v2['um_usrassign_assignment_code']
-						&& $v['um_rolassign_parent_role_id'] == $v2['um_usrassign_parent_role_id']
-						&& $v['um_rolassign_child_role_id'] == $v2['um_usrassign_child_role_id']) {
-						$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'][$k]['um_usrassign_parent_user_id'][] = $v2['um_usrassign_parent_user_id'];
+					if ($v['um_rolassign_assignment_code'] == $v2['um_usrassign_assignment_code'] && $v['um_rolassign_parent_role_id'] == $v2['um_usrassign_parent_role_id'] && $v['um_rolassign_child_role_id'] == $v2['um_usrassign_child_role_id']) {
+						$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'][$k]['um_usrassign_parent_user_id'][$v2['um_usrassign_parent_user_id']]['um_usrassign_parent_user_id'] = $v2['um_usrassign_parent_user_id'];
 					}
 				}
 			}

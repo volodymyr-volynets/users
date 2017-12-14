@@ -6,7 +6,7 @@ class Assignments extends \Object\Table {
 	public $db_link_flag;
 	public $module_code = 'UM';
 	public $title = 'U/M Role Assignments';
-	public $name = 'um_role_assigments';
+	public $name = 'um_role_assignments';
 	public $pk = ['um_rolassign_tenant_id', 'um_rolassign_parent_role_id', 'um_rolassign_assignment_code', 'um_rolassign_child_role_id'];
 	public $tenant = true;
 	public $orderby = [
@@ -24,7 +24,7 @@ class Assignments extends \Object\Table {
 		'um_rolassign_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'um_role_assigments_pk' => ['type' => 'pk', 'columns' => ['um_rolassign_tenant_id', 'um_rolassign_parent_role_id', 'um_rolassign_assignment_code', 'um_rolassign_child_role_id']],
+		'um_role_assignments_pk' => ['type' => 'pk', 'columns' => ['um_rolassign_tenant_id', 'um_rolassign_parent_role_id', 'um_rolassign_assignment_code', 'um_rolassign_child_role_id']],
 		'um_rolassign_parent_role_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_rolassign_tenant_id', 'um_rolassign_parent_role_id'],
