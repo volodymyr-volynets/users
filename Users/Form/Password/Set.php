@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\Password;
 class Set extends \Object\Form\Wrapper\Base {
-	public $form_link = 'password_set';
+	public $form_link = 'um_password_set';
 	public $options = [
 		'segment' => [
 			'type' => 'primary',

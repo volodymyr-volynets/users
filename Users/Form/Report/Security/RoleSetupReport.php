@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\Report\Security;
 class RoleSetupReport extends \Object\Form\Wrapper\Report {
-	public $form_link = 'role_setup_report';
+	public $form_link = 'um_role_setup_report';
 	public $options = [
 		'segment' => self::SEGMENT_REPORT,
 		'actions' => [

@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\System;
 class Senders extends \Object\Form\Wrapper\Base {
-	public $form_link = 'senders';
+	public $form_link = 'um_senders';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

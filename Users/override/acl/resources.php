@@ -48,7 +48,7 @@ class Resources {
 		'postlogin_dashboard' => [
 			'numbers_users' => [
 				'name' => 'User Management',
-				'icon' => 'user-o',
+				'icon' => 'far fa-user',
 				'model' => '\Numbers\Users\Users\Helper\Dashboard\Dashboard',
 				'order' => 32000
 			]

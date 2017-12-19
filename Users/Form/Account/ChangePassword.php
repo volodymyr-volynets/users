@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\Account;
 class ChangePassword extends \Object\Form\Wrapper\Base {
-	public $form_link = 'change_password';
+	public $form_link = 'um_change_password';
 	public $options = [
 		'segment' => [
 			'type' => 'primary',

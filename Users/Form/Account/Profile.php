@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\Account;
 class Profile extends \Object\Form\Wrapper\Base {
-	public $form_link = 'user_profile';
+	public $form_link = 'um_user_profile';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

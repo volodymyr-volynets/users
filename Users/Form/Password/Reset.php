@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\Password;
 class Reset extends \Object\Form\Wrapper\Base {
-	public $form_link = 'password_reset';
+	public $form_link = 'um_password_reset';
 	public $options = [
 		'segment' => [
 			'type' => 'primary',

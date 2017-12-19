@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\Report\Security;
 class ResourceSetupReport extends \Object\Form\Wrapper\Report {
-	public $form_link = 'resource_setup_report';
+	public $form_link = 'um_resource_setup_report';
 	public $options = [
 		'segment' => self::SEGMENT_REPORT,
 		'actions' => [

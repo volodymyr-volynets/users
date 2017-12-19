@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form;
 class Logout extends \Object\Form\Wrapper\Base {
-	public $form_link = 'login';
+	public $form_link = 'um_logout';
 	public $options = [
 		'segment' => [
 			'type' => 'danger',

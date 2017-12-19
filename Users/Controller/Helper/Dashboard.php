@@ -14,6 +14,11 @@ class Dashboard extends \Object\Controller\Authorized {
 			if ($counter % 2) {
 				$row_number++;
 			}
+			$percent = 50;
+			if (!empty($v['double'])) {
+				$row_number++;
+				$percent = 100;
+			}
 			$name = i18n(null, $v['name']);
 			if (!empty($v['icon'])) {
 				$name = \HTML::icon(['type' => $v['icon']]) . ' ' . $name;
@@ -23,10 +28,13 @@ class Dashboard extends \Object\Controller\Authorized {
 			$grid['options'][$row_number][$counter][$counter] = [
 				'value' => '<div class="postlogin_dashboard_holder"><h4>' . $name . '</h4>' . $model->render() . '</div>',
 				'options' => [
-					'percent' => 50
+					'percent' => $percent
 				]
 			];
 			$counter++;
+			if (!empty($v['double'])) {
+				$counter++;
+			}
 		}
 		echo <<<TTT
 			<style>

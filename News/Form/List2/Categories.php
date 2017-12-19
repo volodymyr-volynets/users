@@ -1,8 +1,8 @@
 <?php
 
-namespace Numbers\Users\Users\Form\List2;
-class Groups extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'um_groups_list';
+namespace Numbers\Users\News\Form\List2;
+class Categories extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'ns_categories_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
@@ -14,14 +14,7 @@ class Groups extends \Object\Form\Wrapper\List2 {
 	public $containers = [
 		'tabs' => ['default_row_type' => 'grid', 'order' => 1000, 'type' => 'tabs', 'class' => 'numbers_form_filter_sort_container'],
 		'filter' => ['default_row_type' => 'grid', 'order' => 1500],
-		'sort' => [
-			'type' => 'details',
-			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
-			'details_key' => '\Object\Form\Model\Dummy\Sort',
-			'details_pk' => ['__sort'],
-			'order' => 1600
-		],
+		'sort' => self::LIST_SORT_CONTAINER,
 		self::LIST_CONTAINER => ['default_row_type' => 'grid', 'order' => PHP_INT_MAX],
 	];
 	public $rows = [
@@ -40,13 +33,13 @@ class Groups extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			'um_usrgrp_id' => [
-				'um_usrgrp_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Group #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_usrgrp_id;>='],
-				'um_usrgrp_id2' => ['order' => 2, 'label_name' => 'Group #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_usrgrp_id;<='],
-				'um_usrgrp_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_usrgrp_inactive;=']
+			'ns_category_id' => [
+				'ns_category_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Category #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.ns_category_id;>='],
+				'ns_category_id2' => ['order' => 2, 'label_name' => 'Category #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.ns_category_id;<='],
+				'ns_category_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.ns_category_inactive;=']
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_usrgrp_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.ns_category_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -58,23 +51,24 @@ class Groups extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'um_usrgrp_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Group #', 'domain' => 'group_id', 'percent' => 10, 'url_edit' => true],
-				'um_usrgrp_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 85],
-				'um_usrgrp_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'ns_category_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Category #', 'domain' => 'group_id', 'percent' => 10, 'url_edit' => true],
+				'ns_category_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 75],
+				'ns_category_order' => ['order' => 3, 'label_name' => 'Order', 'domain' => 'order', 'percent' => 10, 'required' => true],
+				'ns_category_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Users\Model\User\Groups';
+	public $query_primary_model = '\Numbers\Users\News\Model\Categories';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'um_usrgrp_id' => SORT_ASC
+			'ns_category_id' => SORT_ASC
 		]
 	];
 	const LIST_SORT_OPTIONS = [
-		'um_usrgrp_id' => ['name' => 'Group #'],
-		'um_usrgrp_name' => ['name' => 'Name']
+		'ns_category_id' => ['name' => 'Group #'],
+		'ns_category_name' => ['name' => 'Name']
 	];
 }

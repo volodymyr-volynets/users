@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\List2\Assignment;
 class Types extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'assignment_types_list';
+	public $form_link = 'um_assignment_types_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

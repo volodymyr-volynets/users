@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form;
 class Login extends \Object\Form\Wrapper\Base {
-	public $form_link = 'login';
+	public $form_link = 'um_login';
 	public $options = [
 		'segment' => [
 			'type' => 'primary',

@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form;
 class Roles extends \Object\Form\Wrapper\Base {
-	public $form_link = 'roles';
+	public $form_link = 'um_roles';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

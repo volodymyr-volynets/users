@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\Registration\Tenant;
 class Collection extends \Object\Form\Wrapper\Collection {
-	public $collection_link = 'tenant_registration_collection';
+	public $collection_link = 'um_tenant_registration_collection';
 	const GLOBAL_WIZARD = [
 		'model' => '\Object\Form\Wrapper\Wizard',
 		'options' => [

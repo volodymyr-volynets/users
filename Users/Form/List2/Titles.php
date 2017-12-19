@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Users\Form\List2;
 class Titles extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'titles_list';
+	public $form_link = 'um_titles_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
