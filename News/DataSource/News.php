@@ -32,7 +32,8 @@ class News extends \Object\DataSource {
 			'ns_new_hot' => 'a.ns_new_hot',
 			'ns_new_category_id' => 'a.ns_new_category_id',
 			'ns_category_name' => 'b.ns_category_name',
-			'ns_new_read_user' => 'c.ns_nwsusr_user_id'
+			'ns_new_read_user' => 'c.ns_nwsusr_user_id',
+			'ns_new_language_code' => 'a.ns_new_language_code'
 		]);
 		if (!empty($parameters['include_content'])) {
 			$this->query->columns([
