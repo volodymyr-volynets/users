@@ -48,12 +48,14 @@ class Login extends \Object\DataSource {
 			// inactive & hold
 			'hold' => 'a.um_user_hold',
 			'inactive' => 'a.um_user_inactive',
+			// roles
 			'roles' => 'b.roles',
 			'role_ids' => 'b.role_ids',
 			'permissions' => 'f.permissions',
 			'organizations' => 'c.organizations',
 			'super_admin' => 'b.super_admin',
 			'handle_exceptions' => 'b.handle_exceptions',
+			'maximum_role_weight' => 'b.maximum_role_weight',
 			// internalization
 			'i18n_group_id' => 'd.um_usri18n_group_id',
 			'i18n_language_code' => 'd.um_usri18n_language_code',
@@ -80,7 +82,8 @@ class Login extends \Object\DataSource {
 				'roles' => $query->db_object->sqlHelper('string_agg', ['expression' => "inner_b.um_role_code", 'delimiter' => ';;']),
 				'role_ids' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('inner_b.um_role_id', 'character varying'), 'delimiter' => ';;']),
 				'super_admin' => 'SUM(inner_b.um_role_super_admin)',
-				'handle_exceptions' => 'SUM(inner_b.um_role_handle_exceptions)'
+				'handle_exceptions' => 'SUM(inner_b.um_role_handle_exceptions)',
+				'maximum_role_weight' => 'MAX(inner_b.um_role_weight)'
 			]);
 			// join
 			$query->join('INNER', new \Numbers\Users\Users\Model\Roles(), 'inner_b', 'ON', [
