@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form;
 class CostCenters extends \Object\Form\Wrapper\Base {
-	public $form_link = 'cost_centers';
+	public $form_link = 'on_cost_centers';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

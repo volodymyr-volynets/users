@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form;
 class Divisions extends \Object\Form\Wrapper\Base {
-	public $form_link = 'divisions';
+	public $form_link = 'on_divisions';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

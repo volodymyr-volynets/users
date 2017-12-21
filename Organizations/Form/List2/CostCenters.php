@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form\List2;
 class CostCenters extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'cost_centers_list';
+	public $form_link = 'on_cost_centers_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

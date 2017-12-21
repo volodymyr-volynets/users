@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form\List2;
 class Jurisdictions extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'jurisdictions_list';
+	public $form_link = 'on_jurisdictions_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

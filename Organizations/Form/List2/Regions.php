@@ -1,13 +1,13 @@
 <?php
 
-namespace Numbers\Users\Organizations\Form\List2\Organization;
-class Types extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'on_types_list';
+namespace Numbers\Users\Organizations\Form\List2;
+class Regions extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'on_regions_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
 			'refresh' => true,
-			'new' => ['onclick' => null],
+			'new' => true,
 			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
 		]
 	];
@@ -33,12 +33,13 @@ class Types extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			'on_orgtype_parent_type_code' => [
-				'on_orgtype_parent_type_code1' => ['order' => 1, 'label_name' => 'Parent', 'type' => 'type_code', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Types', 'query_builder' => 'a.on_orgtype_parent_type_code;='],
-				'on_orgtype_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_orgtype_inactive;=']
+			'on_region_id' => [
+				'on_region_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Region #', 'domain' => 'region_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_region_id;>='],
+				'on_region_id2' => ['order' => 2, 'label_name' => 'Market #', 'domain' => 'market_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_region_id;<='],
+				'on_region_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_region_inactive;=']
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_orgtype_code', 'a.on_orgtype_name', 'a.on_orgtype_parent_type_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_region_name', 'a.on_region_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -50,23 +51,25 @@ class Types extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'on_orgtype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_code', 'percent' => 15, 'url_edit' => true],
-				'on_orgtype_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 65],
-				'on_orgtype_parent_type_code' => ['order' => 3, 'label_name' => 'Parent Type', 'domain' => 'type_code', 'null' => true, 'percent' => 15, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Types'],
-				'on_orgtype_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'on_region_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Region #', 'domain' => 'region_id_sequence', 'percent' => 10, 'url_edit' => true],
+				'on_region_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
+				'on_region_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 25],
+				'on_region_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Organizations\Model\Organization\Types';
+	public $query_primary_model = '\Numbers\Users\Organizations\Model\Regions';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'on_orgtype_name' => SORT_ASC
+			'on_region_id' => SORT_ASC
 		]
 	];
 	const LIST_SORT_OPTIONS = [
-		'on_orgtype_name' => ['name' => 'Name']
+		'on_region_id' => ['name' => 'Region #'],
+		'on_region_code' => ['name' => 'Code'],
+		'on_region_name' => ['name' => 'Name']
 	];
 }

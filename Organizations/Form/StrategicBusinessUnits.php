@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form;
 class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
-	public $form_link = 'sbu';
+	public $form_link = 'on_sbu';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

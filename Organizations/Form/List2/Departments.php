@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form\List2;
 class Departments extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'departments_list';
+	public $form_link = 'on_departments_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

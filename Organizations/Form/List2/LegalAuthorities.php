@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form\List2;
 class LegalAuthorities extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'legal_authorities_list';
+	public $form_link = 'on_legal_authorities_list';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
