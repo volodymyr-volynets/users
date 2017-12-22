@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form;
 class Logout extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_logout';
+	public $module_code = 'UM';
+	public $title = 'U/M Logout';
 	public $options = [
 		'segment' => [
 			'type' => 'danger',

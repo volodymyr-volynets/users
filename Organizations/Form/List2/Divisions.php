@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form\List2;
 class Divisions extends \Object\Form\Wrapper\List2 {
 	public $form_link = 'on_divisions_list';
+	public $module_code = 'ON';
+	public $title = 'O/N Divisions List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

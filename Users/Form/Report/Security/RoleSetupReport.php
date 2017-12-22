@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\Report\Security;
 class RoleSetupReport extends \Object\Form\Wrapper\Report {
 	public $form_link = 'um_role_setup_report';
+	public $module_code = 'UM';
+	public $title = 'U/M Security Role Setup Report';
 	public $options = [
 		'segment' => self::SEGMENT_REPORT,
 		'actions' => [

@@ -2,7 +2,9 @@
 
 namespace Numbers\Users\TaskScheduler\Form;
 class Daemons extends \Object\Form\Wrapper\Base {
-	public $form_link = 'daemons';
+	public $form_link = 'ts_daemons';
+	public $module_code = 'TS';
+	public $title = 'T/S Daemons Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

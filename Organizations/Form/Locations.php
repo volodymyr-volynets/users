@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form;
 class Locations extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_locations';
+	public $module_code = 'ON';
+	public $title = 'O/N Locations Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

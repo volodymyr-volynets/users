@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form\List2;
 class Markets extends \Object\Form\Wrapper\List2 {
 	public $form_link = 'on_markets_list';
+	public $module_code = 'ON';
+	public $title = 'O/N Markets Form';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

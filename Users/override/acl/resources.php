@@ -57,6 +57,11 @@ class Resources {
 			'url' => [
 				'url' => '/Numbers/Users/Users/Controller/Helper/Dashboard'
 			]
-		]
+		],
+		'form_overrides' => [
+			'primary' => [
+				'model' => '\Numbers\Users\Users\DataSource\ACL\Form\Overrides'
+			]
+		],
 	];
 }

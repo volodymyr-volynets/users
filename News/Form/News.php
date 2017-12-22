@@ -3,6 +3,8 @@
 namespace Numbers\Users\News\Form;
 class News extends \Object\Form\Wrapper\Base {
 	public $form_link = 'ns_news';
+	public $module_code = 'NS';
+	public $title = 'N/S News Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

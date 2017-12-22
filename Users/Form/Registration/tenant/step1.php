@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\Registration\Tenant;
 class Step1 extends \Object\Form\Wrapper\Base {
 	public $form_link = 'tenant_registration_step1';
+	public $module_code = 'UM';
+	public $title = 'U/M Registration Tenant Step1 Form';
 	public $options = [
 		'segment' => [
 			'type' => 'primary',

@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\List2\Account;
 class Messages extends \Object\Form\Wrapper\List2 {
 	public $form_link = 'um_account_messages_list';
+	public $module_code = 'UM';
+	public $title = 'U/M Account Messages List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

@@ -2,7 +2,9 @@
 
 namespace Numbers\Users\TaskScheduler\Form\External;
 class CronDaemon extends \Object\Form\Wrapper\Base {
-	public $form_link = 'cron_daemon';
+	public $form_link = 'ts_cron_daemon';
+	public $module_code = 'TS';
+	public $title = 'T/S External Cron Daemon Form';
 	public $options = [
 		'segment' => self::SEGMENT_TASK,
 		'actions' => [

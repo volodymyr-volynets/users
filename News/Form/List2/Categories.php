@@ -3,6 +3,8 @@
 namespace Numbers\Users\News\Form\List2;
 class Categories extends \Object\Form\Wrapper\List2 {
 	public $form_link = 'ns_categories_list';
+	public $module_code = 'NS';
+	public $title = 'N/S Categories List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

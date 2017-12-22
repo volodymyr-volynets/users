@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\Account;
 class Profile extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_user_profile';
+	public $module_code = 'UM';
+	public $title = 'U/M Account Profile Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form;
 class Jurisdictions extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_jurisdictions';
+	public $module_code = 'ON';
+	public $title = 'O/N Jurisdictions Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

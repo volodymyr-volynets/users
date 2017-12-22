@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form\Organization;
 class Types extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_types';
+	public $module_code = 'ON';
+	public $title = 'O/N Organization Types Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

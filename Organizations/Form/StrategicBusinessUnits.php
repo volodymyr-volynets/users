@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form;
 class StrategicBusinessUnits extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_sbu';
+	public $module_code = 'ON';
+	public $title = 'O/N Strategic Business Units Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

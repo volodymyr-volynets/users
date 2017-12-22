@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\Password;
 class Set extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_password_set';
+	public $module_code = 'UM';
+	public $title = 'U/M Password Set Form';
 	public $options = [
 		'segment' => [
 			'type' => 'primary',

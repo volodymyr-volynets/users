@@ -68,7 +68,7 @@ class Messages extends \Object\Controller\Authorized {
 				'Links Row' => [
 					'Header' => [
 						'Header' => [
-							'value' => \HTML::a(['href' => '/Numbers/Users/Users/Controller/Account/Messages', 'value' => \HTML::icon(['type' => 'arrow-left']) . ' ' . i18n(null, 'Back')]),
+							'value' => \HTML::a(['href' => '/Numbers/Users/Users/Controller/Account/Messages', 'value' => \HTML::icon(['type' => 'fas fa-arrow-left']) . ' ' . i18n(null, 'Back')]),
 							'options' => [
 								'percent' => 100,
 								'style' => 'text-align: right;'

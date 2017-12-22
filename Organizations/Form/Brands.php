@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form;
 class Brands extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_brands';
+	public $module_code = 'ON';
+	public $title = 'O/N Brands Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

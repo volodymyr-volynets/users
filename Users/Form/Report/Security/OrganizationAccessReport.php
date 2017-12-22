@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\Report\Security;
 class OrganizationAccessReport extends \Object\Form\Wrapper\Report {
 	public $form_link = 'um_organization_access_report';
+	public $module_code = 'UM';
+	public $title = 'U/M Security Organization Access Report';
 	public $options = [
 		'segment' => self::SEGMENT_REPORT,
 		'actions' => [

@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form\List2;
 class Regions extends \Object\Form\Wrapper\List2 {
 	public $form_link = 'on_regions_list';
+	public $module_code = 'ON';
+	public $title = 'O/N Regions List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

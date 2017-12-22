@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\Assignment;
 class Types extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_assignment_types';
+	public $module_code = 'UM';
+	public $title = 'U/M Assignment Types Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

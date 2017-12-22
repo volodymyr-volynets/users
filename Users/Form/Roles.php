@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form;
 class Roles extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_roles';
+	public $module_code = 'UM';
+	public $title = 'U/M Roles Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

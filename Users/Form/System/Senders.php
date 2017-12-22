@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\System;
 class Senders extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_senders';
+	public $module_code = 'UM';
+	public $title = 'U/M System Senders Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

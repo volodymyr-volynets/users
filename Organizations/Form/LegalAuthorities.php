@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form;
 class LegalAuthorities extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_legal_authorities';
+	public $module_code = 'ON';
+	public $title = 'O/N Legal Authorities Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form;
 class Departments extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_departments';
+	public $module_code = 'ON';
+	public $title = 'O/N Departments Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

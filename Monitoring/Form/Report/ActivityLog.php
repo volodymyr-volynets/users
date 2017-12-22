@@ -3,6 +3,8 @@
 namespace Numbers\Users\Monitoring\Form\Report;
 class ActivityLog extends \Object\Form\Wrapper\Report {
 	public $form_link = 'activity_log_report';
+	public $module_code = 'SM';
+	public $title = 'S/M Activity Log Report';
 	public $options = [
 		'segment' => self::SEGMENT_REPORT,
 		'actions' => [

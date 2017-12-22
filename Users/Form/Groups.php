@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form;
 class Groups extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_groups';
+	public $module_code = 'UM';
+	public $title = 'U/M Groups Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

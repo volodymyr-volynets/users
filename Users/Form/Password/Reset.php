@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\Password;
 class Reset extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_password_reset';
+	public $module_code = 'UM';
+	public $title = 'U/M Password Reset Form';
 	public $options = [
 		'segment' => [
 			'type' => 'primary',

@@ -2,7 +2,9 @@
 
 namespace Numbers\Users\TaskScheduler\Form;
 class Jobs extends \Object\Form\Wrapper\Base {
-	public $form_link = 'jobs';
+	public $form_link = 'ts_jobs';
+	public $module_code = 'TS';
+	public $title = 'T/S Jobs Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

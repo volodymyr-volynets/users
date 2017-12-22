@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form;
 class Titles extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_titles';
+	public $module_code = 'UM';
+	public $title = 'U/M Titles Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

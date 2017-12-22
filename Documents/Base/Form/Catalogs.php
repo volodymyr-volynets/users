@@ -3,6 +3,8 @@
 namespace Numbers\Users\Documents\Base\Form;
 class Catalogs extends \Object\Form\Wrapper\Base {
 	public $form_link = 'dt_catalogs';
+	public $module_code = 'DT';
+	public $title = 'D/T Catalogs Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

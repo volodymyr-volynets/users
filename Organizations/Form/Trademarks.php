@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form;
 class Trademarks extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_trademarks';
+	public $module_code = 'ON';
+	public $title = 'O/N Trademarks Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

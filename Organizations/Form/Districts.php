@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form;
 class Districts extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_districts';
+	public $module_code = 'ON';
+	public $title = 'O/N Districts Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

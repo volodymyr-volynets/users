@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form\Account;
 class ChangePassword extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_change_password';
+	public $module_code = 'UM';
+	public $title = 'U/M Account Change Password Form';
 	public $options = [
 		'segment' => [
 			'type' => 'primary',

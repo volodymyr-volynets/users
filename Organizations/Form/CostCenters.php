@@ -3,6 +3,8 @@
 namespace Numbers\Users\Organizations\Form;
 class CostCenters extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_cost_centers';
+	public $module_code = 'ON';
+	public $title = 'O/N Cost Centers Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [

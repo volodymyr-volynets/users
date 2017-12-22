@@ -3,6 +3,8 @@
 namespace Numbers\Users\Users\Form;
 class Users extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_users';
+	public $module_code = 'UM';
+	public $title = 'U/M Users Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [
@@ -239,7 +241,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Photo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'um_user_photo_file_id'],
 			],
 			self::HIDDEN => [
-				'um_user_photo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
+				'um_user_photo_file_id' => ['label_name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
 			]
 		],
 		'assignments_container' => [
@@ -342,6 +344,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_child_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Notifications' => [
+				'name' => 'Notifications',
 				'pk' => ['um_usrnoti_tenant_id', 'um_usrnoti_user_id', 'um_usrnoti_module_id', 'um_usrnoti_feature_code'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrnoti_tenant_id', 'um_user_id' => 'um_usrnoti_user_id']
