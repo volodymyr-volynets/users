@@ -7,7 +7,7 @@ class Locations extends \Object\Table {
 	public $module_code = 'AM';
 	public $title = 'A/M Promocode Locations';
 	public $name = 'am_promocode_locations';
-	public $pk = ['am_promoloc_tenant_id', 'am_promoloc_brand_id', 'am_promoloc_location_id'];
+	public $pk = ['am_promoloc_tenant_id', 'am_promoloc_promocode_id', 'am_promoloc_location_id'];
 	public $tenant = true;
 	public $orderby = [
 		'am_promoloc_timestamp' => SORT_ASC

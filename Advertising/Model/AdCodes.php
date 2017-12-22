@@ -15,7 +15,7 @@ class AdCodes extends \Object\Table {
 	public $column_prefix = 'am_adcode_';
 	public $columns = [
 		'am_adcode_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'am_adcode_id' => ['name' => 'News #', 'domain' => 'group_id_sequence'],
+		'am_adcode_id' => ['name' => 'Ad Code #', 'domain' => 'group_id_sequence'],
 		'am_adcode_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'am_adcode_name' => ['name' => 'Name', 'domain' => 'name'],
 		'am_adcode_category_id' => ['name' => 'Category #', 'domain' => 'group_id'],

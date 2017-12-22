@@ -25,7 +25,7 @@ class Promocodes extends \Object\Table {
 		'am_promocode_effective_from' => ['name' => 'Effective From', 'type' => 'date', 'null' => true],
 		'am_promocode_effective_to' => ['name' => 'Effective To', 'type' => 'date', 'null' => true],
 		'am_promocode_promocode' => ['name' => 'Promocode', 'domain' => 'promocode'],
-		'am_promocode_barcode' => ['name' => 'Barcode', 'domain' => 'barcode'],
+		'am_promocode_barcode' => ['name' => 'Barcode', 'domain' => 'barcode', 'null' => true],
 		'am_promocode_all_locations' => ['name' => 'All Locations', 'type' => 'boolean'],
 		'am_promocode_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];

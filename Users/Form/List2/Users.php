@@ -105,8 +105,9 @@ class Users extends \Object\Form\Wrapper\List2 {
 	public function renderBecome(& $form, & $options, & $value, & $neighbouring_values) {
 		// check if we have permissions
 		if (\User::id() != $neighbouring_values['um_user_id'] && !empty($neighbouring_values['um_user_login_enabled']) && \Numbers\Users\Users\Helper\Role\Manages::can(\User::get('role_ids'), $neighbouring_values['roles'], 'um_rolman_view_users_type_id', 20)) {
+			$user_id = is_array($neighbouring_values['um_user_id']) ? $neighbouring_values['um_user_id']['value'] : $neighbouring_values['um_user_id'];
 			return \HTML::a([
-				'href' => \Numbers\Users\Users\Helper\LoginWithToken::URL($neighbouring_values['um_user_id']),
+				'href' => \Numbers\Users\Users\Helper\LoginWithToken::URL($user_id),
 				'value' => i18n(null, 'Become'),
 			]);
 		} else {
