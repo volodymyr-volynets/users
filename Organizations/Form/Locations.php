@@ -21,6 +21,7 @@ class Locations extends \Object\Form\Wrapper\Base {
 		// child containers
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
+		'logo_container' => ['default_row_type' => 'grid', 'order' => 32200],
 	];
 	public $rows = [
 		'top' => [
@@ -31,6 +32,7 @@ class Locations extends \Object\Form\Wrapper\Base {
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'contact' => ['order' => 200, 'label_name' => 'Contact'],
 			'primary_address' => ['order' => 300, 'label_name' => 'Primary Address'],
+			'logo' => ['order' => 500, 'label_name' => 'Logo'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
 		]
@@ -56,11 +58,15 @@ class Locations extends \Object\Form\Wrapper\Base {
 			],
 			'primary_address' => [
 				'primary_address' => ['container' => 'primary_address_container', 'order' => 100]
+			],
+			'logo' => [
+				'logo' => ['container' => 'logo_container', 'order' => 100]
 			]
 		],
 		'general_container' => [
 			'on_location_organization_id' => [
-				'on_location_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],
+				'on_location_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Location\Types'],
+				'on_location_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],
 			],
 			'on_location_brand_id' => [
 				'on_location_brand_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive'],
@@ -103,6 +109,17 @@ class Locations extends \Object\Form\Wrapper\Base {
 				'on_location_longitude' => ['order' => 2, 'label_name' => 'Longitude', 'domain' => 'geo_coordinate', 'required' => true],
 			]
 		],
+		'logo_container' => [
+			'__logo_upload' => [
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Logo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '200x80', 'thumbnail_size' => '125x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 200x80.'],
+			],
+			'__logo_preview' => [
+				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Logo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'on_location_logo_file_id'],
+			],
+			self::HIDDEN => [
+				'on_location_logo_file_id' => ['label_name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -126,7 +143,7 @@ class Locations extends \Object\Form\Wrapper\Base {
 				$form->values['on_location_logo_file_id'] = null;
 			}
 			// add file
-			$catalog = $model->fetchPrimaryCatalog($form->values['on_location_id']);
+			$catalog = $model->fetchPrimaryCatalog($form->values['on_location_organization_id']);
 			if (empty($catalog)) {
 				$form->error(DANGER, 'You must set primary catalog!');
 				return;
@@ -142,7 +159,7 @@ class Locations extends \Object\Form\Wrapper\Base {
 
 	public function overrideTabs(& $form, & $options, & $tab, & $neighbouring_values) {
 		$result = [];
-		if ($tab == 'logo' && empty($form->values['on_location_id'])) {
+		if ($tab == 'logo' && empty($form->values['on_location_organization_id'])) {
 			$result['hidden'] = true;
 		}
 		return $result;

@@ -18,6 +18,9 @@ class Brands extends \Object\Table {
 		'on_brand_id' => ['name' => 'Brand #', 'domain' => 'brand_id_sequence'],
 		'on_brand_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_brand_name' => ['name' => 'Name', 'domain' => 'name'],
+		// logo
+		'on_brand_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true],
+		// inactive
 		'on_brand_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

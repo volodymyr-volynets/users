@@ -2,10 +2,10 @@
 
 namespace Numbers\Users\Organizations\Model\Jurisdiction;
 class Types extends \Object\Data {
-	public $column_key = 'on_juristype_code';
+	public $column_key = 'on_juristype_id';
 	public $column_prefix = 'on_juristype_';
 	public $columns = [
-		'on_juristype_code' => ['name' => 'Code', 'domain' => 'type_id'],
+		'on_juristype_id' => ['name' => 'Type #', 'domain' => 'type_id'],
 		'on_juristype_name' => ['name' => 'Name', 'type' => 'text']
 	];
 	public $data = [

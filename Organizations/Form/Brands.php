@@ -19,6 +19,7 @@ class Brands extends \Object\Form\Wrapper\Base {
 		'tabs' => ['default_row_type' => 'grid', 'order' => 500, 'type' => 'tabs'],
 		'buttons' => ['default_row_type' => 'grid', 'order' => 900],
 		// child containers
+		'logo_container' => ['default_row_type' => 'grid', 'order' => 32200],
 		'organizations_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -45,6 +46,7 @@ class Brands extends \Object\Form\Wrapper\Base {
 		'tabs' => [
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'trademarks' => ['order' => 400, 'label_name' => 'Trademarks'],
+			'logo' => ['order' => 500, 'label_name' => 'Logo'],
 		]
 	];
 	public $elements = [
@@ -64,6 +66,9 @@ class Brands extends \Object\Form\Wrapper\Base {
 			],
 			'trademarks' => [
 				'trademarks' => ['container' => 'trademarks_container', 'order' => 100]
+			],
+			'logo' => [
+				'logo' => ['container' => 'logo_container', 'order' => 100]
 			]
 		],
 		'organizations_container' => [
@@ -77,6 +82,17 @@ class Brands extends \Object\Form\Wrapper\Base {
 			'row1' => [
 				'on_brndtrdmrk_trademark_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Trademark', 'domain' => 'trademark_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Trademarks::optionsActive', 'onchange' => 'this.form.submit();'],
 				'on_brndtrdmrk_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			]
+		],
+		'logo_container' => [
+			'__logo_upload' => [
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Logo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '200x80', 'thumbnail_size' => '125x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 200x80.'],
+			],
+			'__logo_preview' => [
+				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Logo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'on_brand_logo_file_id'],
+			],
+			self::HIDDEN => [
+				'on_brand_logo_file_id' => ['label_name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
 			]
 		],
 		'buttons' => [
@@ -106,11 +122,13 @@ class Brands extends \Object\Form\Wrapper\Base {
 		// primary organizations
 		$primary_found = 0;
 		$primary_first_line = null;
+		$primary_organization_id = null;
 		foreach ($form->values['\Numbers\Users\Organizations\Model\Brand\Organizations'] as $k => $v) {
 			if (!isset($primary_first_line)) {
 				$primary_first_line = "\Numbers\Users\Organizations\Model\Brand\Organizations[{$k}][on_brndorg_primary]";
 			}
 			if (!empty($v['on_brndorg_primary'])) {
+				$primary_organization_id = $v['on_brndorg_organization_id'];
 				$primary_found++;
 				if (!empty($v['on_brndorg_inactive'])) {
 					$form->error(DANGER, 'Primary cannot be inactive!', "\Numbers\Users\Organizations\Model\Brand\Organizations[{$k}][on_brndorg_inactive]");
@@ -123,5 +141,39 @@ class Brands extends \Object\Form\Wrapper\Base {
 		if ($primary_found == 0) {
 			$form->error(DANGER, 'You must select primary organization!', $primary_first_line);
 		}
+		// logo
+		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
+			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];
+			$model = new \Numbers\Users\Documents\Base\Base();
+			// remove file if exists
+			if (!empty($form->values['on_brand_logo_file_id'])) {
+				$result = $model->delete($form->values['on_brand_logo_file_id']);
+				if (!$result['success']) {
+					$form->error(DANGER, $result['error']);
+					return;
+				}
+				$form->values['on_brand_logo_file_id'] = null;
+			}
+			// add file
+			$catalog = $model->fetchPrimaryCatalog($primary_organization_id);
+			if (empty($catalog)) {
+				$form->error(DANGER, 'You must set primary catalog!');
+				return;
+			}
+			$result = $model->upload($form->values['__logo_upload'], $catalog);
+			if (!$result['success']) {
+				$form->error(DANGER, $result['error']);
+				return;
+			}
+			$form->values['on_brand_logo_file_id'] = $result['file_id'];
+		}
+	}
+
+	public function overrideTabs(& $form, & $options, & $tab, & $neighbouring_values) {
+		$result = [];
+		if ($tab == 'logo' && empty($form->values['on_brand_id'])) {
+			$result['hidden'] = true;
+		}
+		return $result;
 	}
 }

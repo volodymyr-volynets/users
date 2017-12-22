@@ -18,6 +18,7 @@ class Locations extends \Object\Table {
 		'on_location_id' => ['name' => 'Organization #', 'domain' => 'location_id_sequence'],
 		'on_location_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_location_name' => ['name' => 'Name', 'domain' => 'name'],
+		'on_location_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Organizations\Model\Location\Types'],
 		// contact
 		'on_location_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],
 		'on_location_email2' => ['name' => 'Secondary Email', 'domain' => 'email', 'null' => true],
@@ -40,6 +41,8 @@ class Locations extends \Object\Table {
 		'on_location_district_id' => ['name' => 'District #', 'domain' => 'district_id'],
 		'on_location_market_id' => ['name' => 'Market #', 'domain' => 'market_id'],
 		'on_location_region_id' => ['name' => 'Region #', 'domain' => 'region_id'],
+		// logo
+		'on_location_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true],
 		// inactive & hold
 		'on_location_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'on_location_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
