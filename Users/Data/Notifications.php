@@ -15,7 +15,7 @@ class Notifications extends \Object\Import {
 					'sm_feature_code' => 'UM::EMAIL_PASSWORD_CHANGED',
 					'sm_feature_type' => 21,
 					'sm_feature_name' => 'U/M Email Password Changed',
-					'sm_feature_icon' => 'envelope-o',
+					'sm_feature_icon' => 'far fa-envelop',
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_activation_model' => null,
 					'sm_feature_inactive' => 0
@@ -25,7 +25,7 @@ class Notifications extends \Object\Import {
 					'sm_feature_code' => 'UM::EMAIL_TENANT_CONFIRMATION',
 					'sm_feature_type' => 21,
 					'sm_feature_name' => 'U/M Email Tenant Confirmation',
-					'sm_feature_icon' => 'envelope-o',
+					'sm_feature_icon' => 'far fa-envelop',
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_activation_model' => null,
 					'sm_feature_inactive' => 0
@@ -35,7 +35,7 @@ class Notifications extends \Object\Import {
 					'sm_feature_code' => 'UM::EMAIL_RESET_PASSWORD',
 					'sm_feature_type' => 21,
 					'sm_feature_name' => 'U/M Email Reset Password',
-					'sm_feature_icon' => 'envelope-o',
+					'sm_feature_icon' => 'far fa-envelop',
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_activation_model' => null,
 					'sm_feature_inactive' => 0
@@ -45,7 +45,7 @@ class Notifications extends \Object\Import {
 					'sm_feature_code' => 'UM::EMAIL_USERS_CHANGED',
 					'sm_feature_type' => 20,
 					'sm_feature_name' => 'U/M Email Users Record Changed',
-					'sm_feature_icon' => 'users',
+					'sm_feature_icon' => 'fas fa-users',
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_activation_model' => null,
 					'sm_feature_common_notification_feature_code' => 'SM::EMAIL_COMMON_RECORD_CHANGE',
