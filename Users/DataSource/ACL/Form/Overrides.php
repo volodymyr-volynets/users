@@ -36,7 +36,8 @@ class Overrides extends \Object\DataSource {
 			});
 			$query->where('OR', 'FALSE');
 		});
-		$this->query->where('AND', ['a.um_formoverride_module_id', '=', \Application::$controller->module_id]);
+		$module_id = isset(\Application::$controller) ? \Application::$controller->module_id : 0;
+		$this->query->where('AND', ['a.um_formoverride_module_id', '=', $module_id]);
 		$this->query->where('AND', ['a.um_formoverride_inactive', '=', 0]);
 		$this->query->where('AND', ['a.um_formoverride_form_code', '=', $parameters['form_model']]);
 		$this->query->groupby(['field_code']);
