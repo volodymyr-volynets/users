@@ -116,8 +116,8 @@ class Promocodes extends \Object\Form\Wrapper\Base {
 
 	public function previewBarcode(& $form) {
 		$result = '<br/>';
-		if (!empty($form->values['am_promocode_barcode'])) {
-			//$result.= $form->values['am_promocode_barcode'];
+		if (!empty($form->values['am_promocode_barcode']) && \Can::submoduleExists('Numbers\Backend\IO\PDF')) {
+			$result.= \Numbers\Backend\IO\PDF\Barcode::renderAsHTML($form->values['am_promocode_barcode'], \Numbers\Backend\IO\PDF\Barcode::DEFAULT_BARCODE_TYPE, 2, 30, 'black');
 		}
 		return $result;
 	}

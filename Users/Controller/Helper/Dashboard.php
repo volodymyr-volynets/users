@@ -11,6 +11,12 @@ class Dashboard extends \Object\Controller\Authorized {
 		$counter = 1;
 		$row_number = 1;
 		foreach ($dashboards as $k => $v) {
+			$class = $v['model'];
+			$model = new $class();
+			// continue loop
+			if (!$model->acl()) {
+				continue;
+			}
 			if ($counter % 2) {
 				$row_number++;
 			}
@@ -23,8 +29,6 @@ class Dashboard extends \Object\Controller\Authorized {
 			if (!empty($v['icon'])) {
 				$name = \HTML::icon(['type' => $v['icon']]) . ' ' . $name;
 			}
-			$class = $v['model'];
-			$model = new $class();
 			$grid['options'][$row_number][$counter][$counter] = [
 				'value' => '<div class="postlogin_dashboard_holder"><h4>' . $name . '</h4>' . $model->render() . '</div>',
 				'options' => [

@@ -38,4 +38,11 @@ class Builder {
 		}
 		return \HTML::grid($grid);
 	}
+
+	/**
+	 * Acl
+	 */
+	public function acl() : bool {
+		return true;
+	}
 }
