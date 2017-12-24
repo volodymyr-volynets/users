@@ -81,8 +81,8 @@ class Roles extends \Object\Form\Wrapper\Base {
 
 	public $rows = [
 		'top' => [
-			'um_user_id' => ['order' => 100],
-			'um_user_name' => ['order' => 200],
+			'um_role_id' => ['order' => 100],
+			'um_role_name' => ['order' => 200],
 		],
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
