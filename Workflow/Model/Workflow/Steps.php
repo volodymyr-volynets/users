@@ -18,7 +18,7 @@ class Steps extends \Object\Table {
 	public $columns = [
 		'ww_wrkflwstep_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'ww_wrkflwstep_workflow_id' => ['name' => 'Workflow #', 'domain' => 'workflow_id'],
-		'ww_wrkflwstep_id' => ['name' => 'Step #', 'domain' => 'workflow_id_sequence'],
+		'ww_wrkflwstep_id' => ['name' => 'Step #', 'domain' => 'workflow_id'],
 		'ww_wrkflwstep_name' => ['name' => 'Name', 'domain' => 'name'],
 		'ww_wrkflwstep_order' => ['name' => 'Order', 'domain' => 'order'],
 		'ww_wrkflwstep_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Step\Types'],

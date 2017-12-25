@@ -11,7 +11,7 @@ class LineStyles extends \Object\Data {
 	];
 	public $data = [
 		10 => ['ww_wrkflwcnvsstyle_name' => 'Regular'],
-		20 => ['ww_wrkflwcnvsstyle_name' => 'Dashed'],
-		30 => ['ww_wrkflwcnvsstyle_name' => 'Double'],
+		20 => ['ww_wrkflwcnvsstyle_name' => 'Double'],
+		30 => ['ww_wrkflwcnvsstyle_name' => 'Tripple'],
 	];
 }

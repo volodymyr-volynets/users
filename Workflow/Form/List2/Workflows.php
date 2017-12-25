@@ -40,6 +40,9 @@ class Workflows extends \Object\Form\Wrapper\List2 {
 				'ww_workflow_id2' => ['order' => 2, 'label_name' => 'Workflow #', 'domain' => 'workflow_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.ww_workflow_id;<='],
 				'ww_workflow_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.ww_workflow_inactive;=']
 			],
+			'ww_workflow_versioned' => [
+				'ww_workflow_versioned1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Versioned', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.ww_workflow_versioned;=']
+			],
 			'full_text_search' => [
 				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.ww_workflow_code', 'a.ww_workflow_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
@@ -55,8 +58,9 @@ class Workflows extends \Object\Form\Wrapper\List2 {
 			'row1' => [
 				'ww_workflow_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Workflow #', 'domain' => 'workflow_id', 'percent' => 10, 'url_edit' => true],
 				'ww_workflow_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 65],
-				'ww_workflow_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 20],
-				'ww_workflow_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'ww_workflow_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 15],
+				'ww_workflow_versioned' => ['order' => 4, 'label_name' => 'Version', 'type' => 'boolean', 'percent' => 5],
+				'ww_workflow_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]
 	];

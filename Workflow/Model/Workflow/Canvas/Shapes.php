@@ -20,6 +20,9 @@ class Shapes extends \Object\Table {
 		'ww_wrkflwcnvsshape_shape_border_style_id' => ['name' => 'Border Style #', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineStyles', 'null' => true],
 		'ww_wrkflwcnvsshape_shape_border_color' => ['name' => 'Border Color', 'domain' => 'html_color_code', 'default' => '000000'],
 		'ww_wrkflwcnvsshape_shape_fill_color' => ['name' => 'Fill Color', 'domain' => 'html_color_code', 'default' => 'FFFFFF'],
+		'ww_wrkflwcnvsshape_completed_border_style_id' => ['name' => 'Completed Border Style #', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineStyles', 'null' => true],
+		'ww_wrkflwcnvsshape_completed_border_color' => ['name' => 'Completed Border Color', 'domain' => 'html_color_code', 'default' => '000000'],
+		'ww_wrkflwcnvsshape_completed_fill_color' => ['name' => 'Completed Fill Color', 'domain' => 'html_color_code', 'default' => 'FFFFFF'],
 	];
 	public $constraints = [
 		'ww_workflow_canvas_shapes_pk' => ['type' => 'pk', 'columns' => ['ww_wrkflwcnvsshape_tenant_id', 'ww_wrkflwcnvsshape_workflow_id', 'ww_wrkflwcnvsshape_canvas_id']],

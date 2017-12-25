@@ -12,6 +12,6 @@ class LineTypes extends \Object\Data {
 	public $data = [
 		10 => ['ww_wrkcnvslntp_name' => 'Line'],
 		20 => ['ww_wrkcnvslntp_name' => 'Arrow'],
-		30 => ['ww_wrkcnvslntp_name' => 'Square'],
+		30 => ['ww_wrkcnvslntp_name' => 'Circle'],
 	];
 }
