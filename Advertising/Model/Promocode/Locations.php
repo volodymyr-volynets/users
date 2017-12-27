@@ -17,12 +17,12 @@ class Locations extends \Object\Table {
 	public $columns = [
 		'am_promoloc_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'am_promoloc_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
-		'am_promoloc_promocode_id' => ['name' => 'Promocode #', 'domain' => 'group_id'],
+		'am_promoloc_promocode_id' => ['name' => 'Promocode #', 'domain' => 'promocode_id'],
 		'am_promoloc_location_id' => ['name' => 'Location #', 'domain' => 'location_id'],
 		'am_promoloc_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'on_promocode_locations_pk' => ['type' => 'pk', 'columns' => ['am_promoloc_tenant_id', 'am_promoloc_promocode_id', 'am_promoloc_location_id']],
+		'am_promocode_locations_pk' => ['type' => 'pk', 'columns' => ['am_promoloc_tenant_id', 'am_promoloc_promocode_id', 'am_promoloc_location_id']],
 		'am_promoloc_promocode_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['am_promoloc_tenant_id', 'am_promoloc_promocode_id'],

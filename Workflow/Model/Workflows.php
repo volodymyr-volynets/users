@@ -26,6 +26,7 @@ class Workflows extends \Object\Table {
 		'ww_workflow_version_code' => ['name' => 'Version Code', 'domain' => 'version_code', 'null' => true],
 		'ww_workflow_version_name' => ['name' => 'Version Name', 'domain' => 'name', 'null' => true],
 		// inactive
+		'ww_workflow_all_roles' => ['name' => 'All Roles', 'type' => 'boolean'],
 		'ww_workflow_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

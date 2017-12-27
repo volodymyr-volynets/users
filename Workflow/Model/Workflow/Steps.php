@@ -22,6 +22,8 @@ class Steps extends \Object\Table {
 		'ww_wrkflwstep_name' => ['name' => 'Name', 'domain' => 'name'],
 		'ww_wrkflwstep_order' => ['name' => 'Order', 'domain' => 'order'],
 		'ww_wrkflwstep_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Step\Types'],
+		'ww_wrkflwstep_page_module_id' => ['name' => 'Page Module #', 'domain' => 'module_id', 'null' => true],
+		'ww_wrkflwstep_page_resource_id' => ['name' => 'Page Resource #', 'domain' => 'resource_id', 'null' => true],
 		'ww_wrkflwstep_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

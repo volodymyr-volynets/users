@@ -41,7 +41,7 @@ class Promocodes extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'am_promocode_id' => [
-				'am_promocode_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Category #', 'domain' => 'group_id_sequence', 'percent' => 50, 'navigation' => true],
+				'am_promocode_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Category #', 'domain' => 'promocode_id_sequence', 'percent' => 50, 'navigation' => true],
 				'am_promocode_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 45, 'required' => true, 'navigation' => true],
 				'am_promocode_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
@@ -102,7 +102,7 @@ class Promocodes extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
-		'name' => 'Categories',
+		'name' => 'Promocodes',
 		'model' => '\Numbers\Users\Advertising\Model\Promocodes',
 		'details' => [
 			'\Numbers\Users\Advertising\Model\Promocode\Locations' => [

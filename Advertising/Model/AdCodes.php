@@ -15,7 +15,7 @@ class AdCodes extends \Object\Table {
 	public $column_prefix = 'am_adcode_';
 	public $columns = [
 		'am_adcode_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'am_adcode_id' => ['name' => 'Ad Code #', 'domain' => 'group_id_sequence'],
+		'am_adcode_id' => ['name' => 'Ad Code #', 'domain' => 'adcode_id_sequence'],
 		'am_adcode_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'am_adcode_name' => ['name' => 'Name', 'domain' => 'name'],
 		'am_adcode_category_id' => ['name' => 'Category #', 'domain' => 'group_id'],
@@ -23,6 +23,7 @@ class AdCodes extends \Object\Table {
 		'am_adcode_hidden' => ['name' => 'Hidden', 'type' => 'boolean'],
 		'am_adcode_effective_from' => ['name' => 'Effective From', 'type' => 'date', 'null' => true],
 		'am_adcode_effective_to' => ['name' => 'Effective To', 'type' => 'date', 'null' => true],
+		'am_adcode_all_locations' => ['name' => 'All Locations', 'type' => 'boolean'],
 		'am_adcode_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

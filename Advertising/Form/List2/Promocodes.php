@@ -36,8 +36,8 @@ class Promocodes extends \Object\Form\Wrapper\List2 {
 		],
 		'filter' => [
 			'am_promocode_id' => [
-				'am_promocode_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Promocode #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.am_promocode_id;>='],
-				'am_promocode_id2' => ['order' => 2, 'label_name' => 'Promocode #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.am_promocode_id;<='],
+				'am_promocode_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Promocode #', 'domain' => 'promocode_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.am_promocode_id;>='],
+				'am_promocode_id2' => ['order' => 2, 'label_name' => 'Promocode #', 'domain' => 'promocode_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.am_promocode_id;<='],
 				'am_promocode_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.am_promocode_inactive;=']
 			],
 			'full_text_search' => [
@@ -53,7 +53,7 @@ class Promocodes extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'am_promocode_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Promocode #', 'domain' => 'group_id', 'percent' => 10, 'url_edit' => true],
+				'am_promocode_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Promocode #', 'domain' => 'promocode_id', 'percent' => 10, 'url_edit' => true],
 				'am_promocode_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 65],
 				'am_promocode_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 20],
 				'am_promocode_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]

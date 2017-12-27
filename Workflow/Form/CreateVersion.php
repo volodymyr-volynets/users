@@ -61,6 +61,26 @@ class CreateVersion extends \Object\Form\Wrapper\Base {
 				return;
 			}
 		}
+		// copy organizations
+		foreach ($result['values']['\Numbers\Users\Workflow\Model\Workflow\Organizations'] as $k => $v) {
+			unset($v['ww_wrkflworg_tenant_id']);
+			$v['ww_wrkflworg_workflow_id'] = $workflow_id;
+			$merge_result = \Numbers\Users\Workflow\Model\Workflow\Organizations::collectionStatic()->merge($v);
+			if (!$merge_result['success']) {
+				$form->error(DANGER, $merge_result['error']);
+				return;
+			}
+		}
+		// copy roles
+		foreach ($result['values']['\Numbers\Users\Workflow\Model\Workflow\Roles'] as $k => $v) {
+			unset($v['ww_wrkflwrol_tenant_id']);
+			$v['ww_wrkflwrol_workflow_id'] = $workflow_id;
+			$merge_result = \Numbers\Users\Workflow\Model\Workflow\Roles::collectionStatic()->merge($v);
+			if (!$merge_result['success']) {
+				$form->error(DANGER, $merge_result['error']);
+				return;
+			}
+		}
 		// copy canvas
 		foreach ($result['values']['\Numbers\Users\Workflow\Model\Workflow\Canvas'] as $k => $v) {
 			unset($v['ww_wrkflwcanvas_tenant_id']);

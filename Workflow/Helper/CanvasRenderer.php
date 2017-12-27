@@ -19,9 +19,11 @@ class CanvasRenderer {
 		array_key_sort($data, ['order' => SORT_ASC]);
 		//create transparent image
 		$image = imagecreatetruecolor($options['width'], $options['height']);
-		imagealphablending($image, true);
-		$transparent = imagecolorallocatealpha($image, 0, 0, 0, 127);
-		imagecolortransparent($image, $transparent);
+		$fill_color = imagecolorallocate($image, 255, 255, 255);
+		imagefilledrectangle($image, 0, 0, $options['width'], $options['height'], $fill_color);
+		//imagealphablending($image, true);
+		//$transparent = imagecolorallocatealpha($image, 0, 0, 0, 127);
+		//imagecolortransparent($image, $transparent);
 		// loop through shapes
 		foreach ($data as $k => $v) {
 			switch ($v['type']) {
@@ -76,7 +78,7 @@ class CanvasRenderer {
 		imagedestroy($image);
 		$imagedata = ob_get_contents();
 		ob_end_clean();
-		return '<img src="data:image/png;base64,' . base64_encode($imagedata) . '" alt="" width="' . $options['width'] . '" height="' . $options['height'] . '"/>';
+		return '<img src="data:image/png;base64,' . base64_encode($imagedata) . '" alt="Preview" width="' . $options['width'] . '" height="' . $options['height'] . '"/>';
 	}
 
 	/**
