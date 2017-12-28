@@ -18,6 +18,7 @@ class Workflows extends \Object\Table {
 		'ww_workflow_id' => ['name' => 'Workflow #', 'domain' => 'workflow_id_sequence'],
 		'ww_workflow_code' => ['name' => 'Code', 'domain' => 'group_code', 'null' => true],
 		'ww_workflow_name' => ['name' => 'Name', 'domain' => 'name'],
+		'ww_workflow_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		'ww_workflow_canvas_width' => ['name' => 'Canvas Width', 'domain' => 'dimension'],
 		'ww_workflow_canvas_height' => ['name' => 'Canvas Height', 'domain' => 'dimension'],
 		// version
@@ -52,7 +53,8 @@ class Workflows extends \Object\Table {
 	public $optimistic_lock = true;
 	public $options_map = [
 		'ww_workflow_name' => 'name',
-		'ww_workflow_version_name' => 'name'
+		'ww_workflow_version_name' => 'name',
+		'ww_workflow_icon' => 'icon_class'
 	];
 	public $options_active = [
 		'ww_workflow_inactive' => 0

@@ -66,6 +66,16 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'details_cannot_delete' => true,
 			'order' => 35002
 		],
+		'next_steps_container' => [
+			'label_name' => 'Next Steps',
+			'type' => 'subdetails',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Workflow\Model\Workflow\Steps',
+			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Step\Next',
+			'details_pk' => ['ww_wrkflwstepnext_next_step_id'],
+			'order' => 35003
+		],
 	];
 
 	public $rows = [
@@ -74,6 +84,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'ww_workflow_name' => ['order' => 200],
 		],
 		'tabs' => [
+			'general' => ['order' => 100, 'label_name' => 'General'],
 			'steps' => ['order' => 200, 'label_name' => 'Steps'],
 			'canvas' => ['order' => 300, 'label_name' => 'Canvas'],
 			'preview' => ['order' => 400, 'label_name' => 'Preview'],
@@ -94,6 +105,9 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			]
 		],
 		'tabs' => [
+			'general' => [
+				'general' => ['container' => 'general_container', 'order' => 100],
+			],
 			'steps' => [
 				'steps' => ['container' => 'steps_container', 'order' => 100],
 			],
@@ -104,6 +118,11 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'preview' => [
 				'preview' => ['container' => 'canvas_preview_container', 'order' => 100],
 			]
+		],
+		'general_container' => [
+			'ww_workflow_icon' => [
+				'ww_workflow_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
+			],
 		],
 		'steps_container' => [
 			'row1' => [
@@ -134,8 +153,8 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'ww_wrkflwcanvas_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
 			'row2' => [
-				'ww_wrkflwcanvas_x1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'X1 (Start)', 'domain' => 'dimension', 'required' => false, 'percent' => 25],
-				'ww_wrkflwcanvas_y1' => ['order' => 2, 'label_name' => 'Y1 (Start)', 'domain' => 'dimension', 'required' => false, 'percent' => 25],
+				'ww_wrkflwcanvas_x1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'X1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25],
+				'ww_wrkflwcanvas_y1' => ['order' => 2, 'label_name' => 'Y1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25],
 				'ww_wrkflwcanvas_x2' => ['order' => 3, 'label_name' => 'X2 (Width)', 'domain' => 'dimension', 'required' => false, 'percent' => 25],
 				'ww_wrkflwcanvas_y2' => ['order' => 4, 'label_name' => 'Y2 (Height)', 'domain' => 'dimension', 'required' => false, 'percent' => 25],
 			],
@@ -164,6 +183,12 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'ww_wrkflwcnvsshape_completed_border_style_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Completed Border Style', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineStyles'],
 				'ww_wrkflwcnvsshape_completed_border_color' => ['order' => 2, 'label_name' => 'Completed Border Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
 				'ww_wrkflwcnvsshape_completed_fill_color' => ['order' => 3, 'label_name' => 'Completed Fill Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
+			]
+		],
+		'next_steps_container' => [
+			'row1' => [
+				'ww_wrkflwstepnext_next_step_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Step', 'domain' => 'workflow_id', 'null' => true, 'percent' =>95, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Steps::optionsActive', 'options_depends' => ['ww_wrkflwstep_workflow_id' => 'parent::ww_workflow_id']],
+				'ww_wrkflwstepnext_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			]
 		],
 		'buttons' => [
@@ -198,7 +223,15 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'name' => 'Steps',
 				'pk' => ['ww_wrkflwstep_tenant_id', 'ww_wrkflwstep_workflow_id', 'ww_wrkflwstep_id'],
 				'type' => '1M',
-				'map' => ['ww_workflow_tenant_id' => 'ww_wrkflwstep_tenant_id', 'ww_workflow_id' => 'ww_wrkflwstep_workflow_id']
+				'map' => ['ww_workflow_tenant_id' => 'ww_wrkflwstep_tenant_id', 'ww_workflow_id' => 'ww_wrkflwstep_workflow_id'],
+				'details' => [
+					'\Numbers\Users\Workflow\Model\Workflow\Step\Next' => [
+						'name' => 'Next Steps',
+						'pk' => ['ww_wrkflwstepnext_tenant_id', 'ww_wrkflwstepnext_workflow_id', 'ww_wrkflwstepnext_step_id', 'ww_wrkflwstepnext_next_step_id'],
+						'type' => '1M',
+						'map' => ['ww_wrkflwstep_tenant_id' => 'ww_wrkflwstepnext_tenant_id', 'ww_wrkflwstep_workflow_id' => 'ww_wrkflwstepnext_workflow_id', 'ww_wrkflwstep_id' => 'ww_wrkflwstepnext_step_id'],
+					]
+				]
 			],
 		]
 	];
