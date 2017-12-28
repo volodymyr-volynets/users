@@ -51,7 +51,8 @@ class Workflows extends \Object\Table {
 	];
 	public $optimistic_lock = true;
 	public $options_map = [
-		'ww_workflow_name' => 'name'
+		'ww_workflow_name' => 'name',
+		'ww_workflow_version_name' => 'name'
 	];
 	public $options_active = [
 		'ww_workflow_inactive' => 0
