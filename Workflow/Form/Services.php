@@ -77,6 +77,9 @@ class Services extends \Object\Form\Wrapper\Base {
 		'general_container' => [
 			'ww_service_workflow_id' => [
 				'ww_service_workflow_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Workflow #', 'domain' => 'workflow_id', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflows::optionsActive', 'options_params' => ['ww_workflow_versioned' => 1]],
+			],
+			'ww_service_icon' => [
+				'ww_service_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
 			]
 		],
 		'all_roles_container' => [

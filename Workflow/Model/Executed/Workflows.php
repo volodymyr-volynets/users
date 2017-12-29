@@ -17,7 +17,11 @@ class Workflows extends \Object\Table {
 		'ww_execwflow_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'ww_execwflow_id' => ['name' => 'Executed #', 'domain' => 'big_id_sequence'],
 		'ww_execwflow_service_id' => ['name' => 'Service #', 'domain' => 'service_id'],
+		'ww_execwflow_service_name' => ['name' => 'Service Name', 'domain' => 'name'],
 		'ww_execwflow_workflow_id' => ['name' => 'Workflow #', 'domain' => 'workflow_id'],
+		'ww_execwflow_workflow_name' => ['name' => 'Workflow Name', 'domain' => 'name'],
+		'ww_execwflow_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
+		'ww_execwflow_status_id' => ['name' => 'Status', 'domain' => 'type_id', 'default' => 10, 'options_model' => '\Numbers\Users\Workflow\Model\Executed\Workflow\Statuses'],
 		'ww_execwflow_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
@@ -34,6 +38,12 @@ class Workflows extends \Object\Table {
 			'foreign_model' => '\Numbers\Users\Workflow\Model\Services',
 			'foreign_columns' => ['ww_service_tenant_id', 'ww_service_id']
 		],
+		'ww_execwflow_user_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['ww_execwflow_tenant_id', 'ww_execwflow_user_id'],
+			'foreign_model' => '\Numbers\Users\Users\Model\Users',
+			'foreign_columns' => ['um_user_tenant_id', 'um_user_id']
+		]
 	];
 	public $indexes = [];
 	public $history = false;

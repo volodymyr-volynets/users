@@ -28,6 +28,12 @@ class CanvasRenderer {
 		foreach ($data as $k => $v) {
 			switch ($v['type']) {
 				case 1000: // rectangle
+					// override colors
+					if ((!empty($options['completed_steps']) && in_array($v['step'], $options['completed_steps'])) || !empty($options['show_as_completed'])) {
+						$v['shape_fill_color'] = $v['completed_fill_color'];
+						$v['shape_border_style'] = $v['completed_border_style'];
+						$v['shape_border_color'] = $v['completed_border_color'];
+					}
 					$fill_color_rgb = hex2rgb($v['shape_fill_color']);
 					$fill_color = imagecolorallocate($image, $fill_color_rgb[0], $fill_color_rgb[1], $fill_color_rgb[2]);
 					imagefilledrectangle($image, $v['x1'], $v['y1'], $v['x1'] + $v['x2'], $v['y1'] + $v['y2'], $fill_color);

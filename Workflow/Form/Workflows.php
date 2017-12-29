@@ -212,7 +212,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 						'map' => ['ww_wrkflwcanvas_tenant_id' => 'ww_wrkflwcnvsline_tenant_id', 'ww_wrkflwcanvas_workflow_id' => 'ww_wrkflwcnvsline_workflow_id', 'ww_wrkflwcanvas_id' => 'ww_wrkflwcnvsline_canvas_id']
 					],
 					'\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes' => [
-						'name' => 'Line Settings',
+						'name' => 'Shape Settings',
 						'pk' => ['ww_wrkflwcnvsshape_tenant_id', 'ww_wrkflwcnvsshape_workflow_id', 'ww_wrkflwcnvsshape_canvas_id'],
 						'type' => '11',
 						'map' => ['ww_wrkflwcanvas_tenant_id' => 'ww_wrkflwcnvsshape_tenant_id', 'ww_wrkflwcanvas_workflow_id' => 'ww_wrkflwcnvsshape_workflow_id', 'ww_wrkflwcanvas_id' => 'ww_wrkflwcnvsshape_canvas_id']
@@ -232,7 +232,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 						'map' => ['ww_wrkflwstep_tenant_id' => 'ww_wrkflwstepnext_tenant_id', 'ww_wrkflwstep_workflow_id' => 'ww_wrkflwstepnext_workflow_id', 'ww_wrkflwstep_id' => 'ww_wrkflwstepnext_step_id'],
 					]
 				]
-			],
+			]
 		]
 	];
 
@@ -285,9 +285,17 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'completed_fill_color' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes']['ww_wrkflwcnvsshape_completed_fill_color'] ?? 'FFFFFF',
 			];
 		}
-		return \Numbers\Users\Workflow\Helper\CanvasRenderer::render($data, [
+		$result = \Numbers\Users\Workflow\Helper\CanvasRenderer::render($data, [
 			'width' => $form->values['ww_workflow_canvas_width'],
-			'height' => $form->values['ww_workflow_canvas_height']
+			'height' => $form->values['ww_workflow_canvas_height'],
+			'show_as_completed' => false
 		]);
+		$result.= '<hr/>';
+		$result.= \Numbers\Users\Workflow\Helper\CanvasRenderer::render($data, [
+			'width' => $form->values['ww_workflow_canvas_width'],
+			'height' => $form->values['ww_workflow_canvas_height'],
+			'show_as_completed' => true
+		]);
+		return $result;
 	}
 }

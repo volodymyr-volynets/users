@@ -18,6 +18,7 @@ class Services extends \Object\Table {
 		'ww_service_id' => ['name' => 'Service #', 'domain' => 'service_id_sequence'],
 		'ww_service_code' => ['name' => 'Code', 'domain' => 'group_code', 'null' => true],
 		'ww_service_name' => ['name' => 'Name', 'domain' => 'name'],
+		'ww_service_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		'ww_service_workflow_id' => ['name' => 'Workflow #', 'domain' => 'workflow_id', 'null' => true],
 		'ww_service_all_roles' => ['name' => 'All Roles', 'type' => 'boolean'],
 		// inactive
@@ -45,7 +46,8 @@ class Services extends \Object\Table {
 	];
 	public $optimistic_lock = true;
 	public $options_map = [
-		'ww_service_name' => 'name'
+		'ww_service_name' => 'name',
+		'ww_service_icon' => 'icon_class'
 	];
 	public $options_active = [
 		'ww_service_inactive' => 0
