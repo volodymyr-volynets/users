@@ -26,7 +26,7 @@ class Users extends \Object\DataSource {
 
 	public $primary_model = '\Numbers\Users\Users\Model\Users';
 	public $parameters = [
-		//'selected_organizations' => ['name' => 'Selected Organizations', 'domain' => 'organization_id', 'multiple_column' => true],
+		'selected_organizations' => ['name' => 'Selected Organizations', 'domain' => 'organization_id', 'multiple_column' => true],
 		'selected_roles' => ['name' => 'Selected Roles', 'domain' => 'role_id', 'multiple_column' => true],
 		'existing_values' => ['name' => 'Existing Values', 'type' => 'mixed'],
 		'skip_acl' => ['name' => 'Skip ACL', 'type' => 'boolean'],
@@ -63,6 +63,21 @@ class Users extends \Object\DataSource {
 					$query->columns(1);
 					$query->where('AND', ['inner_r.um_usrrol_user_id', '=', 'a.um_user_id', true]);
 					$query->where('AND', ['inner_r.um_usrrol_role_id', '=', $parameters['selected_roles']]);
+				}, true);
+			});
+		}
+		// selected roles
+		if (!empty($parameters['selected_organizations'])) {
+			$this->query->where('AND', function (& $query) use ($parameters) {
+				// allow existing values
+				if (!empty($parameters['existing_values'])) {
+					$query->where('OR', ['a.um_user_id', '=', $parameters['existing_values']]);
+				}
+				$query->where('OR', function (& $query) use ($parameters) {
+					$query = \Numbers\Users\Users\Model\User\Organizations::queryBuilderStatic(['alias' => 'inner_o'])->select();
+					$query->columns(1);
+					$query->where('AND', ['inner_o.um_usrorg_user_id', '=', 'a.um_user_id', true]);
+					$query->where('AND', ['inner_o.um_usrorg_organization_id', '=', $parameters['selected_organizations']]);
 				}, true);
 			});
 		}

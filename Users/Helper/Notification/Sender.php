@@ -42,11 +42,20 @@ class Sender {
 	 *		replace
 	 *			subject
 	 *			body
+	 *		subject
+	 *		body
+	 *		important
+	 *		from_email
+	 *		from_name
 	 * @return array
 	 */
 	public static function notifySingleUser(string $notification_code, int $user_id, string $email = '', array $options = []) : array {
 		// cache notification
-		if (!isset(self::$cached_notifications[$notification_code])) {
+		if (!empty($options['subject'])) {
+			self::$cached_notifications[$notification_code]['sm_notification_subject'] = $options['subject'];
+			self::$cached_notifications[$notification_code]['sm_notification_body'] = $options['body'] ?? '';
+			self::$cached_notifications[$notification_code]['sm_notification_important'] = $options['important'] ?? false;
+		} else if (!isset(self::$cached_notifications[$notification_code])) {
 			$query = \Numbers\Backend\System\Modules\Model\Module\Features::queryBuilderStatic()->select();
 			$query->join('LEFT', new \Numbers\Backend\System\Modules\Model\Notifications(), 'b', 'ON', [
 				['OR', ['a.sm_feature_code', '=', 'b.sm_notification_code', true], false],
@@ -96,8 +105,8 @@ class Sender {
 			'email' => $email,
 			'subject' => $subject,
 			'body' => $body,
-			'from_email' => $from['data']['email'] ?? null,
-			'from_name' => $from['data']['name'] ?? null,
+			'from_email' => $options['from_email'] ?? $from['data']['email'] ?? null,
+			'from_name' => $options['from_name'] ?? $from['data']['name'] ?? null,
 			'important' => self::$cached_notifications[$notification_code]['sm_notification_important']
 		];
 		if (!empty($email)) {
@@ -108,8 +117,8 @@ class Sender {
 				'important' => self::$cached_notifications[$notification_code]['sm_notification_important']
 			];
 			if ($from['success']) {
-				$send_options['from']['email'] = $from['data']['email'];
-				$send_options['from']['name'] = $from['data']['name'];
+				$send_options['from']['email'] = $options['from_email'] ?? $from['data']['email'];
+				$send_options['from']['name'] = $options['from_name'] ?? $from['data']['name'];
 			}
 			return \Mail::send($send_options);
 		} else {

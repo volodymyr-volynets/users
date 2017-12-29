@@ -128,6 +128,12 @@ class Messages extends \Object\Controller\Authorized {
 			]
 		]);
 	}
+	public function actionNew() {
+		$form = new \Numbers\Users\Users\Form\Account\Message([
+			'input' => \Request::input(null, false)
+		]);
+		echo $form->render();
+	}
 	public function actionJsonMenuName() {
 		// fetch number of messages
 		$query = \Numbers\Users\Users\Model\Message\Recipients::queryBuilderStatic()->select();

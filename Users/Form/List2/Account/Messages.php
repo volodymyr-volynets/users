@@ -9,6 +9,7 @@ class Messages extends \Object\Form\Wrapper\List2 {
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
 			'refresh' => true,
+			'new' => ['href' => '/Numbers/Users/Users/Controller/Account/Messages/_New'],
 			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
 		]
 	];
