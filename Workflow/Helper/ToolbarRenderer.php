@@ -21,6 +21,11 @@ class ToolbarRenderer {
 					'ww_execwstep_step_id' => $next_step['next_resources'][\Application::$controller->controller_id],
 					'ww_execwstep_status_id' => 30
 				]);
+				// update status
+				$merge_result = \Numbers\Users\Workflow\Model\Executed\Workflows::collectionStatic()->merge([
+					'ww_execwflow_id' => $workflow['execution_id'],
+					'ww_execwflow_status_id' => 20
+				]);
 				$next_step = self::determineNextSteps($workflow);
 			}
 		}
@@ -47,6 +52,12 @@ class ToolbarRenderer {
 			$value.= implode(\Format::$symbol_comma . ' ', $next);
 		} else if (!empty($next_step['no_more_steps'])) {
 			$value.= '<b>' . i18n(null, 'Workflow completed!') . '</b>';
+			// if its a last step we empty and update status
+			\Session::set(['numbers', 'workflow'], []);
+			$merge_result = \Numbers\Users\Workflow\Model\Executed\Workflows::collectionStatic()->merge([
+				'ww_execwflow_id' => $workflow['execution_id'],
+				'ww_execwflow_status_id' => 30
+			]);
 		}
 		$value.= '<br/>' . i18n(null, 'Preview:') . ' ' . \HTML::a(['href' => 'javascript:void(0);', 'onclick' => '$(\'#workflow_preview_link_id\').toggle();', 'value' => i18n(null, 'open')]);
 		$value.= '<div id="workflow_preview_link_id" style="display: none;">' . $next_step['image'] . '</div>';
