@@ -21,7 +21,6 @@ class Services extends \Object\Table {
 		'ww_service_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		'ww_service_workflow_id' => ['name' => 'Workflow #', 'domain' => 'workflow_id', 'null' => true],
 		'ww_service_all_roles' => ['name' => 'All Roles', 'type' => 'boolean'],
-		// inactive
 		'ww_service_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

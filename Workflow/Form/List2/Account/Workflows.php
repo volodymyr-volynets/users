@@ -40,6 +40,9 @@ class Workflows extends \Object\Form\Wrapper\List2 {
 				'ww_execwflow_id2' => ['order' => 2, 'label_name' => 'Workflow #', 'domain' => 'workflow_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.ww_execwflow_id;<='],
 				'ww_execwflow_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.ww_execwflow_inactive;=']
 			],
+			'ww_execwflow_status_id' => [
+				'ww_execwflow_status_id1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Status', 'domain' => 'type_id', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Workflow\Model\Executed\Workflow\Statuses', 'query_builder' => 'a.ww_execwflow_status_id;=']
+			],
 			'full_text_search' => [
 				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.ww_execwflow_service_name', 'a.ww_execwflow_workflow_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			],

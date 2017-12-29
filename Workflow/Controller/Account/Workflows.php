@@ -24,15 +24,13 @@ class Workflows extends \Object\Controller\Authorized {
 	}
 	public function actionJsonMenuName() {
 		// fetch number of messages
-		/*
-		$query = \Numbers\Users\Users\Model\Message\Recipients::queryBuilderStatic()->select();
+		$query = \Numbers\Users\Workflow\Model\Executed\Workflows::queryBuilderStatic()->select();
 		$query->columns(['count' => 'COUNT(*)']);
-		$query->where('AND', ['a.um_mesrecip_read', '=', 0]);
-		$query->where('AND', ['a.um_mesrecip_user_id', '=', \User::id()]);
+		$query->where('AND', ['a.ww_execwflow_status_id', '<>', 30]);
+		$query->where('AND', ['a.ww_execwflow_user_id', '=', \User::id()]);
 		$data = $query->query();
-		*/
 		// generate message
-		$label = i18n(null, 'Workflows') . ' ' . \HTML::label2(['type' => 'primary', 'value' => \Format::id(0)]);
+		$label = i18n(null, 'Workflows') . ' ' . \HTML::label2(['type' => 'primary', 'value' => \Format::id($data['rows'][0]['count'])]);
 		\Layout::renderAs([
 			'success' => true,
 			'error' => [],

@@ -20,7 +20,7 @@ class StartWorkflow extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'ww_execwflow_service_id' => [
-				'ww_execwflow_service_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'percent' => 100, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Services'],
+				'ww_execwflow_service_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'percent' => 100, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\DataSource\Services::optionsActive'],
 			],
 			self::BUTTONS => [
 				self::BUTTON_SUBMIT => self::BUTTON_SUBMIT_DATA,
@@ -55,5 +55,7 @@ class StartWorkflow extends \Object\Form\Wrapper\Base {
 			return;
 		}
 		$form->error(SUCCESS, \Object\Content\Messages::OPERATION_EXECUTED);
+		// redirect
+		\Request::redirect('/Numbers/Users/Workflow/Controller/Account/Workflows/_Edit?ww_execwflow_id=' . $merge_result['new_pk']['ww_execwflow_id']);
 	}
 }
