@@ -47,7 +47,10 @@ class Organizations extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
+	public $options_map = [
+		'on_organization_name' => 'name',
+		'on_organization_icon' => 'icon_class',
+	];
 	public $options_active = [];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
