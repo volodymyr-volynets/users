@@ -75,6 +75,9 @@ class Locations extends \Object\Form\Wrapper\Base {
 			'on_location_market_id' => [
 				'on_location_market_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Market', 'domain' => 'market_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Markets::optionsActive'],
 				'on_location_region_id' => ['order' => 2, 'label_name' => 'Region', 'domain' => 'region_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Regions::optionsActive'],
+			],
+			'on_location_item_master_id' => [
+				'on_location_item_master_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Item Master', 'domain' => 'item_master_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\ItemMasters::optionsActive'],
 			]
 		],
 		'contact_container' => [

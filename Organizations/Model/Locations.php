@@ -15,7 +15,7 @@ class Locations extends \Object\Table {
 	public $column_prefix = 'on_location_';
 	public $columns = [
 		'on_location_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'on_location_id' => ['name' => 'Organization #', 'domain' => 'location_id_sequence'],
+		'on_location_id' => ['name' => 'Location #', 'domain' => 'location_id_sequence'],
 		'on_location_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_location_name' => ['name' => 'Name', 'domain' => 'name'],
 		'on_location_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Organizations\Model\Location\Types'],
@@ -41,6 +41,7 @@ class Locations extends \Object\Table {
 		'on_location_district_id' => ['name' => 'District #', 'domain' => 'district_id'],
 		'on_location_market_id' => ['name' => 'Market #', 'domain' => 'market_id'],
 		'on_location_region_id' => ['name' => 'Region #', 'domain' => 'region_id'],
+		'on_location_item_master_id' => ['name' => 'Item Master #', 'domain' => 'item_master_id'],
 		// logo
 		'on_location_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true],
 		// inactive & hold
@@ -50,6 +51,7 @@ class Locations extends \Object\Table {
 	public $constraints = [
 		'on_locations_pk' => ['type' => 'pk', 'columns' => ['on_location_tenant_id', 'on_location_id']],
 		'on_location_code_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_code']],
+		'on_location_item_master_id_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_id', 'on_location_item_master_id']],
 		'on_location_organization_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['on_location_tenant_id', 'on_location_organization_id'],
@@ -79,6 +81,12 @@ class Locations extends \Object\Table {
 			'columns' => ['on_location_tenant_id', 'on_location_region_id'],
 			'foreign_model' => '\Numbers\Users\Organizations\Model\Regions',
 			'foreign_columns' => ['on_region_tenant_id', 'on_region_id']
+		],
+		'on_location_item_master_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['on_location_tenant_id', 'on_location_item_master_id'],
+			'foreign_model' => '\Numbers\Users\Organizations\Model\ItemMasters',
+			'foreign_columns' => ['on_itemmaster_tenant_id', 'on_itemmaster_id']
 		]
 	];
 	public $indexes = [

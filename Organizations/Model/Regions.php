@@ -15,7 +15,7 @@ class Regions extends \Object\Table {
 	public $column_prefix = 'on_region_';
 	public $columns = [
 		'on_region_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'on_region_id' => ['name' => 'District #', 'domain' => 'region_id_sequence'],
+		'on_region_id' => ['name' => 'Region #', 'domain' => 'region_id_sequence'],
 		'on_region_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_region_name' => ['name' => 'Name', 'domain' => 'name'],
 		'on_region_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],

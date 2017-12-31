@@ -132,8 +132,6 @@ class ToolbarRenderer {
 			foreach ($executed_workflow_data['\Numbers\Users\Workflow\Model\Executed\Workflow\Steps'] as $k => $v) {
 				$completed_steps[$v['ww_execwstep_step_id']] = $v['ww_execwstep_step_id'];
 			}
-			print_r2($completed_steps);
-			//$completed_steps
 			// get last step
 			$last_step = end($executed_workflow_data['\Numbers\Users\Workflow\Model\Executed\Workflow\Steps']);
 			$last_step_id = $last_step['ww_execwstep_step_id'];
