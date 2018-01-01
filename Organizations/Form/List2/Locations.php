@@ -61,7 +61,7 @@ class Locations extends \Object\Form\Wrapper\List2 {
 			'row2' => [
 				'__blank' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 10],
 				'on_location_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations'],
-				'on_location_brand_id' => ['order' => 3, 'label_name' => 'Brand #', 'domain' => 'brand_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Organizations\Model\Brands'],
+				'on_location_brand_id' => ['order' => 3, 'label_name' => 'Brand', 'domain' => 'brand_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Organizations\Model\Brands'],
 				'on_location_item_master_id' => ['order' => 4, 'label_name' => 'Item Master', 'domain' => 'item_master_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Organizations\Model\ItemMasters'],
 			]
 		]
