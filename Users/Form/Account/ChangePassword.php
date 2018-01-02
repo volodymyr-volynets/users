@@ -60,7 +60,8 @@ class ChangePassword extends \Object\Form\Wrapper\Base {
 		$crypt = new \Crypt();
 		$result = \Numbers\Users\Users\Model\Users::collectionStatic()->merge([
 			'um_user_id' => \User::id(),
-			'um_user_login_password' => $crypt->passwordHash($form->values['new_password'])
+			'um_user_login_password' => $crypt->passwordHash($form->values['new_password']),
+			'um_user_login_last_set' => \Format::now('date')
 		],
 		[
 			'skip_optimistic_lock' => true
@@ -73,6 +74,10 @@ class ChangePassword extends \Object\Form\Wrapper\Base {
 			$form->values['new_password2'] = '';
 			$form->values['old_password'] = '';
 			$form->error(SUCCESS, 'Password changed!');
+			// update sessions
+			if (!empty($_SESSION['numbers']['force']['password_reset'])) {
+				unset($_SESSION['numbers']['force']['password_reset']);
+			}
 		} else {
 			$form->error(DANGER, 'Could not update password!');
 		}

@@ -93,7 +93,15 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Users\Model\User\Schedule\WorkingHours',
 			'details_pk' => ['um_usrschedwrkhrs_week_day_id'],
 			'order' => 35000
-		]
+		],
+		'security_answers_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Security\Answers',
+			'details_pk' => ['um_usrsecanswer_question_id'],
+			'order' => 36000
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -134,6 +142,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'login' => [
 				'login' => ['container' => 'login_container', 'order' => 100],
+				'security_answers' => ['container' => 'security_answers_container', 'order' => 200],
 			],
 			'roles' => [
 				'roles' => ['container' => 'roles_container', 'order' => 100],
@@ -202,6 +211,12 @@ class Users extends \Object\Form\Wrapper\Base {
 			'um_user_login_last_set' => [
 				'um_user_login_last_set' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password Last Changed', 'type' => 'date', 'persistent' => true, 'method' => 'calendar', 'calendar_icon' => 'right', 'percent' => 50, 'readonly' => true],
 				'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Reset Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false, 'empty_value' => true]
+			]
+		],
+		'security_answers_container' => [
+			'row1' => [
+				'um_usrsecanswer_question_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Question', 'domain' => 'group_id', 'null' => true, 'details_unique_select' => true, 'percent' => 75, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Security\Questions::optionsActive'],
+				'um_usrsecanswer_answer' => ['order' => 2, 'label_name' => 'Answer', 'type' => 'text', 'null' => true, 'percent' => 25, 'required' => true],
 			]
 		],
 		'internalization_container' => [
@@ -389,6 +404,12 @@ class Users extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_usrschedwrkhrs_tenant_id', 'um_usrschedwrkhrs_user_id', 'um_usrschedwrkhrs_week_day_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrschedwrkhrs_tenant_id', 'um_user_id' => 'um_usrschedwrkhrs_user_id']
+			],
+			'\Numbers\Users\Users\Model\User\Security\Answers' => [
+				'name' => 'Security Answers',
+				'pk' => ['um_usrsecanswer_tenant_id', 'um_usrsecanswer_user_id', 'um_usrsecanswer_question_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrsecanswer_tenant_id', 'um_user_id' => 'um_usrsecanswer_user_id']
 			]
 		]
 	];

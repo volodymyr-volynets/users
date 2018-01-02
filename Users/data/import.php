@@ -73,6 +73,55 @@ class Import extends \Object\Import {
 				]
 			]
 		],
+		'security_questions' => [
+			'options' => [
+				'pk' => ['um_secquestion_name'],
+				'model' => '\Numbers\Users\Users\Model\Security\Questions',
+				'method' => 'save'
+			],
+			'data' => [
+				[
+					'um_secquestion_name' => 'What was the house number and street name you lived in as a child?',
+					'um_secquestion_inactive' => 0
+				],
+				[
+					'um_secquestion_name' => 'What were the last four digits of your childhood telephone number?',
+					'um_secquestion_inactive' => 0
+				],
+				[
+					'um_secquestion_name' => 'What primary school did you attend?',
+					'um_secquestion_inactive' => 0
+				],
+				[
+					'um_secquestion_name' => 'In what town or city was your first full time job?',
+					'um_secquestion_inactive' => 0
+				],
+				[
+					'um_secquestion_name' => 'In what town or city did you meet your spouse/partner?',
+					'um_secquestion_inactive' => 0
+				],
+				[
+					'um_secquestion_name' => 'What is the middle name of your oldest child?',
+					'um_secquestion_inactive' => 0
+				],
+				[
+					'um_secquestion_name' => 'What are the last five digits of your driver\'s licence number?',
+					'um_secquestion_inactive' => 0
+				],
+				[
+					'um_secquestion_name' => 'What is your grandmother\'s (on your mother\'s side) maiden name?',
+					'um_secquestion_inactive' => 0
+				],
+				[
+					'um_secquestion_name' => 'What is your spouse or partner\'s mother\'s maiden name?',
+					'um_secquestion_inactive' => 0
+				],
+				[
+					'um_secquestion_name' => 'In what town or city did your mother and father meet?',
+					'um_secquestion_inactive' => 0
+				],
+			]
+		],
 		'features' => [
 			'options' => [
 				'pk' => ['sm_feature_code'],

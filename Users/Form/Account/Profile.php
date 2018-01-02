@@ -45,6 +45,14 @@ class Profile extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['um_usrorg_organization_id'],
 			'details_cannot_delete' => true,
 			'order' => 35001
+		],
+		'working_hours_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Schedule\WorkingHours',
+			'details_pk' => ['um_usrschedwrkhrs_week_day_id'],
+			'order' => 35000
 		]
 	];
 	public $rows = [
@@ -58,6 +66,8 @@ class Profile extends \Object\Form\Wrapper\Base {
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
 			'photo' => ['order' => 500, 'label_name' => 'Photo'],
+			'internalization' => ['order' => 600, 'label_name' => 'Internalization'],
+			'working_hours' => ['order' => 700, 'label_name' => 'Working Hours'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA
 		]
 	];
@@ -78,8 +88,6 @@ class Profile extends \Object\Form\Wrapper\Base {
 			],
 			'login' => [
 				'login' => ['container' => 'login_container', 'order' => 100],
-				'separator' => ['container' => 'separator_container', 'order' => 200],
-				'internalization' => ['container' => 'internalization_container', 'order' => 300],
 			],
 			'organizations' => [
 				'organizations' => ['container' => 'organizations_container', 'order' => 100],
@@ -90,6 +98,12 @@ class Profile extends \Object\Form\Wrapper\Base {
 			'photo' => [
 				'photo' => ['container' => 'photo_container', 'order' => 100],
 			],
+			'internalization' => [
+				'internalization' => ['container' => 'internalization_container', 'order' => 100],
+			],
+			'working_hours' => [
+				'working_hours' => ['container' => 'working_hours_container', 'order' => 100],
+			]
 		],
 		'general_container' => [
 			self::HIDDEN => [
@@ -187,6 +201,18 @@ class Profile extends \Object\Form\Wrapper\Base {
 				'um_user_photo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
 			]
 		],
+		'working_hours_container' => [
+			'row1' => [
+				'um_usrschedwrkhrs_week_day_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Week Day', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 95, 'details_unique_select' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Schedule\WeekDays', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+				'um_usrschedwrkhrs_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'um_usrschedwrkhrs_work_starts' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Work Starts', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'um_usrschedwrkhrs_work_ends' => ['order' => 2, 'label_name' => 'Work Ends', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'um_usrschedwrkhrs_lunch_starts' => ['order' => 3, 'label_name' => 'Lunch Starts', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'um_usrschedwrkhrs_lunch_ends' => ['order' => 4, 'label_name' => 'Lunch Ends', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => [
 				self::BUTTON_SUBMIT_SAVE => self::BUTTON_SUBMIT_SAVE_DATA
@@ -220,6 +246,12 @@ class Profile extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_usri18n_tenant_id', 'um_usri18n_user_id'],
 				'type' => '11',
 				'map' => ['um_user_tenant_id' => 'um_usri18n_tenant_id', 'um_user_id' => 'um_usri18n_user_id']
+			],
+			'\Numbers\Users\Users\Model\User\Schedule\WorkingHours' => [
+				'name' => 'Internalization',
+				'pk' => ['um_usrschedwrkhrs_tenant_id', 'um_usrschedwrkhrs_user_id', 'um_usrschedwrkhrs_week_day_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrschedwrkhrs_tenant_id', 'um_user_id' => 'um_usrschedwrkhrs_user_id']
 			]
 		]
 	];

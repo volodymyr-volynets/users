@@ -44,7 +44,7 @@ class Login extends \Object\DataSource {
 			// login
 			'login_username' => 'a.um_user_login_username',
 			'login_password' => 'a.um_user_login_password',
-			'login_last_set' => 'a.um_user_login_last_set',
+			'login_last_set' => 'COALESCE(a.um_user_login_last_set, a.um_user_inserted_timestamp)',
 			// inactive & hold
 			'hold' => 'a.um_user_hold',
 			'inactive' => 'a.um_user_inactive',
