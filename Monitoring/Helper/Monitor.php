@@ -46,11 +46,11 @@ class Monitor {
 	 * Destroy
 	 */
 	public function destroy() {
-		if (!empty(self::$usage) && !\Application::get('flag.global.__ajax') && !\Helper\Cmd::isCli()) {
+		if (!empty(self::$usage) && !\Application::get('flag.global.__ajax') && !\Helper\Cmd::isCli() && !\Application::get('flag.global.__no_monitoring')) {
 			self::$usage['sm_monusage_user_id'] = \User::id();
 			self::$usage['sm_monusage_duration'] = round(microtime(true) - self::$usage['sm_monusage_duration'], 4);
 			self::$usage['sm_monusage_resource_id'] = \Application::$controller->controller_id ?? null;
-			self::$usage['sm_monusage_resource_name'] = \Application::$controller->title ?? 'Unknown';
+			self::$usage['sm_monusage_resource_name'] = \Application::$controller->title ?? get_class(\Application::$controller);
 			// add data to database
 			\Numbers\Users\Monitoring\Model\Usages::collectionStatic()->merge(self::$usage);
 		}

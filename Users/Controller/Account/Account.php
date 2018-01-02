@@ -2,6 +2,7 @@
 
 namespace Numbers\Users\Users\Controller\Account;
 class Account extends \Object\Controller {
+	public $title = 'Account Name and Avatar';
 	public function actionJsonMenuName() {
 		if (\User::authorized()) {
 			if (\User::get('photo_file_id')) {

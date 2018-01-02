@@ -17,6 +17,7 @@ class Users extends \Object\Form\Wrapper\Base {
 	public $containers = [
 		'top' => ['default_row_type' => 'grid', 'order' => 100],
 		'tabs' => ['default_row_type' => 'grid', 'order' => 500, 'type' => 'tabs'],
+		'tabs2' => ['default_row_type' => 'grid', 'order' => 600, 'type' => 'tabs'],
 		'buttons' => ['default_row_type' => 'grid', 'order' => 900],
 		// child containers
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
@@ -85,6 +86,14 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id'],
 			'order' => 35000
 		],
+		'working_hours_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Schedule\WorkingHours',
+			'details_pk' => ['um_usrschedwrkhrs_week_day_id'],
+			'order' => 35000
+		]
 	];
 	public $rows = [
 		'top' => [
@@ -102,6 +111,10 @@ class Users extends \Object\Form\Wrapper\Base {
 			'assignments' => ['order' => 500, 'label_name' => 'Assignments'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
+		],
+		'tabs2' => [
+			'internalization' => ['order' => 100, 'label_name' => 'Internalization'],
+			'working_hours' => ['order' => 200, 'label_name' => 'Working Hours'],
 		]
 	];
 	public $elements = [
@@ -121,7 +134,6 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'login' => [
 				'login' => ['container' => 'login_container', 'order' => 100],
-				'internalization' => ['container' => 'internalization_container', 'order' => 300],
 			],
 			'roles' => [
 				'roles' => ['container' => 'roles_container', 'order' => 100],
@@ -141,6 +153,14 @@ class Users extends \Object\Form\Wrapper\Base {
 			'assignments' => [
 				'assignments' => ['container' => 'assignments_container', 'order' => 100],
 				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 300],
+			]
+		],
+		'tabs2' => [
+			'internalization' => [
+				'internalization' => ['container' => 'internalization_container', 'order' => 100],
+			],
+			'working_hours' => [
+				'working_hours' => ['container' => 'working_hours_container', 'order' => 100],
 			]
 		],
 		'general_container' => [
@@ -185,9 +205,6 @@ class Users extends \Object\Form\Wrapper\Base {
 			]
 		],
 		'internalization_container' => [
-			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Internalization', 'icon' => 'fas fa-adjust', 'percent' => 100],
-			],
 			'um_usri18n_group_id' => [
 				'um_usri18n_group_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Group', 'domain' => 'group_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Groups::optionsActive'],
 			],
@@ -295,6 +312,18 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrperm_module_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
 			]
 		],
+		'working_hours_container' => [
+			'row1' => [
+				'um_usrschedwrkhrs_week_day_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Week Day', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 95, 'details_unique_select' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Schedule\WeekDays', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+				'um_usrschedwrkhrs_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'um_usrschedwrkhrs_work_starts' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Work Starts', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'um_usrschedwrkhrs_work_ends' => ['order' => 2, 'label_name' => 'Work Ends', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'um_usrschedwrkhrs_lunch_starts' => ['order' => 3, 'label_name' => 'Lunch Starts', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'um_usrschedwrkhrs_lunch_ends' => ['order' => 4, 'label_name' => 'Lunch Ends', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -355,6 +384,12 @@ class Users extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrperm_tenant_id', 'um_user_id' => 'um_usrperm_user_id']
 			],
+			'\Numbers\Users\Users\Model\User\Schedule\WorkingHours' => [
+				'name' => 'Internalization',
+				'pk' => ['um_usrschedwrkhrs_tenant_id', 'um_usrschedwrkhrs_user_id', 'um_usrschedwrkhrs_week_day_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrschedwrkhrs_tenant_id', 'um_user_id' => 'um_usrschedwrkhrs_user_id']
+			]
 		]
 	];
 	public $notification = [

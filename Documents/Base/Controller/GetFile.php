@@ -2,7 +2,9 @@
 
 namespace Numbers\Users\Documents\Base\Controller;
 class GetFile extends \Object\Controller {
+	public $title = 'Get File';
 	public function actionIndex() {
+		\Application::set('flag.global.__no_monitoring', 1);
 		$input = \Request::input();
 		if (empty($input['token'])) {
 			Throw new \Exception('Invalid token!');
