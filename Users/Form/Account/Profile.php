@@ -139,11 +139,6 @@ class Profile extends \Object\Form\Wrapper\Base {
 				'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c']
 			]
 		],
-		'separator_container' => [
-			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Internalization', 'icon' => 'fas fa-adjust', 'percent' => 100],
-			],
-		],
 		'internalization_container' => [
 			'um_usri18n_group_id' => [
 				'um_usri18n_group_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Group', 'domain' => 'group_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Groups::optionsActive'],

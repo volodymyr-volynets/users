@@ -19,4 +19,28 @@ class Preview {
 			return '';
 		}
 	}
+
+	/**
+	 * Render image
+	 *
+	 * @param int $file_id
+	 * @param int $width
+	 * @param int $height
+	 * @return string
+	 */
+	public static function renderImage($file_id, $width, $height) {
+		return \HTML::img(['src' => \Numbers\Users\Documents\Base\Base::generateURL($file_id), 'class' => 'navbar-menu-item-avatar-img', 'width' => $width, 'height' => $height]);
+	}
+
+	/**
+	 * Render icon
+	 *
+	 * @param string $text
+	 * @param int $width
+	 * @param int $height
+	 * @return string
+	 */
+	public static function renderIcon($text, $width, $height) {
+		return \HTML::img(['src' => \Numbers\Users\Documents\Base\Base::generateIconURL($text, $width, $height), 'class' => 'navbar-menu-item-avatar-img', 'width' => $width, 'height' => $height]);
+	}
 }

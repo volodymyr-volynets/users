@@ -28,6 +28,7 @@ class Menu extends \Object\DataSource {
 			'description' => 'a.sm_resource_description',
 			'icon' => 'a.sm_resource_icon',
 			'url' => 'a.sm_resource_menu_url',
+			'module_code' => 'a.sm_resource_module_code',
 			'group1' => 'a.sm_resource_group1_name',
 			'group2' => 'a.sm_resource_group2_name',
 			'group3' => 'a.sm_resource_group3_name',

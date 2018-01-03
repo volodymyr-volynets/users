@@ -150,4 +150,21 @@ class Base {
 			'token' => urldecode($crypt->tokenCreate($file_id, $thumbnail ? 'thumbnail.view' : 'file.view'))
 		]);
 	}
+
+	/**
+	 * Generate Icon URL
+	 *
+	 * @param int $file_id
+	 * @param bool $thumbnail
+	 * @return string
+	 */
+	public static function generateIconURL(string $text, int $width, int $height) : string {
+		$crypt = new \Crypt();
+		return \Request::buildURL('/Numbers/Users/Documents/Base/Controller/GetFile/_Icon', [
+			'token' => urldecode($crypt->tokenCreate($text, 'icon.view')),
+			'text' => $text,
+			'width' => $width,
+			'height' => $height
+		]);
+	}
 }

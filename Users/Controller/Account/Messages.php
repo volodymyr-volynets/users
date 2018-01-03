@@ -123,8 +123,8 @@ class Messages extends \Object\Controller\Authorized {
 			'type' => 'primary',
 			'value' => $grid,
 			'header' => [
-				'icon' => ['type' => 'pencil-square-o'],
-				'title' => 'View Message:'
+				'icon' => ['type' => 'fas fa-pen-square'],
+				'title' => i18n(null, 'View Message:')
 			]
 		]);
 	}

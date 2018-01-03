@@ -1,6 +1,6 @@
 <?php
 
-namespace Numbers\Users\TimeTracking\Data;
+namespace Numbers\Users\Chat\Data;
 class Import extends \Object\Import {
 	public $data = [
 		'modules' => [
@@ -11,11 +11,11 @@ class Import extends \Object\Import {
 			],
 			'data' => [
 				[
-					'sm_module_code' => 'TT',
+					'sm_module_code' => 'CT',
 					'sm_module_type' => 20,
-					'sm_module_name' => 'T/T Time Tracking',
-					'sm_module_abbreviation' => 'T/T',
-					'sm_module_icon' => 'far fa-clock',
+					'sm_module_name' => 'C/T Chat',
+					'sm_module_abbreviation' => 'C/T',
+					'sm_module_icon' => 'fab fa-rocketchat',
 					'sm_module_transactions' => 0,
 					'sm_module_multiple' => 0,
 					'sm_module_activation_model' => null,
@@ -42,11 +42,11 @@ class Import extends \Object\Import {
 			],
 			'data' => [
 				[
-					'sm_feature_module_code' => 'TT',
-					'sm_feature_code' => 'TT::TIME_TRACKING',
+					'sm_feature_module_code' => 'CT',
+					'sm_feature_code' => 'CT::CHAT',
 					'sm_feature_type' => 10,
-					'sm_feature_name' => 'T/T Time Tracking',
-					'sm_feature_icon' => 'far fa-clock',
+					'sm_feature_name' => 'C/T Chat',
+					'sm_feature_icon' => 'fab fa-rocketchat',
 					'sm_feature_activation_model' => null,
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_inactive' => 0,

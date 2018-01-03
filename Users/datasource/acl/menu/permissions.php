@@ -18,6 +18,9 @@ class Permissions {
 		foreach ($data as $k => $v) {
 			// handle permission
 			if ($v['type'] !== 299) {
+				// see if module has been activated
+				if (!\Can::systemModuleExists($v['module_code'])) continue;
+				// if we have permission
 				if (!empty($v['acl_permission'])) {
 					if (!\Application::$controller->canExtended($v['acl_resource_id'], $v['acl_method_code'], $v['acl_action_id'])) {
 						if (!$always_show) {

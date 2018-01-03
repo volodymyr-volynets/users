@@ -5,7 +5,7 @@ class Projects extends \Object\Table {
 	public $db_link;
 	public $db_link_flag;
 	public $module_code = 'TT';
-	public $title = 'T/T ';
+	public $title = 'T/T Projects';
 	public $schema;
 	public $name = 'tt_projects';
 	public $pk = ['tt_project_tenant_id', 'tt_project_id'];

@@ -1,16 +1,13 @@
 <?php
 
-namespace Numbers\Users\Users\Form\Account;
-class Message extends \Object\Form\Wrapper\Base {
-	public $form_link = 'um_user_message';
-	public $module_code = 'UM';
-	public $title = 'U/M Account Message Form';
+namespace Numbers\Users\Chat\Form;
+class AddNewUser extends \Object\Form\Wrapper\Base {
+	public $form_link = 'ct_add_new_user';
+	public $module_code = 'CT';
+	public $title = 'C/T Add New User Form';
 	public $options = [
-		'segment' => self::SEGMENT_FORM,
 		'actions' => [
 			'refresh' => true,
-			'new' => ['href' => '/Numbers/Users/Users/Controller/Account/Messages/_New'],
-			'back' => true
 		]
 	];
 	public $containers = [
@@ -18,7 +15,6 @@ class Message extends \Object\Form\Wrapper\Base {
 		'tabs' => ['default_row_type' => 'grid', 'order' => 500, 'type' => 'tabs'],
 		'buttons' => ['default_row_type' => 'grid', 'order' => 900],
 		// child containers
-		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'organizations_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -26,7 +22,6 @@ class Message extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Organizations\Model\Organizations',
 			'details_pk' => ['organization_id'],
 			'details_cannot_delete' => false,
-			'required' => true,
 			'order' => 35001
 		],
 		'roles_container' => [
@@ -45,32 +40,24 @@ class Message extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Users\Model\Users',
 			'details_pk' => ['user_id'],
 			'details_cannot_delete' => false,
-			'required' => true,
 			'order' => 35000
 		],
 	];
 	public $rows = [
-		'top' => [
-			'subject' => ['order' => 100],
-		],
 		'tabs' => [
-			'general' => ['order' => 100, 'label_name' => 'General'],
-			'organizations' => ['order' => 200, 'label_name' => 'Organizations'],
+			'organizations' => ['order' => 100, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 300, 'label_name' => 'Roles'],
 			'users' => ['order' => 400, 'label_name' => 'Users'],
 		]
 	];
 	public $elements = [
 		'top' => [
-			'subject' => [
-				'subject' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Message Subject', 'domain' => 'subject', 'required' => true, 'percent' => 90],
-				'important' => ['order' => 2, 'label_name' => 'Important', 'type' => 'boolean', 'percent' => 10]
+			'name' => [
+				'name' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'percent' => 85],
+				'important' => ['order' => 2, 'label_name' => 'Important', 'type' => 'boolean', 'percent' => 15]
 			]
 		],
 		'tabs' => [
-			'general' => [
-				'general' => ['container' => 'general_container', 'order' => 100],
-			],
 			'organizations' => [
 				'organizations' => ['container' => 'organizations_container', 'order' => 100],
 			],
@@ -80,11 +67,6 @@ class Message extends \Object\Form\Wrapper\Base {
 			'users' => [
 				'users' => ['container' => 'users_container', 'order' => 100],
 			],
-		],
-		'general_container' => [
-			'body' => [
-				'body' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Message Body', 'type' => 'text', 'percent' => 100, 'required' => true, 'method' => 'wysiwyg'],
-			]
 		],
 		'organizations_container' => [
 			'row1' => [
@@ -109,45 +91,70 @@ class Message extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
-		// if we have users
-		$user_list = [];
-		if (!empty($form->values['\Numbers\Users\Users\Model\Users'])) {
-			$user_list = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\Users'], 'user_id', ['unique' => true]);
-		} else if (!empty($form->values['\Numbers\Users\Users\Model\Roles'])) {
-			// fetch all users with a role
-			$temp = \Numbers\Users\Users\Model\User\Roles::getStatic([
-				'where' => [
-					'um_usrrol_role_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\Roles'], 'role_id', ['unique' => true])
-				],
-				'pk' =>  ['um_usrrol_user_id']
-			]);
-			$user_list = array_keys($temp);
-		} else if (!empty($form->values['\Numbers\Users\Organizations\Model\Organizations'])) {
-			$temp = \Numbers\Users\Users\Model\User\Organizations::getStatic([
-				'where' => [
-					'um_usrorg_organization_id' => array_extract_values_by_key($form->values['\Numbers\Users\Organizations\Model\Organizations'], 'organization_id', ['unique' => true])
-				],
-				'pk' => ['um_usrorg_user_id']
-			]);
-			$user_list = array_keys($temp);
-		}
+		$user_list = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\Users'], 'user_id', ['unique' => true]);
 		if (empty($user_list)) {
-			$form->error(DANGER, \Object\Content\Messages::NO_ROWS_FOUND);
+			$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, '\Numbers\Users\Users\Model\Users[1][user_id]');
 			return;
 		}
-		if ($form->hasErrors()) return;
-		// deliver the message
-		foreach ($user_list as $k => $v) {
-			\Numbers\Users\Users\Helper\Notification\Sender::notifySingleUser('UM::EMAIL_SEND_MESSAGE', $v, '', [
-				'subject' => $form->values['subject'],
-				'body' => $form->values['body'],
-				'important' => $form->values['important'],
-				'from_name' => \User::get('name'),
-				'from_email' => \User::get('email'),
-			]);
+		if (count($user_list) == 1) {
+			$form->values['name'] = null;
+			$single_user = 1;
+		} else {
+			$single_user = 0;
+			if (empty($form->values['name'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'name');
+			}
 		}
-		$form->error(SUCCESS, \Object\Content\Messages::OPERATION_EXECUTED);
-		$form->values = [];
+		if (!$form->hasErrors()) {
+			$data = [
+				'ct_group_owner_user_id' => \User::id(),
+				'ct_group_name' => $form->values['name'] ?? null,
+				'ct_group_important' => $form->values['important'] ?? 0,
+				'ct_group_single_user' => $single_user,
+				'\Numbers\Users\Chat\Model\Group\Users' => []
+			];
+			foreach ($user_list as $k => $v) {
+				$data['\Numbers\Users\Chat\Model\Group\Users'][] = [
+					'ct_grpuser_user_id' => $v
+				];
+			}
+			// important to add himself
+			$himself = \User::id();
+			if (!in_array($himself, $user_list)) {
+				$user_list[] = $himself;
+				$data['\Numbers\Users\Chat\Model\Group\Users'][] = [
+					'ct_grpuser_user_id' => $himself
+				];
+			}
+			// validate if such group already exists
+			$query = \Numbers\Users\Chat\Model\Group\Users::queryBuilderStatic()->select();
+			$query->columns([
+				'ct_grpuser_group_id',
+				'total_rows' => 'COUNT(*)',
+				'matched_rows' => 'SUM(CASE WHEN a.ct_grpuser_user_id IN (' . implode(', ', $user_list) . ') THEN 1 ELSE 0 END)'
+			]);
+			$query->join('LEFT', new \Numbers\Users\Chat\Model\Groups, 'b', 'ON', [
+				['AND', ['a.ct_grpuser_group_id', '=', 'b.ct_group_id', true], false]
+			]);
+			$query->where('AND', ['ct_group_owner_user_id', '=', \User::id()]);
+			$query->groupby(['ct_grpuser_group_id']);
+			$query->having('AND', ['COUNT(*)', '=', 'SUM(CASE WHEN a.ct_grpuser_user_id IN (' . implode(', ', $user_list) . ') THEN 1 ELSE 0 END)', true]);
+			$query->having('AND', ['COUNT(*)', '=', count($user_list)]);
+			$temp = $query->query('ct_grpuser_group_id');
+			if (!empty($temp['rows'])) {
+				$form->error(DANGER, 'Group with the same users already exists!');
+				return;
+			}
+			// insert new group
+			$model = new \Numbers\Users\Chat\Model\Collection\Groups();
+			$result = $model->merge($data);
+			if (!$result['success']) {
+				$form->error(DANGER, $result['error']);
+				return;
+			}
+			$form->error(SUCCESS, \Object\Content\Messages::RECORD_INSERTED);
+			\Request::redirect('/Numbers/Users/Chat/Controller/Chat/_Index');
+		}
 	}
 
 	public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where) {

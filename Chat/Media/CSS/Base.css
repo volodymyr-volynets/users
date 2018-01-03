@@ -1,0 +1,10 @@
+.chat_mini_main_holder {
+	position: absolute;
+	bottom: 0;
+	right: 10px;
+	width: 300px;
+	max-height: 400px;
+}
+.chat_mini_message_holder {
+	max-height: 400px;
+}
