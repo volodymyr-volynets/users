@@ -113,7 +113,6 @@ class Jobs extends \Object\Form\Wrapper\Base {
 		}
 		if (!empty($mandatory_options)) {
 			foreach ($mandatory_options as $k => $v) {
-				print_r2($v);
 				$form->error(DANGER, 'Missing required parameter [Parameter]!', null, [
 					'replace' => [
 						'[Parameter]' => $v['name']

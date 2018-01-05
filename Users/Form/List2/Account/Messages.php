@@ -49,7 +49,7 @@ class Messages extends \Object\Form\Wrapper\List2 {
 		self::LIST_CONTAINER => [
 			'row1' => [
 				'message_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Message #', 'domain' => 'message_id', 'percent' => 10, 'url_edit' => true],
-				'subject' => ['order' => 2, 'label_name' => 'Subject', 'type' => 'text', 'percent' => 70, 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Account\Messages::renderSubjectAndBody'],
+				'subject' => ['order' => 2, 'label_name' => 'Subject / Chat', 'type' => 'text', 'percent' => 70, 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Account\Messages::renderSubjectAndBody'],
 				'from_name' => ['order' => 3, 'label_name' => 'From', 'type' => 'text', 'null' => true, 'percent' => 20, 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Account\Messages::renderSubjectAndBody']
 			],
 			'row2' => [

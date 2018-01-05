@@ -11,7 +11,7 @@ class Users extends \Object\Table {
 	public $pk = ['ct_grpuser_tenant_id', 'ct_grpuser_group_id', 'ct_grpuser_user_id'];
 	public $tenant = true;
 	public $orderby = [
-		'ct_grpuser_timestamp' => SORT_ASC
+		'ct_grpuser_user_id' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'ct_grpuser_';

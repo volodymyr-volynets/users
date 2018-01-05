@@ -23,7 +23,9 @@ class Headers extends \Object\Table {
 		'um_mesheader_from_name' => ['name' => 'From Name', 'domain' => 'name', 'null' => true],
 		'um_mesheader_subject' => ['name' => 'Subject', 'type' => 'text', 'null' => true],
 		'um_mesheader_body_id' => ['name' => 'Body #', 'domain' => 'message_id', 'null' => true],
-		'um_mesheader_keywords' => ['name' => 'Keywords', 'type' => 'text', 'null' => true]
+		'um_mesheader_keywords' => ['name' => 'Keywords', 'type' => 'text', 'null' => true],
+		'um_mesheader_chat_group_id' => ['name' => 'Group #', 'domain' => 'group_id', 'null' => true],
+		'um_mesheader_chat_user_id' => ['name' => 'Chat User #', 'domain' => 'user_id', 'null' => true],
 	];
 	public $constraints = [
 		'um_message_headers_pk' => ['type' => 'pk', 'columns' => ['um_mesheader_tenant_id', 'um_mesheader_id']],

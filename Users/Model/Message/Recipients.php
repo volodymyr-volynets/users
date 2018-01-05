@@ -20,6 +20,7 @@ class Recipients extends \Object\Table {
 		'um_mesrecip_user_id' => ['name' => 'User #', 'domain' => 'user_id'], // fk constraint purposely ommited to allow 0 for non user notifications
 		'um_mesrecip_user_email' => ['name' => 'User Email', 'domain' => 'email', 'null' => true],
 		'um_mesrecip_read' => ['name' => 'Read', 'type' => 'boolean'],
+		'um_mesrecip_chat_group_id' => ['name' => 'Chat Group #', 'domain' => 'group_id', 'null' => true],
 	];
 	public $constraints = [
 		'um_message_recipients_pk' => ['type' => 'pk', 'columns' => ['um_mesrecip_tenant_id', 'um_mesrecip_message_id', 'um_mesrecip_type_id', 'um_mesrecip_user_id']],

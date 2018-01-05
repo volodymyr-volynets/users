@@ -4,7 +4,21 @@
 	right: 10px;
 	width: 300px;
 	max-height: 400px;
+	z-index: 32000;
 }
 .chat_mini_message_holder {
-	max-height: 400px;
+	height: 250px;
+	overflow: scroll;
 }
+.chat_mini_message_single_line_left, .chat_mini_message_single_line_right {
+	background-color: #eee;
+	border-radius: 10px;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+.chat_mini_message_who {
+	font-size: 0.75em;
+	font-color: grey;
+	text-align: center;
+}
+.chat_mini_typing_user {}

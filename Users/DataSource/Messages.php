@@ -22,6 +22,8 @@ class Messages extends \Object\DataSource {
 	public $parameters = [
 		'user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'message_id' => ['name' => 'Message #', 'domain' => 'message_id'],
+		'chat_group_id' => ['name' => 'Chat Group #', 'domain' => 'group_id'],
+		'chat_unread' => ['name' => 'Chat Unread', 'type' => 'boolean'],
 	];
 
 	public function query($parameters, $options = []) {
@@ -37,12 +39,16 @@ class Messages extends \Object\DataSource {
 			'to_user_id' => 'a.um_mesrecip_user_id',
 			'to_name' => 'd.um_user_name',
 			'to_email' => 'a.um_mesrecip_user_email',
+			'to_photo_file_id' => 'd.um_user_photo_file_id',
 			'to_type_id' => 'a.um_mesrecip_type_id',
 			'from_name' => 'b.um_mesheader_from_name',
 			'from_email' => 'b.um_mesheader_from_email',
 			'important' => 'b.um_mesheader_important',
 			'body' => 'c.um_mesbody_body',
-			'keywords' => 'b.um_mesheader_keywords'
+			'keywords' => 'b.um_mesheader_keywords',
+			'chat_group_id' => 'b.um_mesheader_chat_group_id',
+			'chat_user_id' => 'b.um_mesheader_chat_user_id',
+			'chat_user_photo_file_id' => 'e.um_user_photo_file_id',
 		]);
 		// joins
 		$this->query->join('LEFT', new \Numbers\Users\Users\Model\Message\Headers(), 'b', 'ON', [
@@ -54,10 +60,26 @@ class Messages extends \Object\DataSource {
 		$this->query->join('LEFT', new \Numbers\Users\Users\Model\Users(), 'd', 'ON', [
 			['AND', ['a.um_mesrecip_user_id', '=', 'd.um_user_id', true], false]
 		]);
+		$this->query->join('LEFT', new \Numbers\Users\Users\Model\Users(), 'd', 'ON', [
+			['AND', ['a.um_mesrecip_user_id', '=', 'd.um_user_id', true], false]
+		]);
+		$this->query->join('LEFT', new \Numbers\Users\Users\Model\Users(), 'e', 'ON', [
+			['AND', ['b.um_mesheader_chat_user_id', '=', 'e.um_user_id', true], false]
+		]);
+		// where
 		$this->query->where('AND', ['a.um_mesrecip_user_id', '=', $parameters['user_id']]);
-		// message id
 		if (!empty($parameters['message_id'])) {
 			$this->query->where('AND', ['a.um_mesrecip_message_id', '=', $parameters['message_id']]);
 		}
+		if (!empty($parameters['chat_group_id'])) {
+			$this->query->where('AND', ['b.um_mesheader_chat_group_id', '=', $parameters['chat_group_id']]);
+		}
+		if (!empty($parameters['chat_unread'])) {
+			$this->query->where('AND', function (& $query) {
+				$query->where('OR', ['a.um_mesrecip_read', '=', 0, false]);
+				$query->where('OR', ['CURRENT_DATE - ' . $query->db_object->cast('b.um_mesheader_inserted_timestamp', 'date'), '<', 3, false]);
+			});
+		}
+		$this->query->orderby(['timestamp' => SORT_ASC]);
 	}
 }

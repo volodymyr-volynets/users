@@ -50,7 +50,13 @@ class Groups extends \Object\DataSource {
 			['AND', ['a.ct_group_id', '=', 'b.ct_grpuser_group_id', true], false]
 		]);
 		// where
-		$this->query->where('AND', ['a.ct_group_owner_user_id', '=', \User::id()]);
+		//$this->query->where('AND', ['a.ct_group_owner_user_id', '=', \User::id()]);
+		$this->query->where('AND', function (& $query) {
+			$query = \Numbers\Users\Chat\Model\Group\Users::queryBuilderStatic(['alias' => 'exists_a'])->select();
+			$query->columns(['exists_a.ct_grpuser_user_id']);
+			$query->where('AND', ['exists_a.ct_grpuser_group_id', '=', 'a.ct_group_id', true]);
+			$query->where('AND', ['exists_a.ct_grpuser_user_id', '=', \User::id(), false]);
+		}, 'EXISTS');
 		if (!empty($parameters['only_this_group_id'])) {
 			$this->query->where('AND', ['a.ct_group_id', '=', $parameters['only_this_group_id']]);
 		}
