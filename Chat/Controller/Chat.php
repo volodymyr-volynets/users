@@ -14,6 +14,25 @@ class Chat extends \Object\Controller\Authorized {
 		// groups list
 		$groups_content = '';
 		$groups = \Numbers\Users\Chat\DataSource\Groups::getStatic([]);
+		$group_list = [];
+		if (!empty($groups)) {
+			foreach ($groups as $k => $v) {
+				$group_list[] = $v['ct_group_id'];
+			}
+			// get from datasource
+			$model = new \Numbers\Users\Users\DataSource\Messages();
+			$model->cache = false;
+			$messages = $model->get([
+				'where' => [
+					'chat_group_id' => $group_list,
+					'chat_unread' => 1,
+					'chat_by_group' => 1
+				],
+				'pk' => ['chat_group_id']
+			]);
+		} else {
+			$messages = [];
+		}
 		foreach ($groups as $k => $v) {
 			$name = $v['ct_group_name'];
 			$icon = '';
@@ -35,7 +54,18 @@ class Chat extends \Object\Controller\Authorized {
 					}
 				}
 			}
-			$groups_content.= '<table width="100%"><tr><td width="99%"><a href="javascript:void(0);" onclick="Numbers.Chat.startNewChat(' . $v['ct_group_id'] . ');">' . $icon . ' ' . $name . '</a></td><td width="1%"><a href="javascript:void(0);">' . \HTML::icon(['type' => 'far fa-trash-alt']) . '</a></td></tr></table>';
+			$last_message = '<div class="chat_mini_groups" id="chat_mini_groups_group_' . $v['ct_group_id'] . '">';
+				if (!empty($messages[$v['ct_group_id']])) {
+					$last_message2 = \Format::firstName($messages[$v['ct_group_id']]['from_name']) . ': ' . $messages[$v['ct_group_id']]['subject'];
+					if (empty($messages[$v['ct_group_id']]['read'])) {
+						$last_message2 = \HTML::b(['value' => $last_message2]);
+					}
+					$last_message.= $last_message2;
+				}
+			$last_message.= '</div>';
+			$groups_content.= '<table width="100%">';
+				$groups_content.= '<tr><td width="99%"><a href="javascript:void(0);" onclick="Numbers.Chat.startNewChat(' . $v['ct_group_id'] . ');">' . $icon . ' ' . $name . '</a>' . $last_message . '</td></tr>'; // <td width="1%"><a href="javascript:void(0);">' . \HTML::icon(['type' => 'far fa-trash-alt']) . '</a></td>
+			$groups_content.= '</table>';
 			$groups_content.= '<hr class="simple" />';
 		}
 		if (empty($groups)) {
@@ -77,5 +107,6 @@ class Chat extends \Object\Controller\Authorized {
 			]
 		];
 		echo \HTML::grid($grid);
+		\Layout::onload('Numbers.Chat.initialize();');
 	}
 }

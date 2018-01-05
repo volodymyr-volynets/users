@@ -22,8 +22,9 @@ class Messages extends \Object\DataSource {
 	public $parameters = [
 		'user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'message_id' => ['name' => 'Message #', 'domain' => 'message_id'],
-		'chat_group_id' => ['name' => 'Chat Group #', 'domain' => 'group_id'],
+		'chat_group_id' => ['name' => 'Chat Group #', 'domain' => 'group_id', 'multiple_column' => 1],
 		'chat_unread' => ['name' => 'Chat Unread', 'type' => 'boolean'],
+		'chat_by_group' => ['name' => 'Chat By Group', 'type' => 'boolean'],
 	];
 
 	public function query($parameters, $options = []) {
@@ -66,6 +67,21 @@ class Messages extends \Object\DataSource {
 		$this->query->join('LEFT', new \Numbers\Users\Users\Model\Users(), 'e', 'ON', [
 			['AND', ['b.um_mesheader_chat_user_id', '=', 'e.um_user_id', true], false]
 		]);
+		// by group
+		if (!empty($parameters['chat_by_group'])) {
+			$this->query->join('INNER', function (& $query) use ($parameters) {
+				$query = \Numbers\Users\Users\Model\Message\Recipients::queryBuilderStatic(['alias' => 'inner_a'])->select();
+				$query->columns([
+					'inner_a.um_mesrecip_chat_group_id',
+					'last_message' => 'MAX(inner_a.um_mesrecip_message_id)'
+				]);
+				$query->groupby(['inner_a.um_mesrecip_chat_group_id']);
+				//$query->where('AND', ['inner_a.um_mesrecip_user_id', '=', $parameters['user_id']]);
+			}, 'f', 'ON', [
+				['AND', ['a.um_mesrecip_chat_group_id', '=', 'f.um_mesrecip_chat_group_id', true], false],
+				['AND', ['a.um_mesrecip_message_id', '=', 'f.last_message', true], false]
+			]);
+		}
 		// where
 		$this->query->where('AND', ['a.um_mesrecip_user_id', '=', $parameters['user_id']]);
 		if (!empty($parameters['message_id'])) {

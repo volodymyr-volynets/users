@@ -21,4 +21,7 @@
 	font-color: grey;
 	text-align: center;
 }
-.chat_mini_typing_user {}
+.chat_mini_groups {
+	font-size: 0.75em;
+	font-color: grey;
+}

@@ -96,7 +96,7 @@ class Chat extends \Object\Controller {
 		$model->cache = false;
 		$messages = $model->get([
 			'where' => [
-				'chat_group_id' => (int) $input['group_id'],
+				'chat_group_id' => [(int) $input['group_id']],
 				'chat_unread' => 1
 			],
 			'cache' => false

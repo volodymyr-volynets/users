@@ -11,6 +11,15 @@ Numbers.Chat = {
 	websocket: null,
 
 	/**
+	 * Initialize
+	 */
+	initialize: function() {
+		if (!this.websocket) {
+			this.initializeSocket();
+		}
+	},
+
+	/**
 	 * Start new chat
 	 *
 	 * @param int group_id
@@ -38,7 +47,7 @@ Numbers.Chat = {
 					// progress bar
 					$('#chat_mini_group_id_' + group_id + '_messages').html('<div style="text-align: center;"><i class="fas fa-spinner fa-spin"></i></div>');
 					if (!that.websocket) {
-						that.initializeSocket(group_id);
+						that.initializeSocket();
 					}
 					$('#chat_mini_group_id_' + group_id + '_send_link').click(function () {
 						var message = $('#chat_mini_group_id_' + group_id + '_value_field').val();
@@ -131,14 +140,10 @@ Numbers.Chat = {
 					// aggregate
 					var content = '', groupped = {}, counter = 0;
 					var current_user_id = null, current_read = null;
-					var current_read_first = false, last_message_id;
+					var last_message_id, last_message_data;
 					for (var i in data.messages) {
-						if (!current_user_id || current_user_id != data.messages[i]['chat_user_id']) {
+						if (data.count > 0 && data.messages[i]['read'] == 0) {
 							counter++;
-							current_user_id = data.messages[i]['chat_user_id'];
-						} else if (data.count > 0 && !current_read_first && (!current_read || current_read != data.messages[i]['read'])) {
-							counter++;
-							current_read = data.messages[i]['read'];
 							// label here
 							groupped[counter] = {
 								options: i18n(null, '[count] new messages', {replace: {'[count]': data.count}}),
@@ -146,7 +151,10 @@ Numbers.Chat = {
 								current_user: false
 							};
 							counter++;
-							current_read_first = true;
+							data.count = 0;
+						} else if (!current_user_id || current_user_id != data.messages[i]['chat_user_id']) {
+							counter++;
+							current_user_id = data.messages[i]['chat_user_id'];
 						}
 						if (!groupped[counter]) {
 							groupped[counter] = {
@@ -166,6 +174,7 @@ Numbers.Chat = {
 							message: data.messages[i]['subject']
 						});
 						last_message_id = data.messages[i]['message_id'];
+						last_message_data = data.messages[i];
 					}
 					// render
 					for (var i in groupped) {
@@ -225,6 +234,10 @@ Numbers.Chat = {
 					}
 					content+= '<input type="hidden" id="chat_mini_group_id_' + group_id + '_last_message_id" value="' + last_message_id + '" />'
 					$('#chat_mini_group_id_' + group_id + '_messages').html(content);
+					if (last_message_data) {
+					   var temp = Numbers.Format.firstName(last_message_data['from_name']) + ': ' + last_message_data['subject'];
+						$('#chat_mini_groups_group_' + group_id).html(temp);
+					}
 				} else {
 					print_r2(data.error);
 				}
@@ -244,13 +257,14 @@ Numbers.Chat = {
 	 *
 	 * @param int group_id
 	 */
-	initializeSocket: function(group_id) {
+	initializeSocket: function() {
 		that = this;
 		this.websocket = new WebSocket(Numbers.ws_host);
 		this.websocket.onopen = function(event) {};
 		this.websocket.onmessage = function(event) {
 			var data = JSON.parse(event.data);
 			if (data.type == 'message') {
+				that.startNewChat(data.group_id);
 				that.loadMessages(data.group_id);
 				that.scrollToTheBottomOfMessages(data.group_id);
 			} else if (data.type == 'typing') {
@@ -260,10 +274,11 @@ Numbers.Chat = {
 			}
 		};
 		this.websocket.onerror = function (event) {
-			that.closeChat(group_id);
+			var data = JSON.parse(event.data);
+			that.closeChat(data.group_id);
 		};
 		this.websocket.onclose = function (event) {
-			that.initializeSocket(group_id);
+			that.initializeSocket();
 		};
 	},
 
