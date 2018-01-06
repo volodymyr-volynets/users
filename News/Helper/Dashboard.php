@@ -33,7 +33,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 		}
 		// categories
 		if (!empty($summary['categories'])) {
-			$result.= '<br/>';
+			if (!empty($result)) $result.= '<br/>';
 			$result.= i18n(null, 'Categories:') . ' ';
 			foreach ($summary['categories'] as $k => $v) {
 				$result.= \HTML::a(['href' => '/Numbers/Users/News/Controller/Preview?ns_new_category_id=' . $k, 'value' => $v['name'] . ' (' . \Format::id($v['count']) . ')']) . ' ';
@@ -42,9 +42,16 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 		// latest title
 		if (!empty($data)) {
 			$latest = current($data);
-			$result.= '<br/>';
+			if (!empty($result)) $result.= '<br/>';
 			$result.= i18n(null, 'Latest Title:') . ' ' . \HTML::a(['href' => '/Numbers/Users/News/Controller/Preview?ns_new_category_id=' . $latest['ns_new_category_id'], 'value' => i18n(null, $latest['ns_new_title'])]);
 		}
 		return $result;
+	}
+
+	/**
+	 * Acl
+	 */
+	public function acl() : bool {
+		return \Can::systemModuleExists('NS');
 	}
 }

@@ -30,7 +30,7 @@ class Workflows extends \Object\Controller\Authorized {
 		$query->where('AND', ['a.ww_execwflow_user_id', '=', \User::id()]);
 		$data = $query->query();
 		// generate message
-		$label = i18n(null, 'Workflows') . ' ' . \HTML::label2(['type' => 'primary', 'value' => \Format::id($data['rows'][0]['count'])]);
+		$label = '<table width="100%"><tr><td width="99%">' . \HTML::icon(['type' => 'fab fa-hubspot']) . ' ' . i18n(null, 'Workflows') . '</td><td width="1%">' . \HTML::label2(['type' => 'primary', 'value' => \Format::id($data['rows'][0]['count'])]) . '</td></tr></table>';
 		\Layout::renderAs([
 			'success' => true,
 			'error' => [],

@@ -51,7 +51,7 @@ class ToolbarRenderer {
 			$value.= i18n(null, 'Next Step(s):') . ' ';
 			$value.= implode(\Format::$symbol_comma . ' ', $next);
 		} else if (!empty($next_step['no_more_steps'])) {
-			$value.= '<b>' . i18n(null, 'Workflow completed!') . '</b>';
+			$value.= '<b>' . i18n(null, 'Assignment completed!') . '</b>';
 			// if its a last step we empty and update status
 			\Session::set(['numbers', 'workflow'], []);
 			$merge_result = \Numbers\Users\Workflow\Model\Executed\Workflows::collectionStatic()->merge([

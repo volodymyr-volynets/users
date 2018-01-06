@@ -6,16 +6,16 @@ class Account extends \Object\Controller {
 	public function actionJsonMenuName() {
 		if (\User::authorized()) {
 			if (\User::get('photo_file_id')) {
-				$avatar = \Numbers\Users\Documents\Base\Base::generateURL(\User::get('photo_file_id'), true);
+				$avatar = \HTML::img(['src' => \Numbers\Users\Documents\Base\Base::generateURL(\User::get('photo_file_id'), true), 'class' => 'navbar-menu-item-avatar-img', 'alt' => 'Avatar', 'width' => 25, 'height' => 25]);
 			} else {
-				$avatar = null;
+				$avatar = \HTML::icon(['type' => 'fas fa-address-card']);
 			}
+			$label = '<table width="100%"><tr><td width="99%">' . $avatar . ' ' . \User::get('name') . '</td></tr></table>';
 			\Layout::renderAs([
 				'success' => true,
 				'error' => [],
-				'data' => \User::get('name'),
+				'data' => $label,
 				'item' => \Request::input('item'),
-				'avatar' => $avatar
 			], 'application/json');
 		} else {
 			\Layout::renderAs([

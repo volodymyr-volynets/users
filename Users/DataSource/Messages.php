@@ -50,6 +50,7 @@ class Messages extends \Object\DataSource {
 			'chat_group_id' => 'b.um_mesheader_chat_group_id',
 			'chat_user_id' => 'b.um_mesheader_chat_user_id',
 			'chat_user_photo_file_id' => 'e.um_user_photo_file_id',
+			'type' => 'b.um_mesheader_type_id'
 		]);
 		// joins
 		$this->query->join('LEFT', new \Numbers\Users\Users\Model\Message\Headers(), 'b', 'ON', [

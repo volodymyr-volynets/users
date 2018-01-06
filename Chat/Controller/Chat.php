@@ -109,4 +109,21 @@ class Chat extends \Object\Controller\Authorized {
 		echo \HTML::grid($grid);
 		\Layout::onload('Numbers.Chat.initialize();');
 	}
+	public function actionJsonMenuName() {
+		// fetch number of messages
+		$query = \Numbers\Users\Users\Model\Message\Recipients::queryBuilderStatic()->select();
+		$query->columns(['count' => 'COUNT(*)']);
+		$query->where('AND', ['a.um_mesrecip_read', '=', 0]);
+		$query->where('AND', ['a.um_mesrecip_user_id', '=', \User::id()]);
+		$query->where('AND', ['a.um_mesrecip_chat_group_id', 'IS NOT', null]);
+		$data = $query->query();
+		// generate message
+		$label = '<table width="100%"><tr><td width="99%">' . \HTML::icon(['type' => 'far fa-comments']) . ' ' . i18n(null, 'Chat') . '</td><td width="1%">' . \HTML::label2(['type' => 'success', 'value' => \Format::id($data['rows'][0]['count'])]) . '</td></tr></table>';
+		\Layout::renderAs([
+			'success' => true,
+			'error' => [],
+			'data' => $label,
+			'item' => \Request::input('item')
+		], 'application/json');
+	}
 }

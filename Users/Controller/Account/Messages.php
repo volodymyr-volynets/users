@@ -49,16 +49,16 @@ class Messages extends \Object\Controller\Authorized {
 					'sep' => ['value' => ' ', 'width' => '1%'],
 					'value' => \Format::niceTimestamp($data['timestamp'])
 				],
-				'subject' => [
-					'name' => ['value' => i18n(null, 'Subject'), 'width' => '1%'],
-					'sep' => ['value' => ' ', 'width' => '1%'],
-					'value' => \HTML::b(['value' => $data['subject']])
-				],
 				'important' => [
 					'name' => ['value' => i18n(null, 'Important'), 'width' => '1%'],
 					'sep' => ['value' => ' ', 'width' => '1%'],
 					'value' => ($data['important'] ? i18n(null, 'Yes') : i18n(null, 'No'))
-				]
+				],
+				'subject' => [
+					'name' => ['value' => ($data['type'] == 20) ? i18n(null, 'Message') : i18n(null, 'Subject'), 'width' => '1%'],
+					'sep' => ['value' => ' ', 'width' => '1%'],
+					'value' => \HTML::b(['value' => $data['subject']])
+				],
 			],
 			'class' => '',
 			'cellpadding' => 2
@@ -142,7 +142,7 @@ class Messages extends \Object\Controller\Authorized {
 		$query->where('AND', ['a.um_mesrecip_user_id', '=', \User::id()]);
 		$data = $query->query();
 		// generate message
-		$label = i18n(null, 'Messages') . ' ' . \HTML::label2(['type' => 'primary', 'value' => \Format::id($data['rows'][0]['count'])]);
+		$label = '<table width="100%"><tr><td width="99%">' . \HTML::icon(['type' => 'far fa-envelope']) . ' ' . i18n(null, 'Messages') . '</td><td width="1%">' . \HTML::label2(['type' => 'primary', 'value' => \Format::id($data['rows'][0]['count'])]) . '</td></tr></table>';
 		\Layout::renderAs([
 			'success' => true,
 			'error' => [],
