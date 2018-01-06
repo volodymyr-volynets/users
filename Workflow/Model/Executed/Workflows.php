@@ -16,8 +16,8 @@ class Workflows extends \Object\Table {
 	public $columns = [
 		'ww_execwflow_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'ww_execwflow_id' => ['name' => 'Executed #', 'domain' => 'big_id_sequence'],
-		'ww_execwflow_service_id' => ['name' => 'Service #', 'domain' => 'service_id'],
-		'ww_execwflow_service_name' => ['name' => 'Service Name', 'domain' => 'name'],
+		'ww_execwflow_assignment_id' => ['name' => 'Assignment #', 'domain' => 'service_id'],
+		'ww_execwflow_assignment_name' => ['name' => 'Assignment Name', 'domain' => 'name'],
 		'ww_execwflow_workflow_id' => ['name' => 'Workflow #', 'domain' => 'workflow_id'],
 		'ww_execwflow_workflow_name' => ['name' => 'Workflow Name', 'domain' => 'name'],
 		'ww_execwflow_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
@@ -32,11 +32,11 @@ class Workflows extends \Object\Table {
 			'foreign_model' => '\Numbers\Users\Workflow\Model\Workflows',
 			'foreign_columns' => ['ww_workflow_tenant_id', 'ww_workflow_id']
 		],
-		'ww_execwflow_service_id_fk' => [
+		'ww_execwflow_assignment_id_fk' => [
 			'type' => 'fk',
-			'columns' => ['ww_execwflow_tenant_id', 'ww_execwflow_service_id'],
-			'foreign_model' => '\Numbers\Users\Workflow\Model\Services',
-			'foreign_columns' => ['ww_service_tenant_id', 'ww_service_id']
+			'columns' => ['ww_execwflow_tenant_id', 'ww_execwflow_assignment_id'],
+			'foreign_model' => '\Numbers\Users\Workflow\Model\Assignments',
+			'foreign_columns' => ['ww_assignment_tenant_id', 'ww_assignment_id']
 		],
 		'ww_execwflow_user_id_fk' => [
 			'type' => 'fk',

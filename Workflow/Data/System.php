@@ -133,11 +133,11 @@ class System extends \Object\Import {
 					]
 				],
 				[
-					'sm_resource_id' => '::id::\Numbers\Users\Workflow\Controller\Services',
-					'sm_resource_code' => '\Numbers\Users\Workflow\Controller\Services',
+					'sm_resource_id' => '::id::\Numbers\Users\Workflow\Controller\Assignments',
+					'sm_resource_code' => '\Numbers\Users\Workflow\Controller\Assignments',
 					'sm_resource_type' => 100,
 					'sm_resource_classification' => 'Global',
-					'sm_resource_name' => 'W/W Services',
+					'sm_resource_name' => 'W/W Assignments',
 					'sm_resource_description' => null,
 					'sm_resource_icon' => 'fab fa-servicestack',
 					'sm_resource_module_code' => 'WW',
@@ -334,10 +334,10 @@ class System extends \Object\Import {
 					'sm_resource_inactive' => 0
 				],
 				[
-					'sm_resource_id' => '::id::\Menu\Numbers\Users\Workflow\Controller\Services',
-					'sm_resource_code' => '\Menu\Numbers\Users\Workflow\Controller\Services',
+					'sm_resource_id' => '::id::\Menu\Numbers\Users\Workflow\Controller\Assignments',
+					'sm_resource_code' => '\Menu\Numbers\Users\Workflow\Controller\Assignments',
 					'sm_resource_type' => 200,
-					'sm_resource_name' => 'Services',
+					'sm_resource_name' => 'Assignments',
 					'sm_resource_description' => null,
 					'sm_resource_icon' => 'fab fa-servicestack',
 					'sm_resource_module_code' => 'WW',
@@ -353,10 +353,10 @@ class System extends \Object\Import {
 					'sm_resource_acl_public' => 0,
 					'sm_resource_acl_authorized' => 0,
 					'sm_resource_acl_permission' => 1,
-					'sm_resource_menu_acl_resource_id' => '::id::\Numbers\Users\Workflow\Controller\Services',
+					'sm_resource_menu_acl_resource_id' => '::id::\Numbers\Users\Workflow\Controller\Assignments',
 					'sm_resource_menu_acl_method_code' => 'Index',
 					'sm_resource_menu_acl_action_id' => '::id::List_View',
-					'sm_resource_menu_url' => '/Numbers/Users/Workflow/Controller/Services',
+					'sm_resource_menu_url' => '/Numbers/Users/Workflow/Controller/Assignments',
 					'sm_resource_menu_options_generator' => null,
 					'sm_resource_inactive' => 0
 				],

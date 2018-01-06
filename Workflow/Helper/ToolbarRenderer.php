@@ -65,8 +65,8 @@ class ToolbarRenderer {
 			'type' => 'info',
 			'header' => i18n(null, 'Workflow #:') . ' ' . \Format::id($workflow['workflow_id']) . \Format::$symbol_comma .  ' ' .
 						i18n(null, 'Workflow Name:') . ' ' . \Format::id($next_step['workflow_name']) . \Format::$symbol_comma .  ' ' .
-						i18n(null, 'Service #:') . ' ' . \Format::id($workflow['service_id']) . \Format::$symbol_comma .  ' ' .
-						i18n(null, 'Service Name:') . ' ' . \Format::id($next_step['service_name']) . \Format::$symbol_comma .  ' ' .
+						i18n(null, 'Assignment #:') . ' ' . \Format::id($workflow['assignment_id']) . \Format::$symbol_comma .  ' ' .
+						i18n(null, 'Assignment Name:') . ' ' . \Format::id($next_step['assignment_name']) . \Format::$symbol_comma .  ' ' .
 						i18n(null, 'Execution #:') . ' ' . \Format::id($workflow['execution_id']),
 			'value' => $value,
 		]);
@@ -85,7 +85,7 @@ class ToolbarRenderer {
 			'error' => [],
 			'current_step' => [],
 			'next_step' => [],
-			'service_name' => null,
+			'assignment_name' => null,
 			'workflow_name' => null,
 			'next_resources' => [],
 			'no_more_steps' => false,
@@ -101,7 +101,7 @@ class ToolbarRenderer {
 		if ($executed_workflow['success']) {
 			$executed_workflow_data = current($executed_workflow['data']);
 		}
-		$result['service_name'] = $executed_workflow_data['ww_execwflow_service_name'];
+		$result['assignment_name'] = $executed_workflow_data['ww_execwflow_assignment_name'];
 		$result['workflow_name'] = $executed_workflow_data['ww_execwflow_workflow_name'];
 		// load workflow
 		$versioned_workflow = \Numbers\Users\Workflow\Model\Collection\Workflows::getStatic([

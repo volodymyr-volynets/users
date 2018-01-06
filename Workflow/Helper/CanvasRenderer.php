@@ -71,6 +71,10 @@ class CanvasRenderer {
 					imagearc($image, $v['x1'], $v['y1'], $v['x2'], $v['y2'], 0, 360, $border_color);
 					break;
 				case 4000: // text
+					// override colors
+					if ((!empty($options['completed_steps']) && in_array($v['step'], $options['completed_steps'])) || !empty($options['show_as_completed'])) {
+						$v['shape_fill_color'] = $v['completed_fill_color'];
+					}
 					self::setLineStyle($image, 10);
 					$fill_color_rgb = hex2rgb($v['shape_fill_color']);
 					$fill_color = imagecolorallocate($image, $fill_color_rgb[0], $fill_color_rgb[1], $fill_color_rgb[2]);

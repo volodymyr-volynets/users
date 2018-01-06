@@ -44,7 +44,7 @@ class Workflows extends \Object\Form\Wrapper\List2 {
 				'ww_execwflow_status_id1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Status', 'domain' => 'type_id', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Workflow\Model\Executed\Workflow\Statuses', 'query_builder' => 'a.ww_execwflow_status_id;=']
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.ww_execwflow_service_name', 'a.ww_execwflow_workflow_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.ww_execwflow_assignment_name', 'a.ww_execwflow_workflow_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			],
 			self::HIDDEN => [
 				'ww_execwflow_user_id' => ['label_name' => 'User #', 'domain' => 'user_id', 'method' => 'hidden', 'query_builder' => 'a.ww_execwflow_user_id;=']
@@ -60,7 +60,7 @@ class Workflows extends \Object\Form\Wrapper\List2 {
 		self::LIST_CONTAINER => [
 			'row1' => [
 				'ww_execwflow_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Workflow #', 'domain' => 'workflow_id', 'percent' => 10, 'url_edit' => true],
-				'ww_execwflow_service_name' => ['order' => 2, 'label_name' => 'Servce Name', 'domain' => 'name', 'percent' => 35],
+				'ww_execwflow_assignment_name' => ['order' => 2, 'label_name' => 'Assignment Name', 'domain' => 'name', 'percent' => 35],
 				'ww_execwflow_workflow_name' => ['order' => 3, 'label_name' => 'Workflow Name', 'domain' => 'name', 'percent' => 35],
 				'ww_execwflow_status_id' => ['order' => 4, 'label_name' => 'Status', 'domain' => 'type_id', 'percent' => 15, 'options_model' => '\Numbers\Users\Workflow\Model\Executed\Workflow\Statuses'],
 				'ww_execwflow_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
@@ -78,7 +78,7 @@ class Workflows extends \Object\Form\Wrapper\List2 {
 	];
 	const LIST_SORT_OPTIONS = [
 		'ww_execwflow_id' => ['name' => 'Workflow #'],
-		'ww_execwflow_service_name' => ['name' => 'Service Name'],
+		'ww_execwflow_assignment_name' => ['name' => 'Assignment Name'],
 		'ww_execwflow_workflow_name' => ['name' => 'Workflow Name']
 	];
 }

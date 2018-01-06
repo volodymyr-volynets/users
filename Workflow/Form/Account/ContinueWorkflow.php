@@ -24,8 +24,8 @@ class ContinueWorkflow extends \Object\Form\Wrapper\Base {
 				'ww_execwflow_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Workflow #', 'domain' => 'workflow_id_sequence', 'percent' => 95, 'navigation' => true],
 				'ww_execwflow_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
-			'ww_execwflow_service_name' => [
-				'ww_execwflow_service_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Service Name', 'domain' => 'name', 'percent' => 100, 'readonly' => true],
+			'ww_execwflow_assignment_name' => [
+				'ww_execwflow_assignment_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Assignment Name', 'domain' => 'name', 'percent' => 100, 'readonly' => true],
 			],
 			'ww_execwflow_workflow_name' => [
 				'ww_execwflow_workflow_name' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Workflow Name', 'domain' => 'name', 'percent' => 100, 'readonly' => true],
@@ -34,7 +34,7 @@ class ContinueWorkflow extends \Object\Form\Wrapper\Base {
 				'ww_execwflow_status_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Status', 'domain' => 'type_id', 'percent' => 50, 'readonly' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Executed\Workflow\Statuses'],
 			],
 			self::HIDDEN => [
-				'ww_execwflow_service_id' => ['label_name' => 'Service #', 'domain' => 'service_id', 'method' => 'hidden'],
+				'ww_execwflow_assignment_id' => ['label_name' => 'Assignment #', 'domain' => 'service_id', 'method' => 'hidden'],
 				'ww_execwflow_workflow_id' => ['label_name' => 'Workflow #', 'domain' => 'workflow_id', 'method' => 'hidden'],
 			],
 			self::BUTTONS => [
@@ -52,7 +52,7 @@ class ContinueWorkflow extends \Object\Form\Wrapper\Base {
 		// put this workflow into sessions
 		if (!empty($form->process_submit[self::BUTTON_CONTINUE])) {
 			\Session::set(['numbers', 'workflow', 'workflow_id'], $form->values['ww_execwflow_workflow_id']);
-			\Session::set(['numbers', 'workflow', 'service_id'], $form->values['ww_execwflow_service_id']);
+			\Session::set(['numbers', 'workflow', 'assignment_id'], $form->values['ww_execwflow_assignment_id']);
 			\Session::set(['numbers', 'workflow', 'execution_id'], $form->values['ww_execwflow_id']);
 			$form->error(SUCCESS, \Object\Content\Messages::OPERATION_EXECUTED);
 		}

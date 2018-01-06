@@ -68,7 +68,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		],
 		'general_container' => [
 			'um_user_type_id' => [
-				'\Numbers\Users\Organizations\Model\Organization\Type\Map' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Types', 'domain' => 'type_code', 'multiple_column' => 'on_orgtpmap_type_code', 'percent' => 90, 'method' => 'multiselect', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Types::optionsGroupped'],
+				'\Numbers\Users\Organizations\Model\Organization\Type\Map' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Types', 'domain' => 'type_code', 'null' => true, 'multiple_column' => 'on_orgtpmap_type_code', 'percent' => 90, 'method' => 'multiselect', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Types::optionsGroupped'],
 				'on_organization_hold' => ['order' => 3, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
 				'on_organization_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],

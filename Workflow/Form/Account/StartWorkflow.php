@@ -19,8 +19,8 @@ class StartWorkflow extends \Object\Form\Wrapper\Base {
 	public $rows = [];
 	public $elements = [
 		'top' => [
-			'ww_execwflow_service_id' => [
-				'ww_execwflow_service_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'percent' => 100, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\DataSource\Services::optionsActive'],
+			'ww_execwflow_assignment_id' => [
+				'ww_execwflow_assignment_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment', 'domain' => 'service_id', 'null' => true, 'percent' => 100, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\DataSource\Assignments::optionsActive'],
 			],
 			self::BUTTONS => [
 				self::BUTTON_SUBMIT => self::BUTTON_SUBMIT_DATA,
@@ -29,22 +29,22 @@ class StartWorkflow extends \Object\Form\Wrapper\Base {
 	];
 
 	public function save(& $form) {
-		$service = \Numbers\Users\Workflow\Model\Services::getStatic([
+		$assignment = \Numbers\Users\Workflow\Model\Assignments::getStatic([
 			'where' => [
-				'ww_service_id' => $form->values['ww_execwflow_service_id'],
+				'ww_assignment_id' => $form->values['ww_execwflow_assignment_id'],
 			],
 			'pk' => null
 		]);
 		$workflow = \Numbers\Users\Workflow\Model\Workflows::getStatic([
 			'where' => [
-				'ww_workflow_id' => $service[0]['ww_service_workflow_id'],
+				'ww_workflow_id' => $assignment[0]['ww_assignment_workflow_id'],
 			],
 			'pk' => null
 		]);
 		$data = [
-			'ww_execwflow_service_id' => $form->values['ww_execwflow_service_id'],
-			'ww_execwflow_service_name' => $service[0]['ww_service_name'],
-			'ww_execwflow_workflow_id' => $service[0]['ww_service_workflow_id'],
+			'ww_execwflow_assignment_id' => $form->values['ww_execwflow_assignment_id'],
+			'ww_execwflow_assignment_name' => $assignment[0]['ww_assignment_name'],
+			'ww_execwflow_workflow_id' => $assignment[0]['ww_assignment_workflow_id'],
 			'ww_execwflow_workflow_name' => $workflow[0]['ww_workflow_name'],
 			'ww_execwflow_user_id' => \User::id(),
 			'ww_execwflow_inactive' => 0
