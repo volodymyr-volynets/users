@@ -94,6 +94,14 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['um_usrschedwrkhrs_week_day_id'],
 			'order' => 35000
 		],
+		'teams_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Team\Map',
+			'details_pk' => ['um_usrtmmap_team_id'],
+			'order' => 35000
+		],
 		'security_answers_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -121,6 +129,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
 		],
 		'tabs2' => [
+			'teams' => ['order' => 50, 'label_name' => 'Teams'],
 			'internalization' => ['order' => 100, 'label_name' => 'Internalization'],
 			'working_hours' => ['order' => 200, 'label_name' => 'Working Hours'],
 		]
@@ -165,6 +174,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			]
 		],
 		'tabs2' => [
+			'teams' => [
+				'teams' => ['container' => 'teams_container', 'order' => 100],
+			],
 			'internalization' => [
 				'internalization' => ['container' => 'internalization_container', 'order' => 100],
 			],
@@ -339,6 +351,12 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrschedwrkhrs_lunch_ends' => ['order' => 4, 'label_name' => 'Lunch Ends', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
 			]
 		],
+		'teams_container' => [
+			'row1' => [
+				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Teams', 'onchange' => 'this.form.submit();'],
+				'um_usrtmmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -356,6 +374,12 @@ class Users extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_usrgrmap_tenant_id', 'um_usrgrmap_user_id', 'um_usrgrmap_group_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
+			],
+			'\Numbers\Users\Users\Model\User\Team\Map' => [
+				'name' => 'Groups',
+				'pk' => ['um_usrtmmap_tenant_id', 'um_usrtmmap_user_id', 'um_usrtmmap_team_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrtmmap_tenant_id', 'um_user_id' => 'um_usrtmmap_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Roles' => [
 				'name' => 'Roles',
