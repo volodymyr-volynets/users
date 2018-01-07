@@ -69,7 +69,8 @@ Numbers.Chat = {
 						}
 						// need to show if someone is typing
 						var message = $('#chat_mini_group_id_' + group_id + '_value_field').val();
-						if ((message.length % 3) == 1) {
+						var status = cookie_get('__chat_mini_status_user_' + Numbers.user_id);
+						if ((message.length % 3) == 0 && status == 10) { // status Online
 							that.sendMessage(group_id, 'Typing', 'typing');
 						}
 					});
@@ -289,5 +290,14 @@ Numbers.Chat = {
 	 */
 	scrollToTheBottomOfMessages: function(group_id) {
 		$('#chat_mini_group_id_' + group_id + '_messages').animate({scrollTop: $('#chat_mini_group_id_' + group_id + '_messages').prop("scrollHeight") + 5000}, 2500);
+	},
+
+	/**
+	 * Change users status
+	 *
+	 * @param int status
+	 */
+	changeUserStatus: function (status) {
+		cookie_set('__chat_mini_status_user_' + Numbers.user_id, status);
 	}
 };

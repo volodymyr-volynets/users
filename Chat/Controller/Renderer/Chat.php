@@ -90,6 +90,7 @@ class Chat extends \Object\Controller {
 			$query->where('AND' , ['a.um_mesrecip_user_id', '=', (int) $token_data['id']]);
 			$query->where('AND' , ['a.um_mesrecip_chat_group_id', '=', (int) $input['group_id']]);
 			$query->where('AND' , ['a.um_mesrecip_message_id', '<=', (int) $input['last_message_id']]);
+			$query->query();
 		}
 		// get from datasource
 		$model = new \Numbers\Users\Users\DataSource\Messages();

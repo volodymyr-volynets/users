@@ -8,7 +8,8 @@ class Builder {
 	 */
 	public function render() {
 		$grid = [
-			'options' => []
+			'options' => [],
+			'cell_class' => 'col-sm-'
 		];
 		foreach ($this->data as $k => $v) {
 			foreach ($v as $k2 => $v2) {

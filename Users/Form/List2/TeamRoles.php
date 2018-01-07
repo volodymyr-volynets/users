@@ -1,10 +1,10 @@
 <?php
 
 namespace Numbers\Users\Users\Form\List2;
-class Teams extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'um_teams_list';
+class TeamRoles extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'um_team_roles_list';
 	public $module_code = 'UM';
-	public $title = 'U/M Teams List';
+	public $title = 'U/M Team Roles List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
@@ -35,13 +35,13 @@ class Teams extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			'um_team_id' => [
-				'um_team_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team #', 'domain' => 'team_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_team_id;>='],
-				'um_team_id2' => ['order' => 2, 'label_name' => 'Team #', 'domain' => 'team_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_team_id;<='],
-				'um_team_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_team_inactive;=']
+			'um_usrtmrol_id' => [
+				'um_usrtmrol_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'role_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_usrtmrol_id;>='],
+				'um_usrtmrol_id2' => ['order' => 2, 'label_name' => 'Role #', 'domain' => 'role_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_usrtmrol_id;<='],
+				'um_usrtmrol_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_usrtmrol_inactive;=']
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_team_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_usrtmrol_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -53,23 +53,23 @@ class Teams extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'um_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team #', 'domain' => 'team_id', 'percent' => 10, 'url_edit' => true],
-				'um_team_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 85],
-				'um_team_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_usrtmrol_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'role_id', 'percent' => 10, 'url_edit' => true],
+				'um_usrtmrol_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 85],
+				'um_usrtmrol_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Users\Model\User\Teams';
+	public $query_primary_model = '\Numbers\Users\Users\Model\User\Team\Roles';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'um_team_id' => SORT_ASC
+			'um_usrtmrol_id' => SORT_ASC
 		]
 	];
 	const LIST_SORT_OPTIONS = [
-		'um_team_id' => ['name' => 'Team #'],
-		'um_team_name' => ['name' => 'Name']
+		'um_usrtmrol_id' => ['name' => 'Role #'],
+		'um_usrtmrol_name' => ['name' => 'Name']
 	];
 }

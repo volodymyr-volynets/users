@@ -24,6 +24,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'permissions_container' => ['default_row_type' => 'grid', 'order' => 34000],
 		'photo_container' => ['default_row_type' => 'grid', 'order' => 32000],
+		'week_start_day_container' => ['default_row_type' => 'grid', 'order' => 35000],
 		'roles_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -181,7 +182,8 @@ class Users extends \Object\Form\Wrapper\Base {
 				'internalization' => ['container' => 'internalization_container', 'order' => 100],
 			],
 			'working_hours' => [
-				'working_hours' => ['container' => 'working_hours_container', 'order' => 100],
+				'week_start_day' => ['container' => 'week_start_day_container', 'order' => 100],
+				'working_hours' => ['container' => 'working_hours_container', 'order' => 200],
 			]
 		],
 		'general_container' => [
@@ -351,10 +353,16 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrschedwrkhrs_lunch_ends' => ['order' => 4, 'label_name' => 'Lunch Ends', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
 			]
 		],
+		'week_start_day_container' => [
+			'row1' => [
+				'um_user_week_start_day_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Week Start Day', 'domain' => 'type_id', 'null' => true, 'default' => 1, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Schedule\WeekDays', 'options_options' => ['i18n' => 'skip_sorting']],
+			]
+		],
 		'teams_container' => [
 			'row1' => [
-				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Teams', 'onchange' => 'this.form.submit();'],
-				'um_usrtmmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'group_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Teams', 'onchange' => 'this.form.submit();'],
+				'um_usrtmmap_role_id' => ['order' => 2, 'label_name' => 'Role', 'domain' => 'role_id', 'null' => true, 'percent' => 45, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Team\Roles::optionsActive'],
+				'um_usrtmmap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'buttons' => [

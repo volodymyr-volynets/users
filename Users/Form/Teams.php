@@ -22,14 +22,14 @@ class Teams extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'um_team_id' => [
-				'um_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team #', 'domain' => 'group_id_sequence', 'percent' => 95, 'required' => 'c', 'navigation' => true],
+				'um_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team #', 'domain' => 'team_id_sequence', 'percent' => 95, 'navigation' => true],
 				'um_team_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'um_team_name' => [
 				'um_team_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
 			],
 			'um_team_icon' => [
-				'um_team_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
+				'um_team_icon' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
 			]
 		],
 		'buttons' => [
@@ -37,7 +37,7 @@ class Teams extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
-		'name' => 'Groups',
+		'name' => 'Teams',
 		'model' => '\Numbers\Users\Users\Model\User\Teams'
 	];
 }

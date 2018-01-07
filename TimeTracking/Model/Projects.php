@@ -16,16 +16,20 @@ class Projects extends \Object\Table {
 	public $columns = [
 		'tt_project_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'tt_project_id' => ['name' => 'Project #', 'domain' => 'project_id_sequence'],
+		'tt_project_code' => ['name' => 'Code', 'domain' => 'group_code', 'null' => true],
+		'tt_project_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'default' => 10, 'options_model' => '\Numbers\Users\TimeTracking\Model\Project\Types'],
+		'tt_project_parent_project_id' => ['name' => 'Parent Project #', 'domain' => 'project_id', 'null' => true],
 		'tt_project_name' => ['name' => 'Name', 'domain' => 'name'],
 		'tt_project_description' => ['name' => 'Description', 'domain' => 'description', 'null' => true],
-		'tt_project_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
-		'tt_project_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
+		'tt_project_team_id' => ['name' => 'Team #', 'domain' => 'team_id', 'null' => true],
+		'tt_project_user_id' => ['name' => 'User #', 'domain' => 'user_id', 'null' => true],
 		'tt_project_date_start' => ['name' => 'Date Start', 'type' => 'date', 'null' => true],
 		'tt_project_date_finish' => ['name' => 'Date Finish', 'type' => 'date', 'null' => true],
 		'tt_project_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'tt_projects_pk' => ['type' => 'pk', 'columns' => ['tt_project_tenant_id', 'tt_project_id']],
+		'tt_project_code_un' => ['type' => 'unique', 'columns' => ['tt_project_tenant_id', 'tt_project_code', 'tt_project_user_id']],
 		'tt_project_user_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['tt_project_tenant_id', 'tt_project_user_id'],

@@ -33,6 +33,29 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 				],
 				'url' => '/Numbers/Users/Users/Controller/Users/_Edit?__submit_blank=1'
 			],
+			4 => [
+				'name' => 'Team Roles',
+				'icon' => 'fas fa-male',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\TeamRoles',
+					'method_code' => 'Index',
+					'action_id' => 'List_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/TeamRoles'
+			],
+			5 => [
+				'icon' => 'fas fa-arrow-right'
+			],
+			6 => [
+				'name' => 'Teams',
+				'icon' => 'fas fa-sitemap',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\Teams',
+					'method_code' => 'Index',
+					'action_id' => 'List_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/Teams'
+			],
 		],
 		2 => [
 			1 => [
@@ -61,7 +84,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 				'url' => '/Numbers/Users/Users/Controller/Groups'
 			],
 			3 => [
-				'name' => 'Roles',
+				'name' => 'User Roles',
 				'icon' => 'far fa-user-circle',
 				'acl' => [
 					'resource_id' => '\Numbers\Users\Users\Controller\Roles',

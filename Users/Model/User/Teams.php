@@ -14,7 +14,7 @@ class Teams extends \Object\Table {
 	public $column_prefix = 'um_team_';
 	public $columns = [
 		'um_team_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_team_id' => ['name' => 'Group #', 'domain' => 'group_id_sequence'],
+		'um_team_id' => ['name' => 'Group #', 'domain' => 'team_id_sequence'],
 		'um_team_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_team_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		'um_team_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

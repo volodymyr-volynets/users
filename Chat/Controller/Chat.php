@@ -7,12 +7,17 @@ class Chat extends \Object\Controller\Authorized {
 		\Layout::addJs('/numbers/media_submodules/Numbers_Users_Chat_Media_JS_Base.js');
 		\Layout::addCss('/numbers/media_submodules/Numbers_Users_Chat_Media_CSS_Base.css');
 		// add new users form
+		$input = \Request::input(null, true, true);
 		$form = new \Numbers\Users\Chat\Form\AddNewUser([
-			'input' => \Request::input()
+			'input' => $input
 		]);
 		$form_content = $form->render();
 		// groups list
 		$groups_content = '';
+		// render status
+		$groups_content.= \HTML::select(['id' => '__chat_mini_status', 'name' => '__chat_mini_status', 'value' => $input['__chat_mini_status_user_' . \User::id()] ?? 30, 'no_choose' => true, 'options' => \Numbers\Users\Chat\Model\Statuses::optionsStatic(), 'onchange' => 'Numbers.Chat.changeUserStatus(this.value);']);
+		$groups_content.= '<hr class="simple" />';
+		// render groups
 		$groups = \Numbers\Users\Chat\DataSource\Groups::getStatic([]);
 		$group_list = [];
 		if (!empty($groups)) {

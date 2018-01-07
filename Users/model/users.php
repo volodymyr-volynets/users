@@ -38,6 +38,8 @@ class Users extends \Object\Table {
 		'um_user_login_last_set' => ['name' => 'Last Set', 'type' => 'date', 'null' => true],
 		// photo
 		'um_user_photo_file_id' => ['name' => 'Photo File #', 'domain' => 'file_id', 'null' => true],
+		// working hours
+		'um_user_week_start_day_id' => ['name' => 'Week Start Day #', 'domain' => 'type_id', 'default' => 1, 'options_model' => '\Numbers\Users\Users\Model\User\Schedule\WeekDays'],
 		// inactive & hold
 		'um_user_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'um_user_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

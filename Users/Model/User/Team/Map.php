@@ -17,7 +17,8 @@ class Map extends \Object\Table {
 		'um_usrtmmap_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_usrtmmap_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_usrtmmap_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
-		'um_usrtmmap_team_id' => ['name' => 'Group #', 'domain' => 'group_id'],
+		'um_usrtmmap_team_id' => ['name' => 'Group #', 'domain' => 'team_id'],
+		'um_usrtmmap_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_usrtmmap_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
@@ -33,6 +34,12 @@ class Map extends \Object\Table {
 			'columns' => ['um_usrtmmap_tenant_id', 'um_usrtmmap_team_id'],
 			'foreign_model' => '\Numbers\Users\Users\Model\User\Teams',
 			'foreign_columns' => ['um_team_tenant_id', 'um_team_id']
+		],
+		'um_usrtmmap_role_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_usrtmmap_tenant_id', 'um_usrtmmap_role_id'],
+			'foreign_model' => '\Numbers\Users\Users\Model\User\Team\Roles',
+			'foreign_columns' => ['um_usrtmrol_tenant_id', 'um_usrtmrol_id']
 		]
 	];
 	public $history = false;

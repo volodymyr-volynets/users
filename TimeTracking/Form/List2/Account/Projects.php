@@ -1,10 +1,10 @@
 <?php
 
-namespace Numbers\Users\TimeTracking\Form\List2;
+namespace Numbers\Users\TimeTracking\Form\List2\Account;
 class Projects extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'tt_projects_list';
+	public $form_link = 'tt_account_projects_list';
 	public $module_code = 'TT';
-	public $title = 'T/T Projects List';
+	public $title = 'T/T Projects (Account) List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
@@ -40,6 +40,9 @@ class Projects extends \Object\Form\Wrapper\List2 {
 				'tt_project_id2' => ['order' => 2, 'label_name' => 'Project #', 'domain' => 'project_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.tt_project_id;<='],
 				'tt_project_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.tt_project_inactive;=']
 			],
+			self::HIDDEN => [
+				'tt_project_user_id1' => ['label_name' => 'User #', 'domain' => 'user_id', 'query_builder' => 'a.tt_project_user_id;='],
+			],
 			'full_text_search' => [
 				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.tt_project_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
@@ -59,10 +62,9 @@ class Projects extends \Object\Form\Wrapper\List2 {
 			],
 			'row2' => [
 				'__blank' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 10],
-				'tt_project_team_id' => ['order' => 2, 'label_name' => 'Team', 'domain' => 'team_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Users\Model\User\Teams'],
-				'tt_project_user_id' => ['order' => 3, 'label_name' => 'User', 'domain' => 'user_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Users\Model\Users'],
-				'tt_project_date_start' => ['order' => 4, 'label_name' => 'Date Start', 'type' => 'date', 'null' => true, 'percent' => 15],
-				'tt_project_date_finish' => ['order' => 5, 'label_name' => 'Date Finish', 'type' => 'date', 'null' => true, 'percent' => 15],
+				'tt_project_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'percent' => 50, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations'],
+				'tt_project_date_start' => ['order' => 3, 'label_name' => 'Date Start', 'type' => 'date', 'null' => true, 'percent' => 20],
+				'tt_project_date_finish' => ['order' => 4, 'label_name' => 'Date Finish', 'type' => 'date', 'null' => true, 'percent' => 20],
 			]
 		]
 	];

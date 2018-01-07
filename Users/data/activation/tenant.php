@@ -118,5 +118,39 @@ class Tenant extends \Object\Import {
 				]
 			]
 		],
+		'team_roles' => [
+			'options' => [
+				'pk' => ['um_usrtmrol_name'],
+				'model' => '\Numbers\Users\Users\Model\User\Team\Roles',
+				'method' => 'save_insert_new'
+			],
+			'data' => [
+				[
+					'um_usrtmrol_name' => 'Project Sponsor',
+					'um_usrtmrol_icon' => 'fas fa-user-secret',
+					'um_usrtmrol_inactive' => 0
+				],
+				[
+					'um_usrtmrol_name' => 'Project Manager',
+					'um_usrtmrol_icon' => 'fas fa-user-plus',
+					'um_usrtmrol_inactive' => 0
+				],
+				[
+					'um_usrtmrol_name' => 'Team Member',
+					'um_usrtmrol_icon' => 'fas fa-male',
+					'um_usrtmrol_inactive' => 0
+				],
+				[
+					'um_usrtmrol_name' => 'Scrum Master',
+					'um_usrtmrol_icon' => 'far fa-user',
+					'um_usrtmrol_inactive' => 0
+				],
+				[
+					'um_usrtmrol_name' => 'Product Owner',
+					'um_usrtmrol_icon' => 'fas fa-user-plus',
+					'um_usrtmrol_inactive' => 0
+				],
+			]
+		],
 	];
 }

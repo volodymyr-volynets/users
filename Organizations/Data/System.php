@@ -1400,7 +1400,7 @@ class System extends \Object\Import {
 					'sm_resource_id' => '::id::\Menu\Numbers\Users\Organizations\Controller\Organization\Types',
 					'sm_resource_code' => '\Menu\Numbers\Users\Organizations\Controller\Organization\Types',
 					'sm_resource_type' => 200,
-					'sm_resource_name' => 'Types',
+					'sm_resource_name' => 'Organization Types',
 					'sm_resource_description' => null,
 					'sm_resource_icon' => 'far fa-clone',
 					'sm_resource_module_code' => 'ON',
