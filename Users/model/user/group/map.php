@@ -8,6 +8,7 @@ class Map extends \Object\Table {
 	public $title = 'U/M Group Map';
 	public $name = 'um_user_group_map';
 	public $pk = ['um_usrgrmap_tenant_id', 'um_usrgrmap_user_id', 'um_usrgrmap_group_id'];
+	public $tenant = true;
 	public $orderby;
 	public $limit;
 	public $column_prefix = 'um_usrgrmap_';

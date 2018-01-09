@@ -117,21 +117,4 @@ class Users extends \Object\Table {
 		'protection' => 2,
 		'scope' => 'enterprise'
 	];
-
-	/**
-	 * Load by id
-	 *
-	 * @param int $user_id
-	 * @return array
-	 */
-	public static function loadById(int $user_id) : array {
-		return \Numbers\Users\Users\Model\Users::getStatic([
-			'where' => [
-				'um_user_id' => $user_id
-			],
-			'pk' => ['um_user_id'],
-			'single_row' => true,
-			'skip_acl' => true
-		]);
-	}
 }

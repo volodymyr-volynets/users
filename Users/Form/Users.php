@@ -343,7 +343,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'working_hours_container' => [
 			'row1' => [
-				'um_usrschedwrkhrs_week_day_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Week Day', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 95, 'details_unique_select' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Schedule\WeekDays', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+				'um_usrschedwrkhrs_week_day_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Week Day', 'domain' => 'type_id', 'default' => 1, 'null' => true, 'required' => true, 'percent' => 95, 'details_unique_select' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Schedule\WeekDays', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
 				'um_usrschedwrkhrs_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'row2' => [
