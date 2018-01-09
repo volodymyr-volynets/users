@@ -17,11 +17,14 @@ class Chat extends \Object\Controller {
 		]);
 		$group_name = $group[0]['ct_group_name'] ?? $group[0]['user_names'][0] ?? null;
 		// send bar
-		$send_button = \HTML::inputGroup([
-			//'left' => \HTML::icon(['type' => 'far fa-smile']),
-			'value' => \HTML::input(['id' => 'chat_mini_group_id_' . $input['group_id'] . '_value_field', 'placeholder' => i18n(null, 'Send a message')]),
-			'right' => \HTML::a(['id' => 'chat_mini_group_id_' . $input['group_id'] . '_send_link', 'href' => 'javascript:void(0);', 'onclick' => '', 'value' => \HTML::icon(['type' => 'fas fa-mouse-pointer'])])
-		]);
+		$emoji_model = new \Numbers\Frontend\HTML\Renderers\Common\Emojis();
+		$empji_content = $emoji_model->renderEmojis(['onclick' => 'Numbers.Chat.AttachEmoji(' . $input['group_id'] . ', this);']);
+		$send_button = '<div style="position: relative;">';
+			$send_button.= \HTML::textarea(['id' => 'chat_mini_group_id_' . $input['group_id'] . '_value_field', 'placeholder' => i18n(null, 'Send a message')]);
+			$send_button.= \HTML::popover(['id' => 'popover_emoji_id_' . $input['group_id'], 'value' => \HTML::a(['href' => 'javascript:void(0);', 'id' => 'popover_emoji_id_' . $input['group_id'], 'value' => '<i class="fas fa-smile"></i>', 'title' => i18n(null, 'Select Emoji'), 'style'=>'position: absolute; right: 2.5em; top: 0.5em;']), 'title' => i18n(null, 'Select Emoji'), 'content' => $empji_content]);
+			$send_button.= \HTML::a(['id' => 'chat_mini_group_id_' . $input['group_id'] . '_send_link', 'href' => 'javascript:void(0);', 'onclick' => '', 'value' => \HTML::icon(['type' => 'fas fa-mouse-pointer']), 'style' => 'position: absolute; right: 1em; top: 0.5em;']);
+		$send_button.= '</div>';
+		// generate messages
 		$chat_messages = '<div class="chat_mini_message_holder" id="chat_mini_group_id_' . $input['group_id'] . '_messages">&nbsp;</div>';
 		$chat_messages.= '<div class="chat_mini_typing_holder" id="chat_mini_group_id_' . $input['group_id'] . '_typing">';
 			foreach ($group[0]['photos'] as $k2 => $v2) {
@@ -70,7 +73,8 @@ class Chat extends \Object\Controller {
 		\Layout::renderAs([
 			'success' => true,
 			'error' => [],
-			'data' => $chat_content
+			'data' => $chat_content,
+			'js' => \Layout::$onload
 		], 'application/json');
 	}
 
@@ -108,6 +112,8 @@ class Chat extends \Object\Controller {
 			$messages[$k]['to_photo_file_id_url'] = $v['to_photo_file_id'] ? \Numbers\Users\Documents\Base\Base::generateURL($v['to_photo_file_id'], true) : null;
 			$messages[$k]['chat_user_photo_file_id_url'] = $v['chat_user_photo_file_id'] ? \Numbers\Users\Documents\Base\Base::generateURL($v['chat_user_photo_file_id'], true) : null;
 			$messages[$k]['timestamp_nice'] = \Format::niceTimestamp($v['timestamp']);
+			// process emojis
+			$messages[$k]['subject'] = \Numbers\Frontend\HTML\Renderers\Common\Emojis::replaceEmoji($messages[$k]['subject']);
 		}
 		$result['success'] = true;
 		\Layout::renderAs([

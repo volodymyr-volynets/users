@@ -82,6 +82,10 @@ Numbers.Chat = {
 					// load messages
 					that.loadMessages(group_id);
 					that.scrollToTheBottomOfMessages(group_id);
+					// execute js
+					if (data.js) {
+						eval(data.js);
+					}
 				} else {
 					print_r2(data.error);
 				}
@@ -299,5 +303,16 @@ Numbers.Chat = {
 	 */
 	changeUserStatus: function (status) {
 		cookie_set('__chat_mini_status_user_' + Numbers.user_id, status);
+	},
+
+	/**
+	 * Attach emoji
+	 *
+	 * @param int group_id
+	 */
+	AttachEmoji: function(group_id, emoji) {
+		var previous = $('#chat_mini_group_id_' + group_id + '_value_field').val();
+		var temp = $(emoji).attr('data-symbol');
+		$('#chat_mini_group_id_' + group_id + '_value_field').val(previous + ' ' + temp);
 	}
 };

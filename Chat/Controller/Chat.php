@@ -61,7 +61,7 @@ class Chat extends \Object\Controller\Authorized {
 			}
 			$last_message = '<div class="chat_mini_groups" id="chat_mini_groups_group_' . $v['ct_group_id'] . '">';
 				if (!empty($messages[$v['ct_group_id']])) {
-					$last_message2 = \Format::firstName($messages[$v['ct_group_id']]['from_name']) . ': ' . $messages[$v['ct_group_id']]['subject'];
+					$last_message2 = \Format::firstName($messages[$v['ct_group_id']]['from_name']) . ': ' . \Numbers\Frontend\HTML\Renderers\Common\Emojis::replaceEmoji($messages[$v['ct_group_id']]['subject']);
 					if (empty($messages[$v['ct_group_id']]['read'])) {
 						$last_message2 = \HTML::b(['value' => $last_message2]);
 					}
