@@ -56,6 +56,7 @@ class Login extends \Object\DataSource {
 			'super_admin' => 'b.super_admin',
 			'handle_exceptions' => 'b.handle_exceptions',
 			'maximum_role_weight' => 'b.maximum_role_weight',
+			'linked_accounts' => 'g.linked_accounts',
 			// internalization
 			'i18n_group_id' => 'd.um_usri18n_group_id',
 			'i18n_language_code' => 'd.um_usri18n_language_code',
@@ -128,6 +129,17 @@ class Login extends \Object\DataSource {
 		}, 'f', 'ON', [
 			['AND', ['a.um_user_id', '=', 'f.um_usrperm_user_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\Linked\Accounts::queryBuilderStatic(['alias' => 'inner_d'])->select();
+			$query->columns([
+				'inner_d.um_usrlinked_user_id',
+				'linked_accounts' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_d.um_usrlinked_module_id, inner_d.um_usrlinked_type_code, inner_d.um_usrlinked_linked_id)", 'delimiter' => ';;'])
+			]);
+			$query->where('AND', ['inner_d.um_usrlinked_inactive', '=', 0]);
+			$query->groupby(['inner_d.um_usrlinked_user_id']);
+		}, 'g', 'ON', [
+			['AND', ['a.um_user_id', '=', 'g.um_usrlinked_user_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
@@ -187,6 +199,17 @@ class Login extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['permissions'] = [];
+			}
+			//linked_accounts
+			if (!empty($v['linked_accounts'])) {
+				$data[$k]['linked_accounts'] = [];
+				$temp = explode(';;', $v['linked_accounts']);
+				foreach ($temp as $v2) {
+					$v2 = explode('::', $v2);
+					$data[$k]['linked_accounts'][$v2[1]][(int) $v2[0]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['linked_accounts'] = [];
 			}
 		}
 		return $data;
