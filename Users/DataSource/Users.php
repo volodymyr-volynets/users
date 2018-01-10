@@ -13,6 +13,7 @@ class Users extends \Object\DataSource {
 	public $options_map =[
 		'um_user_name' => 'name',
 		'um_user_company' => 'name',
+		'um_user_photo_file_id' => 'photo_id',
 		'um_user_inactive' => 'inactive'
 	];
 	public $options_active =[
@@ -48,6 +49,7 @@ class Users extends \Object\DataSource {
 				'um_user_id' => 'a.um_user_id',
 				'um_user_name' => 'a.um_user_name',
 				'um_user_company' => 'a.um_user_company',
+				'um_user_photo_file_id' => 'a.um_user_photo_file_id',
 				'um_user_inactive' => 'a.um_user_inactive'
 			]);
 		}
