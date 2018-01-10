@@ -22,7 +22,7 @@ class Groups extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'um_usrgrp_id' => [
-				'um_usrgrp_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Group #', 'domain' => 'group_id_sequence', 'percent' => 95, 'required' => 'c', 'navigation' => true],
+				'um_usrgrp_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Group #', 'domain' => 'group_id_sequence', 'percent' => 95, 'navigation' => true],
 				'um_usrgrp_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'um_usrgrp_name' => [
