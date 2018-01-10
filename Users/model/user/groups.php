@@ -31,6 +31,7 @@ class Groups extends \Object\Table {
 			'um_usrgrp_id' => 'wg_audit_usrgrp_id'
 		]
 	];
+	public $optimistic_lock = true;
 	public $options_map = [];
 	public $options_active = [];
 	public $engine = [
