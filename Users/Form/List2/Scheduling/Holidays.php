@@ -1,10 +1,10 @@
 <?php
 
 namespace Numbers\Users\Users\Form\List2\Scheduling;
-class Shifts extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'um_scheduling_shifts_list';
+class Holidays extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'um_scheduling_holidays_list';
 	public $module_code = 'UM';
-	public $title = 'U/M Scheduling Shifts List';
+	public $title = 'U/M Scheduling Holidays List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
@@ -35,13 +35,13 @@ class Shifts extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			'um_schedshift_id' => [
-				'um_schedshift_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Shift #', 'domain' => 'shift_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_schedshift_id;>='],
-				'um_schedshift_id2' => ['order' => 2, 'label_name' => 'Shift #', 'domain' => 'shift_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_schedshift_id;<='],
-				'um_schedshift_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_schedshift_inactive;=']
+			'um_schedholi_id' => [
+				'um_schedholi_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Holiday #', 'domain' => 'holiday_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_schedholi_id;>='],
+				'um_schedholi_id2' => ['order' => 2, 'label_name' => 'Holiday #', 'domain' => 'holiday_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_schedholi_id;<='],
+				'um_schedholi_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_schedholi_inactive;=']
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_schedshift_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_schedholi_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -53,32 +53,31 @@ class Shifts extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'um_schedshift_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Shift #', 'domain' => 'shift_id', 'percent' => 10, 'url_edit' => true],
-				'um_schedshift_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 85],
-				'um_schedshift_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_schedholi_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Holiday #', 'domain' => 'holiday_id', 'percent' => 10, 'url_edit' => true],
+				'um_schedholi_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 75],
+				'um_schedholi_date' => ['order' => 3, 'label_name' => 'Date', 'type' => 'date', 'percent' => 10],
+				'um_schedholi_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'row2' => [
 				'blank' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 10],
 				'um_schedshift_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'percent' => 20, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations'],
 				'um_schedshift_location_id' => ['order' => 3, 'label_name' => 'Location', 'domain' => 'location_id', 'null' => true, 'percent' => 20, 'options_model' => '\Numbers\Users\Organizations\Model\Locations'],
-				'um_schedshift_work_starts' => ['order' => 4, 'label_name' => 'Work Starts', 'type' => 'time', 'percent' => 15],
-				'um_schedshift_work_ends' => ['order' => 5, 'label_name' => 'Work Ends', 'type' => 'time', 'percent' => 15],
-				'um_schedshift_lunch_starts' => ['order' => 6, 'label_name' => 'Lunch Starts', 'type' => 'time', 'percent' => 10],
-				'um_schedshift_lunch_ends' => ['order' => 7, 'label_name' => 'Lunch Ends', 'type' => 'time', 'percent' => 10],
+				'um_schedholi_country_code' => ['order' => 4, 'label_name' => 'Country', 'domain' => 'country_code', 'null' => true, 'percent' => 25, 'options_model' => '\Numbers\Countries\Countries\Model\Countries'],
+				'um_schedholi_province_code' => ['order' => 5, 'label_name' => 'Province', 'domain' => 'province_code', 'null' => true, 'percent' => 25, 'options_model' => '\Numbers\Countries\Countries\Model\Provinces', 'options_depends' => ['cm_province_country_code' => 'um_schedholi_country_code']],
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Users\Model\Scheduling\Shifts';
+	public $query_primary_model = '\Numbers\Users\Users\Model\Scheduling\Holidays';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'um_schedshift_id' => SORT_ASC
+			'um_schedholi_id' => SORT_ASC
 		]
 	];
 	const LIST_SORT_OPTIONS = [
-		'um_schedshift_id' => ['name' => 'Shift #'],
-		'um_schedshift_name' => ['name' => 'Name']
+		'um_schedholi_id' => ['name' => 'Holiday #'],
+		'um_schedholi_name' => ['name' => 'Name']
 	];
 }
