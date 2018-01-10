@@ -25,3 +25,8 @@
 	font-size: 0.75em;
 	font-color: grey;
 }
+.chat_emoji_icon {
+	font-size: 2em;
+	cursor: hand;
+	cursor: pointer;
+}

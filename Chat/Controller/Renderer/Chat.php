@@ -85,17 +85,6 @@ class Chat extends \Object\Controller {
 		$input = \Request::input();
 		$crypt = new \Crypt();
 		$token_data = $crypt->tokenVerify($input['token'] ?? '', ['general']);
-		// update read flag
-		if (!empty($input['read'])) {
-			$query = \Numbers\Users\Users\Model\Message\Recipients::queryBuilderStatic()->update();
-			$query->set([
-				'um_mesrecip_read' => 1
-			]);
-			$query->where('AND' , ['a.um_mesrecip_user_id', '=', (int) $token_data['id']]);
-			$query->where('AND' , ['a.um_mesrecip_chat_group_id', '=', (int) $input['group_id']]);
-			$query->where('AND' , ['a.um_mesrecip_message_id', '<=', (int) $input['last_message_id']]);
-			$query->query();
-		}
 		// get from datasource
 		$model = new \Numbers\Users\Users\DataSource\Messages();
 		$model->cache = false;
@@ -115,6 +104,17 @@ class Chat extends \Object\Controller {
 			// process emojis
 			$messages[$k]['subject'] = \Numbers\Frontend\HTML\Renderers\Common\Emojis::replaceEmoji($messages[$k]['subject']);
 		}
+		// update read flag
+		if (!empty($input['read'])) {
+			$query = \Numbers\Users\Users\Model\Message\Recipients::queryBuilderStatic()->update();
+			$query->set([
+				'um_mesrecip_read' => 1
+			]);
+			$query->where('AND' , ['a.um_mesrecip_user_id', '=', (int) $token_data['id']]);
+			$query->where('AND' , ['a.um_mesrecip_chat_group_id', '=', (int) $input['group_id']]);
+			$query->where('AND' , ['a.um_mesrecip_message_id', '<=', (int) $input['last_message_id']]);
+			$query->query();
+		}
 		$result['success'] = true;
 		\Layout::renderAs([
 			'success' => true,
@@ -128,7 +128,7 @@ class Chat extends \Object\Controller {
 	 * New chat message
 	 */
 	public function actionNewChatMessage() {
-		$input = \Request::input();
+		$input = \Request::input(null, false);
 		$crypt = new \Crypt();
 		$token_data = $crypt->tokenVerify($input['token'] ?? '', ['general']);
 		// save chat message
