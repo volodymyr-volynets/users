@@ -1,6 +1,6 @@
 <?php
 
-namespace Numbers\Users\Users\Model\User\Schedule;
+namespace Numbers\Users\Users\Model\Scheduling\Interval;
 class WeekDays extends \Object\Data {
 	public $column_key = 'um_schedweekday_id';
 	public $column_prefix = 'um_schedweekday_';

@@ -73,7 +73,9 @@ class Login extends \Object\DataSource {
 			'i18n_print_font' => 'd.um_usri18n_print_font',
 			// primary organization
 			'organization_id' => 'e.um_usrorg_organization_id',
-			'photo_file_id' => 'a.um_user_photo_file_id'
+			'photo_file_id' => 'a.um_user_photo_file_id',
+			'operating_country_code' => 'a.um_user_operating_country_code',
+			'operating_province_code' => 'a.um_user_operating_province_code'
 		]);
 		// joins
 		$this->query->join('LEFT', function (& $query) {

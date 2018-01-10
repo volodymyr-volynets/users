@@ -87,14 +87,6 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id'],
 			'order' => 35000
 		],
-		'working_hours_container' => [
-			'type' => 'details',
-			'details_rendering_type' => 'table',
-			'details_new_rows' => 1,
-			'details_key' => '\Numbers\Users\Users\Model\User\Schedule\WorkingHours',
-			'details_pk' => ['um_usrschedwrkhrs_week_day_id'],
-			'order' => 35000
-		],
 		'teams_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -131,14 +123,13 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'tabs2' => [
 			'teams' => ['order' => 50, 'label_name' => 'Teams'],
-			'internalization' => ['order' => 100, 'label_name' => 'Internalization'],
-			'working_hours' => ['order' => 200, 'label_name' => 'Working Hours'],
+			'internalization' => ['order' => 100, 'label_name' => 'Internalization']
 		]
 	];
 	public $elements = [
 		'top' => [
 			'um_user_id' => [
-				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => true],
+				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id_sequence', 'percent' => 50, 'navigation' => true],
 				'um_user_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => true]
 			],
 			'um_user_name' => [
@@ -180,10 +171,6 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'internalization' => [
 				'internalization' => ['container' => 'internalization_container', 'order' => 100],
-			],
-			'working_hours' => [
-				'week_start_day' => ['container' => 'week_start_day_container', 'order' => 100],
-				'working_hours' => ['container' => 'working_hours_container', 'order' => 200],
 			]
 		],
 		'general_container' => [
@@ -202,6 +189,13 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_user_company' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Company', 'domain' => 'name', 'null' => true, 'percent' => 100, 'required' => 'c'],
 			],
 			'separator_1' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 350, 'label_name' => 'Operating Location', 'icon' => 'far fa-flag', 'percent' => 100],
+			],
+			'um_user_operating_country_code' => [
+				'um_user_operating_country_code' => ['order' => 1, 'row_order' => 360, 'label_name' => 'Operating Country', 'domain' => 'country_code', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_user_operating_province_code' => ['order' => 1, 'label_name' => 'Operating Province', 'domain' => 'province_code', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'um_user_operating_country_code']],
+			],
+			'separator_2' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'far fa-envelope', 'percent' => 100],
 			],
 			'um_user_email' => [
@@ -215,7 +209,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'um_user_cell' => [
 				'um_user_cell' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 				'um_user_fax' => ['order' => 2, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
-			]
+			],
 		],
 		'login_container' => [
 			'um_user_login_enabled' => [
@@ -341,23 +335,6 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrperm_module_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
 			]
 		],
-		'working_hours_container' => [
-			'row1' => [
-				'um_usrschedwrkhrs_week_day_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Week Day', 'domain' => 'type_id', 'default' => 1, 'null' => true, 'required' => true, 'percent' => 95, 'details_unique_select' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Schedule\WeekDays', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
-				'um_usrschedwrkhrs_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
-			],
-			'row2' => [
-				'um_usrschedwrkhrs_work_starts' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Work Starts', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
-				'um_usrschedwrkhrs_work_ends' => ['order' => 2, 'label_name' => 'Work Ends', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
-				'um_usrschedwrkhrs_lunch_starts' => ['order' => 3, 'label_name' => 'Lunch Starts', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
-				'um_usrschedwrkhrs_lunch_ends' => ['order' => 4, 'label_name' => 'Lunch Ends', 'type' => 'time', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
-			]
-		],
-		'week_start_day_container' => [
-			'row1' => [
-				'um_user_week_start_day_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Week Start Day', 'domain' => 'type_id', 'null' => true, 'default' => 1, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Schedule\WeekDays', 'options_options' => ['i18n' => 'skip_sorting']],
-			]
-		],
 		'teams_container' => [
 			'row1' => [
 				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'team_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Teams', 'onchange' => 'this.form.submit();'],
@@ -430,12 +407,6 @@ class Users extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrperm_tenant_id', 'um_user_id' => 'um_usrperm_user_id']
-			],
-			'\Numbers\Users\Users\Model\User\Schedule\WorkingHours' => [
-				'name' => 'Internalization',
-				'pk' => ['um_usrschedwrkhrs_tenant_id', 'um_usrschedwrkhrs_user_id', 'um_usrschedwrkhrs_week_day_id'],
-				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrschedwrkhrs_tenant_id', 'um_user_id' => 'um_usrschedwrkhrs_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Security\Answers' => [
 				'name' => 'Security Answers',

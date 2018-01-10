@@ -14,7 +14,7 @@ class Shifts extends \Object\Table {
 	public $column_prefix = 'um_schedshift_';
 	public $columns = [
 		'um_schedshift_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_schedshift_id' => ['name' => 'Group #', 'domain' => 'shift_id_sequence'],
+		'um_schedshift_id' => ['name' => 'Shift #', 'domain' => 'shift_id_sequence'],
 		'um_schedshift_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_schedshift_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id', 'null' => true],
 		'um_schedshift_location_id' => ['name' => 'Location #', 'domain' => 'location_id', 'null' => true],

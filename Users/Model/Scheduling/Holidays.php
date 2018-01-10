@@ -14,7 +14,7 @@ class Holidays extends \Object\Table {
 	public $column_prefix = 'um_schedholi_';
 	public $columns = [
 		'um_schedholi_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_schedholi_id' => ['name' => 'Group #', 'domain' => 'holiday_id_sequence'],
+		'um_schedholi_id' => ['name' => 'Holiday #', 'domain' => 'holiday_id_sequence'],
 		'um_schedholi_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_schedholi_date' => ['name' => 'Date', 'type' => 'date'],
 		'um_schedholi_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id', 'null' => true],
