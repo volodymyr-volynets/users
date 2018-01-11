@@ -9,14 +9,14 @@ class Intervals extends \Object\Controller\Permission {
 		echo $form->render();
 	}
 	public function actionEdit() {
-		$form = new \Numbers\Users\Users\Form\Scheduling\Holidays([
+		$form = new \Numbers\Users\Users\Form\Scheduling\Intervals([
 			'input' => \Request::input()
 		]);
 		echo $form->render();
 	}
 	public function actionImport() {
 		$form = new \Object\Form\Wrapper\Import([
-			'model' => '\Numbers\Users\Users\Form\Scheduling\Holidays',
+			'model' => '\Numbers\Users\Users\Form\Scheduling\Intervals',
 			'input' => \Request::input()
 		]);
 		echo $form->render();

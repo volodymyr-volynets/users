@@ -19,7 +19,7 @@ class GetFile extends \Object\Controller {
 		// proceed with logic
 		$image = imagecreatetruecolor($input['width'] ?? 25, $input['height'] ?? 25);
 		// determine background color
-		$color_hex = substr(md5($input['text']), 0, 6);
+		$color_hex = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($input['text']);
 		$color = hex2rgb($color_hex);
 		$fill_color = imagecolorallocate($image, $color[0], $color[1], $color[2]);
 		imagefilledrectangle($image, 0, 0, $input['width'] ?? 25, $input['height'] ?? 25, $fill_color);

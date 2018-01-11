@@ -22,7 +22,7 @@ class Holidays extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'um_schedholi_id' => [
-				'um_schedholi_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Shift #', 'domain' => 'shift_id_sequence', 'percent' => 95, 'navigation' => true],
+				'um_schedholi_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Holiday #', 'domain' => 'holiday_id_sequence', 'percent' => 95, 'navigation' => true],
 				'um_schedholi_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'um_schedholi_name' => [
@@ -43,7 +43,7 @@ class Holidays extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
-		'name' => 'Shifts',
+		'name' => 'Holidays',
 		'model' => '\Numbers\Users\Users\Model\Scheduling\Holidays'
 	];
 }

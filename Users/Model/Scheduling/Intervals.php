@@ -19,15 +19,18 @@ class Intervals extends \Object\Table {
 		'um_schedinterval_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Types'],
 		'um_schedinterval_status_id' => ['name' => 'Status', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Statuses'],
 		'um_schedinterval_shift_id' => ['name' => 'Shift #', 'domain' => 'shift_id', 'null' => true],
-		'um_schedinterval_work_start_timestamp' => ['name' => 'Work Start Timestamp', 'type' => 'timestamp'],
-		'um_schedinterval_work_finish_timestamp' => ['name' => 'Work Finish Timestamp', 'type' => 'timestamp'],
-		'um_schedinterval_lunch_start_timestamp' => ['name' => 'Lunch Start Timestamp', 'type' => 'timestamp', 'null' => true],
-		'um_schedinterval_lunch_finish_timestamp' => ['name' => 'Lunch Finish Timestamp', 'type' => 'timestamp', 'null' => true],
+		'um_schedinterval_work_starts' => ['name' => 'Work Starts', 'type' => 'datetime'],
+		'um_schedinterval_work_ends' => ['name' => 'Work Ends', 'type' => 'datetime'],
+		'um_schedinterval_lunch_starts' => ['name' => 'Lunch Starts', 'type' => 'datetime', 'null' => true],
+		'um_schedinterval_lunch_ends' => ['name' => 'Lunch Ends', 'type' => 'datetime', 'null' => true],
 		'um_schedinterval_user_id' => ['name' => 'User #', 'domain' => 'user_id', 'null' => true],
 		'um_schedinterval_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id', 'null' => true],
 		'um_schedinterval_location_id' => ['name' => 'Location #', 'domain' => 'location_id', 'null' => true],
 		'um_schedinterval_country_code' => ['name' => 'Country Code', 'domain' => 'country_code', 'null' => true],
 		'um_schedinterval_province_code' => ['name' => 'Province Code', 'domain' => 'province_code', 'null' => true],
+		'um_schedinterval_timezone_code' => ['name' => 'Timezone Code', 'domain' => 'timezone_code'],
+		'um_schedinterval_description' => ['name' => 'Description', 'domain' => 'description', 'null' => true],
+		'um_schedinterval_location_name' => ['name' => 'Location Name', 'domain' => 'name', 'null' => true],
 		'um_schedinterval_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
