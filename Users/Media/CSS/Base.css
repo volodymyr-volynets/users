@@ -1,4 +1,4 @@
-/* Account / Calendar*/
+/* Account / Calendar */
 .numbers_account_calendar_holder {
 	border: 1px solid #ccc;
 	position: relative;
@@ -50,4 +50,11 @@
 .numbers_account_calendar_singleday_interval {
 	position: absolute;
 	width: 100%;
+}
+.numbers_account_calendar_month_cell {
+	border-top: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	height: 100px;
+	position: relative;
+	vertical-align: top;
 }

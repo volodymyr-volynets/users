@@ -14,8 +14,8 @@ class Types extends \Object\Data {
 	public $data = [
 		//10 => ['name' => 'Day'],
 		20 => ['name' => 'Week'],
-		//30 => ['name' => 'Month'],
+		30 => ['name' => 'Month'],
 		//40 => ['name' => 'Year'],
-		50 => ['name' => 'Schedule'],
+		//50 => ['name' => 'Schedule'],
 	];
 }

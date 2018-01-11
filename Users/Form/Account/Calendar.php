@@ -23,9 +23,9 @@ class Calendar extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'panel' => [
-				'today' => ['order' => 1, 'row_order' => 100, 'label_name' => null, 'percent' => 5, 'value' => 'Today', 'method' => 'button2'],
-				'previous' => ['order' => 2, 'label_name' => null, 'percent' => 5, 'value' => '', 'icon' => 'fas fa-arrow-alt-circle-left', 'method' => 'button2', 'type' => 'info'],
-				'next' => ['order' => 3, 'label_name' => null, 'percent' => 5, 'value' => '', 'icon' => 'fas fa-arrow-alt-circle-right', 'method' => 'button2', 'type' => 'info'],
+				'today' => ['order' => 1, 'row_order' => 100, 'label_name' => null, 'percent' => 5, 'class' => 'btn-block', 'value' => 'Today', 'method' => 'button2'],
+				'previous' => ['order' => 2, 'label_name' => null, 'percent' => 5, 'class' => 'btn-block', 'value' => '', 'icon' => 'fas fa-arrow-alt-circle-left', 'method' => 'button2', 'type' => 'info'],
+				'next' => ['order' => 3, 'label_name' => null, 'percent' => 5, 'class' => 'btn-block', 'value' => '', 'icon' => 'fas fa-arrow-alt-circle-right', 'method' => 'button2', 'type' => 'info'],
 				'dates' => ['order' => 4, 'label_name' => null, 'percent' => 65, 'method' => 'div'],
 				'date_hidden' => ['order' => 5, 'label_name' => null, 'type' => 'date', 'method' => 'hidden'],
 				'date1' => ['order' => 5, 'label_name' => null, 'type' => 'date', 'method' => 'hidden'],
@@ -34,8 +34,8 @@ class Calendar extends \Object\Form\Wrapper\Base {
 			],
 			'search' => [
 				// todo add layers
-				'search' => ['order' => 1, 'row_order' => 200, 'label_name' => null, 'percent' => 90, 'placeholder' => 'Search', 'method' => 'input'],
-				'submit' => ['order' => 2, 'label_name' => null, 'percent' => 10, 'value' => 'Submit', 'method' => 'button2'],
+				'search' => ['order' => 1, 'row_order' => 200, 'label_name' => null, 'percent' => 85, 'placeholder' => 'Search', 'method' => 'input'],
+				'submit' => ['order' => 2, 'label_name' => null, 'percent' => 15, 'value' => 'Submit', 'method' => 'button2', 'class' => 'btn-block'],
 			]
 		]
 	];
@@ -150,10 +150,10 @@ class Calendar extends \Object\Form\Wrapper\Base {
 		// render
 		\Layout::addCss('/numbers/media_submodules/Numbers_Users_Users_Media_CSS_Base.css', 10000);
 		switch ($form->values['select']) {
-			case 50: // schedule
-				return $this->renderSchedule($form, $data['rows'], $holidays['rows']);
 			case 20: // week
 				return $this->renderWeek($form, $data['rows'], $holidays['rows']);
+			case 30: // month
+				return $this->renderMonth($form, $data['rows'], $holidays['rows']);
 			default:
 				Throw new \Exception('Type?');
 		}
@@ -164,14 +164,115 @@ class Calendar extends \Object\Form\Wrapper\Base {
 	 *
 	 * @param object $form
 	 * @param array $data
+	 * @param array $holidays
 	 * @return string
 	 */
-	private function renderSchedule(& $form, $data) {
+	private function renderMonth(& $form, $data, $holidays) {
 		$result = '';
 		$result.= '<table class="numbers_account_calendar_holder" width="100%">';
+		$week_days = \Numbers\Users\Users\Model\Scheduling\Interval\WeekDays2::getStatic();
+		$date1 = new \DateTime($form->values['date1']);
+		$date2 = clone $date1;
+		$date1->modify('last Sunday');
+		$date2->modify('first day of next month');
+		$next_month = $date2->format('Y-m-d');
+		$now = \Format::now('date');
+		// rearrange
+		$data_arranged = [
+			'holidays' => [],
+			'multiple_days' => [],
+			'single_day' => []
+		];
+		$data_slot_counter = 0;
+		$data_slot_lock = [];
+		foreach ($holidays as $k => $v) {
+			$name = $v['um_schedholi_name'];
+			if (strpos($name, ' - ') !== false) {
+				$temp = explode(' - ', $name);
+				$name = array_pop($temp);
+			}
+			$v['slot_name'] = $name;
+			$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($name);
+			$v['slot_text_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::determineTextColor($v['slot_color']);
+			$data_arranged['holidays'][$v['um_schedholi_date']][$k] = $v;
+		}
 		foreach ($data as $k => $v) {
+			$date1a = new \DateTime(\Format::readDate($v['um_schedinterval_work_starts'], 'datetime'));
+			$date2a = new \DateTime(\Format::readDate($v['um_schedinterval_work_ends'], 'datetime'));
+			// multi days intervals
+			if ($date1a->format('Y-m-d') != $date2a->format('Y-m-d')) {
+				$data_slot_counter++;
+				while ($date1a->format('Y-m-d') != $date2a->format('Y-m-d')) {
+					$v['slot_counter'] = $data_slot_counter;
+					$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_name']);
+					$v['slot_text_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::determineTextColor($v['slot_color']);
+					$data_arranged['multiple_days'][$date1a->format('Y-m-d')][$data_slot_counter] = $v;
+					$date1a->modify('+1 day');
+				}
+			} else { // single day intervals
+				$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_name']);
+				$v['slot_text_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::determineTextColor($v['slot_color']);
+				$data_arranged['single_day'][$date1a->format('Y-m-d')][$k] = $v;
+			}
+		}
+		for ($i = 1; $i <= 6; $i++) {
 			$result.= '<tr>';
+				foreach ($week_days as $k => $v) {
+					if ($date1->format('Y-m-d') == $now) {
+						$result.= '<td class="numbers_account_calendar_td numbers_account_calendar_month_cell numbers_account_calendar_current">';
+					} else {
+						$result.= '<td class="numbers_account_calendar_td numbers_account_calendar_month_cell">';
+					}
+						$result.= '<div class="numbers_account_calendar_weekday_name">';
+							if ($i == 1) {
+								$month = null;
+								if ($date1->format('j') == 1) {
+									$month = ' / ' . i18n(null, $date1->format('F'));
+								}
+								$result.= '<h5>' . i18n(null, $date1->format('l')) . $month . '</h5>';
+							} else if ($date1->format('j') == 1) {
+								$result.= '<h5>' . i18n(null, $date1->format('F')) . '</h5>';
+							}
+							$result.= '<h5>' . \Format::id($date1->format('j')) . '</h5>';
+						$result.= '</div>';
+						// render holidays first
+						$date1h = $date1->format('Y-m-d');
+						if (!empty($data_arranged['holidays'][$date1h])) {
+							foreach ($data_arranged['holidays'][$date1h] as $k2 => $v2) {
+								$result.= '<div class="numbers_account_calendar_multiday_cell">';
+									$result.= '<div class="numbers_account_calendar_multiday_interval" style="color: ' . $v2['slot_text_color']  . '; background-color: ' . $v2['slot_color'] . ';">';
+										$result.= $v2['slot_name'];
+									$result.= '</div>';
+								$result.= '</div>';
+							}
+						}
+						// render multi days
+						if (!empty($data_arranged['multiple_days'][$date1h])) {
+							foreach ($data_arranged['multiple_days'][$date1h] as $k2 => $v2) {
+								$result.= '<div class="numbers_account_calendar_multiday_cell">';
+									$result.= '<div class="numbers_account_calendar_multiday_interval" style="color: ' . $v2['slot_text_color']  . '; background-color: ' . $v2['slot_color'] . ';">';
+										$result.= $v2['um_schedinterval_name'];
+									$result.= '</div>';
+								$result.= '</div>';
+							}
+						}
+						// single day last
+						if (!empty($data_arranged['single_day'][$date1h])) {
+							foreach ($data_arranged['single_day'][$date1h] as $k2 => $v2) {
+								$result.= '<div class="numbers_account_calendar_multiday_cell">';
+									$result.= '<div class="numbers_account_calendar_multiday_interval" style="color: ' . $v2['slot_text_color']  . '; background-color: ' . $v2['slot_color'] . ';">';
+										$result.= $v2['um_schedinterval_name'];
+									$result.= '</div>';
+								$result.= '</div>';
+							}
+						}
+					$result.= '</td>';
+					// add one day
+					$date1->modify('+1 day');
+				}
 			$result.= '</tr>';
+			// we need to end a loop
+			if ($date1->format('Y-m-d') > $next_month) break;
 		}
 		$result.= '</table>';
 		return $result;
@@ -251,20 +352,9 @@ class Calendar extends \Object\Form\Wrapper\Base {
 						if (isset($data_arranged['holidays'][$date1h])) {
 							foreach ($data_arranged['holidays'][$date1h] as $k2 => $v2) {
 								$result.= '<div class="numbers_account_calendar_multiday_cell">';
-									for ($i = 1; $i <= $data_slot_counter; $i++) {
-										if (!empty($data_arranged['holidays'][$date1h][$i])) {
-											$result.= '<div class="numbers_account_calendar_multiday_interval" style="color: ' . $data_arranged['holidays'][$date1h][$i]['slot_text_color']  . '; background-color: ' . $data_arranged['holidays'][$date1h][$i]['slot_color'] . ';">';
-												if (!empty($data_slot_lock[$i])) {
-													$result.= '&nbsp;';
-												} else {
-													$result.= $data_arranged['holidays'][$date1h][$i]['slot_name'];
-													$data_slot_lock[$i] = true;
-												}
-											$result.= '</div>';
-										} else {
-											$result.= '&nbsp;';
-										}
-									}
+									$result.= '<div class="numbers_account_calendar_multiday_interval" style="color: ' . $v2['slot_text_color']  . '; background-color: ' . $v2['slot_color'] . ';">';
+										$result.= $v2['slot_name'];
+									$result.= '</div>';
 								$result.= '</div>';
 							}
 						}
@@ -351,10 +441,7 @@ class Calendar extends \Object\Form\Wrapper\Base {
 				$result.= '</tr>';
 			}
 		$result.= '</table>';
+		$result = '<div class="numbers_frontend_form_list_table_wrapper_outer"><div class="numbers_frontend_form_list_table_wrapper_inner">' . $result . '</div></div>';
 		return $result;
-	}
-
-	private function renderOneIntervalWeek(& $form, $interval) {
-
 	}
 }
