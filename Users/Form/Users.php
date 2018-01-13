@@ -24,7 +24,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'permissions_container' => ['default_row_type' => 'grid', 'order' => 34000],
 		'photo_container' => ['default_row_type' => 'grid', 'order' => 32000],
-		'week_start_day_container' => ['default_row_type' => 'grid', 'order' => 35000],
+		'territories_container' => ['default_row_type' => 'grid', 'order' => 35000],
 		'roles_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -162,7 +162,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'assignments' => [
 				'assignments' => ['container' => 'assignments_container', 'order' => 100],
-				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 300],
+				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 200],
+				'territories' => ['container' => 'territories_container', 'order' => 300],
 			]
 		],
 		'tabs2' => [
@@ -314,6 +315,11 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrassign_parent_role_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Role #', 'domain' => 'role_id'],
 				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id'],
 			]
+		],
+		'territories_container' => [
+			'separator_2' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Service / Territory Assignments', 'icon' => 'far fa-square', 'percent' => 100],
+			],
 		],
 		'notifications_container' => [
 			'row1' => [

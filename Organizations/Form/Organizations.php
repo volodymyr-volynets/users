@@ -48,7 +48,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		'top' => [
 			'on_organization_id' => [
 				'on_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization #', 'domain' => 'organization_id_sequence', 'percent' => 50, 'required' => 'c', 'navigation' => true],
-				'on_organization_code' => ['order' => 2, 'label_name' => 'Organization Code', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => true, 'navigation' => true]
+				'on_organization_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => true, 'navigation' => true]
 			],
 			'on_organization_name' => [
 				'on_organization_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
