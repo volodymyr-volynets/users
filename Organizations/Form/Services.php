@@ -61,11 +61,16 @@ class Services extends \Object\Form\Wrapper\Base {
 		],
 		'general_container' => [
 			'on_service_organization_id' => [
-				'on_service_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],
+				'on_service_assignment_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'type_id', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Assignment\Types'],
+				'on_service_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
 			],
-			'on_service_icon' => [
-				'on_service_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
+			'on_service_category_id' => [
+				'on_service_category_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Category', 'domain' => 'group_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Categories::optionsActive', 'options_depends' => ['on_servcategory_organization_id' => 'on_service_organization_id']],
+				'on_service_icon' => ['order' => 2, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
 			],
+			'on_service_type_id' => [
+				'on_service_type_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Types'],
+			]
 		],
 		'channel_container' => [
 			'row1' => [
@@ -82,7 +87,7 @@ class Services extends \Object\Form\Wrapper\Base {
 		'model' => '\Numbers\Users\Organizations\Model\Services',
 		'details' => [
 			'\Numbers\Users\Organizations\Model\Service\Channel\Map' => [
-				'name' => 'Types',
+				'name' => 'Channels',
 				'pk' => ['on_servmap_tenant_id', 'on_servmap_service_id', 'on_servmap_channel_id'],
 				'type' => '1M',
 				'map' => ['on_service_tenant_id' => 'on_servmap_tenant_id', 'on_service_id' => 'on_servmap_service_id']

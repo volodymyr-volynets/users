@@ -24,7 +24,10 @@ class Users extends \Object\Form\Wrapper\Base {
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'permissions_container' => ['default_row_type' => 'grid', 'order' => 34000],
 		'photo_container' => ['default_row_type' => 'grid', 'order' => 32000],
-		'territories_container' => ['default_row_type' => 'grid', 'order' => 35000],
+		'user_separator_container' => ['default_row_type' => 'grid', 'order' => 35000],
+		'territories_separator_container' => ['default_row_type' => 'grid', 'order' => 35001],
+		'postal_codes_separator_container' => ['default_row_type' => 'grid', 'order' => 35002],
+		'location_separator_container' => ['default_row_type' => 'grid', 'order' => 35003],
 		'roles_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -70,6 +73,51 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_cannot_delete' => true,
 			'details_empty_warning_message' => true,
 			'order' => 35003
+		],
+		'postal_codes_assignments_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\PostalCodes',
+			'details_pk' => ['um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id'],
+			'details_empty_warning_message' => true,
+			'order' => 35002
+		],
+		'territories_assignments_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Territories',
+			'details_pk' => ['um_usrassterr_organization_id', 'um_usrassterr_service_id', 'um_usrassterr_brand_id'],
+			'order' => 35003
+		],
+		'territories_assignments_container_map' => [
+			'label_name' => 'Territories',
+			'type' => 'subdetails',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Users\Model\User\Assignment\Territories',
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Territory\Map',
+			'details_pk' => ['um_usrasstrrmap_territory_id'],
+			'order' => 35004,
+		],
+		'locations_assignments_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Locations',
+			'details_pk' => ['um_usrassloc_organization_id', 'um_usrassloc_service_id', 'um_usrassloc_brand_id'],
+			'order' => 35005
+		],
+		'locations_assignments_container_map' => [
+			'label_name' => 'Locations',
+			'type' => 'subdetails',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Users\Model\User\Assignment\Locations',
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Location\Map',
+			'details_pk' => ['um_usrasslcnmap_country_code', 'um_usrasslcnmap_province_code', 'um_usrasslcnmap_location_id'],
+			'order' => 35006,
 		],
 		'notifications_container' => [
 			'type' => 'details',
@@ -161,9 +209,15 @@ class Users extends \Object\Form\Wrapper\Base {
 				'notifications' => ['container' => 'notifications_container', 'order' => 100],
 			],
 			'assignments' => [
-				'assignments' => ['container' => 'assignments_container', 'order' => 100],
+				'user_separator' => ['container' => 'user_separator_container', 'order' => 100],
+				'assignments' => ['container' => 'assignments_container', 'order' => 150],
 				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 200],
-				'territories' => ['container' => 'territories_container', 'order' => 300],
+				'postal_codes_separator' => ['container' => 'postal_codes_separator_container', 'order' => 300],
+				'postal_codes' => ['container' => 'postal_codes_assignments_container', 'order' => 400],
+				'territories_separator' => ['container' => 'territories_separator_container', 'order' => 500],
+				'territories' => ['container' => 'territories_assignments_container', 'order' => 600],
+				'location_separator' => ['container' => 'location_separator_container', 'order' => 700],
+				'locations' => ['container' => 'locations_assignments_container', 'order' => 800],
 			]
 		],
 		'tabs2' => [
@@ -300,9 +354,6 @@ class Users extends \Object\Form\Wrapper\Base {
 			]
 		],
 		'assignments_reverse_container' => [
-			'separator_2' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Other Assignments', 'icon' => 'fas fa-cogs', 'percent' => 100],
-			],
 			'row1' => [
 				'um_usrassign_assignment_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'type_code', 'readonly' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
 				'um_usrassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'readonly' => true, 'percent' => 5],
@@ -312,14 +363,76 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrassign_parent_user_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'User(s)', 'domain' => 'user_id', 'multiple_column' => 'um_usrassign_parent_user_id', 'percent' => 100, 'method' => 'multiselect', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive', 'options_depends' => ['selected_roles' => 'um_usrassign_parent_role_id'], 'options_params' => ['skip_acl' => true]]
 			],
 			self::HIDDEN => [
-				'um_usrassign_parent_role_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Role #', 'domain' => 'role_id'],
-				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id'],
+				'um_usrassign_parent_role_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Parent Role #', 'domain' => 'role_id', 'method' => 'hidden'],
+				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id', 'method' => 'hidden'],
 			]
 		],
-		'territories_container' => [
-			'separator_2' => [
+		'user_separator_container' => [
+			'separator' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'User Assignments', 'icon' => 'fas fa-users', 'percent' => 100],
+			],
+		],
+		'postal_codes_separator_container' => [
+			'separator' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Service / Postal Codes Assignments', 'icon' => 'far fa-compass', 'percent' => 100],
+			],
+		],
+		'postal_codes_assignments_container' => [
+			'row1' => [
+				'um_usrasspostal_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 30, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrasspostal_brand_id' => ['order' => 2, 'order_for_defaults' => 31100, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'required' => true, 'percent' => 30, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrasspostal_postal_codes' => ['order' => 3, 'label_name' => 'Postal Codes', 'domain' => 'postal_codes', 'null' => true, 'required' => true, 'percent' => 35, 'method' => 'textarea'],
+				'um_usrasspostal_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_usrasspostal_organization_id' => ['order' =>1, 'row_order' => 200, 'order_for_defaults' => 32000,'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
+			]
+		],
+		'territories_assignments_container' => [
+			'row1' => [
+				'um_usrassterr_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrassterr_brand_id' => ['order' => 2, 'order_for_defaults' => 31100, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrassterr_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_usrassterr_organization_id' => ['order' =>1, 'row_order' => 200, 'order_for_defaults' => 32000,'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
+			]
+		],
+		'territories_separator_container' => [
+			'separator' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Service / Territory Assignments', 'icon' => 'far fa-square', 'percent' => 100],
 			],
+		],
+		'territories_assignments_container_map' => [
+			'row1' => [
+				'um_usrasstrrmap_territory_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Territory', 'domain' => 'territory_id', 'null' => true, 'required' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'searchable' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Location\Territories::optionsGroupped', 'onchange' => 'this.form.submit();'],
+				'um_usrasstrrmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean']
+			]
+		],
+		'location_separator_container' => [
+			'separator' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Service / Locations Assignments', 'icon' => 'fas fa-coffee', 'percent' => 100],
+			],
+		],
+		'locations_assignments_container' => [
+			'row1' => [
+				'um_usrassloc_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrassloc_brand_id' => ['order' => 2, 'order_for_defaults' => 31100, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrassloc_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_usrassloc_organization_id' => ['order' =>1, 'row_order' => 200, 'order_for_defaults' => 32000,'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
+			]
+		],
+		'locations_assignments_container_map' => [
+			'row1' => [
+				'um_usrasslcnmap_country_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Country', 'domain' => 'country_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrasslcnmap_province_code' => ['order' => 2, 'label_name' => 'Province', 'domain' => 'province_code', 'null' => true, 'required' => true, 'percent' => 45, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'um_usrasslcnmap_country_code'], 'onchange' => 'this.form.submit();'],
+				'um_usrasslcnmap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'um_usrasslcnmap_location_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Location', 'domain' => 'location_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Locations::optionsActive', 'options_depends' => ['on_location_country_code' => 'um_usrasslcnmap_country_code', 'on_location_province_code' => 'um_usrasslcnmap_province_code']],
+			]
 		],
 		'notifications_container' => [
 			'row1' => [
@@ -391,16 +504,50 @@ class Users extends \Object\Form\Wrapper\Base {
 				'map' => ['um_user_tenant_id' => 'um_usri18n_tenant_id', 'um_user_id' => 'um_usri18n_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Assignments' => [
-				'name' => 'Assignments',
+				'name' => 'User Assignments',
 				'pk' => ['um_usrassign_tenant_id', 'um_usrassign_assignment_code', 'um_usrassign_parent_user_id', 'um_usrassign_child_user_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_parent_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Assignment\Reverse' => [
-				'name' => 'Assignments (Other)',
+				'name' => 'User Assignments (Reverse)',
 				'pk' => ['um_usrassign_tenant_id', 'um_usrassign_assignment_code', 'um_usrassign_parent_user_id', 'um_usrassign_child_user_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_child_user_id']
+			],
+			'\Numbers\Users\Users\Model\User\Assignment\PostalCodes' => [
+				'name' => 'Postal Code Assignments',
+				'pk' => ['um_usrasspostal_tenant_id', 'um_usrasspostal_user_id', 'um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrasspostal_tenant_id', 'um_user_id' => 'um_usrasspostal_user_id']
+			],
+			'\Numbers\Users\Users\Model\User\Assignment\Territories' => [
+				'name' => 'Territories Assignments',
+				'pk' => ['um_usrassterr_tenant_id', 'um_usrassterr_user_id', 'um_usrassterr_organization_id', 'um_usrassterr_service_id', 'um_usrassterr_brand_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrassterr_tenant_id', 'um_user_id' => 'um_usrassterr_user_id'],
+				'details' => [
+					'\Numbers\Users\Users\Model\User\Assignment\Territory\Map' => [
+						'name' => 'Territory Map Assignments',
+						'pk' => ['um_usrasstrrmap_tenant_id', 'um_usrasstrrmap_user_id', 'um_usrasstrrmap_organization_id', 'um_usrasstrrmap_service_id', 'um_usrasstrrmap_brand_id', 'um_usrasstrrmap_territory_id'],
+						'type' => '1M',
+						'map' => ['um_usrassterr_tenant_id' => 'um_usrasstrrmap_tenant_id', 'um_usrassterr_user_id' => 'um_usrasstrrmap_user_id', 'um_usrassterr_organization_id' => 'um_usrasstrrmap_organization_id', 'um_usrassterr_service_id' => 'um_usrasstrrmap_service_id', 'um_usrassterr_brand_id' => 'um_usrasstrrmap_brand_id'],
+					]
+				]
+			],
+			'\Numbers\Users\Users\Model\User\Assignment\Locations' => [
+				'name' => 'Locations Assignments',
+				'pk' => ['um_usrassloc_tenant_id', 'um_usrassloc_user_id', 'um_usrassloc_organization_id', 'um_usrassloc_service_id', 'um_usrassloc_brand_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrassloc_tenant_id', 'um_user_id' => 'um_usrassloc_user_id'],
+				'details' => [
+					'\Numbers\Users\Users\Model\User\Assignment\Location\Map' => [
+						'name' => 'Location Map Assignments',
+						'pk' => ['um_usrasslcnmap_tenant_id', 'um_usrasslcnmap_user_id', 'um_usrasslcnmap_organization_id', 'um_usrasslcnmap_service_id', 'um_usrasslcnmap_brand_id', 'um_usrasslcnmap_country_code', 'um_usrasslcnmap_province_code', 'um_usrasslcnmap_location_id'],
+						'type' => '1M',
+						'map' => ['um_usrassloc_tenant_id' => 'um_usrasslcnmap_tenant_id', 'um_usrassloc_user_id' => 'um_usrasslcnmap_user_id', 'um_usrassloc_organization_id' => 'um_usrasslcnmap_organization_id', 'um_usrassloc_service_id' => 'um_usrasslcnmap_service_id', 'um_usrassloc_brand_id' => 'um_usrasslcnmap_brand_id'],
+					]
+				]
 			],
 			'\Numbers\Users\Users\Model\User\Notifications' => [
 				'name' => 'Notifications',
@@ -452,27 +599,12 @@ class Users extends \Object\Form\Wrapper\Base {
 			}
 		}
 		// primary organizations
-		$primary_found = 0;
-		$primary_first_line = null;
-		$primary_organization_id = null;
-		foreach ($form->values['\Numbers\Users\Users\Model\User\Organizations'] as $k => $v) {
-			if (!isset($primary_first_line)) {
-				$primary_first_line = "\Numbers\Users\Users\Model\User\Organizations[{$k}][um_usrorg_primary]";
-			}
-			if (!empty($v['um_usrorg_primary'])) {
-				$primary_organization_id = $v['um_usrorg_organization_id'];
-				$primary_found++;
-				if (!empty($v['um_usrorg_inactive'])) {
-					$form->error(DANGER, 'Primary cannot be inactive!', "\Numbers\Users\Users\Model\User\Organizations[{$k}][um_usrorg_inactive]");
-				}
-				if ($primary_found > 1) {
-					$form->error(DANGER, 'There can be only one primary organization!', "\Numbers\Users\Users\Model\User\Organizations[{$k}][um_usrorg_primary]");
-				}
-			}
-		}
-		if ($primary_found == 0) {
-			$form->error(DANGER, 'You must select primary organization!', $primary_first_line);
-		}
+		$primary_organization_id = $form->validateDetailsPrimaryColumn(
+			'\Numbers\Users\Users\Model\User\Organizations',
+			'um_usrorg_primary',
+			'um_usrorg_inactive',
+			'um_usrorg_organization_id'
+		);
 		// password
 		if (!empty($form->values['um_user_login_password_new'])) {
 			// see if we can change password for this role
@@ -489,6 +621,16 @@ class Users extends \Object\Form\Wrapper\Base {
 			$key = "\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse[$k][um_usrassign_parent_user_id]";
 			if (!empty($v['um_usrassign_mandatory']) && empty($v['um_usrassign_parent_user_id'])) {
 				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, $key);
+			}
+		}
+		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Territories'] as $k => $v) {
+			if (empty($v['\Numbers\Users\Users\Model\User\Assignment\Territory\Map'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, "\Numbers\Users\Users\Model\User\Assignment\Territories[$k][\Numbers\Users\Users\Model\User\Assignment\Territory\Map][1][um_usrasstrrmap_territory_id]");
+			}
+		}
+		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Locations'] as $k => $v) {
+			if (empty($v['\Numbers\Users\Users\Model\User\Assignment\Location\Map'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, "\Numbers\Users\Users\Model\User\Assignment\Locations[$k][\Numbers\Users\Users\Model\User\Assignment\Location\Map][1][um_usrasslcnmap_country_code]");
 			}
 		}
 		// photo
@@ -529,6 +671,9 @@ class Users extends \Object\Form\Wrapper\Base {
 	public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where) {
 		if ($field_name == 'um_usrrol_role_id') {
 			$where['selected_organizations'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['unique' => true]);
+		}
+		if (in_array($field_name, ['um_usrasspostal_service_id', 'um_usrassterr_service_id', 'um_usrassloc_service_id'])) {
+			$where['on_service_organization_id'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['unique' => true]);
 		}
 	}
 
@@ -620,6 +765,33 @@ class Users extends \Object\Form\Wrapper\Base {
 					'um_usrassign_parent_role_id' => $v['um_usrassign_parent_role_id'],
 					'um_usrassign_child_role_id' => $v['um_usrassign_child_role_id'],
 				];
+			}
+		}
+	}
+
+	public function processDefaultValue(& $form, $key, $default, & $value, & $neighbouring_values, $changed_field = [], $options = []) {
+		if ($key == 'um_usrasspostal_organization_id') {
+			if (!empty($neighbouring_values['um_usrasspostal_service_id'])) {
+				$data = \Numbers\Users\Organizations\Model\Services::loadById($neighbouring_values['um_usrasspostal_service_id']);
+				$value = $neighbouring_values['um_usrasspostal_organization_id'] = $data['on_service_organization_id'];
+			} else {
+				$value = $neighbouring_values['um_usrasspostal_organization_id'] = null;
+			}
+		}
+		if ($key == 'um_usrassterr_organization_id') {
+			if (!empty($neighbouring_values['um_usrassterr_service_id'])) {
+				$data = \Numbers\Users\Organizations\Model\Services::loadById($neighbouring_values['um_usrassterr_service_id']);
+				$value = $neighbouring_values['um_usrassterr_organization_id'] = $data['on_service_organization_id'];
+			} else {
+				$value = $neighbouring_values['um_usrassterr_organization_id'] = null;
+			}
+		}
+		if ($key == 'um_usrassloc_organization_id') {
+			if (!empty($neighbouring_values['um_usrassloc_service_id'])) {
+				$data = \Numbers\Users\Organizations\Model\Services::loadById($neighbouring_values['um_usrassloc_service_id']);
+				$value = $neighbouring_values['um_usrassloc_organization_id'] = $data['on_service_organization_id'];
+			} else {
+				$value = $neighbouring_values['um_usrassloc_organization_id'] = null;
 			}
 		}
 	}

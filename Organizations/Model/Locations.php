@@ -100,8 +100,14 @@ class Locations extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'on_location_name' => 'name',
+		'on_location_logo_file_id' => 'photo_id',
+		'on_location_inactive' => 'inactive'
+	];
+	public $options_active = [
+		'on_location_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];

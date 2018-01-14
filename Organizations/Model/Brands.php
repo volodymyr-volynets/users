@@ -38,8 +38,13 @@ class Brands extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'on_brand_name' => 'name',
+		'on_brand_logo_file_id' => 'photo_id'
+	];
+	public $options_active = [
+		'on_brand_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];

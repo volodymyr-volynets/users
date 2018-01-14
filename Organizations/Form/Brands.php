@@ -119,28 +119,12 @@ class Brands extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
-		// primary organizations
-		$primary_found = 0;
-		$primary_first_line = null;
-		$primary_organization_id = null;
-		foreach ($form->values['\Numbers\Users\Organizations\Model\Brand\Organizations'] as $k => $v) {
-			if (!isset($primary_first_line)) {
-				$primary_first_line = "\Numbers\Users\Organizations\Model\Brand\Organizations[{$k}][on_brndorg_primary]";
-			}
-			if (!empty($v['on_brndorg_primary'])) {
-				$primary_organization_id = $v['on_brndorg_organization_id'];
-				$primary_found++;
-				if (!empty($v['on_brndorg_inactive'])) {
-					$form->error(DANGER, 'Primary cannot be inactive!', "\Numbers\Users\Organizations\Model\Brand\Organizations[{$k}][on_brndorg_inactive]");
-				}
-				if ($primary_found > 1) {
-					$form->error(DANGER, 'There can be only one primary organization!', "\Numbers\Users\Organizations\Model\Brand\Organizations[{$k}][on_brndorg_primary]");
-				}
-			}
-		}
-		if ($primary_found == 0) {
-			$form->error(DANGER, 'You must select primary organization!', $primary_first_line);
-		}
+		$primary_organization_id = $form->validateDetailsPrimaryColumn(
+			'\Numbers\Users\Organizations\Model\Brand\Organizations',
+			'on_brndorg_primary',
+			'on_brndorg_inactive',
+			'on_brndorg_organization_id'
+		);
 		// logo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
 			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];

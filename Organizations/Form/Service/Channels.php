@@ -44,7 +44,7 @@ class Channels extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
-		'name' => 'Markets',
+		'name' => 'Channels',
 		'model' => '\Numbers\Users\Organizations\Model\Service\Channels'
 	];
 }
