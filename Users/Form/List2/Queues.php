@@ -1,15 +1,14 @@
 <?php
 
-namespace Numbers\Users\Organizations\Form\List2\Service;
-class Categories extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'on_service_categories_list';
-	public $module_code = 'ON';
-	public $title = 'O/N Service Categories Form';
+namespace Numbers\Users\Users\Form\List2;
+class Queues extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'um_queues_list';
+	public $module_code = 'UM';
+	public $title = 'U/M Queues List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
 			'refresh' => true,
-			'new' => true,
 			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
 		]
 	];
@@ -35,14 +34,16 @@ class Categories extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			'on_servcategory_id' => [
-				'on_servcategory_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Category #', 'domain' => 'category_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_servcategory_id;>='],
-				'on_servcategory_id2' => ['order' => 2, 'label_name' => 'Category #', 'domain' => 'category_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_servcategory_id;<='],
-				'on_servcategory_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_servcategory_inactive;=']
+			'um_queue_id' => [
+				'um_queue_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Queue #', 'domain' => 'queue_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_queue_id;>='],
+				'um_queue_id2' => ['order' => 2, 'label_name' => 'Queue #', 'domain' => 'queue_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_queue_id;<='],
+				'um_queue_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_queue_inactive;=']
 			],
+			/*
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_servcategory_name', 'a.on_servcategory_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_usrgrp_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
+			*/
 		],
 		'sort' => [
 			'__sort' => [
@@ -53,25 +54,25 @@ class Categories extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'on_servcategory_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Category #', 'domain' => 'category_id', 'percent' => 10, 'url_edit' => true],
-				'on_servcategory_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
-				'on_servcategory_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 25],
-				'on_servcategory_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+				'um_queue_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Queue #', 'domain' => 'queue_id', 'percent' => 10, 'url_edit' => true],
+				'um_queue_type_id' => ['order' => 2, 'label_name' => 'Queue Type #', 'domain' => 'type_id', 'percent' => 20, 'options_model' => '\Numbers\Users\Organizations\Model\Queue\Types'],
+				'um_queue_hash' => ['order' => 3, 'name' => 'Hash', 'domain' => 'code', 'percent' => 30],
+				'um_queue_user_id' => ['name' => 'User #', 'domain' => 'user_id', 'percent' => 35, 'options_model' => '\Numbers\Users\Users\Model\Users'],
+				'um_queue_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Organizations\Model\Service\Categories';
+	public $query_primary_model = '\Numbers\Users\Users\Model\Queues';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'on_servcategory_id' => SORT_ASC
+			'um_queue_id' => SORT_ASC
 		]
 	];
 	const LIST_SORT_OPTIONS = [
-		'on_servcategory_id' => ['name' => 'Category #'],
-		'on_servcategory_code' => ['name' => 'Code'],
-		'on_servcategory_name' => ['name' => 'Name']
+		'um_queue_id' => ['name' => 'Group #'],
+		'um_queue_hash' => ['name' => 'Hash']
 	];
 }

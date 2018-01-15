@@ -22,12 +22,14 @@ class Services extends \Object\Table {
 		'on_service_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		'on_service_assignment_type_id' => ['name' => 'Assignment Type #', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Assignment\Types'],
 		'on_service_type_id' => ['name' => 'Type #', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Types'],
-		'on_service_category_id' => ['name' => 'Category #', 'domain' => 'group_id'],
+		'on_service_category_id' => ['name' => 'Category #', 'domain' => 'category_id'],
+		'on_service_queue_type_id' => ['name' => 'Queue Type #', 'domain' => 'type_id'],
 		'on_service_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'on_services_pk' => ['type' => 'pk', 'columns' => ['on_service_tenant_id', 'on_service_id']],
 		'on_service_code_un' => ['type' => 'unique', 'columns' => ['on_service_tenant_id', 'on_service_code']],
+		'on_service_assignment_type_id_un' => ['type' => 'unique', 'columns' => ['on_service_tenant_id', 'on_service_id', 'on_service_assignment_type_id']],
 		'on_service_organization_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['on_service_tenant_id', 'on_service_organization_id'],
@@ -40,6 +42,12 @@ class Services extends \Object\Table {
 			'foreign_model' => '\Numbers\Users\Organizations\Model\Service\Categories',
 			'foreign_columns' => ['on_servcategory_tenant_id', 'on_servcategory_id']
 		],
+		'on_service_queue_type_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['on_service_tenant_id', 'on_service_queue_type_id'],
+			'foreign_model' => '\Numbers\Users\Organizations\Model\Queue\Types',
+			'foreign_columns' => ['on_quetype_tenant_id', 'on_quetype_id']
+		]
 	];
 	public $indexes = [
 		'on_services_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['on_service_code', 'on_service_name']],

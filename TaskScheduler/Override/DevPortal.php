@@ -8,7 +8,7 @@ class DevPortal {
 				'Task Scheduler' => [
 					'url' => '/Numbers/Users/TaskScheduler/Controller/External/CronDaemon',
 					'name' => 'Task Scheduler',
-					'icon' => 'sun-o'
+					'icon' => 'far fa-sun'
 				]
 			]
 		]

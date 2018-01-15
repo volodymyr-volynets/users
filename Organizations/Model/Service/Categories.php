@@ -14,7 +14,7 @@ class Categories extends \Object\Table {
 	public $column_prefix = 'on_servcategory_';
 	public $columns = [
 		'on_servcategory_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'on_servcategory_id' => ['name' => 'Category #', 'domain' => 'group_id_sequence'],
+		'on_servcategory_id' => ['name' => 'Category #', 'domain' => 'category_id_sequence'],
 		'on_servcategory_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_servcategory_name' => ['name' => 'Name', 'domain' => 'name'],
 		'on_servcategory_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],

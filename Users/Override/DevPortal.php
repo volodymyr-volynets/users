@@ -8,7 +8,7 @@ class DevPortal {
 				'Tenant Registration' => [
 					'url' => '/Numbers/Users/Users/Controller/Registration/Tenant',
 					'name' => 'Tenant Registration',
-					'icon' => 'pencil-square-o'
+					'icon' => 'fas fa-pencil-alt'
 				]
 			]
 		]

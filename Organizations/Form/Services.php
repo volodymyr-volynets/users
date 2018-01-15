@@ -65,11 +65,12 @@ class Services extends \Object\Form\Wrapper\Base {
 				'on_service_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
 			],
 			'on_service_category_id' => [
-				'on_service_category_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Category', 'domain' => 'group_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Categories::optionsActive', 'options_depends' => ['on_servcategory_organization_id' => 'on_service_organization_id']],
+				'on_service_category_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Category', 'domain' => 'category_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Categories::optionsActive', 'options_depends' => ['on_servcategory_organization_id' => 'on_service_organization_id']],
 				'on_service_icon' => ['order' => 2, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
 			],
 			'on_service_type_id' => [
 				'on_service_type_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Types'],
+				'on_service_queue_type_id' => ['order' => 2, 'label_name' => 'Queue Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Queue\Types'],
 			]
 		],
 		'channel_container' => [
