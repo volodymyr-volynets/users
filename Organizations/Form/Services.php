@@ -71,6 +71,9 @@ class Services extends \Object\Form\Wrapper\Base {
 			'on_service_type_id' => [
 				'on_service_type_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Types'],
 				'on_service_queue_type_id' => ['order' => 2, 'label_name' => 'Queue Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Queue\Types'],
+			],
+			'on_service_workflow_id' => [
+				'on_service_workflow_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Workflow', 'domain' => 'workflow_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows::optionsActive', 'options_params' => ['on_workflow_versioned' => 1, 'on_workflow_type_id' => 10]],
 			]
 		],
 		'channel_container' => [
@@ -95,8 +98,4 @@ class Services extends \Object\Form\Wrapper\Base {
 			],
 		]
 	];
-
-	public function validate(& $form) {
-
-	}
 }

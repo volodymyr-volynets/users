@@ -1,10 +1,10 @@
 <?php
 
-namespace Numbers\Users\Workflow\Form;
+namespace Numbers\Users\Organizations\Form\Service;
 class Workflows extends \Object\Form\Wrapper\Base {
-	public $form_link = 'ww_workflows';
-	public $module_code = 'WW';
-	public $title = 'W/W Workflows Form';
+	public $form_link = 'on_workflows';
+	public $module_code = 'ON';
+	public $title = 'O/N Workflows Form';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [
@@ -26,9 +26,9 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'type' => 'details',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
-			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Steps',
-			'details_pk' => ['ww_wrkflwstep_id'],
-			'details_autoincrement' => ['ww_wrkflwstep_id'],
+			'details_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Steps',
+			'details_pk' => ['on_workstep_id'],
+			'details_autoincrement' => ['on_workstep_id'],
 			'required' => true,
 			'order' => 34000
 		],
@@ -39,7 +39,6 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas',
 			'details_pk' => ['ww_wrkflwcanvas_id'],
 			'details_autoincrement' => ['ww_wrkflwcanvas_id'],
-			'required' => true,
 			'order' => 35000
 		],
 		'canvas_lines_container' => [
@@ -71,17 +70,17 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'type' => 'subdetails',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
-			'details_parent_key' => '\Numbers\Users\Workflow\Model\Workflow\Steps',
-			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Step\Next',
-			'details_pk' => ['ww_wrkflwstepnext_next_step_id'],
+			'details_parent_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Steps',
+			'details_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Next',
+			'details_pk' => ['on_workstpnext_next_step_id'],
 			'order' => 35003
 		],
 	];
 
 	public $rows = [
 		'top' => [
-			'ww_workflow_id' => ['order' => 100],
-			'ww_workflow_name' => ['order' => 200],
+			'on_workflow_id' => ['order' => 100],
+			'on_workflow_name' => ['order' => 200],
 		],
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
@@ -92,16 +91,16 @@ class Workflows extends \Object\Form\Wrapper\Base {
 	];
 	public $elements = [
 		'top' => [
-			'ww_workflow_id' => [
-				'ww_workflow_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Workflow #', 'domain' => 'workflow_id_sequence', 'percent' => 50, 'required' => false, 'navigation' => true],
-				'ww_workflow_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 45, 'required' => true, 'navigation' => true],
-				'ww_workflow_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			'on_workflow_id' => [
+				'on_workflow_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Workflow #', 'domain' => 'workflow_id_sequence', 'percent' => 50, 'required' => false, 'navigation' => true],
+				'on_workflow_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 45, 'required' => true, 'navigation' => true],
+				'on_workflow_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
-			'ww_workflow_name' => [
-				'ww_workflow_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
+			'on_workflow_name' => [
+				'on_workflow_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
 			],
 			self::HIDDEN => [
-				'ww_workflow_versioned' => ['label_name' => 'Versioned', 'type' => 'boolean', 'method' => 'hidden'],
+				'on_workflow_versioned' => ['label_name' => 'Versioned', 'type' => 'boolean', 'method' => 'hidden'],
 			]
 		],
 		'tabs' => [
@@ -120,29 +119,35 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			]
 		],
 		'general_container' => [
-			'ww_workflow_icon' => [
-				'ww_workflow_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
+			'on_workflow_type_id' => [
+				'on_workflow_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Types', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+				'on_workflow_parent_workflow_id' => ['order' => 2, 'label_name' => 'Parent Workflow', 'domain' => 'workflow_id', 'null' => true, 'required' => 'c', 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows::optionsActive', 'options_params' => ['on_workflow_versioned' => 0, 'on_workflow_type_id' => 10]],
+				'on_workflow_use_global_fields' => ['order' => 3, 'label_name' => 'Global Fields', 'type' => 'boolean', 'percent' => 25]
+			],
+			'on_workflow_icon' => [
+				'on_workflow_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
 			],
 		],
 		'steps_container' => [
 			'row1' => [
-				'ww_wrkflwstep_order' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Order', 'domain' => 'order', 'null' => true, 'required' => true, 'percent' => 15],
-				'ww_wrkflwstep_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 55, 'null' => true, 'required' => true],
-				'ww_wrkflwstep_type_id' => ['order' => 3, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Step\Types', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
-				'ww_wrkflwstep_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+				'on_workstep_order' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Order', 'domain' => 'order', 'null' => true, 'required' => true, 'percent' => 15],
+				'on_workstep_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 55, 'null' => true, 'required' => true],
+				'on_workstep_code' => ['order' => 3, 'label_name' => 'Status Code', 'domain' => 'group_code', 'percent' => 25, 'null' => true, 'required' => true],
+				'on_workstep_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
 			'row2' => [
-				'ww_wrkflwstep_page_resource_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Page Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'ww_wrkflwstep_page_module_id', 'resource_id' => 'ww_wrkflwstep_page_resource_id']],
+				'on_workstep_type_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Types', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+				'on_workstep_subtype_id' => ['order' => 2, 'label_name' => 'Sub Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 25, 'placeholder' => 'Subtype', 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\SubTypes', 'onchange' => 'this.form.submit();'],
+				'on_workstep_subflow_workflow_id' => ['order' => 3, 'label_name' => 'Subflow', 'domain' => 'workflow_id', 'null' => true, 'required' => 'c', 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows::optionsActive', 'options_params' => ['on_workflow_versioned' => 0, 'on_workflow_type_id' => 20, 'on_workflow_parent_workflow_id' => 'parent::on_workflow_id']],
 			],
 			self::HIDDEN => [
-				'ww_wrkflwstep_id' => ['label_name' => 'Step #', 'domain' => 'workflow_id', 'null' => true, 'method' => 'hidden'],
-				'ww_wrkflwstep_page_module_id' => ['label_name' => 'Page Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+				'on_workstep_id' => ['label_name' => 'Step #', 'domain' => 'step_id', 'null' => true, 'method' => 'hidden'],
 			]
 		],
 		'canvas_global_container' => [
-			'ww_workflow_canvas_width' => [
-				'ww_workflow_canvas_width' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Canvas Width', 'domain' => 'dimension', 'required' => true, 'percent' => 50],
-				'ww_workflow_canvas_height' => ['order' => 2, 'label_name' => 'Canvas Height', 'domain' => 'dimension', 'required' => true, 'percent' => 50],
+			'on_workflow_canvas_width' => [
+				'on_workflow_canvas_width' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Canvas Width', 'domain' => 'dimension', 'percent' => 50],
+				'on_workflow_canvas_height' => ['order' => 2, 'label_name' => 'Canvas Height', 'domain' => 'dimension', 'percent' => 50],
 			]
 		],
 		'canvas_local_container' => [
@@ -159,7 +164,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'ww_wrkflwcanvas_y2' => ['order' => 4, 'label_name' => 'Y2 (Height)', 'domain' => 'dimension', 'required' => false, 'percent' => 25],
 			],
 			'row3' => [
-				'ww_wrkflwcanvas_step_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Step', 'domain' => 'workflow_id', 'null' => true, 'percent' =>50, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Steps::optionsActive', 'options_depends' => ['ww_wrkflwstep_workflow_id' => 'parent::ww_workflow_id']],
+				'ww_wrkflwcanvas_step_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Step', 'domain' => 'workflow_id', 'null' => true, 'percent' =>50, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Steps::optionsActive', 'options_depends' => ['on_workstep_workflow_id' => 'parent::on_workflow_id']],
 			],
 			self::HIDDEN => [
 				'ww_wrkflwcanvas_id' => ['label_name' => 'Canvas #', 'domain' => 'workflow_id', 'null' => true, 'method' => 'hidden'],
@@ -187,8 +192,11 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		],
 		'next_steps_container' => [
 			'row1' => [
-				'ww_wrkflwstepnext_next_step_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Step', 'domain' => 'workflow_id', 'null' => true, 'percent' =>95, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Steps::optionsActive', 'options_depends' => ['ww_wrkflwstep_workflow_id' => 'parent::ww_workflow_id']],
-				'ww_wrkflwstepnext_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+				'on_workstpnext_next_step_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Step', 'domain' => 'step_id', 'null' => true, 'required' => true, 'percent' =>95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Steps::optionsActive', 'options_depends' => ['on_workstep_workflow_id' => 'parent::on_workflow_id'], 'onchange' => 'this.form.submit();'],
+				'on_workstpnext_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+			],
+			'row2' => [
+				'on_workstpnext_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'required' => true],
 			]
 		],
 		'buttons' => [
@@ -197,13 +205,14 @@ class Workflows extends \Object\Form\Wrapper\Base {
 	];
 	public $collection = [
 		'name' => 'Workflows',
-		'model' => '\Numbers\Users\Workflow\Model\Workflows',
+		'model' => '\Numbers\Users\Organizations\Model\Service\Workflows',
 		'details' => [
+			/*
 			'\Numbers\Users\Workflow\Model\Workflow\Canvas' => [
 				'name' => 'Canvas',
 				'pk' => ['ww_wrkflwcanvas_tenant_id', 'ww_wrkflwcanvas_workflow_id', 'ww_wrkflwcanvas_id'],
 				'type' => '1M',
-				'map' => ['ww_workflow_tenant_id' => 'ww_wrkflwcanvas_tenant_id', 'ww_workflow_id' => 'ww_wrkflwcanvas_workflow_id'],
+				'map' => ['on_workflow_tenant_id' => 'ww_wrkflwcanvas_tenant_id', 'on_workflow_id' => 'ww_wrkflwcanvas_workflow_id'],
 				'details' => [
 					'\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines' => [
 						'name' => 'Line Settings',
@@ -219,17 +228,18 @@ class Workflows extends \Object\Form\Wrapper\Base {
 					]
 				]
 			],
-			'\Numbers\Users\Workflow\Model\Workflow\Steps' => [
+			*/
+			'\Numbers\Users\Organizations\Model\Service\Workflow\Steps' => [
 				'name' => 'Steps',
-				'pk' => ['ww_wrkflwstep_tenant_id', 'ww_wrkflwstep_workflow_id', 'ww_wrkflwstep_id'],
+				'pk' => ['on_workstep_tenant_id', 'on_workstep_workflow_id', 'on_workstep_id'],
 				'type' => '1M',
-				'map' => ['ww_workflow_tenant_id' => 'ww_wrkflwstep_tenant_id', 'ww_workflow_id' => 'ww_wrkflwstep_workflow_id'],
+				'map' => ['on_workflow_tenant_id' => 'on_workstep_tenant_id', 'on_workflow_id' => 'on_workstep_workflow_id'],
 				'details' => [
-					'\Numbers\Users\Workflow\Model\Workflow\Step\Next' => [
+					'\Numbers\Users\Organizations\Model\Service\Workflow\Step\Next' => [
 						'name' => 'Next Steps',
-						'pk' => ['ww_wrkflwstepnext_tenant_id', 'ww_wrkflwstepnext_workflow_id', 'ww_wrkflwstepnext_step_id', 'ww_wrkflwstepnext_next_step_id'],
+						'pk' => ['on_workstpnext_tenant_id', 'on_workstpnext_workflow_id', 'on_workstpnext_step_id', 'on_workstpnext_next_step_id'],
 						'type' => '1M',
-						'map' => ['ww_wrkflwstep_tenant_id' => 'ww_wrkflwstepnext_tenant_id', 'ww_wrkflwstep_workflow_id' => 'ww_wrkflwstepnext_workflow_id', 'ww_wrkflwstep_id' => 'ww_wrkflwstepnext_step_id'],
+						'map' => ['on_workstep_tenant_id' => 'on_workstpnext_tenant_id', 'on_workstep_workflow_id' => 'on_workstpnext_workflow_id', 'on_workstep_id' => 'on_workstpnext_step_id'],
 					]
 				]
 			]
@@ -237,15 +247,26 @@ class Workflows extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
-
+		if ($form->values['on_workflow_type_id'] == 10) {
+			$form->values['on_workflow_use_global_fields'] = 1;
+		}
 	}
 
 	public function refresh(& $form) {
-		if (!empty($form->values['ww_workflow_versioned'])) {
+		if (!empty($form->values['on_workflow_versioned'])) {
 			$form->misc_settings['global']['readonly'] = true;
 		}
 	}
 
+	public function overrideFieldValue(& $form, & $options, & $value, & $neighbouring_values) {
+		if ($options['options']['field_name'] == 'on_workflow_parent_workflow_id') {
+			if ($neighbouring_values['on_workflow_type_id'] != 20) {
+				$options['options']['readonly'] = true;
+			}
+		}
+	}
+
+	/*
 	public function overrideTabs(& $form, & $tab_options, & $tab_name, & $neighbouring_values = []) {
 		if ($tab_name == '\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines') {
 			if ($neighbouring_values['ww_wrkflwcanvas_type_id'] != 2000) {
@@ -258,6 +279,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			}
 		}
 	}
+	*/
 
 	public function previewCanvas(& $form) {
 		$data = [];
@@ -286,14 +308,14 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			];
 		}
 		$result = \Numbers\Users\Workflow\Helper\CanvasRenderer::render($data, [
-			'width' => $form->values['ww_workflow_canvas_width'],
-			'height' => $form->values['ww_workflow_canvas_height'],
+			'width' => $form->values['on_workflow_canvas_width'],
+			'height' => $form->values['on_workflow_canvas_height'],
 			'show_as_completed' => false
 		]);
 		$result.= '<hr/>';
 		$result.= \Numbers\Users\Workflow\Helper\CanvasRenderer::render($data, [
-			'width' => $form->values['ww_workflow_canvas_width'],
-			'height' => $form->values['ww_workflow_canvas_height'],
+			'width' => $form->values['on_workflow_canvas_width'],
+			'height' => $form->values['on_workflow_canvas_height'],
 			'show_as_completed' => true
 		]);
 		return $result;
