@@ -20,7 +20,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		'buttons' => ['default_row_type' => 'grid', 'order' => 900],
 		// child containers
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
-		'canvas_preview_container' => ['default_row_type' => 'grid', 'order' => 32000, 'custom_renderer' => '\Numbers\Users\Workflow\Form\Workflows::previewCanvas'],
+		'canvas_preview_container' => ['default_row_type' => 'grid', 'order' => 32000, 'custom_renderer' => '\Numbers\Users\Organizations\Form\Service\Workflows::previewCanvas'],
 		'canvas_global_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'steps_container' => [
 			'type' => 'details',
@@ -36,9 +36,9 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'type' => 'details',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
-			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas',
-			'details_pk' => ['ww_wrkflwcanvas_id'],
-			'details_autoincrement' => ['ww_wrkflwcanvas_id'],
+			'details_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Canvas',
+			'details_pk' => ['on_workcanvas_id'],
+			'details_autoincrement' => ['on_workcanvas_id'],
 			'order' => 35000
 		],
 		'canvas_lines_container' => [
@@ -46,9 +46,9 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'type' => 'subdetails',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
-			'details_parent_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas',
-			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines',
-			'details_pk' => ['ww_wrkflwcnvsline_canvas_id'],
+			'details_parent_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Canvas',
+			'details_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Lines',
+			'details_pk' => ['on_workcanvline_canvas_id'],
 			'details_11' => true,
 			'details_cannot_delete' => true,
 			'order' => 35001
@@ -58,9 +58,9 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'type' => 'subdetails',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
-			'details_parent_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas',
-			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes',
-			'details_pk' => ['ww_wrkflwcnvsshape_canvas_id'],
+			'details_parent_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Canvas',
+			'details_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes',
+			'details_pk' => ['on_workcanvshape_canvas_id'],
 			'details_11' => true,
 			'details_cannot_delete' => true,
 			'order' => 35002
@@ -152,42 +152,42 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		],
 		'canvas_local_container' => [
 			'row1' => [
-				'ww_wrkflwcanvas_order' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Order', 'domain' => 'order', 'null' => true, 'required' => true, 'percent' => 15],
-				'ww_wrkflwcanvas_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 50, 'null' => true],
-				'ww_wrkflwcanvas_type_id' => ['order' => 3, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 30, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\Types', 'onchange' => 'this.form.submit();'],
-				'ww_wrkflwcanvas_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+				'on_workcanvas_order' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Order', 'domain' => 'order', 'null' => true, 'required' => true, 'percent' => 15],
+				'on_workcanvas_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 50, 'null' => true],
+				'on_workcanvas_type_id' => ['order' => 3, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 30, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\Types', 'onchange' => 'this.form.submit();'],
+				'on_workcanvas_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
 			'row2' => [
-				'ww_wrkflwcanvas_x1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'X1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25],
-				'ww_wrkflwcanvas_y1' => ['order' => 2, 'label_name' => 'Y1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25],
-				'ww_wrkflwcanvas_x2' => ['order' => 3, 'label_name' => 'X2 (Width)', 'domain' => 'dimension', 'required' => false, 'percent' => 25],
-				'ww_wrkflwcanvas_y2' => ['order' => 4, 'label_name' => 'Y2 (Height)', 'domain' => 'dimension', 'required' => false, 'percent' => 25],
+				'on_workcanvas_x1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'X1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25, 'placeholder' => 'X1 (Start)'],
+				'on_workcanvas_y1' => ['order' => 2, 'label_name' => 'Y1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25, 'placeholder' => 'Y1 (Start)'],
+				'on_workcanvas_x2' => ['order' => 3, 'label_name' => 'X2 (Width)', 'domain' => 'dimension', 'required' => false, 'percent' => 25, 'placeholder' => 'X2 (Width)'],
+				'on_workcanvas_y2' => ['order' => 4, 'label_name' => 'Y2 (Height)', 'domain' => 'dimension', 'required' => false, 'percent' => 25, 'placeholder' => 'Y2 (Height)'],
 			],
 			'row3' => [
-				'ww_wrkflwcanvas_step_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Step', 'domain' => 'workflow_id', 'null' => true, 'percent' =>50, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Steps::optionsActive', 'options_depends' => ['on_workstep_workflow_id' => 'parent::on_workflow_id']],
+				'on_workcanvas_step_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Step', 'domain' => 'step_id', 'null' => true, 'percent' =>50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Steps::optionsActive', 'options_depends' => ['on_workstep_workflow_id' => 'parent::on_workflow_id']],
 			],
 			self::HIDDEN => [
-				'ww_wrkflwcanvas_id' => ['label_name' => 'Canvas #', 'domain' => 'workflow_id', 'null' => true, 'method' => 'hidden'],
+				'on_workcanvas_id' => ['label_name' => 'Canvas #', 'domain' => 'canvas_id', 'null' => true, 'method' => 'hidden'],
 			]
 		],
 		'canvas_lines_container' => [
 			'row1' => [
-				'ww_wrkflwcnvsline_line_left_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Left Type', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineTypes'],
-				'ww_wrkflwcnvsline_line_right_type_id' => ['order' => 3, 'label_name' => 'Right Type', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineTypes'],
-				'ww_wrkflwcnvsline_line_style_id' => ['order' => 3, 'label_name' => 'Style', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineStyles'],
-				'ww_wrkflwcnvsline_line_color' => ['order' => 4, 'label_name' => 'Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
+				'on_workcanvline_line_left_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Left Type', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineTypes'],
+				'on_workcanvline_line_right_type_id' => ['order' => 3, 'label_name' => 'Right Type', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineTypes'],
+				'on_workcanvline_line_style_id' => ['order' => 3, 'label_name' => 'Style', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineStyles'],
+				'on_workcanvline_line_color' => ['order' => 4, 'label_name' => 'Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
 			]
 		],
 		'canvas_rectangles_container' => [
 			'row1' => [
-				'ww_wrkflwcnvsshape_shape_border_style_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Border Style', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineStyles'],
-				'ww_wrkflwcnvsshape_shape_border_color' => ['order' => 2, 'label_name' => 'Border Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
-				'ww_wrkflwcnvsshape_shape_fill_color' => ['order' => 3, 'label_name' => 'Fill Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
+				'on_workcanvshape_shape_border_style_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Border Style', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'placeholder' => 'Border Style', 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineStyles'],
+				'on_workcanvshape_shape_border_color' => ['order' => 2, 'label_name' => 'Border Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'method' => 'select', 'placeholder' => 'Border Color', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
+				'on_workcanvshape_shape_fill_color' => ['order' => 3, 'label_name' => 'Fill Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'placeholder' => 'Fill Color', 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
 			],
 			'row2' => [
-				'ww_wrkflwcnvsshape_completed_border_style_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Completed Border Style', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineStyles'],
-				'ww_wrkflwcnvsshape_completed_border_color' => ['order' => 2, 'label_name' => 'Completed Border Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
-				'ww_wrkflwcnvsshape_completed_fill_color' => ['order' => 3, 'label_name' => 'Completed Fill Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
+				'on_workcanvshape_completed_border_style_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Completed Border Style', 'domain' => 'type_id', 'null' => true, 'percent' => 25, 'placeholder' => 'Border Style (Completed)', 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\LineStyles'],
+				'on_workcanvshape_completed_border_color' => ['order' => 2, 'label_name' => 'Completed Border Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'placeholder' => 'Border Color (Completed)', 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
+				'on_workcanvshape_completed_fill_color' => ['order' => 3, 'label_name' => 'Completed Fill Color', 'domain' => 'html_color_code', 'null' => true, 'percent' => 25, 'placeholder' => 'Fill Color (Completed)', 'method' => 'select', 'color_picker' => true, 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Frontend\HTML\Renderers\Common\Colors::optgroups'],
 			]
 		],
 		'next_steps_container' => [
@@ -207,28 +207,26 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		'name' => 'Workflows',
 		'model' => '\Numbers\Users\Organizations\Model\Service\Workflows',
 		'details' => [
-			/*
-			'\Numbers\Users\Workflow\Model\Workflow\Canvas' => [
+			'\Numbers\Users\Organizations\Model\Service\Workflow\Canvas' => [
 				'name' => 'Canvas',
-				'pk' => ['ww_wrkflwcanvas_tenant_id', 'ww_wrkflwcanvas_workflow_id', 'ww_wrkflwcanvas_id'],
+				'pk' => ['on_workcanvas_tenant_id', 'on_workcanvas_workflow_id', 'on_workcanvas_id'],
 				'type' => '1M',
-				'map' => ['on_workflow_tenant_id' => 'ww_wrkflwcanvas_tenant_id', 'on_workflow_id' => 'ww_wrkflwcanvas_workflow_id'],
+				'map' => ['on_workflow_tenant_id' => 'on_workcanvas_tenant_id', 'on_workflow_id' => 'on_workcanvas_workflow_id'],
 				'details' => [
-					'\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines' => [
+					'\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Lines' => [
 						'name' => 'Line Settings',
-						'pk' => ['ww_wrkflwcnvsline_tenant_id', 'ww_wrkflwcnvsline_workflow_id', 'ww_wrkflwcnvsline_canvas_id'],
+						'pk' => ['on_workcanvline_tenant_id', 'on_workcanvline_workflow_id', 'on_workcanvline_canvas_id'],
 						'type' => '11',
-						'map' => ['ww_wrkflwcanvas_tenant_id' => 'ww_wrkflwcnvsline_tenant_id', 'ww_wrkflwcanvas_workflow_id' => 'ww_wrkflwcnvsline_workflow_id', 'ww_wrkflwcanvas_id' => 'ww_wrkflwcnvsline_canvas_id']
+						'map' => ['on_workcanvas_tenant_id' => 'on_workcanvline_tenant_id', 'on_workcanvas_workflow_id' => 'on_workcanvline_workflow_id', 'on_workcanvas_id' => 'on_workcanvline_canvas_id']
 					],
-					'\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes' => [
+					'\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes' => [
 						'name' => 'Shape Settings',
-						'pk' => ['ww_wrkflwcnvsshape_tenant_id', 'ww_wrkflwcnvsshape_workflow_id', 'ww_wrkflwcnvsshape_canvas_id'],
+						'pk' => ['on_workcanvshape_tenant_id', 'on_workcanvshape_workflow_id', 'on_workcanvshape_canvas_id'],
 						'type' => '11',
-						'map' => ['ww_wrkflwcanvas_tenant_id' => 'ww_wrkflwcnvsshape_tenant_id', 'ww_wrkflwcanvas_workflow_id' => 'ww_wrkflwcnvsshape_workflow_id', 'ww_wrkflwcanvas_id' => 'ww_wrkflwcnvsshape_canvas_id']
+						'map' => ['on_workcanvas_tenant_id' => 'on_workcanvshape_tenant_id', 'on_workcanvas_workflow_id' => 'on_workcanvshape_workflow_id', 'on_workcanvas_id' => 'on_workcanvshape_canvas_id']
 					]
 				]
 			],
-			*/
 			'\Numbers\Users\Organizations\Model\Service\Workflow\Steps' => [
 				'name' => 'Steps',
 				'pk' => ['on_workstep_tenant_id', 'on_workstep_workflow_id', 'on_workstep_id'],
@@ -266,45 +264,43 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		}
 	}
 
-	/*
 	public function overrideTabs(& $form, & $tab_options, & $tab_name, & $neighbouring_values = []) {
-		if ($tab_name == '\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines') {
-			if ($neighbouring_values['ww_wrkflwcanvas_type_id'] != 2000) {
+		if ($tab_name == '\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Lines') {
+			if ($neighbouring_values['on_workcanvas_type_id'] != 2000) {
 				return ['hidden' => true];
 			}
 		}
-		if ($tab_name == '\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes') {
-			if (!in_array($neighbouring_values['ww_wrkflwcanvas_type_id'], [1000, 3000, 4000])) {
+		if ($tab_name == '\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes') {
+			if (!in_array($neighbouring_values['on_workcanvas_type_id'], [1000, 3000, 4000])) {
 				return ['hidden' => true];
 			}
 		}
 	}
-	*/
 
 	public function previewCanvas(& $form) {
 		$data = [];
-		foreach ($form->values['\Numbers\Users\Workflow\Model\Workflow\Canvas'] as $k => $v) {
-			if (!empty($v['ww_wrkflwcanvas_inactive'])) continue;
+		foreach ($form->values['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas'] as $k => $v) {
+			if (!empty($v['on_workcanvas_inactive'])) continue;
 			$data[$k] = [
-				'order' => $v['ww_wrkflwcanvas_order'],
-				'type' => $v['ww_wrkflwcanvas_type_id'],
-				'name' => $v['ww_wrkflwcanvas_name'],
-				'x1' => $v['ww_wrkflwcanvas_x1'],
-				'x2' => $v['ww_wrkflwcanvas_x2'],
-				'y1' => $v['ww_wrkflwcanvas_y1'],
-				'y2' => $v['ww_wrkflwcanvas_y2'],
+				'order' => $v['on_workcanvas_order'],
+				'type' => $v['on_workcanvas_type_id'],
+				'name' => $v['on_workcanvas_name'],
+				'x1' => $v['on_workcanvas_x1'],
+				'x2' => $v['on_workcanvas_x2'],
+				'y1' => $v['on_workcanvas_y1'],
+				'y2' => $v['on_workcanvas_y2'],
 				// line attributes
-				'line_left_type' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines']['ww_wrkflwcnvsline_line_left_type_id'] ?? 10,
-				'line_right_type' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines']['ww_wrkflwcnvsline_line_right_type_id'] ?? 10,
-				'line_style' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines']['ww_wrkflwcnvsline_line_style_id'] ?? 10,
-				'line_color' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines']['ww_wrkflwcnvsline_line_color'] ?? '000000',
+				'line_left_type' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Lines']['on_workcanvline_line_left_type_id'] ?? 10,
+				'line_right_type' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Lines']['on_workcanvline_line_right_type_id'] ?? 10,
+				'line_style' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Lines']['on_workcanvline_line_style_id'] ?? 10,
+				'line_color' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Lines']['on_workcanvline_line_color'] ?? '000000',
 				// shape attributes
-				'shape_border_style' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes']['ww_wrkflwcnvsshape_shape_border_style_id'] ?? 10,
-				'shape_border_color' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes']['ww_wrkflwcnvsshape_shape_border_color'] ?? '000000',
-				'shape_fill_color' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes']['ww_wrkflwcnvsshape_shape_fill_color'] ?? 'FFFFFF',
-				'completed_border_style' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes']['ww_wrkflwcnvsshape_completed_border_style_id'] ?? 10,
-				'completed_border_color' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes']['ww_wrkflwcnvsshape_completed_border_color'] ?? '000000',
-				'completed_fill_color' => $v['\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes']['ww_wrkflwcnvsshape_completed_fill_color'] ?? 'FFFFFF',
+				'shape_border_style' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes']['on_workcanvshape_shape_border_style_id'] ?? 10,
+				'shape_border_color' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes']['on_workcanvshape_shape_border_color'] ?? '000000',
+				'shape_fill_color' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes']['on_workcanvshape_shape_fill_color'] ?? 'FFFFFF',
+				'completed_border_style' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes']['on_workcanvshape_completed_border_style_id'] ?? 10,
+				'completed_border_color' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes']['on_workcanvshape_completed_border_color'] ?? '000000',
+				'completed_fill_color' => $v['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes']['on_workcanvshape_completed_fill_color'] ?? 'FFFFFF',
 			];
 		}
 		$result = \Numbers\Users\Workflow\Helper\CanvasRenderer::render($data, [

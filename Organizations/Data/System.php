@@ -1763,7 +1763,7 @@ class System extends \Object\Import {
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
 						[
-							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_feature_code' => 'ON::SERVICES',
 							'sm_rsrcftr_inactive' => 0
 						]
 					],
@@ -1844,7 +1844,7 @@ class System extends \Object\Import {
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
 						[
-							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_feature_code' => 'ON::SERVICES',
 							'sm_rsrcftr_inactive' => 0
 						]
 					],
@@ -1896,20 +1896,19 @@ class System extends \Object\Import {
 						]
 					]
 				],
-				/*
 				[
-					'sm_resource_id' => '::id::\Numbers\Users\Workflow\Controller\CreateVersion',
-					'sm_resource_code' => '\Numbers\Users\Workflow\Controller\CreateVersion',
+					'sm_resource_id' => '::id::\Numbers\Users\Organizations\Controller\Workflow\CreateVersion',
+					'sm_resource_code' => '\Numbers\Users\Organizations\Controller\Workflow\CreateVersion',
 					'sm_resource_type' => 100,
 					'sm_resource_classification' => 'Processing',
-					'sm_resource_name' => 'W/W Create Version',
+					'sm_resource_name' => 'O/N Create Version',
 					'sm_resource_description' => null,
 					'sm_resource_icon' => 'fas fa-link',
 					'sm_resource_module_code' => 'WW',
 					'sm_resource_group1_name' => 'Operations',
-					'sm_resource_group2_name' => 'System Management',
-					'sm_resource_group3_name' => 'Workflow Management',
-					'sm_resource_group4_name' => null,
+					'sm_resource_group2_name' => 'Organization Management',
+					'sm_resource_group3_name' => 'Services',
+					'sm_resource_group4_name' => 'Workflows',
 					'sm_resource_group5_name' => null,
 					'sm_resource_group6_name' => null,
 					'sm_resource_group7_name' => null,
@@ -1926,7 +1925,7 @@ class System extends \Object\Import {
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
 						[
-							'sm_rsrcftr_feature_code' => 'WW::WORKFLOW',
+							'sm_rsrcftr_feature_code' => 'ON::SERVICES',
 							'sm_rsrcftr_inactive' => 0
 						]
 					],
@@ -1938,7 +1937,6 @@ class System extends \Object\Import {
 						]
 					]
 				],
-				*/
 			]
 		],
 		'menu' => [
@@ -2728,6 +2726,33 @@ class System extends \Object\Import {
 					'sm_resource_menu_acl_method_code' => 'Index',
 					'sm_resource_menu_acl_action_id' => '::id::List_View',
 					'sm_resource_menu_url' => '/Numbers/Users/Organizations/Controller/Workflow/Fields',
+					'sm_resource_menu_options_generator' => null,
+					'sm_resource_inactive' => 0
+				],
+				[
+					'sm_resource_id' => '::id::\Menu\Numbers\Users\Organizations\Controller\Workflow\CreateVersion',
+					'sm_resource_code' => '\Menu\Numbers\Users\Organizations\Controller\Workflow\CreateVersion',
+					'sm_resource_type' => 200,
+					'sm_resource_name' => 'Create Version',
+					'sm_resource_description' => null,
+					'sm_resource_icon' => 'fas fa-link',
+					'sm_resource_module_code' => 'ON',
+					'sm_resource_group1_name' => 'Operations',
+					'sm_resource_group2_name' => 'Organization Management',
+					'sm_resource_group3_name' => 'Services',
+					'sm_resource_group4_name' => 'Workflows',
+					'sm_resource_group5_name' => null,
+					'sm_resource_group6_name' => null,
+					'sm_resource_group7_name' => null,
+					'sm_resource_group8_name' => null,
+					'sm_resource_group9_name' => null,
+					'sm_resource_acl_public' => 0,
+					'sm_resource_acl_authorized' => 0,
+					'sm_resource_acl_permission' => 1,
+					'sm_resource_menu_acl_resource_id' => '::id::\Numbers\Users\Organizations\Controller\Workflow\CreateVersion',
+					'sm_resource_menu_acl_method_code' => 'Edit',
+					'sm_resource_menu_acl_action_id' => '::id::Record_View',
+					'sm_resource_menu_url' => '/Numbers/Users/Organizations/Controller/Workflow/CreateVersion/_Edit',
 					'sm_resource_menu_options_generator' => null,
 					'sm_resource_inactive' => 0
 				],

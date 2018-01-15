@@ -10,7 +10,9 @@ class Workflows extends \Object\Table {
 	public $name = 'on_workflows';
 	public $pk = ['on_workflow_tenant_id', 'on_workflow_id'];
 	public $tenant = true;
-	public $orderby;
+	public $orderby = [
+		'on_workflow_id' => SORT_DESC
+	];
 	public $limit;
 	public $column_prefix = 'on_workflow_';
 	public $columns = [
