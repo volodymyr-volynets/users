@@ -65,6 +65,9 @@ class AdCodes extends \Object\Form\Wrapper\Base {
 				'am_adcode_effective_from' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Effective From', 'type' => 'date', 'null' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
 				'am_adcode_effective_to' => ['order' => 2, 'label_name' => 'Effective To', 'type' => 'date', 'null' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
 				'am_adcode_hidden' => ['order' => 3, 'label_name' => 'Hidden', 'type' => 'boolean', 'percent' => 50],
+			],
+			'am_adcode_icon' => [
+				'am_adcode_icon' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options'],
 			]
 		],
 		'all_locations_container' => [

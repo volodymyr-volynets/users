@@ -15,7 +15,7 @@ class Promocodes extends \Object\Table {
 	public $column_prefix = 'am_promocode_';
 	public $columns = [
 		'am_promocode_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'am_promocode_id' => ['name' => 'News #', 'domain' => 'promocode_id_sequence'],
+		'am_promocode_id' => ['name' => 'Promocode #', 'domain' => 'promocode_id_sequence'],
 		'am_promocode_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'am_promocode_name' => ['name' => 'Name', 'domain' => 'name'],
 		'am_promocode_description' => ['name' => 'Description', 'domain' => 'description', 'null' => true],

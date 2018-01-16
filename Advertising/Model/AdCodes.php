@@ -18,6 +18,7 @@ class AdCodes extends \Object\Table {
 		'am_adcode_id' => ['name' => 'Ad Code #', 'domain' => 'adcode_id_sequence'],
 		'am_adcode_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'am_adcode_name' => ['name' => 'Name', 'domain' => 'name'],
+		'am_adcode_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		'am_adcode_category_id' => ['name' => 'Category #', 'domain' => 'group_id'],
 		'am_adcode_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'am_adcode_hidden' => ['name' => 'Hidden', 'type' => 'boolean'],
@@ -54,7 +55,8 @@ class AdCodes extends \Object\Table {
 	];
 	public $optimistic_lock = true;
 	public $options_map = [
-		'am_adcode_name' => 'name'
+		'am_adcode_name' => 'name',
+		'am_adcode_icon' => 'icon_class'
 	];
 	public $options_active = [
 		'am_adcode_inactive' => 0
