@@ -18,7 +18,6 @@ class PostalCodes extends \Object\Table {
 		'on_terrpostal_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'on_terrpostal_location_id' => ['name' => 'Location #', 'domain' => 'location_id'],
 		'on_terrpostal_postal_code' => ['name' => 'Postal Code', 'domain' => 'postal_code'],
-		'on_terrpostal_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'on_territory_postal_codes_pk' => ['type' => 'pk', 'columns' => ['on_terrpostal_tenant_id', 'on_terrpostal_territory_id', 'on_terrpostal_organization_id', 'on_terrpostal_location_id', 'on_terrpostal_postal_code']],
@@ -67,6 +66,11 @@ class PostalCodes extends \Object\Table {
 			'success' => false,
 			'error' => []
 		];
+		// if we do not have postal codes
+		if (empty($data['on_territory_postal_codes'])) {
+			$result['success'] = true;
+			return $result;
+		}
 		// step 1 delete
 		$query = $this->queryBuilder()->delete();
 		$query->where('AND', ['a.on_terrpostal_territory_id', '=', $data['on_territory_id']]);
@@ -75,42 +79,23 @@ class PostalCodes extends \Object\Table {
 			$result['error']+= $delete_result['error'];
 			return $result;
 		}
-		// step 2 process postal codes
-		$postal_codes = explode(' ', strtoupper(trim2($data['on_territory_postal_codes'])));
-		if ($data['on_territory_country_code'] == 'CA') {
-			$postal_codes2 = $postal_codes;
-			$postal_codes = [];
-			foreach ($postal_codes2 as $v) {
-				if (strlen($v) == 6) {
-					$postal_codes[] = $v;
-				} else if (strlen($v) < 6) {
-					$postal_one = \Numbers\Countries\Countries\Model\PostalCodes::getStatic([
-						'where' => [
-							'cm_postal_country_code' => $data['on_territory_country_code'],
-							'cm_postal_postal_code;LIKE' => $v . '%'
-						],
-						'pk' => ['cm_postal_postal_code'],
-						'columns' => ['cm_postal_postal_code']
+		// if not inactive
+		if (empty($data['on_territory_inactive'])) {
+			// step 2 process postal codes
+			$postal_codes = explode(' ', strtoupper(trim2($data['on_territory_postal_codes'])));
+			foreach ($postal_codes as $k => $v) {
+				foreach ($data['\Numbers\Users\Organizations\Model\Location\Territory\Locations'] as $k2 => $v2) {
+					if (!empty($v2['on_terrloc_inactive'])) continue;
+					$merge_result = $this->collection()->merge([
+						'on_terrpostal_territory_id' => $data['on_territory_id'],
+						'on_terrpostal_organization_id' => $data['on_territory_organization_id'],
+						'on_terrpostal_location_id' => $v2['on_terrloc_location_id'],
+						'on_terrpostal_postal_code' => $v,
 					]);
-					if (!empty($postal_one)) {
-						$postal_codes+= array_keys($postal_one);
+					if (!$merge_result['success']) {
+						$result['error']+= $merge_result['error'];
+						return $result;
 					}
-				}
-			}
-		}
-		// add postal codes
-		foreach ($postal_codes as $k => $v) {
-			foreach ($data['\Numbers\Users\Organizations\Model\Location\Territory\Locations'] as $k2 => $v2) {
-				$merge_result = $this->collection()->merge([
-					'on_terrpostal_territory_id' => $data['on_territory_id'],
-					'on_terrpostal_organization_id' => $data['on_territory_organization_id'],
-					'on_terrpostal_location_id' => $v2['on_terrloc_location_id'],
-					'on_terrpostal_postal_code' => $v,
-					'on_terrpostal_inactive' => 0
-				]);
-				if (!$merge_result['success']) {
-					$result['error']+= $merge_result['error'];
-					return $result;
 				}
 			}
 		}

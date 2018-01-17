@@ -7,7 +7,7 @@ class PostalCodes extends \Object\Table {
 	public $module_code = 'UM';
 	public $title = 'U/M User Assignment Postal Codes';
 	public $name = 'um_user_assignment_postal_codes';
-	public $pk = ['um_usrasspostal_tenant_id', 'um_usrasspostal_user_id', 'um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id'];
+	public $pk = ['um_usrasspostal_tenant_id', 'um_usrasspostal_user_id', 'um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id', 'um_usrasspostal_location_id'];
 	public $tenant = true;
 	public $orderby = [
 		'um_usrasspostal_timestamp' => SORT_ASC
@@ -21,11 +21,12 @@ class PostalCodes extends \Object\Table {
 		'um_usrasspostal_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'um_usrasspostal_service_id' => ['name' => 'Service #', 'domain' => 'service_id'],
 		'um_usrasspostal_brand_id' => ['name' => 'Brand #', 'domain' => 'brand_id'],
+		'um_usrasspostal_location_id' => ['name' => 'Location #', 'domain' => 'location_id'],
 		'um_usrasspostal_postal_codes' => ['name' => 'Postal Codes', 'domain' => 'postal_codes'],
 		'um_usrasspostal_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'um_user_assignment_postal_codes_pk' => ['type' => 'pk', 'columns' => ['um_usrasspostal_tenant_id', 'um_usrasspostal_user_id', 'um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id']],
+		'um_user_assignment_postal_codes_pk' => ['type' => 'pk', 'columns' => ['um_usrasspostal_tenant_id', 'um_usrasspostal_user_id', 'um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id', 'um_usrasspostal_location_id']],
 		'um_usrasspostal_user_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_usrasspostal_tenant_id', 'um_usrasspostal_user_id'],
@@ -49,6 +50,12 @@ class PostalCodes extends \Object\Table {
 			'columns' => ['um_usrasspostal_tenant_id', 'um_usrasspostal_brand_id'],
 			'foreign_model' => '\Numbers\Users\Organizations\Model\Brands',
 			'foreign_columns' => ['on_brand_tenant_id', 'on_brand_id']
+		],
+		'um_usrasspostal_location_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_usrasspostal_tenant_id', 'um_usrasspostal_location_id'],
+			'foreign_model' => '\Numbers\Users\Organizations\Model\Locations',
+			'foreign_columns' => ['on_location_tenant_id', 'on_location_id']
 		]
 	];
 	public $indexes = [];

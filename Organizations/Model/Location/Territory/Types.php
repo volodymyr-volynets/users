@@ -13,8 +13,8 @@ class Types extends \Object\Data {
 		'on_terrtype_name' => 'name',
 		'on_terrtype_icon' => 'icon_class',
 	];
-	public $data = [
-		10 => ['on_terrtype_name' => 'Postal Codes', 'on_terrtype_icon' => 'far fa-compass'],
-		//20 => ['on_terrtype_name' => 'Counties', 'on_terrtype_icon' => 'far fa-compass'],
+	public $data = [ // keys are mirrored to service assignment type
+		13 => ['on_terrtype_name' => 'Postal Codes', 'on_terrtype_icon' => 'far fa-compass'],
+		17 => ['on_terrtype_name' => 'Counties', 'on_terrtype_icon' => 'fab fa-chrome'],
 	];
 }

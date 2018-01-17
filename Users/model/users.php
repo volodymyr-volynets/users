@@ -120,4 +120,9 @@ class Users extends \Object\Table {
 		'protection' => 2,
 		'scope' => 'enterprise'
 	];
+
+	public $triggers = [
+		'update_postal_codes_actuals' => '\Numbers\Users\Users\Model\User\Assignment\PostalCode\Actuals::triggerUpdateActuals',
+		'update_postal_codes_details' => '\Numbers\Users\Users\Model\User\Assignment\PostalCode\Details::triggerUpdateDetails'
+	];
 }

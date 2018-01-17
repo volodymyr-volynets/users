@@ -105,10 +105,15 @@ class Territories extends \Object\Form\Wrapper\Base {
 			if (empty($form->values['on_territory_province_code'])) {
 				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_territory_province_code');
 			}
-			if (empty($form->values['on_territory_postal_codes'])) {
-				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_territory_postal_codes');
-			} else {
-				$form->values['on_territory_postal_codes'] = strtoupper(trim2($form->values['on_territory_postal_codes']));
+			// postal codes type
+			if ($form->values['on_territory_type_id'] == 13) {
+				if (empty($form->values['on_territory_postal_codes'])) {
+					$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_territory_postal_codes');
+				} else {
+					$form->values['on_territory_postal_codes'] = strtoupper(trim2($form->values['on_territory_postal_codes']));
+				}
+			} else { // county
+				$form->values['on_territory_postal_codes'] = null;
 			}
 			if (empty($form->values['\Numbers\Users\Organizations\Model\Location\Territory\Locations'])) {
 				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, '\Numbers\Users\Organizations\Model\Location\Territory\Locations[1][on_terrloc_location_id]');
@@ -125,7 +130,7 @@ class Territories extends \Object\Form\Wrapper\Base {
 
 	public function overrideFieldValue(& $form, & $options, & $value, & $neighbouring_values) {
 		if ($options['options']['field_name'] == 'on_territory_postal_codes') {
-			if (empty($form->values['on_territory_node_type_id']) || in_array($form->values['on_territory_node_type_id'], [10, 20])) {
+			if (empty($form->values['on_territory_node_type_id']) || in_array($form->values['on_territory_node_type_id'], [10, 20]) || $form->values['on_territory_type_id'] != 13) {
 				$options['options']['row_class'] = 'grid_row_hidden';
 			}
 		}

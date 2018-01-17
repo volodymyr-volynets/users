@@ -18,16 +18,13 @@ class Users extends \Object\Form\Wrapper\Base {
 		'top' => ['default_row_type' => 'grid', 'order' => 100],
 		'tabs' => ['default_row_type' => 'grid', 'order' => 500, 'type' => 'tabs'],
 		'tabs2' => ['default_row_type' => 'grid', 'order' => 600, 'type' => 'tabs'],
+		'tabs3' => ['default_row_type' => 'grid', 'order' => 600, 'type' => 'tabs'],
 		'buttons' => ['default_row_type' => 'grid', 'order' => 900],
 		// child containers
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'permissions_container' => ['default_row_type' => 'grid', 'order' => 34000],
 		'photo_container' => ['default_row_type' => 'grid', 'order' => 32000],
-		'user_separator_container' => ['default_row_type' => 'grid', 'order' => 35000],
-		'territories_separator_container' => ['default_row_type' => 'grid', 'order' => 35001],
-		'postal_codes_separator_container' => ['default_row_type' => 'grid', 'order' => 35002],
-		'location_separator_container' => ['default_row_type' => 'grid', 'order' => 35003],
 		'roles_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -79,7 +76,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\PostalCodes',
-			'details_pk' => ['um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id'],
+			'details_pk' => ['um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id', 'um_usrasspostal_location_id'],
 			'details_empty_warning_message' => true,
 			'order' => 35002
 		],
@@ -172,7 +169,13 @@ class Users extends \Object\Form\Wrapper\Base {
 		'tabs2' => [
 			'teams' => ['order' => 50, 'label_name' => 'Teams'],
 			'internalization' => ['order' => 100, 'label_name' => 'Internalization']
-		]
+		],
+		'tabs3' => [
+			'user_assignments' => ['order' => 100, 'label_name' => 'User Assignments'],
+			'postal_code_assignments' => ['order' => 200, 'label_name' => 'Postal Codes'],
+			'territories_assignments' => ['order' => 300, 'label_name' => 'Territories'],
+			'locations_assignments' => ['order' => 300, 'label_name' => 'Locations'],
+		],
 	];
 	public $elements = [
 		'top' => [
@@ -209,15 +212,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'notifications' => ['container' => 'notifications_container', 'order' => 100],
 			],
 			'assignments' => [
-				'user_separator' => ['container' => 'user_separator_container', 'order' => 100],
-				'assignments' => ['container' => 'assignments_container', 'order' => 150],
-				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 200],
-				'postal_codes_separator' => ['container' => 'postal_codes_separator_container', 'order' => 300],
-				'postal_codes' => ['container' => 'postal_codes_assignments_container', 'order' => 400],
-				'territories_separator' => ['container' => 'territories_separator_container', 'order' => 500],
-				'territories' => ['container' => 'territories_assignments_container', 'order' => 600],
-				'location_separator' => ['container' => 'location_separator_container', 'order' => 700],
-				'locations' => ['container' => 'locations_assignments_container', 'order' => 800],
+				'tabs3' => ['container' => 'tabs3', 'order' => 100],
 			]
 		],
 		'tabs2' => [
@@ -227,6 +222,21 @@ class Users extends \Object\Form\Wrapper\Base {
 			'internalization' => [
 				'internalization' => ['container' => 'internalization_container', 'order' => 100],
 			]
+		],
+		'tabs3' => [
+			'user_assignments' => [
+				'user_assignments' => ['container' => 'assignments_container', 'order' => 100],
+				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 200],
+			],
+			'postal_code_assignments' => [
+				'postal_code_assignments' => ['container' => 'postal_codes_assignments_container', 'order' => 100],
+			],
+			'territories_assignments' => [
+				'territories_assignments' => ['container' => 'territories_assignments_container', 'order' => 100],
+			],
+			'locations_assignments' => [
+				'locations_assignments' => ['container' => 'locations_assignments_container', 'order' => 100],
+			],
 		],
 		'general_container' => [
 			'um_user_type_id' => [
@@ -367,30 +377,23 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id', 'method' => 'hidden'],
 			]
 		],
-		'user_separator_container' => [
-			'separator' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'User Assignments', 'icon' => 'fas fa-users', 'percent' => 100],
-			],
-		],
-		'postal_codes_separator_container' => [
-			'separator' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Service / Postal Codes Assignments', 'icon' => 'far fa-compass', 'percent' => 100],
-			],
-		],
 		'postal_codes_assignments_container' => [
 			'row1' => [
-				'um_usrasspostal_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 30, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_usrasspostal_brand_id' => ['order' => 2, 'order_for_defaults' => 31100, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'required' => true, 'percent' => 30, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_usrasspostal_postal_codes' => ['order' => 3, 'label_name' => 'Postal Codes', 'domain' => 'postal_codes', 'null' => true, 'required' => true, 'percent' => 35, 'method' => 'textarea'],
-				'um_usrasspostal_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_usrasspostal_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'options_params' => ['on_service_assignment_type_id' => 20], 'onchange' => 'this.form.submit();'],
+				'um_usrasspostal_brand_id' => ['order' => 2, 'order_for_defaults' => 31100, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'required' => true, 'percent' => 45, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrasspostal_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'um_usrasspostal_location_id' => ['order' => 1, 'row_order' => 200, 'order_for_defaults' => 33000, 'label_name' => 'Location', 'domain' => 'location_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Locations::optionsActive', 'options_depends' => ['on_location_organization_id' => 'um_usrasspostal_organization_id']],
+				'um_usrasspostal_postal_codes' => ['order' => 2, 'label_name' => 'Postal Codes', 'domain' => 'postal_codes', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'textarea'],
 			],
 			self::HIDDEN => [
-				'um_usrasspostal_organization_id' => ['order' =>1, 'row_order' => 200, 'order_for_defaults' => 32000,'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
+				'um_usrasspostal_organization_id' => ['order' => 1, 'row_order' => 300, 'order_for_defaults' => 32000,'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
 			]
 		],
 		'territories_assignments_container' => [
 			'row1' => [
-				'um_usrassterr_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrassterr_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'options_params' => ['on_service_assignment_type_id' => [13, 17]], 'onchange' => 'this.form.submit();'],
 				'um_usrassterr_brand_id' => ['order' => 2, 'order_for_defaults' => 31100, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive', 'onchange' => 'this.form.submit();'],
 				'um_usrassterr_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
@@ -398,25 +401,15 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrassterr_organization_id' => ['order' =>1, 'row_order' => 200, 'order_for_defaults' => 32000,'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
 			]
 		],
-		'territories_separator_container' => [
-			'separator' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Service / Territory Assignments', 'icon' => 'far fa-square', 'percent' => 100],
-			],
-		],
 		'territories_assignments_container_map' => [
 			'row1' => [
 				'um_usrasstrrmap_territory_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Territory', 'domain' => 'territory_id', 'null' => true, 'required' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'searchable' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Location\Territories::optionsGroupped', 'onchange' => 'this.form.submit();'],
 				'um_usrasstrrmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean']
 			]
 		],
-		'location_separator_container' => [
-			'separator' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'label_name' => 'Service / Locations Assignments', 'icon' => 'fas fa-coffee', 'percent' => 100],
-			],
-		],
 		'locations_assignments_container' => [
 			'row1' => [
-				'um_usrassloc_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrassloc_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'options_params' => ['on_service_assignment_type_id' => 30], 'onchange' => 'this.form.submit();'],
 				'um_usrassloc_brand_id' => ['order' => 2, 'order_for_defaults' => 31100, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive', 'onchange' => 'this.form.submit();'],
 				'um_usrassloc_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
@@ -517,7 +510,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'\Numbers\Users\Users\Model\User\Assignment\PostalCodes' => [
 				'name' => 'Postal Code Assignments',
-				'pk' => ['um_usrasspostal_tenant_id', 'um_usrasspostal_user_id', 'um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id'],
+				'pk' => ['um_usrasspostal_tenant_id', 'um_usrasspostal_user_id', 'um_usrasspostal_organization_id', 'um_usrasspostal_service_id', 'um_usrasspostal_brand_id', 'um_usrasspostal_location_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrasspostal_tenant_id', 'um_user_id' => 'um_usrasspostal_user_id']
 			],
@@ -668,12 +661,33 @@ class Users extends \Object\Form\Wrapper\Base {
 		}
 	}
 
-	public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where) {
+	/**
+	 * Cached services
+	 *
+	 * @var array
+	 */
+	private $temp_services_cached;
+
+	public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where, $neighbouring_values, $details_value) {
 		if ($field_name == 'um_usrrol_role_id') {
 			$where['selected_organizations'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['unique' => true]);
 		}
 		if (in_array($field_name, ['um_usrasspostal_service_id', 'um_usrassterr_service_id', 'um_usrassloc_service_id'])) {
 			$where['on_service_organization_id'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['unique' => true]);
+		}
+		if ($field_name == 'um_usrasstrrmap_territory_id' && !empty($details_value['um_usrassterr_service_id'])) {
+			//print_r2($details_value);
+			if (!isset($this->temp_services_cached)) {
+				$this->temp_services_cached = \Numbers\Users\Organizations\Model\Services::getStatic([
+					'pk' => ['on_service_id'],
+					'columns' => [
+						'on_service_id', 'on_service_assignment_type_id'
+					]
+				]);
+			}
+			if (in_array($this->temp_services_cached[$details_value['um_usrassterr_service_id']]['on_service_assignment_type_id'], [13, 17])) {
+				$where['on_territory_type_id'] = $this->temp_services_cached[$details_value['um_usrassterr_service_id']]['on_service_assignment_type_id'];
+			}
 		}
 	}
 
@@ -813,6 +827,12 @@ class Users extends \Object\Form\Wrapper\Base {
 	public function overrideTabs(& $form, & $options, & $tab, & $neighbouring_values) {
 		$result = [];
 		if ($tab == 'photo' && empty($form->values['um_user_id'])) {
+			$result['hidden'] = true;
+		}
+		if ($tab == 'territories_assignments' && !\Can::systemFeatureExists('ON::TERRITORIES')) {
+			$result['hidden'] = true;
+		}
+		if ($tab == 'postal_code_assignments' && !\Can::systemFeatureExists('CM::COUNTRIES')) {
 			$result['hidden'] = true;
 		}
 		return $result;
