@@ -93,7 +93,7 @@ class Details extends \Object\Table {
 			]);
 			// join
 			$query->join('INNER', new \Numbers\Users\Users\Model\User\Assignment\PostalCode\Actuals(), 'b', 'ON', [
-				['AND', ['a.cm_postal_postal_code', 'LIKE', $query->db_object->sqlHelper('concat', ['um_usrassactpostal_postal_code', "'%'"]), true]],
+				['AND', ['a.cm_postal_postal_code', 'LIKE', $query->db_object->sqlHelper('concat', ['b.um_usrassactpostal_postal_code', "'%'"]), true]],
 			]);
 		});
 		$insert_result = $query->query();

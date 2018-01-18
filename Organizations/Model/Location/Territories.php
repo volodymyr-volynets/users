@@ -70,7 +70,9 @@ class Territories extends \Object\Table {
 	];
 
 	public $triggers = [
-		'update_postal_codes' => '\Numbers\Users\Organizations\Model\Location\Territory\PostalCodes::triggerUpdatePostalCodesFromTerritory'
+		'update_postal_codes' => '\Numbers\Users\Organizations\Model\Location\Territory\PostalCodes::triggerUpdatePostalCodesFromTerritory',
+		'update_territory_postal_details' => '\Numbers\Users\Users\Model\User\Assignment\Territory\PostalCode\Details::triggerUpdateDetails',
+		'update_territory_county_details' => '\Numbers\Users\Users\Model\User\Assignment\Territory\County\Details::triggerUpdateDetails'
 	];
 
 	/**
@@ -80,7 +82,7 @@ class Territories extends \Object\Table {
 		$options['i18n'] = false;
 		$result = $this->optionsActive($options);
 		if (!empty($result)) {
-			$converted = \Helper\Tree::convertByParent($result, 'parent');
+			$converted = \Helper\Tree::convertByParent($result, 'parent', ['disable_parents' => true]);
 			$result = [];
 			\Helper\Tree::convertTreeToOptionsMulti($converted, 0, ['name_field' => 'name'], $result);
 		}

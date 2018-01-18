@@ -835,6 +835,9 @@ class Users extends \Object\Form\Wrapper\Base {
 		if ($tab == 'postal_code_assignments' && !\Can::systemFeatureExists('CM::COUNTRIES')) {
 			$result['hidden'] = true;
 		}
+		if (in_array($tab, ['postal_code_assignments', 'territories_assignments', 'locations_assignments']) && !\Can::systemFeatureExists('ON::SERVICES')) {
+			$result['hidden'] = true;
+		}
 		return $result;
 	}
 }
