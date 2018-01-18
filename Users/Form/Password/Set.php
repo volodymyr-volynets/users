@@ -49,7 +49,7 @@ class Set extends \Object\Form\Wrapper\Base {
 			if ($token_data === false || $token_data['token'] != 'password.reset') {
 				$form->error(DANGER, $token_error_message);
 			} else {
-				$this->data_user_id = (int) $token_data;
+				$this->data_user_id = (int) $token_data['id'];
 			}
 		}
 	}

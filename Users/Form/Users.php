@@ -257,8 +257,8 @@ class Users extends \Object\Form\Wrapper\Base {
 				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 350, 'label_name' => 'Operating Location', 'icon' => 'far fa-flag', 'percent' => 100],
 			],
 			'um_user_operating_country_code' => [
-				'um_user_operating_country_code' => ['order' => 1, 'row_order' => 360, 'label_name' => 'Operating Country', 'domain' => 'country_code', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_user_operating_province_code' => ['order' => 2, 'label_name' => 'Operating Province', 'domain' => 'province_code', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'um_user_operating_country_code']],
+				'um_user_operating_country_code' => ['order' => 1, 'row_order' => 360, 'label_name' => 'Operating Country', 'domain' => 'country_code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_user_operating_province_code' => ['order' => 2, 'label_name' => 'Operating Province', 'domain' => 'province_code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'um_user_operating_country_code']],
 			],
 			'separator_2' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'far fa-envelope', 'percent' => 100],

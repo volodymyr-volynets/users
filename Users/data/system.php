@@ -1473,7 +1473,7 @@ class System extends \Object\Import {
 					'sm_resource_menu_acl_action_id' => null,
 					'sm_resource_menu_url' => '/Numbers/Users/Users/Controller/Logout',
 					'sm_resource_menu_options_generator' => null,
-					'sm_resource_menu_order' => 32001,
+					'sm_resource_menu_order' => 999999,
 					'sm_resource_menu_separator' => 1,
 					'sm_resource_inactive' => 0
 				],

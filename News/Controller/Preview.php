@@ -76,4 +76,24 @@ class Preview extends \Object\Controller\Permission {
 			echo \HTML::message(['type' => WARNING, 'options' => i18n(null, \Object\Content\Messages::NO_ROWS_FOUND)]);
 		}
 	}
+	public function actionJsonMenuName() {
+		// fetch number of news
+		$model = new \Numbers\Users\News\DataSource\News();
+		$model->cache = true;
+		$data = $model->get();
+		$unred = 0;
+		foreach ($data as $k => $v) {
+			if (empty($v['ns_new_read_user'])) {
+				$unred++;
+			}
+		}
+		// generate message
+		$label = '<table width="100%"><tr><td width="99%">' . \HTML::icon(['type' => 'fas fa-newspaper']) . ' ' . i18n(null, 'News') . '</td><td width="1%">' . \HTML::label2(['type' => 'primary', 'value' => \Format::id($unred)]) . '</td></tr></table>';
+		\Layout::renderAs([
+			'success' => true,
+			'error' => [],
+			'data' => $label,
+			'item' => \Request::input('item')
+		], 'application/json');
+	}
 }
