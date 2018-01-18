@@ -145,12 +145,18 @@ class Login extends \Object\DataSource {
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
+		$this->query->orderby([
+			'um_user_id' => SORT_DESC
+		]);
+		$this->query->limit(1);
 		if (!empty($parameters['user_id'])) {
 			$this->query->where('AND', ['a.um_user_id', '=', (int) $parameters['user_id']]);
 		} else {
 			$parameters['username'] = strtolower($parameters['username'] . '');
 			if (strpos($parameters['username'], '@') !== false) {
 				$this->query->where('AND', ['a.um_user_email', '=', $parameters['username']]);
+			} else if (is_numeric($parameters['username'])) {
+				$this->query->where('AND', ['a.um_user_numeric_phone', '=', (int) $parameters['username']]);
 			} else {
 				$this->query->where('AND', ['a.um_user_login_username', '=', $parameters['username']]);
 			}

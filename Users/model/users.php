@@ -28,6 +28,7 @@ class Users extends \Object\Table {
 		'um_user_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],
 		'um_user_email2' => ['name' => 'Secondary Email', 'domain' => 'email', 'null' => true],
 		'um_user_phone' => ['name' => 'Primary Phone', 'domain' => 'phone', 'null' => true],
+		'um_user_numeric_phone' => ['name' => 'Primary Phone Numeric', 'domain' => 'numeric_phone', 'null' => true],
 		'um_user_phone2' => ['name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true],
 		'um_user_cell' => ['name' => 'Cell Phone', 'domain' => 'phone', 'null' => true],
 		'um_user_fax' => ['name' => 'Fax', 'domain' => 'phone', 'null' => true],
@@ -49,6 +50,7 @@ class Users extends \Object\Table {
 		'um_users_pk' => ['type' => 'pk', 'columns' => ['um_user_tenant_id', 'um_user_id']],
 		'um_user_code_un' => ['type' => 'unique', 'columns' => ['um_user_tenant_id', 'um_user_code']],
 		'um_user_email_un' => ['type' => 'unique', 'columns' => ['um_user_tenant_id', 'um_user_email']],
+		'um_user_numeric_phone_un' => ['type' => 'unique', 'columns' => ['um_user_tenant_id', 'um_user_numeric_phone']],
 		'um_user_login_username_un' => ['type' => 'unique', 'columns' => ['um_user_tenant_id', 'um_user_login_username']],
 		'um_user_type_id_fk' => [
 			'type' => 'fk',

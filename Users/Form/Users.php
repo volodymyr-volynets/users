@@ -268,11 +268,11 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_user_email2' => ['order' => 2, 'label_name' => 'Secondary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
 			],
 			'um_user_phone' => [
-				'um_user_phone' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+				'um_user_phone' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Primary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 				'um_user_phone2' => ['order' => 2, 'label_name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 			],
 			'um_user_cell' => [
-				'um_user_cell' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+				'um_user_cell' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 				'um_user_fax' => ['order' => 2, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 			],
 		],
@@ -586,9 +586,10 @@ class Users extends \Object\Form\Wrapper\Base {
 		}
 		// login enabled
 		if (!empty($form->values['um_user_login_enabled'])) {
-			if (empty($form->values['um_user_email']) && empty($form->values['um_user_login_username'])) {
-				$form->error('danger', 'You must provide Email or Username!', 'um_user_email');
-				$form->error('danger', 'You must provide Email or Username!', 'um_user_login_username');
+			if (empty($form->values['um_user_email']) && empty($form->values['um_user_phone']) && empty($form->values['um_user_login_username'])) {
+				$form->error('danger', 'You must provide Email, Phone or Username!', 'um_user_email');
+				$form->error('danger', 'You must provide Email, Phone or Username!', 'um_user_phone');
+				$form->error('danger', 'You must provide Email, Phone or Username!', 'um_user_login_username');
 			}
 		}
 		// primary organizations
@@ -651,6 +652,10 @@ class Users extends \Object\Form\Wrapper\Base {
 				return;
 			}
 			$form->values['um_user_photo_file_id'] = $result['file_id'];
+		}
+		// numeric phone
+		if (!empty($form->values['um_user_phone'])) {
+			$form->values['um_user_numeric_phone'] = \Object\Validator\Phone::plainNumber($form->values['um_user_phone']);
 		}
 	}
 
