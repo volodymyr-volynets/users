@@ -587,9 +587,9 @@ class Users extends \Object\Form\Wrapper\Base {
 		// login enabled
 		if (!empty($form->values['um_user_login_enabled'])) {
 			if (empty($form->values['um_user_email']) && empty($form->values['um_user_phone']) && empty($form->values['um_user_login_username'])) {
-				$form->error('danger', 'You must provide Email, Phone or Username!', 'um_user_email');
-				$form->error('danger', 'You must provide Email, Phone or Username!', 'um_user_phone');
-				$form->error('danger', 'You must provide Email, Phone or Username!', 'um_user_login_username');
+				$form->error('danger', 'You must provide email, phone or username!', 'um_user_email');
+				$form->error('danger', 'You must provide email, phone or username!', 'um_user_phone');
+				$form->error('danger', 'You must provide email, phone or username!', 'um_user_login_username');
 			}
 		}
 		// primary organizations
