@@ -86,6 +86,7 @@ class Users extends \Object\Table {
 	public $options_active = [
 		'um_user_inactive' => 0
 	];
+	public $options_skip_i18n = true;
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];

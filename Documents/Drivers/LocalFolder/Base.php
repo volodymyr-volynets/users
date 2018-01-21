@@ -33,11 +33,12 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base {
 			'path' => null,
 			'thumbnail_path' => null
 		];
+		$dir = '';
 		$application_structure = \Application::get('application.structure');
 		if (!empty($application_structure['db_multiple'])) {
 			$dir.= $application_structure['settings']['db']['default']['dbname'] . '/';
 		}
-		$dir = \Tenant::id() . '/' . strtolower($catalog['dt_catalog_code']) . '/';
+		$dir.= \Tenant::id() . '/' . strtolower($catalog['dt_catalog_code']) . '/';
 		// create directory is does not exists
 		if (!file_exists($this->options['dir'] . $dir)) {
 			if (!\Helper\File::mkdir($this->options['dir'] . $dir)) {

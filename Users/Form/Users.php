@@ -679,6 +679,9 @@ class Users extends \Object\Form\Wrapper\Base {
 		}
 		if (in_array($field_name, ['um_usrasspostal_service_id', 'um_usrassterr_service_id', 'um_usrassloc_service_id'])) {
 			$where['on_service_organization_id'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['unique' => true]);
+			if (empty($where['on_service_organization_id'])) {
+				$where['on_service_organization_id'] = null;
+			}
 		}
 		if ($field_name == 'um_usrasstrrmap_territory_id' && !empty($details_value['um_usrassterr_service_id'])) {
 			//print_r2($details_value);

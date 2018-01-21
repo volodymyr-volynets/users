@@ -155,6 +155,15 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		];
 		$form->query = \Factory::model($form->options['model_table'] . '\0Virtual0\Widgets\Comments')->queryBuilder()->select();
 		$form->processReportQueryFilter($form->query);
+		// additional filter
+		$parent_model = \Factory::model($form->options['model_table']);
+		if (!empty($parent_model->comments['map'])) {
+			foreach ($parent_model->comments['map'] as $k => $v) {
+				if (isset($form->options['input'][$k])) {
+					$form->query->where('AND', ['a.' . $v, '=', (int) $form->options['input'][$k]]);
+				}
+			}
+		}
 		// query #1 get counter
 		$counter_query = clone $form->query;
 		$counter_query->columns(['counter' => 'COUNT(*)'], ['empty_existing' => true]);
