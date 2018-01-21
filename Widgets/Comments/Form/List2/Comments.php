@@ -86,10 +86,16 @@ class Comments extends \Object\Form\Wrapper\List2 {
 	const LIST_SORT_OPTIONS = [
 		'wg_comment_id' => ['name' => 'Comment #'],
 	];
-	public $collection = [
-		'readonly' => true,
-		'model' => '\Numbers\Accounting\OrderManagement\Model\Orders\0Virtual0\Widgets\Comments'
-	];
+
+	public function overrides(& $form) {
+		if (!empty($form->__options['model_table'])) {
+			$model = new $form->__options['model_table']();
+			$form->collection = [
+				'name' => 'Comments',
+				'model' => $model->comments_model
+			];
+		}
+	}
 
 	public function validate(& $form) {
 		// if we have new comment
@@ -141,7 +147,7 @@ class Comments extends \Object\Form\Wrapper\List2 {
 
 	public function overrideFieldValue(& $form, & $options, & $value, & $neighbouring_values) {
 		// hide module #
-		if (in_array($options['options']['field_name'], ['__module_id', 'separator__module_id', '__format'])) {
+		if (in_array($options['options']['field_name'], ['__module_id', '__separator__module_id', '__format'])) {
 			$options['options']['row_class'] = 'grid_row_hidden';
 		}
 	}
