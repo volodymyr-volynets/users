@@ -37,7 +37,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 				self::HEADER_ROW => [
 					'order' => 100,
 					self::FORMS => [
-						'tenant_registration_step1' => self::GLOBAL_WIZARD
+						'tenant_registration_step1_wizzard' => self::GLOBAL_WIZARD
 					]
 				],
 				self::MAIN_ROW => [
@@ -62,7 +62,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 				self::HEADER_ROW => [
 					'order' => 100,
 					self::FORMS => [
-						'tenant_registration_step2' => self::GLOBAL_WIZARD
+						'tenant_registration_step2_wizzard' => self::GLOBAL_WIZARD
 					]
 				],
 				self::MAIN_ROW => [
@@ -87,7 +87,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 				self::HEADER_ROW => [
 					'order' => 100,
 					self::FORMS => [
-						'tenant_registration_step2' => self::GLOBAL_WIZARD
+						'tenant_registration_step2_wizzard' => self::GLOBAL_WIZARD
 					]
 				],
 				self::MAIN_ROW => [
@@ -95,6 +95,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 					self::FORMS => [
 						'tenant_registration_step3' => [
 							'model' => '\Numbers\Users\Users\Form\Registration\Tenant\Step3',
+							'bypass_input' => ['__wizard_step', 'token'],
 							'options' => [
 								'segment' => null,
 								'percent' => 100,
@@ -113,7 +114,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 				self::HEADER_ROW => [
 					'order' => 100,
 					self::FORMS => [
-						'tenant_registration_step4' => self::GLOBAL_WIZARD
+						'tenant_registration_step4_wizzard' => self::GLOBAL_WIZARD
 					]
 				],
 				self::MAIN_ROW => [
@@ -136,10 +137,10 @@ class Collection extends \Object\Form\Wrapper\Collection {
 	public function distribute() {
 		$this->values['__wizard_step'] = (int) ($this->values['__wizard_step'] ?? 1);
 		if (empty($this->values['__wizard_step'])) $this->values['__wizard_step'] = 1;
-		$this->values['collection_screen_link'] = 'step' . $this->values['__wizard_step'];
+		$this->collection_screen_link = 'step' . $this->values['__wizard_step'];
 		// make everything look success
 		if ($this->values['__wizard_step'] == 4) {
-			$this->data['step4'][$this::ROWS][self::HEADER_ROW][$this::FORMS]['tenant_registration_step4']['options']['wizard']['type'] = 'success';
+			$this->data['step4'][$this::ROWS][self::HEADER_ROW][$this::FORMS]['tenant_registration_step4_wizzard']['options']['wizard']['type'] = 'success';
 			$this->data['step4']['options']['segment']['type'] = 'success';
 		}
 	}
