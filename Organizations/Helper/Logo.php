@@ -8,7 +8,6 @@ class Logo {
 	 */
 	public static function getURL() {
 		if (empty(\I18n::$options['organization_id'])) return;
-		//\Numbers\Users\Documents\Base\Base::generateURL($neighbouring_values[$options['options']['preview_file_id']])]
 		$organization = \Numbers\Users\Organizations\Model\Organizations::getStatic([
 			'where' => [
 				'on_organization_id' => \I18n::$options['organization_id']

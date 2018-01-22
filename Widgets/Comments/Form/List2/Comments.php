@@ -9,7 +9,7 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		'segment' => null,
 		'actions' => [
 			'refresh' => true,
-			'new' => ['onclick' => 'Numbers.Modal.show(\'form_modal_new_comment_dialog\');', 'href' => 'javascript:void(0);'],
+			'new' => ['onclick' => 'Numbers.Modal.show(\'form_wg_comments_modal_new_comment_dialog\');', 'href' => 'javascript:void(0);', 'action_code' => 'Record_Make_Comment'],
 			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
 		]
 	];
