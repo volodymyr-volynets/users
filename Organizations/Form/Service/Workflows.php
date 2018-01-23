@@ -276,8 +276,13 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		}
 		// steps
 		foreach ($form->values['\Numbers\Users\Organizations\Model\Service\Workflow\Steps'] as $k => $v) {
+			// not ending step must have next steps
 			if ($v['on_workstep_type_id'] != 30 && empty($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Next'])) {
 				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, "\Numbers\Users\Organizations\Model\Service\Workflow\Steps[{$k}][\Numbers\Users\Organizations\Model\Service\Workflow\Step\Next][1][on_workstpnext_next_step_id]");
+			}
+			// form subtype must have form fields
+			if ($v['on_workstep_subtype_id'] == 100 && empty($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, "\Numbers\Users\Organizations\Model\Service\Workflow\Steps[{$k}][\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields][1][on_workstpfield_field_id]");
 			}
 		}
 	}
