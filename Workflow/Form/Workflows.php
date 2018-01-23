@@ -253,7 +253,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			}
 		}
 		if ($tab_name == '\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes') {
-			if (!in_array($neighbouring_values['ww_wrkflwcanvas_type_id'], [1000, 3000, 4000])) {
+			if (!in_array($neighbouring_values['ww_wrkflwcanvas_type_id'], [1000, 1100, 3000, 4000])) {
 				return ['hidden' => true];
 			}
 		}

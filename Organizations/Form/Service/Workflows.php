@@ -75,6 +75,16 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['on_workstpnext_next_step_id'],
 			'order' => 35003
 		],
+		'form_fields_container' => [
+			'label_name' => 'Form Fields',
+			'type' => 'subdetails',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Steps',
+			'details_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields',
+			'details_pk' => ['on_workstpfield_field_id'],
+			'order' => 35003
+		]
 	];
 
 	public $rows = [
@@ -199,6 +209,16 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'on_workstpnext_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'required' => true],
 			]
 		],
+		'form_fields_container' => [
+			'row1' => [
+				'on_workstpfield_field_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Field #', 'domain' => 'field_id', 'null' => true, 'required' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Fields::optionsActive', 'onchange' => 'this.form.submit();'],
+				'on_workstpfield_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+			],
+			'row2' => [
+				'on_workstpfield_order' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Order', 'domain' => 'order', 'null' => true, 'percent' => 20],
+				'on_workstpfield_default' => ['order' => 2, 'label_name' => 'Default', 'type' => 'text', 'null' => true, 'percent' => 80, 'placeholder' => 'Default'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -238,6 +258,12 @@ class Workflows extends \Object\Form\Wrapper\Base {
 						'pk' => ['on_workstpnext_tenant_id', 'on_workstpnext_workflow_id', 'on_workstpnext_step_id', 'on_workstpnext_next_step_id'],
 						'type' => '1M',
 						'map' => ['on_workstep_tenant_id' => 'on_workstpnext_tenant_id', 'on_workstep_workflow_id' => 'on_workstpnext_workflow_id', 'on_workstep_id' => 'on_workstpnext_step_id'],
+					],
+					'\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields' => [
+						'name' => 'Form Fields',
+						'pk' => ['on_workstpfield_tenant_id', 'on_workstpfield_workflow_id', 'on_workstpfield_step_id', 'on_workstpfield_field_id'],
+						'type' => '1M',
+						'map' => ['on_workstep_tenant_id' => 'on_workstpfield_tenant_id', 'on_workstep_workflow_id' => 'on_workstpfield_workflow_id', 'on_workstep_id' => 'on_workstpfield_step_id'],
 					]
 				]
 			]
@@ -247,6 +273,12 @@ class Workflows extends \Object\Form\Wrapper\Base {
 	public function validate(& $form) {
 		if ($form->values['on_workflow_type_id'] == 10) {
 			$form->values['on_workflow_use_global_fields'] = 1;
+		}
+		// steps
+		foreach ($form->values['\Numbers\Users\Organizations\Model\Service\Workflow\Steps'] as $k => $v) {
+			if ($v['on_workstep_type_id'] != 30 && empty($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Next'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, "\Numbers\Users\Organizations\Model\Service\Workflow\Steps[{$k}][\Numbers\Users\Organizations\Model\Service\Workflow\Step\Next][1][on_workstpnext_next_step_id]");
+			}
 		}
 	}
 
@@ -262,6 +294,11 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				$options['options']['readonly'] = true;
 			}
 		}
+		if (in_array($options['options']['field_name'], ['on_workcanvshape_shape_border_style_id', 'on_workcanvshape_shape_border_color', 'on_workcanvshape_completed_border_style_id', 'on_workcanvshape_completed_border_color'])) {
+			if (($options['options']['__detail_values']['on_workcanvas_type_id'] ?? null) == 4000) {
+				$options['options']['readonly'] = true;
+			}
+		}
 	}
 
 	public function overrideTabs(& $form, & $tab_options, & $tab_name, & $neighbouring_values = []) {
@@ -271,7 +308,12 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			}
 		}
 		if ($tab_name == '\Numbers\Users\Organizations\Model\Service\Workflow\Canvas\Shapes') {
-			if (!in_array($neighbouring_values['on_workcanvas_type_id'], [1000, 3000, 4000])) {
+			if (!in_array($neighbouring_values['on_workcanvas_type_id'], [1000, 1100, 3000, 4000])) {
+				return ['hidden' => true];
+			}
+		}
+		if ($tab_name == '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields') {
+			if ($neighbouring_values['on_workstep_subtype_id'] != 100) {
 				return ['hidden' => true];
 			}
 		}

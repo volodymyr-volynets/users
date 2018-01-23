@@ -48,6 +48,12 @@ class Services extends \Object\Table {
 			'columns' => ['on_service_tenant_id', 'on_service_queue_type_id'],
 			'foreign_model' => '\Numbers\Users\Organizations\Model\Queue\Types',
 			'foreign_columns' => ['on_quetype_tenant_id', 'on_quetype_id']
+		],
+		'on_service_workflow_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['on_service_tenant_id', 'on_service_workflow_id'],
+			'foreign_model' => '\Numbers\Users\Organizations\Model\Service\Workflows',
+			'foreign_columns' => ['on_workflow_tenant_id', 'on_workflow_id']
 		]
 	];
 	public $indexes = [

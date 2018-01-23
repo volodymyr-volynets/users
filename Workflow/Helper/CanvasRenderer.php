@@ -29,6 +29,8 @@ class CanvasRenderer {
 		foreach ($data as $k => $v) {
 			switch ($v['type']) {
 				case 1000: // rectangle
+				case 1100: // rhombus
+				case 3000: // circle
 					// override colors
 					if ((!empty($options['completed_steps']) && in_array($v['step'], $options['completed_steps'])) || !empty($options['show_as_completed'])) {
 						$v['shape_fill_color'] = $v['completed_fill_color'];
@@ -37,12 +39,38 @@ class CanvasRenderer {
 					}
 					$fill_color_rgb = hex2rgb($v['shape_fill_color']);
 					$fill_color = imagecolorallocate($image, $fill_color_rgb[0], $fill_color_rgb[1], $fill_color_rgb[2]);
-					imagefilledrectangle($image, $v['x1'], $v['y1'], $v['x1'] + $v['x2'], $v['y1'] + $v['y2'], $fill_color);
+					if ($v['type'] == 1000) {
+						imagefilledrectangle($image, $v['x1'], $v['y1'], $v['x1'] + $v['x2'], $v['y1'] + $v['y2'], $fill_color);
+					} else if ($v['type'] == 1100) {
+						$half_width = $v['x2'] / 2;
+						$half_height = $v['y2'] / 2;
+						imagefilledpolygon($image, [
+							$v['x1'] + $half_width, $v['y1'],
+							$v['x1'] + $v['x2'], $v['y1'] + $half_height,
+							$v['x1'] + $half_width, $v['y1'] + $v['y2'],
+							$v['x1'], $v['y1'] + $half_height
+						], 4, $fill_color);
+					} else if ($v['type'] == 3000) {
+						imagefilledarc($image, $v['x1'], $v['y1'], $v['x2'], $v['y2'], 0, 360, $fill_color, IMG_ARC_PIE);
+					}
 					// border
 					self::setLineStyle($image, $v['shape_border_style']);
 					$border_color_rgb = hex2rgb($v['shape_border_color']);
 					$border_color = imagecolorallocate($image, $border_color_rgb[0], $border_color_rgb[1], $border_color_rgb[2]);
-					imagerectangle($image, $v['x1'], $v['y1'], $v['x1'] + $v['x2'], $v['y1'] + $v['y2'], $border_color);
+					if ($v['type'] == 1000) {
+						imagerectangle($image, $v['x1'], $v['y1'], $v['x1'] + $v['x2'], $v['y1'] + $v['y2'], $border_color);
+					} else if ($v['type'] == 1100) {
+						$half_width = $v['x2'] / 2;
+						$half_height = $v['y2'] / 2;
+						imagepolygon($image, [
+							$v['x1'] + $half_width, $v['y1'],
+							$v['x1'] + $v['x2'], $v['y1'] + $half_height,
+							$v['x1'] + $half_width, $v['y1'] + $v['y2'],
+							$v['x1'], $v['y1'] + $half_height
+						], 4, $border_color);
+					} else if ($v['type'] == 3000) {
+						imagearc($image, $v['x1'], $v['y1'], $v['x2'], $v['y2'], 0, 360, $border_color);
+					}
 					break;
 				case 2000: // line
 					self::setLineStyle($image, $v['line_style']);
@@ -60,16 +88,6 @@ class CanvasRenderer {
 					} else if ($v['line_right_type'] == 20) {
 						self::arrow($image, $v['x1'], $v['y1'], $v['x1'] + $v['x2'], $v['y1'] + $v['y2'], 10, 10, $line_color);
 					}
-					break;
-				case 3000: // circle
-					$fill_color_rgb = hex2rgb($v['shape_fill_color']);
-					$fill_color = imagecolorallocate($image, $fill_color_rgb[0], $fill_color_rgb[1], $fill_color_rgb[2]);
-					imagefilledarc($image, $v['x1'], $v['y1'], $v['x2'], $v['y2'], 0, 360, $fill_color, IMG_ARC_PIE);
-					// border
-					self::setLineStyle($image, $v['shape_border_style']);
-					$border_color_rgb = hex2rgb($v['shape_border_color']);
-					$border_color = imagecolorallocate($image, $border_color_rgb[0], $border_color_rgb[1], $border_color_rgb[2]);
-					imagearc($image, $v['x1'], $v['y1'], $v['x2'], $v['y2'], 0, 360, $border_color);
 					break;
 				case 4000: // text
 					// override colors

@@ -105,6 +105,18 @@ class CreateVersion extends \Object\Form\Wrapper\Base {
 					}
 				}
 			}
+			// copy fields
+			if (!empty($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields'])) {
+				foreach ($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields'] as $k2 => $v2) {
+					unset($v2['on_workstpfield_tenant_id']);
+					$v2['on_workstpfield_workflow_id'] = $workflow_id;
+					$merge_result = \Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields::collectionStatic()->merge($v2);
+					if (!$merge_result['success']) {
+						$form->error(DANGER, $merge_result['error']);
+						return;
+					}
+				}
+			}
 		}
 		// copy canvas
 		foreach ($result['values']['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas'] as $k => $v) {
