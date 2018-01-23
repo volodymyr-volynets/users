@@ -68,7 +68,14 @@ class Helper {
 		return $result;
 	}
 
-	public static function getNextSteps(int $workflow_id, int $execwflow_id) {
+	/**
+	 * Get next step
+	 *
+	 * @param int $workflow_id
+	 * @param int $execwflow_id
+	 * @return array
+	 */
+	public static function getNextSteps(int $workflow_id, int $execwflow_id) : array {
 		// find last step
 		$query = \Numbers\Users\Organizations\Model\Service\Executed\Workflow\Steps::queryBuilderStatic()->select();
 		$query->where('AND', ['a.on_execwfstep_execwflow_id', '=', $execwflow_id]);
@@ -76,7 +83,7 @@ class Helper {
 		$query->limit(1);
 		$existing_step = $query->query();
 		if (empty($existing_step['rows'])) {
-			$result = \Numbers\Users\Organizations\Model\Service\Workflow\Steps::getStatic([
+			return \Numbers\Users\Organizations\Model\Service\Workflow\Steps::getStatic([
 				'where' => [
 					'on_workstep_workflow_id' => $workflow_id,
 					'on_workstep_type_id' => 10,
@@ -84,17 +91,71 @@ class Helper {
 				'pk' => ['on_workstep_id']
 			]);
 		} else {
-			print_r2($existing_step);
-			exit;
-			$query = \Numbers\Users\Organizations\Model\Service\Workflow\Steps::queryBuilderStatic()->select();
-			$query->where('AND', ['a.on_workstep_workflow_id', '=', $workflow_id]);
-			$query->where('AND', function (& $query) use ($workflow_id) {
-				$query = \Numbers\Users\Organizations\Model\Service\Workflow\Step\Next::queryBuilderStatic(['alias' => 'exists_a'])->select();
-				$query->columns(['exists_a.on_workstpnext_next_step_id']);
-				$query->where('AND', ['exists_a.on_workstpnext_workflow_id', '=', $workflow_id]);
-				//$query->where('AND', ['exists_a.ct_grpuser_user_id', '=', \User::id(), false]);
-			}, 'EXISTS');
+			// if status not complete means we are on the right step, just return it
+			if ($existing_step['rows'][0]['on_execwfstep_status_id'] != 30) {
+				return \Numbers\Users\Organizations\Model\Service\Workflow\Steps::getStatic([
+					'where' => [
+						'on_workstep_workflow_id' => $workflow_id,
+						'on_workstep_id' => $existing_step['rows'][0]['on_execwfstep_step_id'],
+					],
+					'pk' => ['on_workstep_id']
+				]);
+			} else {
+				// last step
+				$step_id = $existing_step['rows'][0]['on_execwfstep_step_id'];
+				// fetch next steps
+				$query = \Numbers\Users\Organizations\Model\Service\Workflow\Steps::queryBuilderStatic()->select();
+				$query->where('AND', ['a.on_workstep_workflow_id', '=', $workflow_id]);
+				$query->where('AND', function (& $query) use ($workflow_id, $step_id) {
+					$query = \Numbers\Users\Organizations\Model\Service\Workflow\Step\Next::queryBuilderStatic(['alias' => 'exists_a'])->select();
+					$query->columns(['exists_a.on_workstpnext_next_step_id']);
+					$query->where('AND', ['exists_a.on_workstpnext_workflow_id', '=', $workflow_id]);
+					$query->where('AND', ['exists_a.on_workstpnext_step_id', '=', $step_id, false]);
+					$query->where('AND', ['exists_a.on_workstpnext_next_step_id', '=', 'a.on_workstep_id', true]);
+				}, 'EXISTS');
+				$result = $query->query(['on_workstep_id']);
+				return $result['rows'];
+			}
 		}
+	}
+
+	/**
+	 * Prepare for render next step
+	 *
+	 * @param int $workflow_id
+	 * @param int $execwflow_id
+	 * @return array
+	 */
+	public static function prepareForRenderNextStep(int $workflow_id, int $execwflow_id) : array {
+		$result = [
+			'success' => false,
+			'error' => [],
+			'form_model' => '',
+			'step_id' => null,
+			'step_name' => '',
+			'html' => ''
+		];
+		$next_steps = self::getNextSteps($workflow_id, $execwflow_id);
+		if (count($next_steps) == 1) {
+			$next = current($next_steps);
+			$result['step_id'] = $next['on_workstep_id'];
+			$result['step_name'] = $next['on_workstep_name'];
+			switch ($next['on_workstep_subtype_id']) {
+				case 100: // form
+					$result['form_model'] = '\Numbers\Users\Organizations\Form\Workflow\SubType\Form';
+					break;
+				case 900: // assignment
+					$result['form_model'] = '\Numbers\Users\Organizations\Form\Workflow\SubType\Assignment';
+					break;
+				default:
+					Throw new \Exception('Type ' . $next['on_workstep_subtype_id'] . '?');
+			}
+		} else { // we have a choice
+			print_r2($next_steps);
+			exit;
+			//
+		}
+		$result['success'] = true;
 		return $result;
 	}
 
@@ -119,6 +180,43 @@ class Helper {
 		return $result;
 	}
 
+	/**
+	 * Process automatic step
+	 *
+	 * @param int $workflow_id
+	 * @param int $execwflow_id
+	 * @param array $step_data
+	 * @return array
+	 */
+	public static function processSingleStep(int $workflow_id, int $execwflow_id, int $step_id) : array {
+		$step_data = \Numbers\Users\Organizations\Model\Service\Workflow\Steps::getStatic([
+			'where' => [
+				'on_workstep_workflow_id' => $workflow_id,
+				'on_workstep_id' => $step_id,
+			],
+			'pk' => ['on_workstep_id'],
+			'single_row' => true
+		]);
+		$result = \Numbers\Users\Organizations\Model\Service\Executed\Workflow\Steps::collectionStatic()->merge([
+			'on_execwfstep_execwflow_id' => $execwflow_id,
+			'on_execwfstep_workflow_id' => $workflow_id,
+			'on_execwfstep_step_id' => $step_id,
+			'on_execwfstep_name' => $step_data['on_workstep_name'],
+			'on_execwfstep_status_id' => 30
+		]);
+		// insert fields
+		return $result;
+	}
+
+	/**
+	 * Insert single field
+	 *
+	 * @param int $execwflow_id
+	 * @param int $execwfstep_id
+	 * @param string $field_code
+	 * @param type $field_value
+	 * @return array
+	 */
 	public static function insertSingleField(int $execwflow_id, int $execwfstep_id, string $field_code, $field_value) : array {
 		if (!isset(self::$cached_fields)) {
 			self::$cached_fields = \Numbers\Users\Organizations\Model\Service\Workflow\Fields::getStatic([

@@ -77,6 +77,31 @@ class Collection extends \Object\Form\Wrapper\Collection {
 					'order' => $index
 				];
 				$index++;
+				// render next step
+				$next_result = \Numbers\Users\Organizations\Helper\Workflow\Helper::prepareForRenderNextStep($v['on_execwflow_workflow_id'], $k);
+				if ($next_result['success']) {
+					$options['input']['on_execwflow_id'] = $k;
+					$options['input']['on_execwflow_step_id'] = $next_result['step_id'];
+					$options['input']['on_execwflow_workflow_id'] = $v['on_execwflow_workflow_id'];
+					$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k . '_next']['order'] = $index;
+					$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k . '_next'][self::FORMS]['on_workflow_form_id_' . $k . '_next'] = [
+						'model' => $next_result['form_model'],
+						'options' => [
+							'form_link' => 'on_workflow_form_id_' . $k . '_next',
+							'segment' => ['type' => 'warning',
+								'header' => [
+									'icon' => ['type' => ' fab fa-hubspot'],
+									'title' => 'Workflow Next Step: ' . $next_result['step_name'],
+								]
+							],
+							'percent' => 100,
+							'input' => $options['input'],
+							'bypass_hidden_from_input' => ($options['__parent_options']['bypass_input'] ?? []),
+						],
+						'order' => $index
+					];
+					$index++;
+				}
 			}
 		}
 		// call parent constructor

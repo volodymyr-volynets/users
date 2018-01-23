@@ -2,7 +2,7 @@
 
 namespace Numbers\Users\Organizations\Form\Workflow;
 class Workflows extends \Object\Form\Wrapper\Base {
-	public $form_link = 'on_workflow_form';
+	public $form_link = 'on_workflow_workflows_form';
 	public $module_code = 'ON';
 	public $title = 'O/N Workflows Form';
 	public $options = [
