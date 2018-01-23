@@ -21,6 +21,7 @@ class Steps extends \Object\Table {
 		'on_execwfstep_id' => ['name' => 'Executed Step #', 'domain' => 'executed_workflow_id_sequence'],
 		'on_execwfstep_workflow_id' => ['name' => 'Workflow #', 'domain' => 'workflow_id'],
 		'on_execwfstep_step_id' => ['name' => 'Step #', 'domain' => 'step_id'],
+		'on_execwfstep_name' => ['name' => 'Name', 'domain' => 'name'],
 		'on_execwfstep_status_id' => ['name' => 'Status', 'domain' => 'type_id', 'default' => 10, 'options_model' => '\Numbers\Users\Organizations\Model\Service\Executed\Workflow\Statuses'],
 	];
 	public $constraints = [

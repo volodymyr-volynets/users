@@ -13,6 +13,7 @@ class CanvasRenderer {
 	 * @return string
 	 */
 	public static function render(array $data, array $options = []) {
+		if (empty($options['width']) || empty($options['height'])) return '';
 		$options['width'] = $options['width'] ?? 1024;
 		$options['height'] = $options['height'] ?? 768;
 		// sort by order

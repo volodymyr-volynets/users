@@ -28,6 +28,7 @@ class Fields extends \Object\Table {
 	];
 	public $constraints = [
 		'om_workflow_fields_pk' => ['type' => 'pk', 'columns' => ['on_workfield_tenant_id', 'on_workfield_id']],
+		'on_workfield_code_un' => ['type' => 'unique', 'columns' => ['on_workfield_tenant_id', 'on_workfield_code']],
 	];
 	public $indexes = [
 		'om_workflow_fields_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['on_workfield_name', 'on_workfield_code']],

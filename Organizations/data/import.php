@@ -65,6 +65,22 @@ class Import extends \Object\Import {
 					'sm_feature_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Module\Dependencies' => []
 				],
+				[
+					'sm_feature_module_code' => 'ON',
+					'sm_feature_code' => 'ON::WORKFLOW_SUPPLEMENTARY',
+					'sm_feature_type' => 30,
+					'sm_feature_name' => 'O/N Workflow Supplementary',
+					'sm_feature_icon' => 'fas fa-database',
+					'sm_feature_activation_model' => '\Numbers\Users\Organizations\Data\Features\Workflow\Supplementary',
+					'sm_feature_activated_by_default' => 1,
+					'sm_feature_inactive' => 0,
+					'\Numbers\Backend\System\Modules\Model\Module\Dependencies' => [
+						[
+							'sm_mdldep_child_module_code' => 'ON',
+							'sm_mdldep_child_feature_code' => 'ON::SERVICES'
+						]
+					]
+				],
 			]
 		],
 	];
