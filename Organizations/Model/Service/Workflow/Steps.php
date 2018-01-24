@@ -25,6 +25,7 @@ class Steps extends \Object\Table {
 		'on_workstep_subflow_workflow_id' => ['name' => 'Subflow #', 'domain' => 'workflow_id', 'null' => true],
 		'on_workstep_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Types'],
 		'on_workstep_subtype_id' => ['name' => 'Sub Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\SubTypes'],
+		'on_workstep_dashboard_id' => ['name' => 'Dashboard #', 'domain' => 'dashboard_id', 'null' => true],
 		'on_workstep_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

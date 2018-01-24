@@ -27,7 +27,7 @@ class Fields extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'on_workfield_id' => [
-				'on_workfield_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Channel #', 'domain' => 'channel_id_sequence', 'percent' => 50, 'navigation' => true],
+				'on_workfield_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Field #', 'domain' => 'field_id_sequence', 'percent' => 50, 'navigation' => true],
 				'on_workfield_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => true, 'navigation' => true],
 				'on_workfield_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],

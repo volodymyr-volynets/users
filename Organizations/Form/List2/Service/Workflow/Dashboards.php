@@ -1,10 +1,10 @@
 <?php
 
 namespace Numbers\Users\Organizations\Form\List2\Service\Workflow;
-class Fields extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'on_workflow_fields_list';
+class Dashboards extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'on_workflow_dashboards_list';
 	public $module_code = 'ON';
-	public $title = 'O/N Workflow Fields List';
+	public $title = 'O/N Workflow Dashboards List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
@@ -35,13 +35,13 @@ class Fields extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			'on_workfield_id' => [
-				'on_workfield_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Field #', 'domain' => 'field_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_workfield_id;>='],
-				'on_workfield_id2' => ['order' => 2, 'label_name' => 'Field #', 'domain' => 'field_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_workfield_id;<='],
-				'on_workfield_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_workfield_inactive;=']
+			'on_workdashboard_id' => [
+				'on_workdashboard_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Dashboard #', 'domain' => 'dashboard_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_workdashboard_id;>='],
+				'on_workdashboard_id2' => ['order' => 2, 'label_name' => 'Dashboard #', 'domain' => 'dashboard_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_workdashboard_id;<='],
+				'on_workdashboard_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_workdashboard_inactive;=']
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_workfield_code', 'a.on_workfield_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_workdashboard_code', 'a.on_workdashboard_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -53,24 +53,24 @@ class Fields extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'on_workfield_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Field #', 'domain' => 'field_id', 'percent' => 10, 'url_edit' => true],
-				'on_workfield_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 50],
-				'on_workfield_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 35],
-				'on_workfield_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'on_workdashboard_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Dashboard #', 'domain' => 'dashboard_id', 'percent' => 10, 'url_edit' => true],
+				'on_workdashboard_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 50],
+				'on_workdashboard_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 35],
+				'on_workdashboard_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Organizations\Model\Service\Workflow\Fields';
+	public $query_primary_model = '\Numbers\Users\Organizations\Model\Service\Workflow\Dashboards';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'on_workfield_id' => SORT_ASC
+			'on_workdashboard_id' => SORT_ASC
 		]
 	];
 	const LIST_SORT_OPTIONS = [
-		'on_workfield_id' => ['name' => 'Fields #'],
-		'on_workfield_name' => ['name' => 'Name']
+		'on_workdashboard_id' => ['name' => 'Dashboard #'],
+		'on_workdashboard_name' => ['name' => 'Name']
 	];
 }

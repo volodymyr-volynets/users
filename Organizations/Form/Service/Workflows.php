@@ -163,13 +163,16 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'row1' => [
 				'on_workstep_order' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Order', 'domain' => 'order', 'null' => true, 'required' => true, 'percent' => 15],
 				'on_workstep_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 55, 'null' => true, 'required' => true],
-				'on_workstep_code' => ['order' => 3, 'label_name' => 'Status Code', 'domain' => 'group_code', 'percent' => 25, 'null' => true, 'required' => true],
+				'on_workstep_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 25, 'null' => true, 'required' => true],
 				'on_workstep_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
 			'row2' => [
 				'on_workstep_type_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Types', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
 				'on_workstep_subtype_id' => ['order' => 2, 'label_name' => 'Sub Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 25, 'placeholder' => 'Subtype', 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\SubTypes', 'onchange' => 'this.form.submit();'],
 				'on_workstep_subflow_workflow_id' => ['order' => 3, 'label_name' => 'Subflow', 'domain' => 'workflow_id', 'null' => true, 'required' => 'c', 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows::optionsActive', 'options_params' => ['on_workflow_versioned' => 0, 'on_workflow_type_id' => 20, 'on_workflow_parent_workflow_id' => 'parent::on_workflow_id']],
+			],
+			'row3' => [
+				'on_workstep_dashboard_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Dashboard', 'domain' => 'dashboard_id', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Dashboards::optionsActive'],
 			],
 			self::HIDDEN => [
 				'on_workstep_id' => ['label_name' => 'Step #', 'domain' => 'step_id', 'null' => true, 'method' => 'hidden'],
@@ -263,6 +266,9 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'on_workstpalarm_from_step_start' => ['order' => 2, 'label_name' => 'From Step Start', 'type' => 'boolean', 'percent' => 15],
 				'on_workstpalarm_from_date_field_id' => ['order' => 3, 'label_name' => 'From Date Field #', 'domain' => 'field_id', 'null' => true, 'perent' => 65, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Fields::optionsActive', 'options_params' => ['on_workfield_type' => 'timestamp']],
 				'on_workstpalarm_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row3' => [
+				'on_workstpalarm_dashboard_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Dashboard', 'domain' => 'dashboard_id', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Dashboards::optionsActive'],
 			]
 		],
 		'buttons' => [

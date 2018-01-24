@@ -26,6 +26,7 @@ class Alarms extends \Object\Table {
 		'on_workstpalarm_business' => ['name' => 'Business', 'type' => 'boolean'],
 		'on_workstpalarm_from_step_start' => ['name' => 'From Step Start', 'type' => 'boolean'],
 		'on_workstpalarm_from_date_field_id' => ['name' => 'From Date Field #', 'domain' => 'field_id', 'null' => true],
+		'on_workstpalarm_dashboard_id' => ['name' => 'Dashboard #', 'domain' => 'dashboard_id', 'null' => true],
 		'on_workstpalarm_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

@@ -27,11 +27,11 @@ class Fields extends \Object\Table {
 		'on_workfield_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'om_workflow_fields_pk' => ['type' => 'pk', 'columns' => ['on_workfield_tenant_id', 'on_workfield_id']],
+		'on_workflow_fields_pk' => ['type' => 'pk', 'columns' => ['on_workfield_tenant_id', 'on_workfield_id']],
 		'on_workfield_code_un' => ['type' => 'unique', 'columns' => ['on_workfield_tenant_id', 'on_workfield_code']],
 	];
 	public $indexes = [
-		'om_workflow_fields_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['on_workfield_name', 'on_workfield_code']],
+		'on_workflow_fields_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['on_workfield_name', 'on_workfield_code']],
 	];
 	public $history = false;
 	public $audit = false;
