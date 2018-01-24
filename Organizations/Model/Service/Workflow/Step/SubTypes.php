@@ -18,7 +18,7 @@ class SubTypes extends \Object\Data {
 		100 => ['on_workstpsubtype_name' => 'Form', 'on_workstpsubtype_icon' => 'fas fa-database'],
 		200 => ['on_workstpsubtype_name' => 'Decision', 'on_workstpsubtype_icon' => 'far fa-question-circle'],
 		300 => ['on_workstpsubtype_name' => 'Information', 'on_workstpsubtype_icon' => 'fas fa-info'],
-		400 => ['on_workstpsubtype_name' => 'Acknowledge', 'on_workstpsubtype_icon' => 'fab fa-delicious'],
+		//400 => ['on_workstpsubtype_name' => 'Acknowledge', 'on_workstpsubtype_icon' => 'fab fa-delicious'],
 		900 => ['on_workstpsubtype_name' => 'Assignment', 'on_workstpsubtype_icon' => 'fab fa-glide'],
 		999 => ['on_workstpsubtype_name' => 'Automatic', 'on_workstpsubtype_icon' => 'fab fa-discourse'],
 	];

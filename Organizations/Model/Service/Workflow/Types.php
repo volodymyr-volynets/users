@@ -18,6 +18,7 @@ class Types extends \Object\Data {
 	];
 	public $data = [
 		10 => ['on_worktype_name' => 'Workflow', 'on_worktype_icon' => 'fas fa-tree'],
-		20 => ['on_worktype_name' => 'Subflow', 'on_worktype_icon' => 'fab fa-pagelines'],
+		// todo
+		//20 => ['on_worktype_name' => 'Subflow', 'on_worktype_icon' => 'fab fa-pagelines'],
 	];
 }

@@ -100,8 +100,8 @@ class Fields extends \Object\Form\Wrapper\Base {
 				}
 			} else {
 				// method
-				if (!in_array($form->values['on_workfield_method'], ['text', 'boolean'])) {
-					$form->error('danger', 'You can only have Text and Boolean!', 'on_workfield_method');
+				if (!in_array($form->values['on_workfield_method'], ['input', 'boolean'])) {
+					$form->error('danger', 'You can only have Input and Boolean!', 'on_workfield_method');
 				}
 			}
 			// update type

@@ -117,6 +117,16 @@ class CreateVersion extends \Object\Form\Wrapper\Base {
 					}
 				}
 			}
+			// copy complementary
+			if (!empty($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary'])) {
+				unset($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary']['on_workstpcomp_tenant_id']);
+				$v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary']['on_workstpcomp_workflow_id'] = $workflow_id;
+				$merge_result = \Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary::collectionStatic()->merge($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary']);
+				if (!$merge_result['success']) {
+					$form->error(DANGER, $merge_result['error']);
+					return;
+				}
+			}
 		}
 		// copy canvas
 		foreach ($result['values']['\Numbers\Users\Organizations\Model\Service\Workflow\Canvas'] as $k => $v) {

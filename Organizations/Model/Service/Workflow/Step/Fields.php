@@ -22,6 +22,9 @@ class Fields extends \Object\Table {
 		'on_workstpfield_field_id' => ['name' => 'Field #', 'domain' => 'field_id'],
 		'on_workstpfield_order' => ['name' => 'Order', 'domain' => 'order'],
 		'on_workstpfield_default' => ['name' => 'Default', 'type' => 'text', 'null' => true],
+		'on_workstpfield_required' => ['name' => 'Required', 'type' => 'boolean'],
+		'on_workstpfield_row_id' => ['name' => 'Row', 'domain' => 'code', 'default' => 'row1', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Field\Rows'],
+		'on_workstpfield_percent' => ['name' => 'Percent', 'domain' => 'percent'],
 		'on_workstpfield_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

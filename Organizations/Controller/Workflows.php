@@ -10,7 +10,7 @@ class Workflows extends \Object\Controller\Permission {
 	}
 	public function actionEdit() {
 		$form = new \Numbers\Users\Organizations\Form\Service\Workflows([
-			'input' => \Request::input()
+			'input' => \Request::input(null, false)
 		]);
 		echo $form->render();
 	}

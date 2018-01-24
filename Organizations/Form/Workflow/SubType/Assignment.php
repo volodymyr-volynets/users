@@ -57,7 +57,26 @@ class Assignment extends \Object\Form\Wrapper\Base {
 			$form->error(DANGER, $result['error']);
 			return false;
 		}
+		$execwfstep_id = $result['new_serials']['on_execwfstep_id'];
+		// step 3 insert field
+		$result = \Numbers\Users\Organizations\Helper\Workflow\Helper::insertSingleField($execwflow_id, $execwfstep_id, 'SYSTEM_ASSIGNEE_USER_ID', $form->values['user_id']);
+		if (!$result['success']) {
+			$model->db_object->rollback();
+			$form->error(DANGER, $result['error']);
+			return false;
+		}
 		$model->db_object->commit();
 		return true;
+	}
+
+	public function success(& $form) {
+		$params = [];
+		if (!empty($form->options['bypass_hidden_from_input'])) {
+			foreach ($form->options['bypass_hidden_from_input'] as $v) {
+				$params[$v] = $form->options['input'][$v] ?? '';
+			}
+		}
+		$url = \Application::get('mvc.full') . '?' . http_build_query2($params) . '#' . $form->options['input']['on_execwflow_anchor'];
+		\Request::redirect($url);
 	}
 }

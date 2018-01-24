@@ -54,8 +54,8 @@ class Fields extends \Object\Form\Wrapper\List2 {
 		self::LIST_CONTAINER => [
 			'row1' => [
 				'on_workfield_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Field #', 'domain' => 'field_id', 'percent' => 10, 'url_edit' => true],
-				'on_workfield_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 70],
-				'on_workfield_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 15],
+				'on_workfield_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 50],
+				'on_workfield_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 35],
 				'on_workfield_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]

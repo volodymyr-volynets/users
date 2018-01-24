@@ -84,7 +84,18 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields',
 			'details_pk' => ['on_workstpfield_field_id'],
 			'order' => 35003
-		]
+		],
+		'complementary_container' => [
+			'label_name' => 'Complementary',
+			'type' => 'subdetails',
+			'details_rendering_type' => 'grid_with_label',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Steps',
+			'details_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary',
+			'details_pk' => ['on_workstpcomp_step_id'],
+			'details_11' => true,
+			'order' => 35003
+		],
 	];
 
 	public $rows = [
@@ -216,7 +227,18 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			],
 			'row2' => [
 				'on_workstpfield_order' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Order', 'domain' => 'order', 'null' => true, 'percent' => 20],
-				'on_workstpfield_default' => ['order' => 2, 'label_name' => 'Default', 'type' => 'text', 'null' => true, 'percent' => 80, 'placeholder' => 'Default'],
+				'on_workstpfield_required' => ['order' => 2, 'label_name' => 'Required', 'type' => 'boolean', 'percent' => 5],
+				'on_workstpfield_row_id' => ['order' => 3, 'label_name' => 'Row', 'domain' => 'code', 'default' => 'row1', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Field\Rows'],
+				'on_workstpfield_percent' => ['order' => 4, 'label_name' => 'Percent', 'domain' => 'percent', 'null' => true, 'required' => true, 'percent' => 10],
+				'on_workstpfield_default' => ['order' => 5, 'label_name' => 'Default', 'type' => 'text', 'null' => true, 'percent' => 40, 'placeholder' => 'Default'],
+			]
+		],
+		'complementary_container' => [
+			'row1' => [
+				'on_workstpcomp_date_field_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Date Field', 'domain' => 'field_id', 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Fields::optionsActive', 'options_params' => ['on_workfield_type' => 'timestamp']],
+			],
+			'row2' => [
+				'on_workstpcomp_description' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Description / Information', 'domain' => 'description', 'null' => true, 'required' => 'c', 'percent' => 100, 'method' => 'wysiwyg'],
 			]
 		],
 		'buttons' => [
@@ -264,6 +286,12 @@ class Workflows extends \Object\Form\Wrapper\Base {
 						'pk' => ['on_workstpfield_tenant_id', 'on_workstpfield_workflow_id', 'on_workstpfield_step_id', 'on_workstpfield_field_id'],
 						'type' => '1M',
 						'map' => ['on_workstep_tenant_id' => 'on_workstpfield_tenant_id', 'on_workstep_workflow_id' => 'on_workstpfield_workflow_id', 'on_workstep_id' => 'on_workstpfield_step_id'],
+					],
+					'\Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary' => [
+						'name' => 'Complementary',
+						'pk' => ['on_workstpcomp_tenant_id', 'on_workstpcomp_workflow_id', 'on_workstpcomp_step_id'],
+						'type' => '11',
+						'map' => ['on_workstep_tenant_id' => 'on_workstpcomp_tenant_id', 'on_workstep_workflow_id' => 'on_workstpcomp_workflow_id', 'on_workstep_id' => 'on_workstpcomp_step_id'],
 					]
 				]
 			]
@@ -283,6 +311,30 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			// form subtype must have form fields
 			if ($v['on_workstep_subtype_id'] == 100 && empty($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields'])) {
 				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, "\Numbers\Users\Organizations\Model\Service\Workflow\Steps[{$k}][\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields][1][on_workstpfield_field_id]");
+			}
+			// information
+			if ($v['on_workstep_subtype_id'] == 300 && empty($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary']['on_workstpcomp_description'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, "\Numbers\Users\Organizations\Model\Service\Workflow\Steps[{$k}][\Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary][on_workstpcomp_description]");
+			}
+			// step fields
+			if (!empty($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields'])) {
+				$temp = [];
+				foreach ($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields'] as $k2 => $v2) {
+					if (!isset($temp[$v2['on_workstpfield_row_id']])) {
+						$temp[$v2['on_workstpfield_row_id']][1] = $v2['on_workstpfield_percent'];
+						$temp[$v2['on_workstpfield_row_id']][2] = [$k2];
+					} else {
+						$temp[$v2['on_workstpfield_row_id']][1]+= $v2['on_workstpfield_percent'];
+						$temp[$v2['on_workstpfield_row_id']][2][] = $k2;
+					}
+				}
+				foreach ($temp as $k2 => $v2) {
+					if ($v2[1] != 100) {
+						foreach ($v2[2] as $v3) {
+							$form->error(DANGER, 'Sum is not 100%!', "\Numbers\Users\Organizations\Model\Service\Workflow\Steps[{$k}][\Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields][{$v3}][on_workstpfield_percent]");
+						}
+					}
+				}
 			}
 		}
 	}

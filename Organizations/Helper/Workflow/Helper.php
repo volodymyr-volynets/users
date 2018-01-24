@@ -103,15 +103,19 @@ class Helper {
 			} else {
 				// last step
 				$step_id = $existing_step['rows'][0]['on_execwfstep_step_id'];
+				$chosen_step_id = $existing_step['rows'][0]['on_execwfstep_chosen_step_id'];
 				// fetch next steps
 				$query = \Numbers\Users\Organizations\Model\Service\Workflow\Steps::queryBuilderStatic()->select();
 				$query->where('AND', ['a.on_workstep_workflow_id', '=', $workflow_id]);
-				$query->where('AND', function (& $query) use ($workflow_id, $step_id) {
+				$query->where('AND', function (& $query) use ($workflow_id, $step_id, $chosen_step_id) {
 					$query = \Numbers\Users\Organizations\Model\Service\Workflow\Step\Next::queryBuilderStatic(['alias' => 'exists_a'])->select();
 					$query->columns(['exists_a.on_workstpnext_next_step_id']);
 					$query->where('AND', ['exists_a.on_workstpnext_workflow_id', '=', $workflow_id]);
 					$query->where('AND', ['exists_a.on_workstpnext_step_id', '=', $step_id, false]);
 					$query->where('AND', ['exists_a.on_workstpnext_next_step_id', '=', 'a.on_workstep_id', true]);
+					if (!empty($chosen_step_id)) {
+						$query->where('AND', ['exists_a.on_workstpnext_next_step_id', '=', $chosen_step_id]);
+					}
 				}, 'EXISTS');
 				$result = $query->query(['on_workstep_id']);
 				return $result['rows'];
@@ -144,6 +148,12 @@ class Helper {
 				case 100: // form
 					$result['form_model'] = '\Numbers\Users\Organizations\Form\Workflow\SubType\Form';
 					break;
+				case 200: // decision
+					$result['form_model'] = '\Numbers\Users\Organizations\Form\Workflow\SubType\Decision';
+					break;
+				case 300:
+					$result['form_model'] = '\Numbers\Users\Organizations\Form\Workflow\SubType\Information';
+					break;
 				case 900: // assignment
 					$result['form_model'] = '\Numbers\Users\Organizations\Form\Workflow\SubType\Assignment';
 					break;
@@ -151,9 +161,7 @@ class Helper {
 					Throw new \Exception('Type ' . $next['on_workstep_subtype_id'] . '?');
 			}
 		} else { // we have a choice
-			print_r2($next_steps);
-			exit;
-			//
+			return $result;
 		}
 		$result['success'] = true;
 		return $result;
@@ -185,10 +193,12 @@ class Helper {
 	 *
 	 * @param int $workflow_id
 	 * @param int $execwflow_id
-	 * @param array $step_data
+	 * @param int $step_id
+	 * @param array $options
+	 *		on_execwfstep_chosen_step_id
 	 * @return array
 	 */
-	public static function processSingleStep(int $workflow_id, int $execwflow_id, int $step_id) : array {
+	public static function processSingleStep(int $workflow_id, int $execwflow_id, int $step_id, array $options = []) : array {
 		$step_data = \Numbers\Users\Organizations\Model\Service\Workflow\Steps::getStatic([
 			'where' => [
 				'on_workstep_workflow_id' => $workflow_id,
@@ -202,9 +212,27 @@ class Helper {
 			'on_execwfstep_workflow_id' => $workflow_id,
 			'on_execwfstep_step_id' => $step_id,
 			'on_execwfstep_name' => $step_data['on_workstep_name'],
-			'on_execwfstep_status_id' => 30
+			'on_execwfstep_status_id' => 30,
+			'on_execwfstep_chosen_step_id' => $options['on_execwfstep_chosen_step_id'] ?? null
 		]);
-		// insert fields
+		if (!$result['success']) {
+			return $result;
+		}
+		// load complementary
+		$info_result = \Numbers\Users\Organizations\Model\Service\Workflow\Step\Complementary::getStatic([
+			'where' => [
+				'on_workstpcomp_workflow_id' => $workflow_id,
+				'on_workstpcomp_step_id' => $step_id,
+			],
+			'pk' => null,
+			'single_row' => true
+		]);
+		if (!empty($info_result['on_workstpcomp_date_field_id'])) {
+			$field_result = self::insertSingleField($execwflow_id, $result['new_serials']['on_execwfstep_id'], $info_result['on_workstpcomp_date_field_id'], \Format::now('timestamp'));
+			if (!$field_result['success']) {
+				return $field_result;
+			}
+		}
 		return $result;
 	}
 
@@ -213,15 +241,24 @@ class Helper {
 	 *
 	 * @param int $execwflow_id
 	 * @param int $execwfstep_id
-	 * @param string $field_code
+	 * @param int|string $field_code
 	 * @param type $field_value
 	 * @return array
 	 */
-	public static function insertSingleField(int $execwflow_id, int $execwfstep_id, string $field_code, $field_value) : array {
+	public static function insertSingleField(int $execwflow_id, int $execwfstep_id, $field_code, $field_value) : array {
 		if (!isset(self::$cached_fields)) {
 			self::$cached_fields = \Numbers\Users\Organizations\Model\Service\Workflow\Fields::getStatic([
 				'pk' => ['on_workfield_code']
 			]);
+		}
+		// if we pass field id
+		if (is_numeric($field_code)) {
+			foreach (self::$cached_fields as $k => $v) {
+				if ($v['on_workfield_id'] == $field_code) {
+					$field_code = $k;
+					break;
+				}
+			}
 		}
 		// determine storage type
 		$type = 'mixed';
