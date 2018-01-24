@@ -51,7 +51,7 @@ class CreateVersion extends \Object\Form\Wrapper\Base {
 		$result['values']['on_workflow_version_workflow_id'] = $result['values']['on_workflow_id'];
 		$result['values']['on_workflow_version_code'] = $form->values['on_workflow_version_code'];
 		$result['values']['on_workflow_version_name'] = $form->values['on_workflow_version_name'];
-		$result['values']['on_workflow_code'].= ' - ' . $result['values']['on_workflow_version_code'];
+		$result['values']['on_workflow_code'].= ' - ' . strtoupper($result['values']['on_workflow_version_code']);
 		if (!empty($parent_workflow_id)) {
 			$result['values']['on_workflow_parent_workflow_id'] = $parent_workflow_id;
 		}
@@ -111,6 +111,18 @@ class CreateVersion extends \Object\Form\Wrapper\Base {
 					unset($v2['on_workstpfield_tenant_id']);
 					$v2['on_workstpfield_workflow_id'] = $workflow_id;
 					$merge_result = \Numbers\Users\Organizations\Model\Service\Workflow\Step\Fields::collectionStatic()->merge($v2);
+					if (!$merge_result['success']) {
+						$form->error(DANGER, $merge_result['error']);
+						return;
+					}
+				}
+			}
+			// copy alarms
+			if (!empty($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarms'])) {
+				foreach ($v['\Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarms'] as $k2 => $v2) {
+					unset($v2['on_workstpalarm_tenant_id']);
+					$v2['on_workstpalarm_workflow_id'] = $workflow_id;
+					$merge_result = \Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarms::collectionStatic()->merge($v2);
 					if (!$merge_result['success']) {
 						$form->error(DANGER, $merge_result['error']);
 						return;

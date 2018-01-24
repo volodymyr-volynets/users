@@ -96,6 +96,16 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'details_11' => true,
 			'order' => 35003
 		],
+		'alarms_container' => [
+			'label_name' => 'Alarms',
+			'type' => 'subdetails',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Steps',
+			'details_key' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarms',
+			'details_pk' => ['on_workstpalarm_code'],
+			'order' => 35003
+		]
 	];
 
 	public $rows = [
@@ -241,6 +251,20 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'on_workstpcomp_description' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Description / Information', 'domain' => 'description', 'null' => true, 'required' => 'c', 'percent' => 100, 'method' => 'wysiwyg'],
 			]
 		],
+		'alarms_container' => [
+			'row1' => [
+				'on_workstpalarm_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 30, 'onchange' => 'this.form.submit();'],
+				'on_workstpalarm_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'required' => true, 'percent' => 40, 'onchange' => 'this.form.submit();'],
+				'on_workstpalarm_interval_period' => ['order' => 3, 'label_name' => 'Interval Period', 'domain' => 'group_id', 'null' => true, 'required' => true, 'percent' => 15],
+				'on_workstpalarm_interval_type_id' => ['order' => 4, 'label_name' => 'Interval Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 15, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarm\IntervalTypes', 'onchange' => 'this.form.submit();'],
+			],
+			'row2' => [
+				'on_workstpalarm_business' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Business', 'type' => 'boolean', 'percent' => 15],
+				'on_workstpalarm_from_step_start' => ['order' => 2, 'label_name' => 'From Step Start', 'type' => 'boolean', 'percent' => 15],
+				'on_workstpalarm_from_date_field_id' => ['order' => 3, 'label_name' => 'From Date Field #', 'domain' => 'field_id', 'null' => true, 'perent' => 65, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Fields::optionsActive', 'options_params' => ['on_workfield_type' => 'timestamp']],
+				'on_workstpalarm_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -292,6 +316,12 @@ class Workflows extends \Object\Form\Wrapper\Base {
 						'pk' => ['on_workstpcomp_tenant_id', 'on_workstpcomp_workflow_id', 'on_workstpcomp_step_id'],
 						'type' => '11',
 						'map' => ['on_workstep_tenant_id' => 'on_workstpcomp_tenant_id', 'on_workstep_workflow_id' => 'on_workstpcomp_workflow_id', 'on_workstep_id' => 'on_workstpcomp_step_id'],
+					],
+					'\Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarms' => [
+						'name' => 'Alarms',
+						'pk' => ['on_workstpalarm_tenant_id', 'on_workstpalarm_workflow_id', 'on_workstpalarm_step_id', 'on_workstpalarm_code'],
+						'type' => '1M',
+						'map' => ['on_workstep_tenant_id' => 'on_workstpalarm_tenant_id', 'on_workstep_workflow_id' => 'on_workstpalarm_workflow_id', 'on_workstep_id' => 'on_workstpalarm_step_id'],
 					]
 				]
 			]
