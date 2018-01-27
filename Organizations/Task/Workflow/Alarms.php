@@ -21,6 +21,7 @@ class Alarms extends \Numbers\Users\TaskScheduler\Abstract2\Task {
 			'a.on_execwflow_current_step_id',
 			'a.on_execwflow_current_execwfstep_id',
 			'a.on_execwflow_current_step_start',
+			'a.on_execwflow_organization_id',
 			'b.on_workstpalarm_step_id',
 			'b.on_workstpalarm_code',
 			'b.on_workstpalarm_name',
@@ -58,19 +59,25 @@ class Alarms extends \Numbers\Users\TaskScheduler\Abstract2\Task {
 				} else {
 					$base_date = $v2['on_execwffield_value_timestamp'];
 				}
+				// if business hours
 				if ($v2['on_workstpalarm_business']) {
-					Throw new \Exception('Business hours');
-				} else {
+					$future_date = \Numbers\Users\Organizations\Helper\BusinessHours::findNearestDatetime(
+						$v2['on_execwflow_organization_id'],
+						$base_date,
+						$options['timezone_code'],
+						\Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarm\IntervalTypes::convertToMinutes($v2['on_workstpalarm_interval_type_id'], $v2['on_workstpalarm_interval_period'])
+					);
+				} else { // regular interval
 					$future_date = new \DateTime($base_date, new \DateTimeZone($options['timezone_code']));
 					$future_date->add(date_interval_create_from_date_string($v2['on_workstpalarm_interval_period'] . ' ' . \Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarm\IntervalTypes::mapInterval($v2['on_workstpalarm_interval_type_id'])));
-					if ($future_date <= $now_date) {
-						$update_result = \Numbers\Users\Organizations\Helper\Workflow\Helper::updateWorkflowCurrentAlarm($v2['on_execwflow_id'], $v2['on_execwflow_current_execwfstep_id'], $v2['on_workstpalarm_code'], $v2['on_workstpalarm_name']);
-						if (!$update_result['success']) {
-							$result['error'] = array_merge($result['error'], $update_result['error']);
-							return $result;
-						}
-						goto nextflow;
+				}
+				if ($future_date <= $now_date) {
+					$update_result = \Numbers\Users\Organizations\Helper\Workflow\Helper::updateWorkflowCurrentAlarm($v2['on_execwflow_id'], $v2['on_execwflow_current_execwfstep_id'], $v2['on_workstpalarm_code'], $v2['on_workstpalarm_name']);
+					if (!$update_result['success']) {
+						$result['error'] = array_merge($result['error'], $update_result['error']);
+						return $result;
 					}
+					goto nextflow;
 				}
 			}
 nextflow:

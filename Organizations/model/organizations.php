@@ -28,6 +28,9 @@ class Organizations extends \Object\Table {
 		'on_organization_fax' => ['name' => 'Fax', 'domain' => 'phone', 'null' => true],
 		// logo
 		'on_organization_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true],
+		// operating country / province
+		'on_organization_operating_country_code' => ['name' => 'Operating Country Code', 'domain' => 'country_code', 'null' => true],
+		'on_organization_operating_province_code' => ['name' => 'Operating Province Code', 'domain' => 'province_code', 'null' => true],
 		// inactive & hold
 		'on_organization_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'on_organization_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

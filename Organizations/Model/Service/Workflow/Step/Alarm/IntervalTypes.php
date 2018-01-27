@@ -37,4 +37,21 @@ class IntervalTypes extends \Object\Data {
 			case 50: return 'years';
 		}
 	}
+
+	/**
+	 * Convert to minutes
+	 *
+	 * @param int $type_id
+	 * @param int $value
+	 * @return int
+	 */
+	public static function convertToMinutes(int $type_id, int $value) : int {
+		switch ($type_id) {
+			case 10: return $value;
+			case 20: return $value * 60;
+			case 30: return $value * 60 * 24;
+			case 40: return $value * 60 * 24 * 30;
+			case 50: return $value * 60 * 24 * 365;
+		}
+	}
 }
