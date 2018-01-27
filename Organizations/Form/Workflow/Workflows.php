@@ -35,6 +35,17 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['on_execwffield_field_id'],
 			'details_cannot_delete' => true,
 			'order' => 35000
+		],
+		'step_alarms_container' => [
+			'label_name' => 'Alarms',
+			'type' => 'subdetails',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 0,
+			'details_parent_key' => '\Numbers\Users\Organizations\Model\Service\Executed\Workflow\Steps',
+			'details_key' => '\Numbers\Users\Organizations\Model\Service\Executed\Workflow\Step\Alarms',
+			'details_pk' => ['on_execwfstpalarm_alarm_code'],
+			'details_cannot_delete' => true,
+			'order' => 35000
 		]
 	];
 	public $rows = [
@@ -54,10 +65,11 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'on_execwflow_workflow_id' => ['order' => 2, 'label_name' => 'Workflow', 'domain' => 'workflow_id', 'percent' => 50, 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows', 'readonly' => true],
 			],
 			'on_execwflow_workflow_name' => [
-				'on_execwflow_workflow_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Workflow Name', 'domain' => 'name', 'percent' => 100],
+				'on_execwflow_workflow_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Workflow Name', 'domain' => 'name', 'percent' => 50],
+				'on_execwflow_current_alarm_name' => ['order' => 2, 'label_name' => 'Current Alarm', 'domain' => 'name', 'percent' => 50, 'readonly' => true],
 			],
 			'on_execwflow_versioned_workflow_id' => [
-				'on_execwflow_status_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Status', 'domain' => 'type_id', 'default' => 10, 'options_model' => '\Numbers\Users\Organizations\Model\Service\Executed\Workflow\Statuses', 'readonly' => true],
+				'on_execwflow_status_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Status', 'domain' => 'type_id', 'default' => 10, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Executed\Workflow\Statuses', 'readonly' => true],
 				'on_execwflow_versioned_workflow_id' => ['order' => 2, 'label_name' => 'Versioned Workflow', 'domain' => 'workflow_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows', 'readonly' => true],
 			]
 		],
@@ -91,6 +103,12 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'on_execwffield_value_mixed' => ['label_name' => 'Value (Mixed)', 'type' => 'json', 'null' => true, 'method' => 'hidden'],
 			]
 		],
+		'step_alarms_container' => [
+			'row1' => [
+				'on_execwfstpalarm_alarm_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Alarm Code', 'domain' => 'group_code', 'percent' => 50, 'readonly' => true],
+				'on_execwfstpalarm_alarm_name' => ['order' => 2, 'label_name' => 'Alarm Name', 'domain' => 'name', 'percent' => 50, 'readonly' => true],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => [
 				self::BUTTON_SUBMIT_SAVE => self::BUTTON_SUBMIT_SAVE_DATA,
@@ -114,6 +132,13 @@ class Workflows extends \Object\Form\Wrapper\Base {
 						'pk' => ['on_execwffield_tenant_id', 'on_execwffield_execwflow_id', 'on_execwffield_execwfstep_id', 'on_execwffield_field_id'],
 						'type' => '1M',
 						'map' => ['on_execwfstep_tenant_id' => 'on_execwffield_tenant_id', 'on_execwfstep_execwflow_id' => 'on_execwffield_execwflow_id', 'on_execwfstep_id' => 'on_execwffield_execwfstep_id'],
+					],
+					'\Numbers\Users\Organizations\Model\Service\Executed\Workflow\Step\Alarms' => [
+						'name' => 'Step Alarms',
+						'readonly' => true,
+						'pk' => ['on_execwfstpalarm_tenant_id', 'on_execwfstpalarm_execwflow_id', 'on_execwfstpalarm_execwfstep_id', 'on_execwfstpalarm_alarm_code'],
+						'type' => '1M',
+						'map' => ['on_execwfstep_tenant_id' => 'on_execwfstpalarm_tenant_id', 'on_execwfstep_execwflow_id' => 'on_execwfstpalarm_execwflow_id', 'on_execwfstep_id' => 'on_execwfstpalarm_execwfstep_id'],
 					]
 				]
 			]

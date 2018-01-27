@@ -18,9 +18,10 @@ class Helper {
 	 * @param int $linked_module_id
 	 * @param int $linked_id
 	 * @param string $name
+	 * @param array $options
 	 * @return array
 	 */
-	public static function start(int $workflow_id, string $linked_type, int $linked_module_id, int $linked_id, string $name) : array {
+	public static function start(int $workflow_id, string $linked_type, int $linked_module_id, int $linked_id, string $name, array $options = []) : array {
 		$result = [
 			'success' => false,
 			'error' => []
@@ -37,11 +38,15 @@ class Helper {
 		$data = [
 			'on_execwflow_workflow_id' => $workflow_id,
 			'on_execwflow_versioned_workflow_id' => $workflow['on_workflow_version_workflow_id'],
-			'on_execwflow_workflow_name' => $workflow['on_workflow_name'] . ' - ' . $name,
+			'on_execwflow_workflow_name' => $workflow['on_workflow_name'],
+			'on_execwflow_customer_name' => $name,
+			'on_execwflow_customer_phone' => $options['on_execwflow_customer_phone'],
+			'on_execwflow_customer_email' => $options['on_execwflow_customer_email'],
 			'on_execwflow_status_id' => 10,
 			'on_execwflow_linked_type_code' => $linked_type,
 			'on_execwflow_linked_module_id' => $linked_module_id,
 			'on_execwflow_linked_id' => $linked_id,
+			'on_execwflow_organization_id' => $options['on_execwflow_organization_id'],
 			'on_execwflow_inactive' => 0
 		];
 		$flow_result = $model->collection()->merge($data);
@@ -184,7 +189,15 @@ class Helper {
 			'on_execwfstep_status_id' => 30
 		]);
 		// insert fields
-		self::insertSingleField($execwflow_id, $result['new_serials']['on_execwfstep_id'], 'SYSTEM_BOOK_DATE', \Format::now('timestamp'));
+		$field_result = self::insertSingleField($execwflow_id, $result['new_serials']['on_execwfstep_id'], 'SYSTEM_BOOK_DATE', \Format::now('timestamp'));
+		if (!$field_result['success']) {
+			return $field_result;
+		}
+		// current step
+		$current_result = self::updateWorkflowCurrentStep($execwflow_id, $step_data['on_workstep_id'], $result['new_serials']['on_execwfstep_id']);
+		if (!$current_result['success']) {
+			return $current_result;
+		}
 		return $result;
 	}
 
@@ -232,6 +245,56 @@ class Helper {
 			if (!$field_result['success']) {
 				return $field_result;
 			}
+		}
+		// current step
+		$current_result = self::updateWorkflowCurrentStep($execwflow_id, $step_id, $result['new_serials']['on_execwfstep_id']);
+		if (!$current_result['success']) {
+			return $current_result;
+		}
+		return $result;
+	}
+
+	/**
+	 * Update workflow current step
+	 *
+	 * @param int $execwflow_id
+	 * @param int $step_id
+	 * @return array
+	 */
+	public static function updateWorkflowCurrentStep(int $execwflow_id, int $step_id, int $execwfstep_id) : array {
+		return \Numbers\Users\Organizations\Model\Service\Executed\Workflows::collectionStatic()->merge([
+			'on_execwflow_id' => $execwflow_id,
+			'on_execwflow_current_execwfstep_id' =>$execwfstep_id,
+			'on_execwflow_current_step_id' => $step_id,
+			'on_execwflow_current_step_start' => \Format::now('timestamp'),
+			// important to reset alarm when we change step
+			'on_execwflow_current_alarm_code' => null,
+			'on_execwflow_current_alarm_name' => null,
+		]);
+	}
+
+	/**
+	 * Update workflow alarm
+	 *
+	 * @param int $execwflow_id
+	 * @param string $alarm_code
+	 * @param string $alarm_name
+	 * @return array
+	 */
+	public static function updateWorkflowCurrentAlarm(int $execwflow_id, int $execwfstep_id, string $alarm_code, string $alarm_name) : array {
+		$result = \Numbers\Users\Organizations\Model\Service\Executed\Workflows::collectionStatic()->merge([
+			'on_execwflow_id' => $execwflow_id,
+			'on_execwflow_current_alarm_code' => $alarm_code,
+			'on_execwflow_current_alarm_name' => $alarm_name,
+		]);
+		$alarm_result = \Numbers\Users\Organizations\Model\Service\Executed\Workflow\Step\Alarms::collectionStatic()->merge([
+			'on_execwfstpalarm_execwflow_id' => $execwflow_id,
+			'on_execwfstpalarm_execwfstep_id' => $execwfstep_id,
+			'on_execwfstpalarm_alarm_code' => $alarm_code,
+			'on_execwfstpalarm_alarm_name' => $alarm_name,
+		]);
+		if (!$alarm_result['success']) {
+			return $alarm_result;
 		}
 		return $result;
 	}
@@ -326,5 +389,18 @@ class Helper {
 			'height' => $collection_data['on_workflow_canvas_height'],
 			'completed_steps' => $executed_steps
 		]);
+	}
+
+	/**
+	 * Generate URL
+	 *
+	 * @param string $linked_type
+	 * @param int $module_id
+	 * @param int $linked_id
+	 * @return string
+	 */
+	public static function generateLinkedIdURL(string $linked_type, int $module_id, int $linked_id) : string {
+		$temp = \Numbers\Users\Organizations\Model\Service\Executed\Linked\Types::getStatic();
+		return str_replace(['[module_id]', '[linked_id]'], [$module_id, $linked_id], $temp[$linked_type]['on_execwflinktype_url']);
 	}
 }

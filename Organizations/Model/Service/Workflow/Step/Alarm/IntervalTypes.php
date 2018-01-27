@@ -21,4 +21,20 @@ class IntervalTypes extends \Object\Data {
 		40 => ['on_workstpinttype_name' => 'Month'],
 		50 => ['on_workstpinttype_name' => 'Years'],
 	];
+
+	/**
+	 * Map interval
+	 *
+	 * @param int $type_id
+	 * @return string
+	 */
+	public static function mapInterval(int $type_id) : string {
+		switch ($type_id) {
+			case 10: return 'minutes';
+			case 20: return 'hours';
+			case 30: return 'days';
+			case 40: return 'month';
+			case 50: return 'years';
+		}
+	}
 }

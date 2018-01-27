@@ -74,7 +74,7 @@ abstract class Task {
 	 *
 	 * @return array
 	 */
-	public function process() {
+	public function process(array $options = []) {
 		$result = [
 			'success' => false,
 			'error' => []
@@ -89,6 +89,7 @@ abstract class Task {
 		}
 		if (!empty($result['error'])) return $result;
 		// execute
+		$this->options = array_merge_hard($this->options, $options);
 		$result = $this->execute($this->parameters, $this->options);
 		// todo: send email notification
 		return $result;

@@ -25,9 +25,17 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		'children_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
-			'details_new_rows' => 3,
+			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Organizations\Model\Organization\Children',
 			'details_pk' => ['on_orgchl_child_organization_id'],
+			'order' => 35000
+		],
+		'business_hours_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Organizations\Model\Organization\BusinessHours',
+			'details_pk' => ['on_orgbhour_day_id'],
 			'order' => 35000
 		],
 	];
@@ -40,6 +48,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'children' => ['order' => 200, 'label_name' => 'Children'],
 			'logo' => ['order' => 300, 'label_name' => 'Logo'],
+			'business_hours' => ['order' => 400, 'label_name' => 'Business Hours'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
 		]
@@ -64,6 +73,9 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			],
 			'logo' => [
 				'logo' => ['container' => 'logo_container', 'order' => 100]
+			],
+			'business_hours' => [
+				'business_hours' => ['container' => 'business_hours_container', 'order' => 100]
 			]
 		],
 		'general_container' => [
@@ -108,6 +120,17 @@ class Organizations extends \Object\Form\Wrapper\Base {
 				'on_orgchl_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
+		'business_hours_container' => [
+			'row1' => [
+				'on_orgbhour_day_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Day', 'domain' => 'day_id', 'null' => true, 'percent' => 45, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organization\BusinessHour\Days', 'onchange' => 'this.form.submit();', 'options_options' => ['i18n' => 'skip_sorting']],
+				'on_orgbhour_start_time' => ['order' => 2, 'label_name' => 'Start Time', 'type' => 'time', 'null' => true, 'percent' => 25, 'required' => true, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'on_orgbhour_end_time' => ['order' => 3, 'label_name' => 'End Time', 'type' => 'time', 'null' => true, 'percent' => 25, 'required' => true, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'on_orgbhour_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'on_orgbhour_timezone_code' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Timezone', 'domain' => 'timezone_code', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Timezones::optionsActive'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -127,6 +150,12 @@ class Organizations extends \Object\Form\Wrapper\Base {
 				'pk' => ['on_orgchl_tenant_id', 'on_orgchl_parent_organization_id', 'on_orgchl_child_organization_id'],
 				'type' => '1M',
 				'map' => ['on_organization_tenant_id' => 'on_orgchl_tenant_id', 'on_organization_id' => 'on_orgchl_parent_organization_id'],
+			],
+			'\Numbers\Users\Organizations\Model\Organization\BusinessHours' => [
+				'name' => 'Business Hours',
+				'pk' => ['on_orgbhour_tenant_id', 'on_orgbhour_organization_id', 'on_orgbhour_day_id'],
+				'type' => '1M',
+				'map' => ['on_organization_tenant_id' => 'on_orgbhour_tenant_id', 'on_organization_id' => 'on_orgbhour_organization_id'],
 			]
 		]
 	];

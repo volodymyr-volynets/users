@@ -56,7 +56,11 @@ class SingleCronJob extends \Object\Controller {
 			// execute task
 			$class = $job['rows'][0]['ts_task_model'];
 			$job_model = new $class(json_decode($job['rows'][0]['ts_execjb_parameters'], true));
-			$job_result = $job_model->process();
+			$job_result = $job_model->process([
+				'datetime' => $job['rows'][0]['ts_execjb_datetime'],
+				'timezone_code' => $job['rows'][0]['ts_execjb_timezone_code'],
+				'task_code' => $job['rows'][0]['ts_execjb_task_code'],
+			]);
 			if (!$job_result['success']) {
 				$result['error'] = array_merge($result['error'], $job_result['error']);
 				break;

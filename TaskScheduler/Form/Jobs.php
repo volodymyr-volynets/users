@@ -21,7 +21,6 @@ class Jobs extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\TaskScheduler\Model\JobParameters',
 			'details_pk' => ['ts_jbparam_name'],
-			'required' => true,
 			'order' => 800
 		],
 		'buttons' => ['default_row_type' => 'grid', 'order' => 900]

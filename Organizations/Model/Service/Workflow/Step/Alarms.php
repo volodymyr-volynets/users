@@ -11,7 +11,7 @@ class Alarms extends \Object\Table {
 	public $pk = ['on_workstpalarm_tenant_id', 'on_workstpalarm_workflow_id', 'on_workstpalarm_step_id', 'on_workstpalarm_code'];
 	public $tenant = true;
 	public $orderby = [
-		'on_workstpalarm_name' => SORT_ASC
+		'on_workstpalarm_order' => SORT_ASC
 	];
 	public $limit;
 	public $column_prefix = 'on_workstpalarm_';
@@ -21,8 +21,9 @@ class Alarms extends \Object\Table {
 		'on_workstpalarm_step_id' => ['name' => 'Step #', 'domain' => 'step_id'],
 		'on_workstpalarm_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_workstpalarm_name' => ['name' => 'Name', 'domain' => 'name'],
+		'on_workstpalarm_order' => ['name' => 'Order', 'domain' => 'order'],
 		'on_workstpalarm_interval_period' => ['name' => 'Interval Period', 'domain' => 'group_id'],
-		'on_workstpalarm_interval_type_id' => ['name' => 'Interval Type', 'domain' => 'type_id'],
+		'on_workstpalarm_interval_type_id' => ['name' => 'Interval Type', 'domain' => 'type_id', 'default' => 10],
 		'on_workstpalarm_business' => ['name' => 'Business', 'type' => 'boolean'],
 		'on_workstpalarm_from_step_start' => ['name' => 'From Step Start', 'type' => 'boolean'],
 		'on_workstpalarm_from_date_field_id' => ['name' => 'From Date Field #', 'domain' => 'field_id', 'null' => true],
@@ -31,6 +32,7 @@ class Alarms extends \Object\Table {
 	];
 	public $constraints = [
 		'on_workflow_step_alarms_pk' => ['type' => 'pk', 'columns' => ['on_workstpalarm_tenant_id', 'on_workstpalarm_workflow_id', 'on_workstpalarm_step_id', 'on_workstpalarm_code']],
+		'on_workstpalarm_code_un' => ['type' => 'unique', 'columns' => ['on_workstpalarm_tenant_id', 'on_workstpalarm_workflow_id', 'on_workstpalarm_step_id', 'on_workstpalarm_code']],
 		'on_workstpalarm_step_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['on_workstpalarm_tenant_id', 'on_workstpalarm_workflow_id', 'on_workstpalarm_step_id'],

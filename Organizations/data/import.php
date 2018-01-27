@@ -83,5 +83,21 @@ class Import extends \Object\Import {
 				],
 			]
 		],
+		'tasks' => [
+			'options' => [
+				'pk' => ['ts_task_code'],
+				'model' => '\Numbers\Users\TaskScheduler\Model\Collection\Tasks',
+				'method' => 'save'
+			],
+			'data' => [
+				[
+					'ts_task_code' => 'ON_TASK_WORKFLOW_ALARMS',
+					'ts_task_name' => 'O/N Task Workflow Alarms',
+					'ts_task_model' => '\Numbers\Users\Organizations\Task\Workflow\Alarms',
+					'ts_task_inactive' => 0,
+					'\Numbers\Users\TaskScheduler\Model\TaskParameters' => []
+				]
+			]
+		],
 	];
 }
