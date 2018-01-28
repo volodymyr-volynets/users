@@ -65,13 +65,9 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'on_execwflow_workflow_id' => ['order' => 2, 'label_name' => 'Workflow', 'domain' => 'workflow_id', 'percent' => 50, 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows', 'readonly' => true],
 			],
 			'on_execwflow_workflow_name' => [
-				'on_execwflow_workflow_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Workflow Name', 'domain' => 'name', 'percent' => 50],
+				'on_execwflow_status_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Status', 'domain' => 'type_id', 'default' => 10, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Executed\Workflow\Statuses', 'readonly' => true],
 				'on_execwflow_current_alarm_name' => ['order' => 2, 'label_name' => 'Current Alarm', 'domain' => 'name', 'percent' => 50, 'readonly' => true],
 			],
-			'on_execwflow_versioned_workflow_id' => [
-				'on_execwflow_status_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Status', 'domain' => 'type_id', 'default' => 10, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Executed\Workflow\Statuses', 'readonly' => true],
-				'on_execwflow_versioned_workflow_id' => ['order' => 2, 'label_name' => 'Versioned Workflow', 'domain' => 'workflow_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows', 'readonly' => true],
-			]
 		],
 		'tabs' => [
 			'steps' => [
@@ -111,7 +107,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		],
 		'buttons' => [
 			self::BUTTONS => [
-				self::BUTTON_SUBMIT_SAVE => self::BUTTON_SUBMIT_SAVE_DATA,
+				//self::BUTTON_SUBMIT_SAVE => self::BUTTON_SUBMIT_SAVE_DATA,
 			]
 		]
 	];

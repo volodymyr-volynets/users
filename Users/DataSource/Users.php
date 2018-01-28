@@ -10,13 +10,13 @@ class Users extends \Object\DataSource {
 	public $limit;
 	public $single_row;
 	public $single_value;
-	public $options_map =[
+	public $options_map = [
 		'um_user_name' => 'name',
 		'um_user_company' => 'name',
 		'um_user_photo_file_id' => 'photo_id',
 		'um_user_inactive' => 'inactive'
 	];
-	public $options_active =[
+	public $options_active = [
 		'um_user_inactive' => 0
 	];
 	public $column_prefix = 'um_user_';

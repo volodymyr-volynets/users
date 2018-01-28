@@ -82,10 +82,11 @@ class Controllers2 extends \Numbers\Users\Users\DataSource\ACL\Controllers {
 	 * @return string
 	 */
 	public function determineClassificationIcon(string $classification) : string {
-		if ($classification == 'Settings') return 'cogs';
-		if ($classification == 'Reports') return 'table';
-		if ($classification == 'Tasks') return 'sun-o';
-		if ($classification == 'Miscellaneous') return 'cubes';
-		return 'cubes';
+		if ($classification == 'Settings') return 'fas fa-cogs';
+		if ($classification == 'Account') return 'far fa-user';
+		if ($classification == 'Reports') return 'fas fa-table';
+		if ($classification == 'Tasks') return 'far fa-sun';
+		if ($classification == 'Miscellaneous') return 'fas fa-cubes';
+		return 'fas fa-cubes';
 	}
 }

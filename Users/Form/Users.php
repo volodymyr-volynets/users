@@ -161,7 +161,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
 			'photo' => ['order' => 420, 'label_name' => 'Photo'],
 			'permissions' => ['order' => 440, 'label_name' => 'Permissions'],
-			'notifications' => ['order' => 450, 'label_name' => 'Notifications'],
+			//'notifications' => ['order' => 450, 'label_name' => 'Notifications'],
 			'assignments' => ['order' => 500, 'label_name' => 'Assignments'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
@@ -207,9 +207,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'permissions' => [
 				'permissions' => ['container' => 'permissions_container', 'order' => 100],
-			],
-			'notifications' => [
-				'notifications' => ['container' => 'notifications_container', 'order' => 100],
+				'notifications' => ['container' => 'notifications_container', 'order' => 200],
 			],
 			'assignments' => [
 				'tabs3' => ['container' => 'tabs3', 'order' => 100],
