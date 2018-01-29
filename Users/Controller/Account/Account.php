@@ -10,7 +10,7 @@ class Account extends \Object\Controller {
 			} else {
 				$avatar = \HTML::icon(['type' => 'fas fa-address-card']);
 			}
-			$label = '<table width="100%"><tr><td width="99%">' . $avatar . ' ' . \User::get('name') . '</td></tr></table>';
+			$label = '<span>' . $avatar . ' ' . \User::get('name') . '</span>';
 			\Layout::renderAs([
 				'success' => true,
 				'error' => [],

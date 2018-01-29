@@ -53,7 +53,7 @@ class Organizations extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'on_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization #', 'domain' => 'organization_id', 'percent' => 10, 'url_edit' => true],
+				'on_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Org. #', 'domain' => 'organization_id', 'percent' => 10, 'url_edit' => true],
 				'on_organization_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
 				'on_organization_code' => ['order' => 3, 'label_name' => 'Organization Code', 'domain' => 'group_code', 'percent' => 25],
 				'on_organization_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
