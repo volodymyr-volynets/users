@@ -247,7 +247,9 @@ class Helper {
 			}
 		}
 		// current step
-		$current_result = self::updateWorkflowCurrentStep($execwflow_id, $step_id, $result['new_serials']['on_execwfstep_id']);
+		$current_result = self::updateWorkflowCurrentStep($execwflow_id, $step_id, $result['new_serials']['on_execwfstep_id'], [
+			'on_workstep_type_id' => $step_data['on_workstep_type_id']
+		]);
 		if (!$current_result['success']) {
 			return $current_result;
 		}
@@ -259,10 +261,13 @@ class Helper {
 	 *
 	 * @param int $execwflow_id
 	 * @param int $step_id
+	 * @param int $execwfstep_id
+	 * @param array $options
+	 *		on_workstep_type_id
 	 * @return array
 	 */
-	public static function updateWorkflowCurrentStep(int $execwflow_id, int $step_id, int $execwfstep_id) : array {
-		return \Numbers\Users\Organizations\Model\Service\Executed\Workflows::collectionStatic()->merge([
+	public static function updateWorkflowCurrentStep(int $execwflow_id, int $step_id, int $execwfstep_id, array $options = []) : array {
+		$data = [
 			'on_execwflow_id' => $execwflow_id,
 			'on_execwflow_current_execwfstep_id' =>$execwfstep_id,
 			'on_execwflow_current_step_id' => $step_id,
@@ -270,7 +275,13 @@ class Helper {
 			// important to reset alarm when we change step
 			'on_execwflow_current_alarm_code' => null,
 			'on_execwflow_current_alarm_name' => null,
-		]);
+		];
+		if (!empty($options['on_workstep_type_id']) && $options['on_workstep_type_id'] == 30) {
+			$data['on_execwflow_status_id'] = 30;
+		} else {
+			$data['on_execwflow_status_id'] = 20;
+		}
+		return \Numbers\Users\Organizations\Model\Service\Executed\Workflows::collectionStatic()->merge($data);
 	}
 
 	/**
