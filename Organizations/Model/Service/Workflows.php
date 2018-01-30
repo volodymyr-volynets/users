@@ -31,7 +31,6 @@ class Workflows extends \Object\Table {
 		'on_workflow_version_code' => ['name' => 'Version Code', 'domain' => 'version_code', 'null' => true],
 		'on_workflow_version_name' => ['name' => 'Version Name', 'domain' => 'name', 'null' => true],
 		// inactive
-		'on_workflow_use_global_fields' => ['name' => 'Use Global Fields', 'type' => 'boolean'],
 		'on_workflow_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

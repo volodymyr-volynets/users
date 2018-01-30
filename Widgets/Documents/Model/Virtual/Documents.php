@@ -35,14 +35,12 @@ class Documents extends \Object\Table {
 
 	/**
 	 * Constructor
-	 *
-	 * @param string $class
 	 */
-	public function __construct($class, $virtual_class_name) {
+	public function __construct($class, $virtual_class_name, $options = []) {
 		// add regular columns
 		$this->columns['wg_document_tenant_id'] = ['name' => 'Tenant #', 'domain' => 'tenant_id'];
 		$this->columns['wg_document_id'] = ['name' => 'Document #', 'domain' => 'big_id_sequence'];
-		$this->determineModelMap($class, 'documents', $virtual_class_name);
+		$this->determineModelMap($class, 'documents', $virtual_class_name, $options);
 		$this->columns['wg_document_file_id'] = ['name' => 'File', 'domain' => 'file_id'];
 		$this->columns['wg_document_important'] = ['name' => 'Important', 'type' => 'boolean'];
 		$this->columns['wg_document_catalog_code'] = ['name' => 'Catalog', 'domain' => 'group_code'];
@@ -58,7 +56,7 @@ class Documents extends \Object\Table {
 			'foreign_columns' => array_keys($this->map)
 		];
 		// construct table
-		parent::__construct();
+		parent::__construct($options);
 	}
 
 	/**

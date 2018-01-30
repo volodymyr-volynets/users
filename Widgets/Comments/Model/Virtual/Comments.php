@@ -35,14 +35,12 @@ class Comments extends \Object\Table {
 
 	/**
 	 * Constructor
-	 *
-	 * @param string $class
 	 */
-	public function __construct($class, $virtual_class_name) {
+	public function __construct($class, $virtual_class_name, $options = []) {
 		// add regular columns
 		$this->columns['wg_comment_tenant_id'] = ['name' => 'Tenant #', 'domain' => 'tenant_id'];
 		$this->columns['wg_comment_id'] = ['name' => 'Comment #', 'domain' => 'big_id_sequence'];
-		$this->determineModelMap($class, 'comments', $virtual_class_name);
+		$this->determineModelMap($class, 'comments', $virtual_class_name, $options);
 		$this->columns['wg_comment_value'] = ['name' => 'Comment', 'domain' => 'comment'];
 		$this->columns['wg_comment_important'] = ['name' => 'Inportant', 'type' => 'boolean'];
 		$this->columns['wg_comment_file_1'] = ['name' => 'File 1', 'domain' => 'file_id', 'null' => true];
@@ -58,7 +56,7 @@ class Comments extends \Object\Table {
 			'foreign_columns' => array_keys($this->map)
 		];
 		// construct table
-		parent::__construct();
+		parent::__construct($options);
 	}
 
 	/**

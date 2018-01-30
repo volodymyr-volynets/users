@@ -152,8 +152,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		'general_container' => [
 			'on_workflow_type_id' => [
 				'on_workflow_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Types', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
-				'on_workflow_parent_workflow_id' => ['order' => 2, 'label_name' => 'Parent Workflow', 'domain' => 'workflow_id', 'null' => true, 'required' => 'c', 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows::optionsActive', 'options_params' => ['on_workflow_versioned' => 0, 'on_workflow_type_id' => 10]],
-				'on_workflow_use_global_fields' => ['order' => 3, 'label_name' => 'Global Fields', 'type' => 'boolean', 'percent' => 25]
+				'on_workflow_parent_workflow_id' => ['order' => 2, 'label_name' => 'Parent Workflow', 'domain' => 'workflow_id', 'null' => true, 'required' => 'c', 'percent' => 75, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows::optionsActive', 'options_params' => ['on_workflow_versioned' => 0, 'on_workflow_type_id' => 10]],
 			],
 			'on_workflow_icon' => [
 				'on_workflow_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
@@ -235,15 +234,15 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		],
 		'form_fields_container' => [
 			'row1' => [
-				'on_workstpfield_field_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Field #', 'domain' => 'field_id', 'null' => true, 'required' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Fields::optionsActive', 'onchange' => 'this.form.submit();'],
-				'on_workstpfield_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+				'on_workstpfield_field_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Field #', 'domain' => 'field_id', 'null' => true, 'required' => true, 'percent' => 45, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Fields::optionsActive', 'onchange' => 'this.form.submit();'],
+				'on_workstpfield_default' => ['order' => 2, 'label_name' => 'Default', 'type' => 'text', 'null' => true, 'percent' => 40, 'placeholder' => 'Default'],
+				'on_workstpfield_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15],
 			],
 			'row2' => [
-				'on_workstpfield_order' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Order', 'domain' => 'order', 'null' => true, 'percent' => 20],
-				'on_workstpfield_required' => ['order' => 2, 'label_name' => 'Required', 'type' => 'boolean', 'percent' => 5],
-				'on_workstpfield_row_id' => ['order' => 3, 'label_name' => 'Row', 'domain' => 'code', 'default' => 'row1', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Field\Rows'],
-				'on_workstpfield_percent' => ['order' => 4, 'label_name' => 'Percent', 'domain' => 'percent', 'null' => true, 'required' => true, 'percent' => 10],
-				'on_workstpfield_default' => ['order' => 5, 'label_name' => 'Default', 'type' => 'text', 'null' => true, 'percent' => 40, 'placeholder' => 'Default'],
+				'on_workstpfield_order' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Order', 'domain' => 'order', 'null' => true, 'percent' => 25],
+				'on_workstpfield_required' => ['order' => 2, 'label_name' => 'Required', 'type' => 'boolean', 'percent' => 15],
+				'on_workstpfield_row_id' => ['order' => 3, 'label_name' => 'Row', 'domain' => 'code', 'default' => 'row1', 'null' => true, 'required' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Field\Rows'],
+				'on_workstpfield_percent' => ['order' => 4, 'label_name' => 'Percent', 'domain' => 'percent', 'null' => true, 'required' => true, 'percent' => 25],
 			]
 		],
 		'complementary_container' => [
@@ -256,16 +255,18 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		],
 		'alarms_container' => [
 			'row1' => [
-				'on_workstpalarm_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 30, 'onchange' => 'this.form.submit();'],
-				'on_workstpalarm_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'required' => true, 'percent' => 40, 'onchange' => 'this.form.submit();'],
-				'on_workstpalarm_interval_period' => ['order' => 3, 'label_name' => 'Interval Period', 'domain' => 'group_id', 'null' => true, 'required' => true, 'percent' => 15],
-				'on_workstpalarm_interval_type_id' => ['order' => 4, 'label_name' => 'Interval Type', 'domain' => 'type_id', 'default' => 10, 'null' => true, 'required' => true, 'percent' => 15, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarm\IntervalTypes', 'onchange' => 'this.form.submit();'],
+				'on_workstpalarm_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'onchange' => 'this.form.submit();'],
+				'on_workstpalarm_interval_period' => ['order' => 2, 'label_name' => 'Interval Period', 'domain' => 'group_id', 'null' => true, 'required' => true, 'percent' => 25],
+				'on_workstpalarm_interval_type_id' => ['order' => 3, 'label_name' => 'Interval Type', 'domain' => 'type_id', 'default' => 10, 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Step\Alarm\IntervalTypes', 'onchange' => 'this.form.submit();'],
+			],
+			'row1_1' => [
+				'on_workstpalarm_name' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'required' => true, 'percent' => 100, 'onchange' => 'this.form.submit();'],
 			],
 			'row2' => [
 				'on_workstpalarm_business' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Business Hours', 'type' => 'boolean', 'percent' => 15, 'readonly' => true],
 				'on_workstpalarm_from_step_start' => ['order' => 2, 'label_name' => 'From Step Start', 'type' => 'boolean', 'percent' => 15],
-				'on_workstpalarm_from_date_field_id' => ['order' => 3, 'label_name' => 'From Date Field', 'domain' => 'field_id', 'null' => true, 'perent' => 65, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Fields::optionsActive', 'options_params' => ['on_workfield_type' => 'timestamp']],
-				'on_workstpalarm_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'on_workstpalarm_from_date_field_id' => ['order' => 3, 'label_name' => 'From Date Field', 'domain' => 'field_id', 'null' => true, 'perent' => 55, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Fields::optionsActive', 'options_params' => ['on_workfield_type' => 'timestamp']],
+				'on_workstpalarm_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
 			'row3' => [
 				'on_workstpalarm_dashboard_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Dashboard', 'domain' => 'dashboard_id', 'null' => true, 'percent' => 85, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflow\Dashboards::optionsActive'],
@@ -336,9 +337,6 @@ class Workflows extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
-		if ($form->values['on_workflow_type_id'] == 10) {
-			$form->values['on_workflow_use_global_fields'] = 1;
-		}
 		// steps
 		foreach ($form->values['\Numbers\Users\Organizations\Model\Service\Workflow\Steps'] as $k => $v) {
 			// not ending step must have next steps
