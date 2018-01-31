@@ -50,7 +50,7 @@ class Dashboard extends \Object\Controller\Authorized {
 					text-align: center;
 					height: 5em;
 					overflow: hidden;
-					font-size: 0.75em;
+					font-size: 0.6rem;
 				}
 				.postlogin_dashboard_icon {
 					font-size: 2em;

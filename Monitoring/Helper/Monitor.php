@@ -52,7 +52,8 @@ class Monitor {
 			self::$usage['sm_monusage_resource_id'] = \Application::$controller->controller_id ?? null;
 			self::$usage['sm_monusage_resource_name'] = \Application::$controller->title ?? get_class(\Application::$controller);
 			// add data to database
-			\Numbers\Users\Monitoring\Model\Usages::collectionStatic()->merge(self::$usage);
+			$model = new \Numbers\Users\Monitoring\Model\Usages();
+			$model->db_object->insert($model->full_table_name, [self::$usage]);
 		}
 	}
 }

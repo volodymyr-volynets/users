@@ -197,7 +197,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 
 	public function overrideTabs(& $form, & $options, & $tab, & $neighbouring_values) {
 		$result = [];
-		if ($tab == 'logo' && empty($form->values['on_organization_id'])) {
+		if ($tab == 'logo' && (empty($form->values['on_organization_id']) || !\Can::systemModuleExists('DT'))) {
 			$result['hidden'] = true;
 		}
 		return $result;

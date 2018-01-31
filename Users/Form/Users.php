@@ -832,7 +832,7 @@ class Users extends \Object\Form\Wrapper\Base {
 
 	public function overrideTabs(& $form, & $options, & $tab, & $neighbouring_values) {
 		$result = [];
-		if ($tab == 'photo' && empty($form->values['um_user_id'])) {
+		if ($tab == 'photo' && (empty($form->values['um_user_id']) || !\Can::systemModuleExists('DT'))) {
 			$result['hidden'] = true;
 		}
 		if ($tab == 'territories_assignments' && !\Can::systemFeatureExists('ON::TERRITORIES')) {
