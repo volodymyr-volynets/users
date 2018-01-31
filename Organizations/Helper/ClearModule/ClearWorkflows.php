@@ -47,6 +47,14 @@ class ClearWorkflows {
 				$model->db_object->rollback();
 				return $delete_result;
 			}
+			// step alarms
+			$query = \Numbers\Users\Organizations\Model\Service\Executed\Workflow\Step\Alarms::queryBuilderStatic()->delete();
+			$query->where('AND', ['a.on_execwfstpalarm_execwflow_id', '=', $ids]);
+			$delete_result = $query->query();
+			if (!$delete_result['success']) {
+				$model->db_object->rollback();
+				return $delete_result;
+			}
 			// steps
 			$query = \Numbers\Users\Organizations\Model\Service\Executed\Workflow\Steps::queryBuilderStatic()->delete();
 			$query->where('AND', ['a.on_execwfstep_execwflow_id', '=', $ids]);
