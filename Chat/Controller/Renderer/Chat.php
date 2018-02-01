@@ -67,7 +67,7 @@ class Chat extends \Object\Controller {
 			'value' => $grid,
 			'header' => [
 				'icon' => ['type' => 'far fa-comments'],
-				'title' => i18n(null, 'Chat with: [group_name]', ['replace' => ['[group_name]' => $group_name]]) . '<a href="javascript:void(0);" class="pull-right" onclick="Numbers.Chat.closeChat(' . $input['group_id'] . ');">' . \HTML::icon(['type' => 'fas fa-times']) . '</a>'
+				'title' => i18n(null, 'Chat with: [group_name]', ['replace' => ['[group_name]' => $group_name]]) . '<a href="javascript:void(0);" class="float-right" onclick="Numbers.Chat.closeChat(' . $input['group_id'] . ');">' . \HTML::icon(['type' => 'fas fa-times', 'class' => 'text-white']) . '</a>'
 			],
 		]) . '</div>';
 		\Layout::renderAs([

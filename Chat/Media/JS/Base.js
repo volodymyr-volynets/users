@@ -11,6 +11,13 @@ Numbers.Chat = {
 	websocket: null,
 
 	/**
+	 * Connection established
+	 *
+	 * @type Boolean
+	 */
+	connected: false,
+
+	/**
 	 * Initialize
 	 */
 	initialize: function() {
@@ -105,7 +112,12 @@ Numbers.Chat = {
 		data.user_id = Numbers.user_id;
 		data.token = Numbers.token;
 		data.api = '/Numbers/Users/Chat/Controller/Renderer/Chat/_NewChatMessage';
-		this.websocket.send(JSON.stringify(data));
+		if (this.connected) {
+			$('#chat_mini_group_id_' + group_id + '_value_field').attr('readonly', false);
+			this.websocket.send(JSON.stringify(data));
+		} else {
+			$('#chat_mini_group_id_' + group_id + '_value_field').attr('readonly', true);
+		}
 	},
 
 	/**
@@ -263,28 +275,36 @@ Numbers.Chat = {
 	 * @param int group_id
 	 */
 	initializeSocket: function() {
-		that = this;
-		this.websocket = new WebSocket(Numbers.ws_host);
-		this.websocket.onopen = function(event) {};
-		this.websocket.onmessage = function(event) {
-			var data = JSON.parse(event.data);
-			if (data.type == 'message') {
-				that.startNewChat(data.group_id);
-				that.loadMessages(data.group_id);
-				that.scrollToTheBottomOfMessages(data.group_id);
-			} else if (data.type == 'typing') {
-				var typing_span = $('#chat_mini_group_id_' + data.group_id + '_typing_user_' + data.user_id);
-				typing_span.show();
-				setTimeout(function(){ typing_span.hide(); }, 5000);
-			}
-		};
-		this.websocket.onerror = function (event) {
-			var data = JSON.parse(event.data);
-			that.closeChat(data.group_id);
-		};
-		this.websocket.onclose = function (event) {
-			that.initializeSocket();
-		};
+		try {
+			that = this;
+			this.websocket = new WebSocket(Numbers.ws_host);
+			this.websocket.onopen = function(event) {
+				that.connected = true;
+			};
+			this.websocket.onmessage = function(event) {
+				var data = JSON.parse(event.data);
+				if (data.type == 'message') {
+					that.startNewChat(data.group_id);
+					that.loadMessages(data.group_id);
+					that.scrollToTheBottomOfMessages(data.group_id);
+				} else if (data.type == 'typing') {
+					var typing_span = $('#chat_mini_group_id_' + data.group_id + '_typing_user_' + data.user_id);
+					typing_span.show();
+					setTimeout(function(){ typing_span.hide(); }, 5000);
+				}
+			};
+			this.websocket.onerror = function (event) {
+				if (event && event.data) {
+					var data = JSON.parse(event.data);
+					that.closeChat(data.group_id);
+				}
+			};
+			this.websocket.onclose = function (event) {
+				that.initializeSocket();
+			};
+		} catch (error) {
+			console.log(error);
+		}
 	},
 
 	/**
