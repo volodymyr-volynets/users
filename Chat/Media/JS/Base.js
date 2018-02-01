@@ -134,16 +134,16 @@ Numbers.Chat = {
 	 *
 	 * @type Boolean
 	 */
-	loadMessageLock: false,
+	loadMessageLock: {},
 
 	/**
 	 * Load messages
 	 */
 	loadMessages: function(group_id, read) {
-		if (this.loadMessageLock) {
+		if (this.loadMessageLock[group_id]) {
 			return;
 		} else {
-			this.loadMessageLock = true;
+			this.loadMessageLock[group_id] = true;
 		}
 		var last_message_id = $('#chat_mini_group_id_' + group_id + '_last_message_id').val();
 		that = this;
@@ -196,11 +196,11 @@ Numbers.Chat = {
 					// render
 					for (var i in groupped) {
 						if (groupped[i].new_message_separator) {
-							content+= '<table>';
+							content+= '<table width="100%">';
 								content+= '<tr>';
-									content+= '<td width="30%"><hr/></td>';
-									content+= '<td width="40%">' + groupped[i]['options'] + '</td>';
-									content+= '<td width="30%"><hr/></td>';
+									content+= '<td width="20%"><hr/></td>';
+									content+= '<td width="60%">' + groupped[i]['options'] + '</td>';
+									content+= '<td width="20%"><hr/></td>';
 								content+= '</tr>';
 							content+= '</table>';
 						} else if (groupped[i].current_user) {
@@ -254,17 +254,20 @@ Numbers.Chat = {
 					if (last_message_data) {
 					   var temp = Numbers.Format.firstName(last_message_data['from_name']) + ': ' + last_message_data['subject'];
 						$('#chat_mini_groups_group_' + group_id).html(temp);
+						// beep
+						var audio = new Audio('/numbers/media_submodules/Numbers_Users_Chat_Media_Other_Tone.mp3');
+						audio.play();
 					}
+					// unset the lock
+					that.loadMessageLock[group_id] = false;
 				} else {
 					print_r2(data.error);
 				}
-				// unset the lock
-				that.loadMessageLock = false;
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				print_r2(jqXHR.responseText);
 				// unset the lock
-				that.loadMessageLock = false;
+				that.loadMessageLock[group_id] = false;
 			}
 		});
 	},
