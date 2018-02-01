@@ -1763,6 +1763,10 @@ class System extends \Object\Import {
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
 						[
+							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_inactive' => 0
+						],
+						[
 							'sm_rsrcftr_feature_code' => 'ON::SERVICES',
 							'sm_rsrcftr_inactive' => 0
 						]
@@ -1843,6 +1847,10 @@ class System extends \Object\Import {
 					'sm_resource_menu_options_generator' => null,
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
+						[
+							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_inactive' => 0
+						],
 						[
 							'sm_rsrcftr_feature_code' => 'ON::SERVICES',
 							'sm_rsrcftr_inactive' => 0
@@ -1925,6 +1933,10 @@ class System extends \Object\Import {
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
 						[
+							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_inactive' => 0
+						],
+						[
 							'sm_rsrcftr_feature_code' => 'ON::SERVICES',
 							'sm_rsrcftr_inactive' => 0
 						]
@@ -2006,6 +2018,10 @@ class System extends \Object\Import {
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
 						[
+							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_inactive' => 0
+						],
+						[
 							'sm_rsrcftr_feature_code' => 'ON::SERVICES',
 							'sm_rsrcftr_inactive' => 0
 						]
@@ -2046,6 +2062,10 @@ class System extends \Object\Import {
 					'sm_resource_menu_options_generator' => null,
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
+						[
+							'sm_rsrcftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrcftr_inactive' => 0
+						],
 						[
 							'sm_rsrcftr_feature_code' => 'ON::SERVICES',
 							'sm_rsrcftr_inactive' => 0
