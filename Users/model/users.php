@@ -28,7 +28,7 @@ class Users extends \Object\Table {
 		'um_user_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],
 		'um_user_email2' => ['name' => 'Secondary Email', 'domain' => 'email', 'null' => true],
 		'um_user_phone' => ['name' => 'Primary Phone', 'domain' => 'phone', 'null' => true],
-		'um_user_numeric_phone' => ['name' => 'Primary Phone Numeric', 'domain' => 'numeric_phone', 'null' => true],
+		'um_user_numeric_phone' => ['name' => 'Primary Phone (Numeric)', 'domain' => 'numeric_phone', 'null' => true],
 		'um_user_phone2' => ['name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true],
 		'um_user_cell' => ['name' => 'Cell Phone', 'domain' => 'phone', 'null' => true],
 		'um_user_fax' => ['name' => 'Fax', 'domain' => 'phone', 'null' => true],

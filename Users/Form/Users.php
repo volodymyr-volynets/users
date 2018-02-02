@@ -273,6 +273,9 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_user_cell' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 				'um_user_fax' => ['order' => 2, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 			],
+			self::HIDDEN => [
+				'um_user_numeric_phone' => ['label_name' => 'Primary Phone (Numeric)', 'domain' => 'numeric_phone', 'null' => true],
+			]
 		],
 		'login_container' => [
 			'um_user_login_enabled' => [
@@ -654,6 +657,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		// numeric phone
 		if (!empty($form->values['um_user_phone'])) {
 			$form->values['um_user_numeric_phone'] = \Object\Validator\Phone::plainNumber($form->values['um_user_phone']);
+		} else {
+			$form->values['um_user_numeric_phone'] = null;
 		}
 	}
 
