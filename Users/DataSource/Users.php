@@ -34,6 +34,7 @@ class Users extends \Object\DataSource {
 		'include_all_columns' => ['name' => 'Include All Columns', 'type' => 'boolean'],
 		'only_id_column' => ['name' => 'Only ID Column', 'type' => 'boolean'],
 		'include_himself' => ['name' => 'Include Himself', 'type' => 'boolean'],
+		'skip_himself' => ['name' => 'Skip Himself', 'type' => 'boolean'],
 	];
 
 	public function query($parameters, $options = []) {
@@ -52,6 +53,10 @@ class Users extends \Object\DataSource {
 				'um_user_photo_file_id' => 'a.um_user_photo_file_id',
 				'um_user_inactive' => 'a.um_user_inactive'
 			]);
+		}
+		// skip himself
+		if (!empty($parameters['skip_himself'])) {
+			$this->query->where('AND', ['a.um_user_id', '!=', \User::id(), false]);
 		}
 		// selected roles
 		if (!empty($parameters['selected_roles'])) {

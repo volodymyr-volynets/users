@@ -254,9 +254,6 @@ Numbers.Chat = {
 					if (last_message_data) {
 					   var temp = Numbers.Format.firstName(last_message_data['from_name']) + ': ' + last_message_data['subject'];
 						$('#chat_mini_groups_group_' + group_id).html(temp);
-						// beep
-						var audio = new Audio('/numbers/media_submodules/Numbers_Users_Chat_Media_Other_Tone.mp3');
-						audio.play();
 					}
 					// unset the lock
 					that.loadMessageLock[group_id] = false;
@@ -290,6 +287,9 @@ Numbers.Chat = {
 					that.startNewChat(data.group_id);
 					that.loadMessages(data.group_id);
 					that.scrollToTheBottomOfMessages(data.group_id);
+					// beep
+					var audio = new Audio('/numbers/media_submodules/Numbers_Users_Chat_Media_Other_Tone.mp3');
+					audio.play();
 				} else if (data.type == 'typing') {
 					var typing_span = $('#chat_mini_group_id_' + data.group_id + '_typing_user_' + data.user_id);
 					typing_span.show();

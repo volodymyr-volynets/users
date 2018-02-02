@@ -80,7 +80,7 @@ class AddNewUser extends \Object\Form\Wrapper\Base {
 		],
 		'users_container' => [
 			'row1' => [
-				'user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User', 'domain' => 'user_id', 'required' => true, 'null' => true, 'persistent' => true, 'details_unique_select' => true, 'searchable' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Users', 'options_params' => ['skip_acl' => true], 'onchange' => 'this.form.submit();'],
+				'user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User', 'domain' => 'user_id', 'required' => true, 'null' => true, 'persistent' => true, 'details_unique_select' => true, 'searchable' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Users', 'options_params' => ['skip_acl' => true, 'skip_himself' => true], 'onchange' => 'this.form.submit();'],
 			]
 		],
 		'buttons' => [
