@@ -133,10 +133,10 @@ class AddNewUser extends \Object\Form\Wrapper\Base {
 				'total_rows' => 'COUNT(*)',
 				'matched_rows' => 'SUM(CASE WHEN a.ct_grpuser_user_id IN (' . implode(', ', $user_list) . ') THEN 1 ELSE 0 END)'
 			]);
-			$query->join('LEFT', new \Numbers\Users\Chat\Model\Groups, 'b', 'ON', [
+			$query->join('LEFT', new \Numbers\Users\Chat\Model\Groups(), 'b', 'ON', [
 				['AND', ['a.ct_grpuser_group_id', '=', 'b.ct_group_id', true], false]
 			]);
-			$query->where('AND', ['ct_group_owner_user_id', '=', \User::id()]);
+			//$query->where('AND', ['ct_group_owner_user_id', '=', \User::id()]);
 			$query->groupby(['ct_grpuser_group_id']);
 			$query->having('AND', ['COUNT(*)', '=', 'SUM(CASE WHEN a.ct_grpuser_user_id IN (' . implode(', ', $user_list) . ') THEN 1 ELSE 0 END)', true]);
 			$query->having('AND', ['COUNT(*)', '=', count($user_list)]);
