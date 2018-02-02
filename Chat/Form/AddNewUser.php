@@ -153,7 +153,7 @@ class AddNewUser extends \Object\Form\Wrapper\Base {
 				return;
 			}
 			$form->error(SUCCESS, \Object\Content\Messages::RECORD_INSERTED);
-			\Request::redirect('/Numbers/Users/Chat/Controller/Chat/_Index');
+			$form->redirect('/Numbers/Users/Chat/Controller/Chat/_Index');
 		}
 	}
 
