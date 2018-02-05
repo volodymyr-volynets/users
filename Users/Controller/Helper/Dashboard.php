@@ -3,6 +3,7 @@
 namespace Numbers\Users\Users\Controller\Helper;
 class Dashboard extends \Object\Controller\Authorized {
 	public function actionIndex() {
+		\Layout::addCss('/numbers/media_submodules/Numbers_Users_Users_Media_CSS_Base.css');
 		$dashboards = \Object\ACL\Resources::getStatic('postlogin_dashboard');
 		array_key_sort($dashboards, ['order' => SORT_ASC]);
 		$grid = [
@@ -30,7 +31,7 @@ class Dashboard extends \Object\Controller\Authorized {
 				$name = \HTML::icon(['type' => $v['icon']]) . ' ' . $name;
 			}
 			$grid['options'][$row_number][$counter][$counter] = [
-				'value' => '<div class="postlogin_dashboard_holder"><h4>' . $name . '</h4>' . $model->render() . '</div>',
+				'value' => \HTML::segment(['type' => 'primary', 'header' => $name, 'value' => $model->render()]) . '<br/>',
 				'options' => [
 					'percent' => $percent
 				]
@@ -40,23 +41,6 @@ class Dashboard extends \Object\Controller\Authorized {
 				$counter++;
 			}
 		}
-		echo <<<TTT
-			<style>
-				.postlogin_dashboard_holder {
-					border: 1px solid #DDDDDD;
-					background: linear-gradient(#FFFFFF, #DDDDDD);
-				}
-				.postlogin_dashboard_div {
-					text-align: center;
-					height: 5em;
-					overflow: hidden;
-					font-size: 0.6rem;
-				}
-				.postlogin_dashboard_icon {
-					font-size: 2em;
-				}
-			</style>
-TTT;
 		echo \HTML::grid($grid);
 	}
 }

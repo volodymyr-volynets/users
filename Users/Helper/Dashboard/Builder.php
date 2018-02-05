@@ -19,12 +19,12 @@ class Builder {
 				}
 				if (!empty($v2['icon'])) {
 					if (!empty($v2['name'])) {
-						$name = \HTML::icon(['type' => $v2['icon'], 'class' => 'postlogin_dashboard_icon']) . '<br/>' . $name;
+						$name = \HTML::icon(['type' => $v2['icon'], 'class' => 'numbers_postlogin_dashboard_icon']) . '<br/>' . $name;
 					} else {
 						$name = '<br/>' . \HTML::icon(['type' => $v2['icon']]);
 					}
 				}
-				$name = '<div class="postlogin_dashboard_div">' . $name . '</div>';
+				$name = '<div class="numbers_postlogin_dashboard_div">' . $name . '</div>';
 				// url
 				if (!empty($v2['acl']) && \Application::$controller->canExtended($v2['acl']['resource_id'], $v2['acl']['method_code'], $v2['acl']['action_id'])) {
 					$name = \HTML::a(['href' => $v2['url'], 'value' => $name]);

@@ -58,3 +58,12 @@
 	position: relative;
 	vertical-align: top;
 }
+.numbers_postlogin_dashboard_div {
+	text-align: center;
+	height: 5em;
+	overflow: hidden;
+	font-size: 0.6rem;
+}
+.numbers_postlogin_dashboard_icon {
+	font-size: 2em;
+}
