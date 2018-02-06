@@ -32,7 +32,8 @@ class Dashboards extends \Object\Table {
 	public $audit = false;
 	public $optimistic_lock = false;
 	public $options_map = [
-		'on_workdashboard_name' => 'name'
+		'on_workdashboard_name' => 'name',
+		'on_workdashboard_icon' => 'icon_class'
 	];
 	public $options_active = [
 		'on_workdashboard_inactive' => 0

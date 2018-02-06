@@ -78,7 +78,7 @@ class Services extends \Object\Form\Wrapper\Base {
 		],
 		'channel_container' => [
 			'row1' => [
-				'on_servmap_channel_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Channel #', 'domain' => 'channel_id', 'null' => true, 'required' => true, 'details_unique_select' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Channels::optionsActive', 'onchange' => 'this.form.submit();'],
+				'on_servmap_channel_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Channel', 'domain' => 'channel_id', 'null' => true, 'required' => true, 'details_unique_select' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Channels::optionsActive', 'onchange' => 'this.form.submit();'],
 				'on_servmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],

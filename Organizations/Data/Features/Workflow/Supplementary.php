@@ -44,7 +44,7 @@ class Supplementary extends \Object\Import {
 					'on_workfield_inactive' => 0
 				],
 				[
-					'on_workfield_code' => 'SYSTEM_ASSIGNEE_USER_ID',
+					'on_workfield_code' => 'SYSTEM_ASSIGNED_USER_ID',
 					'on_workfield_name' => 'Assigned User #',
 					'on_workfield_method' => 'input',
 					'on_workfield_model_id' => null,

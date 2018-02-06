@@ -52,6 +52,9 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 	 * Acl
 	 */
 	public function acl() : bool {
-		return \Can::systemModuleExists('NS');
+		$model = new \Numbers\Users\News\DataSource\News();
+		$model->cache = true;
+		$data = $model->get();
+		return \Can::systemModuleExists('NS') && !empty($data);
 	}
 }
