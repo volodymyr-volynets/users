@@ -77,8 +77,8 @@ class Territories extends \Object\Form\Wrapper\Base {
 		],
 		'locations_container' => [
 			'row1' => [
-				'on_terrloc_location_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Location', 'domain' => 'location_id', 'required' => true, 'null' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Locations::optionsActive', 'options_depends' => ['on_location_organization_id' => 'parent::on_territory_organization_id', 'on_location_country_code' => 'parent::on_territory_country_code']],
-				'on_terrloc_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 5],
+				'on_terrloc_location_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Location', 'domain' => 'location_id', 'required' => true, 'null' => true, 'percent' => 80, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Locations::optionsActive', 'options_depends' => ['on_location_organization_id' => 'parent::on_territory_organization_id', 'on_location_country_code' => 'parent::on_territory_country_code']],
+				'on_terrloc_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
 				'on_terrloc_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],

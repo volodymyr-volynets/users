@@ -23,6 +23,9 @@ class Types extends \Object\Data {
 		17 => ['on_servasstype_name' => 'Counties', 'on_servasstype_icon' => 'fab fa-shirtsinbulk', 'on_servasstype_parent' => 10],
 		20 => ['on_servasstype_name' => 'Postal Codes', 'on_servasstype_icon' => 'far fa-compass'],
 		30 => ['on_servasstype_name' => 'Locations', 'on_servasstype_icon' => 'fas fa-coffee'],
+		40 => ['on_servasstype_name' => 'Geo Areas', 'on_servasstype_icon' => 'fas fa-images'],
+		// todo
+		50 => ['on_servasstype_name' => 'No Assignment', 'on_servasstype_icon' => 'fas fa-leaf'],
 	];
 
 	public function options($options = []) {
@@ -36,6 +39,10 @@ class Types extends \Object\Data {
 		// if we have postal codes
 		if (!\Can::systemFeatureExists('CM::COUNTRIES')) {
 			unset($data[20]);
+		}
+		// if we have geo extension
+		if (!\Can::systemFeatureExists('SM::POSTGIS')) {
+			unset($data[40]);
 		}
 		$converted = \Helper\Tree::convertByParent($data, 'parent');
 		$result = [];

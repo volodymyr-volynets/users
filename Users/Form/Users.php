@@ -12,7 +12,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			'new' => true,
 			'back' => true,
 			'import' => true
-		]
+		],
+		'include_js' => '/numbers/media_submodules/Numbers_Users_Users_Media_JS_Users.js'
 	];
 	public $containers = [
 		'top' => ['default_row_type' => 'grid', 'order' => 100],
@@ -148,6 +149,22 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['um_usrsecanswer_question_id'],
 			'order' => 36000
 		],
+		// modal
+		'google_map_modal' => [
+			'default_row_type' => 'grid',
+			'order' => 32200,
+			'type' => 'modal',
+			'label_name' => 'Add new geo service area:'
+		],
+		'geoarea_assignments_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\GeoAreas',
+			'details_pk' => ['um_usrassgeoarea_id'],
+			'details_autoincrement' => ['um_usrassgeoarea_id'],
+			'order' => 35003
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -173,8 +190,9 @@ class Users extends \Object\Form\Wrapper\Base {
 		'tabs3' => [
 			'user_assignments' => ['order' => 100, 'label_name' => 'User Assignments'],
 			'postal_code_assignments' => ['order' => 200, 'label_name' => 'Postal Codes'],
-			'territories_assignments' => ['order' => 300, 'label_name' => 'Territories'],
-			'locations_assignments' => ['order' => 300, 'label_name' => 'Locations'],
+			'territories_assignments' => ['order' => 300, 'label_name' => 'Territories', 'acl' => ['ON::TERRITORIES']],
+			'locations_assignments' => ['order' => 400, 'label_name' => 'Locations'],
+			'geoarea_assignments' => ['order' => 500, 'label_name' => 'Geo Areas', 'acl' => ['SM::POSTGIS']],
 		],
 	];
 	public $elements = [
@@ -235,6 +253,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			'locations_assignments' => [
 				'locations_assignments' => ['container' => 'locations_assignments_container', 'order' => 100],
 			],
+			'geoarea_assignments' => [
+				'geoarea_assignments' => ['container' => 'geoarea_assignments_container', 'order' => 100],
+			]
 		],
 		'general_container' => [
 			'um_user_type_id' => [
@@ -352,8 +373,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'assignments_container' => [
 			'row1' => [
-				'um_usrassign_assignment_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'type_code', 'readonly' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
-				'um_usrassign_multiple' => ['order' => 3, 'label_name' => 'Multiple', 'type' => 'boolean', 'readonly' => true, 'percent' => 5],
+				'um_usrassign_assignment_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'type_code', 'readonly' => true, 'percent' => 85, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
+				'um_usrassign_multiple' => ['order' => 3, 'label_name' => 'Multiple', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
 			],
 			'row2' => [
 				'um_usrassign_child_user_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'User(s)', 'domain' => 'user_id', 'multiple_column' => 'um_usrassign_child_user_id', 'percent' => 100, 'method' => 'multiselect', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive', 'options_depends' => ['selected_roles' => 'um_usrassign_child_role_id'], 'options_params' => ['skip_acl' => true]]
@@ -366,9 +387,9 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'assignments_reverse_container' => [
 			'row1' => [
-				'um_usrassign_assignment_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'type_code', 'readonly' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
-				'um_usrassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'readonly' => true, 'percent' => 5],
-				'um_usrassign_multiple' => ['order' => 3, 'label_name' => 'Multiple', 'type' => 'boolean', 'readonly' => true, 'percent' => 5],
+				'um_usrassign_assignment_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'type_code', 'readonly' => true, 'percent' => 70, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
+				'um_usrassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
+				'um_usrassign_multiple' => ['order' => 3, 'label_name' => 'Multiple', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
 			],
 			'row2' => [
 				'um_usrassign_parent_user_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'User(s)', 'domain' => 'user_id', 'multiple_column' => 'um_usrassign_parent_user_id', 'percent' => 100, 'method' => 'multiselect', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive', 'options_depends' => ['selected_roles' => 'um_usrassign_parent_role_id'], 'options_params' => ['skip_acl' => true]]
@@ -412,7 +433,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'row1' => [
 				'um_usrassloc_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'options_params' => ['on_service_assignment_type_id' => 30], 'onchange' => 'this.form.submit();'],
 				'um_usrassloc_brand_id' => ['order' => 2, 'order_for_defaults' => 31100, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_usrassloc_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_usrassloc_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			self::HIDDEN => [
 				'um_usrassloc_organization_id' => ['order' =>1, 'row_order' => 200, 'order_for_defaults' => 32000,'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
@@ -453,6 +474,30 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'team_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Teams', 'onchange' => 'this.form.submit();'],
 				'um_usrtmmap_role_id' => ['order' => 2, 'label_name' => 'Role', 'domain' => 'role_id', 'null' => true, 'percent' => 45, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Team\Roles::optionsActive'],
 				'um_usrtmmap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			]
+		],
+		'geoarea_assignments_container' => [
+			'row1' => [
+				'um_usrassgeoarea_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'options_params' => ['on_service_assignment_type_id' => 40], 'onchange' => 'this.form.submit();'],
+				'um_usrassgeoarea_brand_id' => ['order' => 2, 'order_for_defaults' => 31100, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrassgeoarea_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'um_usrassgeoarea_location_id' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Location', 'domain' => 'location_id', 'null' => true, 'required' => true, 'percent' => 70, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Locations::optionsActive'],
+				'show_google_map' => ['order' => 2, 'label_name' => null, 'percent' => 30, 'value' => 'Draw Area', 'method' => 'button', 'onclick' => 'Numbers.Modal.show(\'form_um_users_modal_google_map_modal_dialog\'); Numbers.NumbersUsersUsersFormUsers.initialize(this);'],
+			],
+			self::HIDDEN => [
+				'um_usrassgeoarea_organization_id' => ['order' => 1, 'row_order' => 200, 'order_for_defaults' => 32000, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
+				'um_usrassgeoarea_polygon' => ['order' => 2, 'label_name' => 'Polygon', 'type' => 'geometry', 'null' => true, 'required' => true, 'class' => 'um_usrassgeoarea_polygon'],
+			]
+		],
+		'google_map_modal' => [
+			'google_map_div' => [
+				'google_map_div' => ['order' => 1, 'row_order' => 100, 'label_name' => null, 'percent' => 100, 'method' => 'div', 'style' => 'height: 500px;']
+			],
+			'buttons' => [
+				self::BUTTON_SUBMIT_OTHER => self::BUTTON_SUBMIT_OTHER_DATA + ['row_order' => 32000, 'onclick' => 'Numbers.NumbersUsersUsersFormUsers.setPolygon(); Numbers.Modal.hide(\'form_um_users_modal_google_map_modal_dialog\'); return false;'],
+				'__remove_selected_polygon' => ['order' => 32000, 'button_group' => 'right', 'value' => 'Delete', 'type' => 'danger', 'method' => 'button2', 'icon' => 'far fa-trash-alt', 'class' => 'float-right', 'onclick' => 'Numbers.NumbersUsersUsersFormUsers.deleteSelectedShape(); return false;']
 			]
 		],
 		'buttons' => [
@@ -517,6 +562,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'\Numbers\Users\Users\Model\User\Assignment\Territories' => [
 				'name' => 'Territories Assignments',
+				'acl' => ['ON::TERRITORIES'],
 				'pk' => ['um_usrassterr_tenant_id', 'um_usrassterr_user_id', 'um_usrassterr_organization_id', 'um_usrassterr_service_id', 'um_usrassterr_brand_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrassterr_tenant_id', 'um_user_id' => 'um_usrassterr_user_id'],
@@ -543,6 +589,13 @@ class Users extends \Object\Form\Wrapper\Base {
 					]
 				]
 			],
+			'\Numbers\Users\Users\Model\User\Assignment\GeoAreas' => [
+				'name' => 'Geo Areas Assignments',
+				'acl' => ['SM::POSTGIS'],
+				'pk' => ['um_usrassgeoarea_tenant_id', 'um_usrassgeoarea_user_id', 'um_usrassgeoarea_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrassgeoarea_tenant_id', 'um_user_id' => 'um_usrassgeoarea_user_id'],
+			],
 			'\Numbers\Users\Users\Model\User\Notifications' => [
 				'name' => 'Notifications',
 				'pk' => ['um_usrnoti_tenant_id', 'um_usrnoti_user_id', 'um_usrnoti_module_id', 'um_usrnoti_feature_code'],
@@ -567,8 +620,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		'feature_code' => 'UM::EMAIL_USERS_CHANGED'
 	];
 
-	public function refresh(& $form) {
-
+	public function overrides(& $form) {
+		\Layout::addJs('https://maps.googleapis.com/maps/api/js?key=' . \Application::get('google.maps.api_key') . '&libraries=drawing', 10000);
 	}
 
 	public function validate(& $form) {
@@ -653,6 +706,14 @@ class Users extends \Object\Form\Wrapper\Base {
 				return;
 			}
 			$form->values['um_user_photo_file_id'] = $result['file_id'];
+		}
+		// polygons
+		if ($form->hasErrors() && !empty($form->errors['fields'])) {
+			foreach ($form->errors['fields'] as $k => $v) {
+				if (strpos($k, 'um_usrassgeoarea_polygon') !== false) {
+					$form->errors['fields'][str_replace('um_usrassgeoarea_polygon', 'show_google_map', $k)] = $v;
+				}
+			}
 		}
 		// numeric phone
 		if (!empty($form->values['um_user_phone'])) {
@@ -817,6 +878,14 @@ class Users extends \Object\Form\Wrapper\Base {
 				$value = $neighbouring_values['um_usrassloc_organization_id'] = $data['on_service_organization_id'];
 			} else {
 				$value = $neighbouring_values['um_usrassloc_organization_id'] = null;
+			}
+		}
+		if ($key == 'um_usrassgeoarea_organization_id') {
+			if (!empty($neighbouring_values['um_usrassgeoarea_service_id'])) {
+				$data = \Numbers\Users\Organizations\Model\Services::loadById($neighbouring_values['um_usrassgeoarea_service_id']);
+				$value = $neighbouring_values['um_usrassgeoarea_organization_id'] = $data['on_service_organization_id'];
+			} else {
+				$value = $neighbouring_values['um_usrassgeoarea_organization_id'] = null;
 			}
 		}
 	}
