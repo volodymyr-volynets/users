@@ -44,6 +44,7 @@ class Locations extends \Object\DataSource {
 			case 20: $parameters['filter_by_direct_postal_code'] = 1; break;
 			case 30: $parameters['filter_by_location_assignment'] = 1; break;
 			case 40: $parameters['filter_by_geo_assignment'] = 1; break;
+			default: $this->query->where('AND', 'FALSE');
 		}
 		// columns
 		$this->query->columns([
@@ -107,29 +108,31 @@ class Locations extends \Object\DataSource {
 			}, 'EXISTS');
 		}
 		// geo assignment
-		if (!empty($parameters['filter_by_geo_assignment']) && !empty($parameters['postal_code']) && !empty($parameters['address'])) {
-			$decoded = \Numbers\Countries\Countries\Helper\Google::decodeAnAddress($parameters['address']);
-			/*
-			if (!$decoded['success']) { // query postal codes
-				$decoded = \Numbers\Countries\Countries\Helper\PostalCode::decodePostalCode($parameters['country_code'], $parameters['postal_code']);
-			}
-			*/
-			if ($decoded['success']) {
-				$this->query->where('AND', function (& $query) use ($parameters, $decoded) {
-					$query = \Numbers\Users\Users\Model\User\Assignment\GeoAreas::queryBuilderStatic(['alias' => 'inner_e'])->select();
-					$query->columns(1);
-					$query->where('AND', ['inner_e.um_usrassgeoarea_service_id', '=', $parameters['service_id']]);
-					$query->where('AND', ['inner_e.um_usrassgeoarea_location_id', '=', 'a.on_location_id', true]);
-					//um_usrassgeoarea_polygon
-					$temp_contains = $this->query->db_object->sqlHelper('ST_Contains', [
-						'from' => 'inner_e.um_usrassgeoarea_polygon',
-						'to' => $this->query->db_object->sqlHelper('ST_Point', [
-							'latitude' => $decoded['latitude'],
-							'longitude' => $decoded['longitude'],
-						]),
-					]);
-					$query->where('AND', $temp_contains);
-				}, 'EXISTS');
+		if (!empty($parameters['filter_by_geo_assignment'])) {
+			if (!empty($parameters['postal_code']) && !empty($parameters['address'])) {
+				$decoded = \Numbers\Countries\Countries\Helper\Google::decodeAnAddress($parameters['address']);
+				if (!$decoded['success']) { // query postal codes
+					$decoded = \Numbers\Countries\Countries\Helper\PostalCode::decodePostalCode($parameters['country_code'], $parameters['postal_code']);
+				}
+				if ($decoded['success']) {
+					$this->query->where('AND', function (& $query) use ($parameters, $decoded) {
+						$query = \Numbers\Users\Users\Model\User\Assignment\GeoAreas::queryBuilderStatic(['alias' => 'inner_e'])->select();
+						$query->columns(1);
+						$query->where('AND', ['inner_e.um_usrassgeoarea_service_id', '=', $parameters['service_id']]);
+						$query->where('AND', ['inner_e.um_usrassgeoarea_location_id', '=', 'a.on_location_id', true]);
+						//um_usrassgeoarea_polygon
+						$temp_contains = $this->query->db_object->sqlHelper('ST_Contains', [
+							'from' => 'inner_e.um_usrassgeoarea_polygon',
+							'to' => $this->query->db_object->sqlHelper('ST_Point', [
+								'latitude' => $decoded['latitude'],
+								'longitude' => $decoded['longitude'],
+							]),
+						]);
+						$query->where('AND', $temp_contains);
+					}, 'EXISTS');
+				} else {
+					$this->query->where('AND', 'FALSE');
+				}
 			} else {
 				$this->query->where('AND', 'FALSE');
 			}
