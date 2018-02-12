@@ -4,7 +4,7 @@ namespace Numbers\Users\Organizations\Form\List2\Service;
 class Categories extends \Object\Form\Wrapper\List2 {
 	public $form_link = 'on_service_categories_list';
 	public $module_code = 'ON';
-	public $title = 'O/N Service Categories Form';
+	public $title = 'O/N Service Categories List';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [

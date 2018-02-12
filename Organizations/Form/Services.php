@@ -74,6 +74,9 @@ class Services extends \Object\Form\Wrapper\Base {
 			],
 			'on_service_workflow_id' => [
 				'on_service_workflow_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Workflow', 'domain' => 'workflow_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\Workflows::optionsActive', 'options_params' => ['on_workflow_versioned' => 1, 'on_workflow_type_id' => 10], 'options_options' => ['i18n' => 'skip_sorting']],
+			],
+			'on_service_service_script_id' => [
+				'on_service_service_script_id' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Service Script', 'domain' => 'service_script_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Service\ServiceScripts::optionsActive', 'options_params' => ['on_servscript_versioned' => 1], 'options_options' => ['i18n' => 'skip_sorting']],
 			]
 		],
 		'channel_container' => [

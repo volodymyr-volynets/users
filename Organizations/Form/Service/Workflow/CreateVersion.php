@@ -4,7 +4,7 @@ namespace Numbers\Users\Organizations\Form\Service\Workflow;
 class CreateVersion extends \Object\Form\Wrapper\Base {
 	public $form_link = 'on_workflow_create_version';
 	public $module_code = 'ON';
-	public $title = 'O/N Create Version';
+	public $title = 'O/N Create Version (Workflow)';
 	public $options = [
 		'segment' => self::SEGMENT_FORM,
 		'actions' => [
