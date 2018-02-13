@@ -45,7 +45,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		'canvas_lines_container' => [
 			'label_name' => 'Line Settings',
 			'type' => 'subdetails',
-			'details_rendering_type' => 'table',
+			'details_rendering_type' => 'grid_with_label',
 			'details_new_rows' => 1,
 			'details_parent_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas',
 			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\Lines',
@@ -57,7 +57,7 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		'canvas_rectangles_container' => [
 			'label_name' => 'Shape Settings',
 			'type' => 'subdetails',
-			'details_rendering_type' => 'table',
+			'details_rendering_type' => 'grid_with_label',
 			'details_new_rows' => 1,
 			'details_parent_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas',
 			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas\Shapes',

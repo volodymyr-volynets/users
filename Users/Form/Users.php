@@ -165,6 +165,14 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_autoincrement' => ['um_usrassgeoarea_id'],
 			'order' => 35003
 		],
+		'queues_assignments_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Queues',
+			'details_pk' => ['um_usrassqueue_queue_type_id'],
+			'order' => 35004
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -193,6 +201,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'territories_assignments' => ['order' => 300, 'label_name' => 'Territories', 'acl' => ['ON::TERRITORIES']],
 			'locations_assignments' => ['order' => 400, 'label_name' => 'Locations'],
 			'geoarea_assignments' => ['order' => 500, 'label_name' => 'Geo Areas', 'acl' => ['SM::POSTGIS']],
+			'queues_assignments' => ['order' => 600, 'label_name' => 'Queues'],
 		],
 	];
 	public $elements = [
@@ -255,6 +264,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'geoarea_assignments' => [
 				'geoarea_assignments' => ['container' => 'geoarea_assignments_container', 'order' => 100],
+			],
+			'queues_assignments' => [
+				'queues_assignments' => ['container' => 'queues_assignments_container', 'order' => 100],
 			]
 		],
 		'general_container' => [
@@ -500,6 +512,12 @@ class Users extends \Object\Form\Wrapper\Base {
 				'__remove_selected_polygon' => ['order' => 32000, 'button_group' => 'right', 'value' => 'Delete', 'type' => 'danger', 'method' => 'button2', 'icon' => 'far fa-trash-alt', 'class' => 'float-right', 'onclick' => 'Numbers.NumbersUsersUsersFormUsers.deleteSelectedShape(); return false;']
 			]
 		],
+		'queues_assignments_container' => [
+			'row1' => [
+				'um_usrassqueue_queue_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 95, 'details_unique_select' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Queue\Types', 'onchange' => 'this.form.submit();'],
+				'um_usrassqueue_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -595,6 +613,12 @@ class Users extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_usrassgeoarea_tenant_id', 'um_usrassgeoarea_user_id', 'um_usrassgeoarea_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrassgeoarea_tenant_id', 'um_user_id' => 'um_usrassgeoarea_user_id'],
+			],
+			'\Numbers\Users\Users\Model\User\Assignment\Queues' => [
+				'name' => 'Queues Assignments',
+				'pk' => ['um_usrassqueue_tenant_id', 'um_usrassqueue_user_id', 'um_usrassqueue_queue_type_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrassqueue_tenant_id', 'um_user_id' => 'um_usrassqueue_user_id'],
 			],
 			'\Numbers\Users\Users\Model\User\Notifications' => [
 				'name' => 'Notifications',

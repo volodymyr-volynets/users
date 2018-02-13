@@ -26,8 +26,8 @@ class Holidays extends \Object\Form\Wrapper\Base {
 				'um_schedholi_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'um_schedholi_name' => [
-				'um_schedholi_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 85, 'required' => true],
-				'um_schedholi_date' => ['order' => 1, 'label_name' => 'Date', 'type' => 'date', 'required' => true, 'percent' => 15, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'um_schedholi_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 75, 'required' => true],
+				'um_schedholi_date' => ['order' => 1, 'label_name' => 'Date', 'type' => 'date', 'required' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
 			],
 			'um_schedholi_organization_id' => [
 				'um_schedholi_organization_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],

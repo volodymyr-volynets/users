@@ -117,6 +117,6 @@ class Form extends \Object\Form\Wrapper\Base {
 			}
 		}
 		$url = \Application::get('mvc.full') . '?' . http_build_query2($params) . '#' . $form->options['input']['on_execwflow_anchor'];
-		\Request::redirect($url);
+		$form->redirect($url);
 	}
 }
