@@ -106,7 +106,7 @@ class Decision extends \Object\Form\Wrapper\Base {
 				$params[$v] = $form->options['input'][$v] ?? '';
 			}
 		}
-		$url = \Application::get('mvc.full') . '?' . http_build_query2($params) . '#' . $form->options['input']['on_execwflow_anchor'];
+		$url = \Application::get('mvc.full') . '?' . http_build_query2($params) . '#' . $form->options['input']['__anchor'];
 		\Request::redirect($url);
 	}
 }

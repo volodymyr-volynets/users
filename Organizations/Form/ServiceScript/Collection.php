@@ -64,6 +64,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 			foreach ($data as $k => $v) {
 				$input = $options['input'];
 				$input['on_execsscript_id'] = $k;
+				$input['__anchor'] = "form_on_service_script_form_id_{$k}_form_anchor";
 				$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k] = [
 					'order' => $index,
 					'options' => [

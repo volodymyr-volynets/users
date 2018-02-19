@@ -98,7 +98,7 @@ class ServiceScripts extends \Object\Form\Wrapper\Base {
 		if (!empty($form->options['collection_current_tab_id'])) {
 			$params[$form->options['collection_current_tab_id']] = $form->form_link;
 		}
-		$url = \Application::get('mvc.full') . '?' . http_build_query2($params) . '#' . $form->options['input']['on_execwflow_anchor'];
+		$url = \Application::get('mvc.full') . '?' . http_build_query2($params) . '#' . $form->options['input']['__anchor'];
 		$form->redirect($url);
 	}
 }
