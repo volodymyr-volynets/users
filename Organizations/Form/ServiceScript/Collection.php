@@ -60,26 +60,26 @@ class Collection extends \Object\Form\Wrapper\Collection {
 					self::ROWS => []
 				]
 			];
+			$this->data[self::MAIN_SCREEN][self::ROWS]['row1'] = [
+				'order' => 1000,
+				'options' => [
+					'type' => 'tabs',
+					'segment' => [
+						'type' => 'warning',
+						'header' => [
+							'icon' => ['type' => 'fas fa-question-circle'],
+							'title' => 'Service Scripts'
+						]
+					],
+					'its_own_segment' => true
+				]
+			];
 			$index = 1;
 			foreach ($data as $k => $v) {
 				$input = $options['input'];
 				$input['on_execsscript_id'] = $k;
 				$input['__anchor'] = "form_on_service_script_form_id_{$k}_form_anchor";
-				$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k] = [
-					'order' => $index,
-					'options' => [
-						'type' => 'tabs',
-						'segment' => [
-							'type' => 'warning',
-							'header' => [
-								'icon' => ['type' => 'fas fa-question-circle'],
-								'title' => 'Service Scripts'
-							]
-						],
-						'its_own_segment' => true
-					]
-				];
-				$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k][self::FORMS]['on_service_script_form_id_' . $k] = [
+				$this->data[self::MAIN_SCREEN][self::ROWS]['row1'][self::FORMS]['on_service_script_form_id_' . $k] = [
 					'model' => '\Numbers\Users\Organizations\Form\ServiceScript\ServiceScripts',
 					'options' => [
 						'label_name' => $v['on_execsscript_service_script_name'],
