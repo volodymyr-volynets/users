@@ -39,7 +39,6 @@ class Workflows extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Workflow\Model\Workflow\Canvas',
 			'details_pk' => ['ww_wrkflwcanvas_id'],
 			'details_autoincrement' => ['ww_wrkflwcanvas_id'],
-			'required' => true,
 			'order' => 35000
 		],
 		'canvas_lines_container' => [
@@ -153,13 +152,13 @@ class Workflows extends \Object\Form\Wrapper\Base {
 				'ww_wrkflwcanvas_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
 			'row2' => [
-				'ww_wrkflwcanvas_x1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'X1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25],
-				'ww_wrkflwcanvas_y1' => ['order' => 2, 'label_name' => 'Y1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25],
-				'ww_wrkflwcanvas_x2' => ['order' => 3, 'label_name' => 'X2 (Width)', 'domain' => 'dimension', 'required' => false, 'percent' => 25],
-				'ww_wrkflwcanvas_y2' => ['order' => 4, 'label_name' => 'Y2 (Height)', 'domain' => 'dimension', 'required' => false, 'percent' => 25],
+				'ww_wrkflwcanvas_x1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'X1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25, 'placeholder' => 'X1 (Start)'],
+				'ww_wrkflwcanvas_y1' => ['order' => 2, 'label_name' => 'Y1 (Start)', 'domain' => 'dimension', 'required' => true, 'percent' => 25, 'placeholder' => 'Y1 (Start)'],
+				'ww_wrkflwcanvas_x2' => ['order' => 3, 'label_name' => 'X2 (Width)', 'domain' => 'dimension', 'required' => false, 'percent' => 25, 'placeholder' => 'X2 (Width)'],
+				'ww_wrkflwcanvas_y2' => ['order' => 4, 'label_name' => 'Y2 (Height)', 'domain' => 'dimension', 'required' => false, 'percent' => 25, 'placeholder' => 'Y2 (Height)'],
 			],
 			'row3' => [
-				'ww_wrkflwcanvas_step_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Step', 'domain' => 'workflow_id', 'null' => true, 'percent' =>50, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Steps::optionsActive', 'options_depends' => ['ww_wrkflwstep_workflow_id' => 'parent::ww_workflow_id']],
+				'ww_wrkflwcanvas_step_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Step', 'domain' => 'workflow_id', 'null' => true, 'percent' =>50, 'placeholder' => 'Step', 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Steps::optionsActive', 'options_depends' => ['ww_wrkflwstep_workflow_id' => 'parent::ww_workflow_id']],
 			],
 			self::HIDDEN => [
 				'ww_wrkflwcanvas_id' => ['label_name' => 'Canvas #', 'domain' => 'workflow_id', 'null' => true, 'method' => 'hidden'],
@@ -187,8 +186,8 @@ class Workflows extends \Object\Form\Wrapper\Base {
 		],
 		'next_steps_container' => [
 			'row1' => [
-				'ww_wrkflwstepnext_next_step_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Step', 'domain' => 'workflow_id', 'null' => true, 'percent' =>95, 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Steps::optionsActive', 'options_depends' => ['ww_wrkflwstep_workflow_id' => 'parent::ww_workflow_id']],
-				'ww_wrkflwstepnext_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+				'ww_wrkflwstepnext_next_step_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Step', 'domain' => 'workflow_id', 'null' => true, 'percent' => 85, 'placeholder' => 'Step', 'method' => 'select', 'options_model' => '\Numbers\Users\Workflow\Model\Workflow\Steps::optionsActive', 'options_depends' => ['ww_wrkflwstep_workflow_id' => 'parent::ww_workflow_id']],
+				'ww_wrkflwstepnext_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15],
 			]
 		],
 		'buttons' => [

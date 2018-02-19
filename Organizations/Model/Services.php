@@ -26,6 +26,7 @@ class Services extends \Object\Table {
 		'on_service_queue_type_id' => ['name' => 'Queue Type #', 'domain' => 'type_id'],
 		'on_service_workflow_id' => ['name' => 'Workflow #', 'domain' => 'workflow_id', 'null' => true],
 		'on_service_service_script_id' => ['name' => 'Service Script #', 'domain' => 'service_script_id', 'null' => true],
+		'on_service_appointments' => ['name' => 'Appointments', 'type' => 'boolean'],
 		'on_service_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

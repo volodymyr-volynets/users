@@ -18,6 +18,57 @@ class Helper {
 	public static $cached_all_models;
 
 	/**
+	 * Start service script
+	 *
+	 * @param int $service_script_id
+	 * @param string $linked_type
+	 * @param int $linked_module_id
+	 * @param int $linked_id
+	 * @param array $answers
+	 * @param array $options
+	 *		on_execsscript_organization_id
+	 *		on_execsscript_location_id
+	 *		on_execsscript_region_id
+	 * @return array
+	 */
+	public static function start(int $service_script_id, string $linked_type, int $linked_module_id, int $linked_id, array $answers, array $options = []) : array {
+		$result = [
+			'success' => false,
+			'error' => []
+		];
+		$service_script = \Numbers\Users\Organizations\Model\Service\ServiceScripts::getStatic([
+			'where' => [
+				'on_servscript_id' => $service_script_id
+			],
+			'pk' => null,
+			'single_row' => true
+		]);
+		$model = new \Numbers\Users\Organizations\Model\Service\Executed\ServiceScripts();
+		$model->db_object->begin();
+		$data = [
+			'on_execsscript_service_script_id' => $service_script_id,
+			'on_execsscript_service_script_name' => $service_script['on_servscript_name'],
+			'on_execsscript_organization_id' => $options['on_execsscript_organization_id'],
+			'on_execsscript_location_id' => $options['on_execsscript_location_id'],
+			'on_execsscript_region_id' => $options['on_execsscript_region_id'],
+			'on_execsscript_channel_code' => $options['on_execsscript_channel_code'],
+			'on_execsscript_linked_type_code' => $linked_type,
+			'on_execsscript_linked_module_id' => $linked_module_id,
+			'on_execsscript_linked_id' => $linked_id, // we do not have fk for this field
+			'on_execsscript_values' => $answers,
+			'on_execsscript_inactive' => 0
+		];
+		$flow_result = $model->collection()->merge($data);
+		if (!$flow_result['success']) {
+			$model->db_object->rollback();
+			return $flow_result;
+		}
+		$model->db_object->commit();
+		$result['success'] = true;
+		return $result;
+	}
+
+	/**
 	 * Get questions
 	 *
 	 * @param int $service_script_id
@@ -99,6 +150,7 @@ class Helper {
 						'method' => $v['on_servquestion_type_code'],
 						'options_model' => $options_model,
 						'options' => $v['answers'],
+						'multiple_column' => ($v['on_servquestion_type_code'] == 'multiselect' ? 1 : false),
 						'searchable' => true,
 						'percent' => 100,
 						'required' => $v['on_servquestion_required']
@@ -147,20 +199,16 @@ class Helper {
 					}
 					break;
 				case 'radiobox':
-					$inner_counter = 1;
-					foreach ($v['answers'] as $k2 => $v2) {
-						$form->elements['top']['ss_field_' . $k . '_answer_' . $inner_counter]['ss_field_' . $k . '_answer_' . $inner_counter] = [
-							'order' => 1,
-							'row_order' => $order + $inner_counter,
-							'label_name' => '',
-							'type' => 'text',
-							'method' => 'radio', // todo fix here!!!       
-							'percent' => 100,
-							'description' => i18n(null, $k2),
-							'group_by_class' => 'ss_field_' . $k . '_answer'
-						];
-						$inner_counter++;
-					}
+					$form->elements['top']['ss_field_' . $k . '_answer']['ss_field_' . $k . '_answer'] = [
+						'order' => 1,
+						'row_order' => $order + 1,
+						'label_name' => '',
+						'type' => 'text',
+						'method' => 'radio',
+						'percent' => 100,
+						// radio boxes require options
+						'options' => $v['answers']
+					];
 					break;
 				case 'boolean':
 					$form->elements['top']['ss_field_' . $k . '_answer']['ss_field_' . $k . '_answer'] = [

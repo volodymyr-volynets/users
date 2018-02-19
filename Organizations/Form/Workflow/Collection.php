@@ -7,9 +7,9 @@ class Collection extends \Object\Form\Wrapper\Collection {
 	public $__options;
 
 	public function __construct($options = []) {
-		$on_execwflow_linked_type_code = $options['input']['on_execwflow_linked_type_code'];
-		$on_execwflow_linked_module_id = (int) $options['input']['on_execwflow_linked_module_id'];
-		$on_execwflow_linked_id = (int) $options['input']['on_execwflow_linked_id'];
+		$on_execwflow_linked_type_code = $options['input']['__linked_type_code'];
+		$on_execwflow_linked_module_id = (int) $options['input']['__linked_module_id'];
+		$on_execwflow_linked_id = (int) $options['input']['__linked_id'];
 		$workflows_data = [];
 		$workflows_model = new \Numbers\Users\Organizations\Model\Service\Executed\Workflows();
 		if (!empty($on_execwflow_linked_id) && !empty($on_execwflow_linked_module_id) && !empty($on_execwflow_linked_type_code)) {
@@ -62,16 +62,29 @@ class Collection extends \Object\Form\Wrapper\Collection {
 			];
 			$index = 1;
 			foreach ($workflows_data as $k => $v) {
-				$options['input']['on_execwflow_id'] = $k;
-				$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k]['order'] = $index;
+				$input = $options['input'];
+				$input['on_execwflow_id'] = $k;
+				$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k] = [
+					'order' => $index,
+					'options' => [
+						'type' => 'tabs',
+						'segment' => [
+							'type' => 'success',
+							'header' => [
+								'icon' => ['type' => ' fab fa-hubspot'],
+								'title' => 'Workflow: ' . $v['on_execwflow_workflow_name']
+							]
+						],
+						'its_own_segment' => true
+					]
+				];
 				$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k][self::FORMS]['on_workflow_form_id_' . $k] = [
 					'model' => '\Numbers\Users\Organizations\Form\Workflow\Workflows',
-					//'bypass_input' => ($options['__parent_options']['bypass_input'] ?? []),
 					'options' => [
+						'label_name' => 'Workflow',
 						'form_link' => 'on_workflow_form_id_' . $k,
-						'segment' => \Object\Form\Parent2::SEGMENT_WORKFLOWS,
 						'percent' => 100,
-						'input' => $options['input'],
+						'input' => $input,
 						'bypass_hidden_from_input' => ($options['__parent_options']['bypass_input'] ?? []),
 					],
 					'order' => $index
@@ -80,23 +93,17 @@ class Collection extends \Object\Form\Wrapper\Collection {
 				// render next step
 				$next_result = \Numbers\Users\Organizations\Helper\Workflow\Helper::prepareForRenderNextStep($v['on_execwflow_workflow_id'], $k);
 				if ($next_result['success']) {
-					$options['input']['on_execwflow_id'] = $k;
-					$options['input']['on_execwflow_step_id'] = $next_result['step_id'];
-					$options['input']['on_execwflow_workflow_id'] = $v['on_execwflow_workflow_id'];
-					$options['input']['on_execwflow_anchor'] = "form_on_workflow_form_id_{$k}_form_anchor";
-					$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k . '_next']['order'] = $index;
-					$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k . '_next'][self::FORMS]['on_workflow_form_id_' . $k . '_next'] = [
+					$input['on_execwflow_id'] = $k;
+					$input['on_execwflow_step_id'] = $next_result['step_id'];
+					$input['on_execwflow_workflow_id'] = $v['on_execwflow_workflow_id'];
+					$input['on_execwflow_anchor'] = "form_on_workflow_form_id_{$k}_form_anchor";
+					$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k][self::FORMS]['on_workflow_form_id_' . $k . '_next'] = [
 						'model' => $next_result['form_model'],
 						'options' => [
+							'label_name' => 'Next Step',
 							'form_link' => 'on_workflow_form_id_' . $k . '_next',
-							'segment' => ['type' => 'warning',
-								'header' => [
-									'icon' => ['type' => ' fab fa-hubspot'],
-									'title' => 'Workflow Next Step: ' . $next_result['step_name'],
-								]
-							],
 							'percent' => 100,
-							'input' => $options['input'],
+							'input' => $input,
 							'bypass_hidden_from_input' => ($options['__parent_options']['bypass_input'] ?? []),
 						],
 						'order' => $index

@@ -4,7 +4,7 @@ namespace Numbers\Users\Organizations\Helper;
 class Logo {
 
 	/**
-	 * Get url
+	 * Get URL
 	 */
 	public static function getURL() {
 		if (empty(\I18n::$options['organization_id'])) return;
