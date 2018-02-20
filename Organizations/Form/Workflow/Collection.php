@@ -25,32 +25,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 				]
 			]);
 		}
-		if (empty($workflows_data)) {
-			$this->data = [
-				self::MAIN_SCREEN => [
-					'options' => [
-						'type' => 'forms',
-						'segment' => \Object\Form\Parent2::SEGMENT_WORKFLOWS,
-						'its_own_segment' => true
-					],
-					'order' => 1000,
-					self::ROWS => [
-						self::MAIN_ROW => [
-							'order' => 100,
-							self::FORMS => [
-								'no_workflows_found' => [
-									'model' => '\Numbers\Users\Organizations\Form\Workflow\NoWorkflowsFound',
-									'options' => [
-										'percent' => 100,
-									],
-									'order' => 1
-								]
-							]
-						],
-					]
-				]
-			];
-		} else {
+		if (!empty($workflows_data)) {
 			$this->data = [
 				self::MAIN_SCREEN => [
 					'options' => [

@@ -23,10 +23,10 @@ class Calendar extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'panel' => [
-				'today' => ['order' => 1, 'row_order' => 100, 'label_name' => null, 'percent' => 5, 'class' => 'btn-block', 'value' => 'Today', 'method' => 'button2'],
+				'today' => ['order' => 1, 'row_order' => 100, 'label_name' => null, 'percent' => 20, 'class' => 'btn-block', 'value' => 'Today', 'method' => 'button2'],
 				'previous' => ['order' => 2, 'label_name' => null, 'percent' => 5, 'class' => 'btn-block', 'value' => '', 'icon' => 'fas fa-arrow-alt-circle-left', 'method' => 'button2', 'type' => 'info'],
 				'next' => ['order' => 3, 'label_name' => null, 'percent' => 5, 'class' => 'btn-block', 'value' => '', 'icon' => 'fas fa-arrow-alt-circle-right', 'method' => 'button2', 'type' => 'info'],
-				'dates' => ['order' => 4, 'label_name' => null, 'percent' => 65, 'method' => 'div'],
+				'dates' => ['order' => 4, 'label_name' => null, 'percent' => 55, 'method' => 'div'],
 				'date_hidden' => ['order' => 5, 'label_name' => null, 'type' => 'date', 'method' => 'hidden'],
 				'date1' => ['order' => 5, 'label_name' => null, 'type' => 'date', 'method' => 'hidden'],
 				'date2' => ['order' => 5, 'label_name' => null, 'type' => 'date', 'method' => 'hidden'],
