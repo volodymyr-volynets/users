@@ -26,7 +26,7 @@ class Locations extends \Object\DataSource {
 
 	public $primary_model = '\Numbers\Users\Organizations\Model\Locations';
 	public $parameters = [
-		'selected_organizations' => ['name' => 'Selected Organizations', 'domain' => 'organization_id', 'multiple_column' => true],
+		'selected_organizations' => ['name' => 'Selected Organizations', 'domain' => 'organization_id', 'multiple_column' => true, 'required' => true],
 		'existing_values' => ['name' => 'Existing Values', 'type' => 'mixed'],
 		'assignment_type_id' => ['name' => 'Assignment Type', 'domain' => 'type_id'],
 		'service_id' => ['name' => 'Service', 'domain' => 'service_id', 'multiple_column' => true, 'required' => true],

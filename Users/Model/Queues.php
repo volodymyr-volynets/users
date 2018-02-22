@@ -19,13 +19,15 @@ class Queues extends \Object\Table {
 		'um_queue_type_id' => ['name' => 'Queue Type #', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Organizations\Model\Queue\Types'],
 		'um_queue_hash' => ['name' => 'Hash', 'domain' => 'code'],
 		'um_queue_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
-		'um_queue_json' => ['name' => 'Json Data', 'type' => 'json'],
+		'um_queue_temporary_until' => ['name' => 'Temporary Until', 'type' => 'timestamp', 'null' => true],
 		'um_queue_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'um_queues_pk' => ['type' => 'pk', 'columns' => ['um_queue_tenant_id', 'um_queue_id']],
 	];
-	public $indexes = [];
+	public $indexes = [
+		'um_queue_hash_idx' => ['type' => 'btree', 'columns' => ['um_queue_hash']]
+	];
 	public $history = false;
 	public $audit = false;
 	public $optimistic_lock = false;
@@ -38,6 +40,10 @@ class Queues extends \Object\Table {
 	public $cache = false;
 	public $cache_tags = [];
 	public $cache_memory = false;
+
+	public $who = [
+		'inserted' => true,
+	];
 
 	public $data_asset = [
 		'classification' => 'client_confidential',

@@ -54,11 +54,11 @@ class Queues extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'um_queue_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Queue #', 'domain' => 'queue_id', 'percent' => 10, 'url_edit' => true],
+				'um_queue_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Queue #', 'domain' => 'queue_id', 'percent' => 20],
 				'um_queue_type_id' => ['order' => 2, 'label_name' => 'Queue Type #', 'domain' => 'type_id', 'percent' => 20, 'options_model' => '\Numbers\Users\Organizations\Model\Queue\Types'],
-				'um_queue_hash' => ['order' => 3, 'name' => 'Hash', 'domain' => 'code', 'percent' => 30],
-				'um_queue_user_id' => ['name' => 'User #', 'domain' => 'user_id', 'percent' => 35, 'options_model' => '\Numbers\Users\Users\Model\Users'],
-				'um_queue_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_queue_hash' => ['order' => 3, 'label_name' => 'Hash', 'domain' => 'code', 'percent' => 30],
+				'um_queue_user_id' => ['order' => 4, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'options_model' => '\Numbers\Users\Users\Model\Users'],
+				'um_queue_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]
 	];

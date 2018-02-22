@@ -170,7 +170,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Queues',
-			'details_pk' => ['um_usrassqueue_queue_type_id'],
+			'details_pk' => ['um_usrassqueue_queue_type_id', 'um_usrassqueue_owner_type_id'],
 			'order' => 35004
 		],
 	];
@@ -367,8 +367,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'organizations_container' => [
 			'row1' => [
-				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 5],
+				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
 				'um_usrorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
@@ -514,8 +514,9 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'queues_assignments_container' => [
 			'row1' => [
-				'um_usrassqueue_queue_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 95, 'details_unique_select' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Queue\Types', 'onchange' => 'this.form.submit();'],
-				'um_usrassqueue_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_usrassqueue_queue_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Queue Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Queue\Types', 'onchange' => 'this.form.submit();'],
+				'um_usrassqueue_owner_type_id' => ['order' => 2, 'label_name' => 'Owner Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 45, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Queue\OwnerTypes', 'onchange' => 'this.form.submit();'],
+				'um_usrassqueue_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'buttons' => [
@@ -616,7 +617,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'\Numbers\Users\Users\Model\User\Assignment\Queues' => [
 				'name' => 'Queues Assignments',
-				'pk' => ['um_usrassqueue_tenant_id', 'um_usrassqueue_user_id', 'um_usrassqueue_queue_type_id'],
+				'pk' => ['um_usrassqueue_tenant_id', 'um_usrassqueue_user_id', 'um_usrassqueue_queue_type_id', 'um_usrassqueue_owner_type_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrassqueue_tenant_id', 'um_user_id' => 'um_usrassqueue_user_id'],
 			],

@@ -1,10 +1,10 @@
 <?php
 
 namespace Numbers\Users\Organizations\Form\List2\Queue;
-class Types extends \Object\Form\Wrapper\List2 {
-	public $form_link = 'on_queue_types_list';
+class OwnerTypes extends \Object\Form\Wrapper\List2 {
+	public $form_link = 'on_owner_types_list';
 	public $module_code = 'ON';
-	public $title = 'O/N Queue Types Form';
+	public $title = 'O/N Owner Types Form';
 	public $options = [
 		'segment' => self::SEGMENT_LIST,
 		'actions' => [
@@ -35,13 +35,13 @@ class Types extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
-			'on_quetype_id' => [
-				'on_quetype_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type #', 'domain' => 'type_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_quetype_id;>='],
-				'on_quetype_id2' => ['order' => 2, 'label_name' => 'Type #', 'domain' => 'type_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_quetype_id;<='],
-				'on_quetype_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_quetype_inactive;=']
+			'on_ownertype_id' => [
+				'on_ownertype_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type #', 'domain' => 'type_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_ownertype_id;>='],
+				'on_ownertype_id2' => ['order' => 2, 'label_name' => 'Type #', 'domain' => 'type_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_ownertype_id;<='],
+				'on_ownertype_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_ownertype_inactive;=']
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_quetype_name', 'a.on_quetype_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_ownertype_name', 'a.on_ownertype_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -53,24 +53,24 @@ class Types extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'on_quetype_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type #', 'domain' => 'type_id', 'percent' => 10, 'url_edit' => true],
-				'on_quetype_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
-				'on_quetype_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 25],
-				'on_quetype_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+				'on_ownertype_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type #', 'domain' => 'type_id', 'percent' => 10, 'url_edit' => true],
+				'on_ownertype_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
+				'on_ownertype_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 25],
+				'on_ownertype_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Organizations\Model\Queue\Types';
+	public $query_primary_model = '\Numbers\Users\Organizations\Model\Queue\OwnerTypes';
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'default_limit' => 30,
 		'default_sort' => [
-			'on_quetype_id' => SORT_ASC
+			'on_ownertype_id' => SORT_ASC
 		]
 	];
 	const LIST_SORT_OPTIONS = [
-		'on_quetype_id' => ['name' => 'Type #'],
-		'on_quetype_name' => ['name' => 'Name']
+		'on_ownertype_id' => ['name' => 'Type #'],
+		'on_ownertype_name' => ['name' => 'Name']
 	];
 }
