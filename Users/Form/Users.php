@@ -437,8 +437,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'territories_assignments_container_map' => [
 			'row1' => [
-				'um_usrasstrrmap_territory_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Territory', 'domain' => 'territory_id', 'null' => true, 'required' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'searchable' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Location\Territories::optionsGroupped', 'onchange' => 'this.form.submit();'],
-				'um_usrasstrrmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean']
+				'um_usrasstrrmap_territory_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Territory', 'domain' => 'territory_id', 'null' => true, 'required' => true, 'details_unique_select' => true, 'percent' => 85, 'method' => 'select', 'tree' => true, 'searchable' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Location\Territories::optionsGroupped', 'onchange' => 'this.form.submit();'],
+				'um_usrasstrrmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			]
 		],
 		'locations_assignments_container' => [

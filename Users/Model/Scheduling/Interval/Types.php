@@ -14,7 +14,8 @@ class Types extends \Object\Data {
 	public $data = [
 		1000 => ['um_schedinttype_name' => 'Working Hours'],
 		2000 => ['um_schedinttype_name' => 'Time Tracking'],
-		3000 => ['um_schedinttype_name' => 'Appointments'],
+		3000 => ['um_schedinttype_name' => 'Appointment (Availability)'],
+		3100 => ['um_schedinttype_name' => 'Appointment (Booked)'],
 		4000 => ['um_schedinttype_name' => 'Not Available'], // sick days, other reasones
 		5000 => ['um_schedinttype_name' => 'Vacation'],
 	];

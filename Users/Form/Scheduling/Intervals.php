@@ -16,9 +16,19 @@ class Intervals extends \Object\Form\Wrapper\Base {
 	];
 	public $containers = [
 		'top' => ['default_row_type' => 'grid', 'order' => 100],
-		'buttons' => ['default_row_type' => 'grid', 'order' => 900]
+		'tabs' => ['default_row_type' => 'grid', 'order' => 500, 'type' => 'tabs'],
+		'buttons' => ['default_row_type' => 'grid', 'order' => 900],
+		// children
+		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
+		'description_container' => ['default_row_type' => 'grid', 'order' => 32001],
 	];
-	public $rows = [];
+	public $rows = [
+		'tabs' => [
+			'general' => ['order' => 100, 'label_name' => 'General'],
+			'description' => ['order' => 200, 'label_name' => 'Description'],
+			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
+		],
+	];
 	public $elements = [
 		'top' => [
 			'um_schedinterval_id' => [
@@ -28,16 +38,26 @@ class Intervals extends \Object\Form\Wrapper\Base {
 			'um_schedinterval_name' => [
 				'um_schedinterval_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
 			],
+		],
+		'tabs' => [
+			'general' => [
+				'general' => ['container' => 'general_container', 'order' => 100],
+			],
+			'description' => [
+				'description' => ['container' => 'description_container', 'order' => 100],
+			]
+		],
+		'general_container' => [
 			'um_schedinterval_type_id' => [
-				'um_schedinterval_type_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Types', 'onchange' => 'this.form.submit();'],
-				'um_schedinterval_status_id' => ['order' => 2, 'label_name' => 'Status', 'domain' => 'type_id', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Statuses'],
+				'um_schedinterval_type_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Types', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+				'um_schedinterval_status_id' => ['order' => 2, 'label_name' => 'Status', 'domain' => 'type_id', 'null' => true, 'required' => true, 'placeholder' => 'Status', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Statuses', 'options_options' => ['i18n' => 'skip_sorting']],
 			],
 			'um_schedinterval_shift_id' => [
 				'um_schedinterval_shift_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Shift', 'domain' => 'shift_id', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Shifts::optionsActive', 'onchange' => 'this.form.submit();'],
 			],
 			'um_schedinterval_work_starts' => [
-				'um_schedinterval_work_starts' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Work Starts', 'type' => 'datetime', 'percent' => 25, 'required' => true, 'method' => 'calendar', 'calendar_icon' => 'right'],
-				'um_schedinterval_work_ends' => ['order' => 2, 'label_name' => 'Work Ends', 'type' => 'datetime', 'percent' => 25, 'required' => true, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'um_schedinterval_work_starts' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Date Start', 'type' => 'datetime', 'percent' => 25, 'required' => true, 'method' => 'calendar', 'calendar_icon' => 'right'],
+				'um_schedinterval_work_ends' => ['order' => 2, 'label_name' => 'Date End', 'type' => 'datetime', 'percent' => 25, 'required' => true, 'method' => 'calendar', 'calendar_icon' => 'right'],
 				'um_schedinterval_lunch_starts' => ['order' => 3, 'label_name' => 'Lunch Starts', 'type' => 'datetime', 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
 				'um_schedinterval_lunch_ends' => ['order' => 4, 'label_name' => 'Lunch Ends', 'type' => 'datetime', 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
 			],
@@ -56,6 +76,8 @@ class Intervals extends \Object\Form\Wrapper\Base {
 				'um_schedinterval_country_code' => ['order' => 1, 'row_order' => 800, 'label_name' => 'Country', 'domain' => 'country_code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
 				'um_schedinterval_province_code' => ['order' => 1, 'label_name' => 'Province', 'domain' => 'province_code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'um_schedinterval_country_code']],
 			],
+		],
+		'description_container' => [
 			'um_schedinterval_description' => [
 				'um_schedinterval_description' => ['order' => 1, 'row_order' => 900, 'label_name' => 'Description', 'domain' => 'description', 'null' => true, 'method' => 'wysiwyg'],
 			]

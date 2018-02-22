@@ -15,5 +15,6 @@ class Statuses extends \Object\Data {
 		10 => ['um_schedintstatus_name' => 'New'], // newly created
 		20 => ['um_schedintstatus_name' => 'Confirmed'], // confirmed by owner
 		30 => ['um_schedintstatus_name' => 'Approved'], // approved by manager
+		40 => ['um_schedintstatus_name' => 'Canceled'], // canceled
 	];
 }

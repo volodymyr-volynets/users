@@ -83,7 +83,14 @@ class Intervals extends \Object\Table {
 		'MySQLi' => 'InnoDB'
 	];
 
-	public $cache = true;
+	public $addresses = [
+		'map' => [
+			'um_schedinterval_tenant_id' => 'wg_address_tenant_id',
+			'um_schedinterval_id' => 'wg_address_interval_id'
+		]
+	];
+
+	public $cache = false;
 	public $cache_tags = [];
 	public $cache_memory = false;
 
