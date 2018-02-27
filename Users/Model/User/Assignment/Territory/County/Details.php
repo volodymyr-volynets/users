@@ -95,6 +95,8 @@ class Details extends \Object\Table {
 			$result['error']+= $insert_result['error'];
 			return $result;
 		}
+		// reset cache
+		$this->resetCache();
 		// sucess at the end
 		$result['success'] = true;
 		return $result;

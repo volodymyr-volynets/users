@@ -68,7 +68,7 @@ class PostalCodes extends \Object\Table {
 	];
 
 	public $cache = false;
-	public $cache_tags = [];
+	public $cache_tags = ['direct_postal_code_assignment'];
 	public $cache_memory = false;
 
 	public $data_asset = [

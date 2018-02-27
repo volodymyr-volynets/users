@@ -50,6 +50,7 @@ class Territories extends \Object\Table {
 	public $options_map = [
 		'on_territory_name' => 'name',
 		'on_territory_parent_territory_id' => 'parent',
+		'on_territory_node_type_id' => 'node_type_id',
 		'on_territory_inactive' => 'inactive'
 	];
 	public $options_active = [
@@ -82,6 +83,11 @@ class Territories extends \Object\Table {
 		$options['i18n'] = false;
 		$result = $this->optionsActive($options);
 		if (!empty($result)) {
+			foreach ($result as $k => $v) {
+				if ($v['node_type_id'] != 30) {
+					$result[$k]['disabled'] = true;
+				}
+			}
 			$converted = \Helper\Tree::convertByParent($result, 'parent', ['disable_parents' => true]);
 			$result = [];
 			\Helper\Tree::convertTreeToOptionsMulti($converted, 0, ['name_field' => 'name'], $result);

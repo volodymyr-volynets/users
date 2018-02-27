@@ -44,6 +44,7 @@ class Locations extends \Object\DataSource {
 			case 20: $parameters['filter_by_direct_postal_code'] = 1; break;
 			case 30: $parameters['filter_by_location_assignment'] = 1; break;
 			case 40: $parameters['filter_by_geo_assignment'] = 1; break;
+			case 50: /* no assignment service, display all locations */ break;
 			default: $this->query->where('AND', 'FALSE');
 		}
 		// columns
@@ -63,6 +64,7 @@ class Locations extends \Object\DataSource {
 				$query->where('OR', ['a.on_location_organization_id', '=', $parameters['selected_organizations']]);
 			});
 		}
+		// filter by locations assignment
 		if (!empty($parameters['filter_by_location_assignment'])) {
 			$this->query->where('AND', function (& $query) use ($parameters) {
 				$query = \Numbers\Users\Users\Model\User\Assignment\Location\Map::queryBuilderStatic(['alias' => 'inner_a'])->select();

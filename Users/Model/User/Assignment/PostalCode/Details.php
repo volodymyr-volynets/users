@@ -36,7 +36,7 @@ class Details extends \Object\Table {
 	];
 
 	public $cache = false;
-	public $cache_tags = [];
+	public $cache_tags = ['direct_postal_code_assignment'];
 	public $cache_memory = false;
 
 	public $data_asset = [
@@ -58,7 +58,7 @@ class Details extends \Object\Table {
 			'success' => false,
 			'error' => []
 		];
-		// step 1 update specia flag
+		// step 1 update special flag
 		$query = $this->queryBuilder()->delete();
 		$update_result = $query->query();
 		if (!$update_result['success']) {
@@ -101,6 +101,8 @@ class Details extends \Object\Table {
 			$result['error']+= $insert_result['error'];
 			return $result;
 		}
+		// reset cache
+		$this->resetCache();
 		// sucess at the end
 		$result['success'] = true;
 		return $result;

@@ -108,52 +108,50 @@ class ServiceProviders extends \Object\DataSource {
 				$query->where('OR', ['a.um_user_id', '=', 'c.um_usrorg_user_id', true]);
 			}, 'EXISTS');
 		}
-		// um_user_inserted_timestamp
-//		if (!empty($parameters['filter_by_location_assignment'])) {
-//			$this->query->where('AND', function (& $query) use ($parameters) {
-//				$query = \Numbers\Users\Users\Model\User\Assignment\Location\Map::queryBuilderStatic(['alias' => 'inner_a'])->select();
-//				$query->columns(1);
-//				$query->where('AND', ['inner_a.um_usrasslcnmap_service_id', '=', $parameters['service_id']]);
-//				$query->where('AND', ['inner_a.um_usrasslcnmap_location_id', '=', 'a.on_location_id', true]);
-//				if (!empty($parameters['country_code'])) {
-//					$query->where('AND', ['inner_a.um_usrasslcnmap_country_code', '=', $parameters['country_code']]);
-//				}
-//				if (!empty($parameters['province_code'])) {
-//					$query->where('AND', ['inner_a.um_usrasslcnmap_province_code', '=', $parameters['province_code']]);
-//				}
-//			}, 'EXISTS');
-//		}
-//		// filter by territory postal code
-//		if (!empty($parameters['filter_by_territory_postal_code'])) {
-//			$this->query->where('AND', function (& $query) use ($parameters) {
-//				$query = \Numbers\Users\Users\Model\User\Assignment\Territory\PostalCode\Details::queryBuilderStatic(['alias' => 'inner_b'])->select();
-//				$query->columns(1);
-//				$query->where('AND', ['inner_b.um_usrassdetailterri_service_id', '=', $parameters['service_id']]);
-//				$query->where('AND', ['inner_b.um_usrassdetailterri_location_id', '=', 'a.on_location_id', true]);
-//				$query->where('AND', ['inner_b.um_usrassdetailterri_postal_code', '=', $parameters['postal_code']]);
-//			}, 'EXISTS');
-//		}
-//		// filter by direct postal code
-//		if (!empty($parameters['filter_by_direct_postal_code'])) {
-//			$this->query->where('AND', function (& $query) use ($parameters) {
-//				$query = \Numbers\Users\Users\Model\User\Assignment\PostalCode\Details::queryBuilderStatic(['alias' => 'inner_c'])->select();
-//				$query->columns(1);
-//				$query->where('AND', ['inner_c.um_usrassdetailpostal_service_id', '=', $parameters['service_id']]);
-//				$query->where('AND', ['inner_c.um_usrassdetailpostal_location_id', '=', 'a.on_location_id', true]);
-//				$query->where('AND', ['inner_c.um_usrassdetailpostal_postal_code', '=', $parameters['postal_code']]);
-//			}, 'EXISTS');
-//		}
-//		// filter by country
-//		if (!empty($parameters['filter_by_territory_county'])) {
-//			$this->query->where('AND', function (& $query) use ($parameters) {
-//				$query = \Numbers\Users\Users\Model\User\Assignment\Territory\County\Details::queryBuilderStatic(['alias' => 'inner_d'])->select();
-//				$query->columns(1);
-//				$query->where('AND', ['inner_d.um_usrassdetailcounty_service_id', '=', $parameters['service_id']]);
-//				$query->where('AND', ['inner_d.um_usrassdetailcounty_location_id', '=', 'a.on_location_id', true]);
-//				$query->where('AND', ['inner_d.um_usrassdetailcounty_territory_id', '=', $parameters['territory_id']]);
-//			}, 'EXISTS');
-//		}
-//		// geo assignment
+		// filter by location
+		if (!empty($parameters['filter_by_location_assignment'])) {
+			$this->query->where('AND', function (& $query) use ($parameters) {
+				$query = \Numbers\Users\Users\Model\User\Assignment\Location\Map::queryBuilderStatic(['alias' => 'inner_a'])->select();
+				$query->columns(1);
+				$query->where('AND', ['inner_a.um_usrasslcnmap_service_id', '=', $parameters['service_id']]);
+				$query->where('AND', ['inner_a.um_usrasslcnmap_location_id', '=', $parameters['location_id']]);
+				$query->where('AND', ['inner_a.um_usrasslcnmap_user_id', '=', 'a.um_user_id', true]);
+			}, 'EXISTS');
+		}
+		// filter by territory postal code
+		if (!empty($parameters['filter_by_territory_postal_code'])) {
+			$this->query->where('AND', function (& $query) use ($parameters) {
+				$query = \Numbers\Users\Users\Model\User\Assignment\Territory\PostalCode\Details::queryBuilderStatic(['alias' => 'inner_b'])->select();
+				$query->columns(1);
+				$query->where('AND', ['inner_b.um_usrassdetailterri_service_id', '=', $parameters['service_id']]);
+				$query->where('AND', ['inner_b.um_usrassdetailterri_location_id', '=', $parameters['location_id']]);
+				$query->where('AND', ['inner_b.um_usrassdetailterri_postal_code', '=', $parameters['postal_code']]);
+				$query->where('AND', ['inner_b.um_usrassdetailterri_user_id', '=', 'a.um_user_id', true]);
+			}, 'EXISTS');
+		}
+		// filter by direct postal code
+		if (!empty($parameters['filter_by_direct_postal_code'])) {
+			$this->query->where('AND', function (& $query) use ($parameters) {
+				$query = \Numbers\Users\Users\Model\User\Assignment\PostalCode\Details::queryBuilderStatic(['alias' => 'inner_c'])->select();
+				$query->columns(1);
+				$query->where('AND', ['inner_c.um_usrassdetailpostal_service_id', '=', $parameters['service_id']]);
+				$query->where('AND', ['inner_c.um_usrassdetailpostal_location_id', '=', $parameters['location_id']]);
+				$query->where('AND', ['inner_c.um_usrassdetailpostal_postal_code', '=', $parameters['postal_code']]);
+				$query->where('AND', ['inner_c.um_usrassdetailpostal_user_id', '=', 'a.um_user_id', true]);
+			}, 'EXISTS');
+		}
+		// filter by county
+		if (!empty($parameters['filter_by_territory_county'])) {
+			$this->query->where('AND', function (& $query) use ($parameters) {
+				$query = \Numbers\Users\Users\Model\User\Assignment\Territory\County\Details::queryBuilderStatic(['alias' => 'inner_d'])->select();
+				$query->columns(1);
+				$query->where('AND', ['inner_d.um_usrassdetailcounty_service_id', '=', $parameters['service_id']]);
+				$query->where('AND', ['inner_d.um_usrassdetailcounty_location_id', '=', $parameters['location_id']]);
+				$query->where('AND', ['inner_d.um_usrassdetailcounty_territory_id', '=', $parameters['territory_id']]);
+				$query->where('AND', ['inner_d.um_usrassdetailcounty_user_id', '=', 'a.um_user_id', true]);
+			}, 'EXISTS');
+		}
+		// geo assignment
 		if (!empty($parameters['filter_by_geo_assignment'])) {
 			if (!empty($parameters['postal_code']) && !empty($parameters['address'])) {
 				$decoded = \Numbers\Countries\Countries\Helper\Google::decodeAnAddress($parameters['address']);
@@ -189,7 +187,5 @@ class ServiceProviders extends \Object\DataSource {
 		$this->query->limit($parameters['limit']);
 		// order
 		$this->query->orderby(['last_timestamp' => SORT_ASC]);
-		// debug
-		//print_r2($this->query->sql());
 	}
 }
