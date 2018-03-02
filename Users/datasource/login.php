@@ -69,6 +69,7 @@ class Login extends \Object\DataSource {
 			'i18n_format_timestamp' => 'd.um_usri18n_format_timestamp',
 			'i18n_format_amount_frm' => 'd.um_usri18n_format_amount_frm',
 			'i18n_format_amount_fs' => 'd.um_usri18n_format_amount_fs',
+			'i18n_format_uom' => 'd.um_usri18n_format_uom',
 			'i18n_print_format' => 'd.um_usri18n_print_format',
 			'i18n_print_font' => 'd.um_usri18n_print_font',
 			// primary organization

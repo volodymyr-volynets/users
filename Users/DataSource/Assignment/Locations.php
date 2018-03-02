@@ -12,6 +12,7 @@ class Locations extends \Object\DataSource {
 	public $single_value;
 	public $options_map =[
 		'on_location_name' => 'name',
+		'on_location_distance_to_location' => 'name',
 		'on_location_logo_file_id' => 'photo_id',
 		'on_location_inactive' => 'inactive'
 	];
@@ -47,10 +48,12 @@ class Locations extends \Object\DataSource {
 			case 50: /* no assignment service, display all locations */ break;
 			default: $this->query->where('AND', 'FALSE');
 		}
+		$parameters['postal_code'] = strtoupper($parameters['postal_code']);
 		// columns
 		$this->query->columns([
 			'on_location_id' => 'a.on_location_id',
 			'on_location_name' => 'a.on_location_name',
+			'on_location_distance_to_location' => 'NULL',
 			'on_location_logo_file_id' => 'a.on_location_logo_file_id',
 			'on_location_inactive' => 'a.on_location_inactive'
 		]);
@@ -139,6 +142,22 @@ class Locations extends \Object\DataSource {
 				$this->query->where('AND', 'FALSE');
 			}
 		}
+		// distance to location if we have postal code
+		if (!empty($parameters['postal_code']) && !empty($parameters['country_code'])) {
+			$this->query->columns([
+				'on_location_distance_to_location' => $this->query->db_object->sqlHelper('distance_in_meters', [
+					'latitude_1' => 'p.cm_postal_latitude',
+					'longitude_1' => 'p.cm_postal_longitude',
+					'latitude_2' => 'a.on_location_latitude',
+					'longitude_2' => 'a.on_location_longitude'
+				])
+			]);
+			$this->query->join('LEFT', new \Numbers\Countries\Countries\Model\PostalCodes(), 'p', 'ON', [
+				['AND', ['p.cm_postal_country_code', '=', $parameters['country_code'], false], false],
+				['AND', ['p.cm_postal_postal_code', '=', $parameters['postal_code'], false], false],
+			]);
+			$this->query->orderby(['on_location_distance_to_location' => SORT_ASC]);
+		}
 		// where
 		if (!empty($parameters['country_code'])) {
 			$this->query->where('AND', ['a.on_location_country_code', '=', $parameters['country_code']]);
@@ -146,5 +165,14 @@ class Locations extends \Object\DataSource {
 		if (!empty($parameters['province_code'])) {
 			$this->query->where('AND', ['a.on_location_province_code', '=', $parameters['province_code']]);
 		}
+	}
+
+	public function processNotCached($data, $options = []) {
+		foreach ($data as $k => $v) {
+			if (isset($v['on_location_distance_to_location'])) {
+				$data[$k]['on_location_distance_to_location'] = '(' . \Format::distance($v['on_location_distance_to_location']) . ')';
+			}
+		}
+		return $data;
 	}
 }

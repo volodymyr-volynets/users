@@ -26,8 +26,9 @@ class Internalization extends \Object\Table {
 		'um_usri18n_format_time' => ['name' => 'Time Format', 'domain' => 'code', 'null' => true],
 		'um_usri18n_format_datetime' => ['name' => 'Datetime Format', 'domain' => 'code', 'null' => true],
 		'um_usri18n_format_timestamp' => ['name' => 'Timestamp Format', 'domain' => 'code', 'null' => true],
-		'um_usri18n_format_amount_frm' => ['name' => 'Amounts In Forms', 'domain' => 'type_id', 'null' => true, 'options_model' => '\Numbers\Internalization\Internalization\Model\Format\Amounts'],
-		'um_usri18n_format_amount_fs' => ['name' => 'Amounts In Financial Statement', 'domain' => 'type_id', 'null' => true, 'options_model' => '\Numbers\Internalization\Internalization\Model\Format\Amounts'],
+		'um_usri18n_format_amount_frm' => ['name' => 'Amounts In Forms', 'domain' => 'type_id', 'null' => true, 'options_model' => '\Object\Format\Amounts'],
+		'um_usri18n_format_amount_fs' => ['name' => 'Amounts In Financial Statement', 'domain' => 'type_id', 'null' => true, 'options_model' => '\Object\Format\Amounts'],
+		'um_usri18n_format_uom' => ['name' => 'Unit of Measures', 'domain' => 'group_code', 'null' => true, 'default' => 'METRIC', 'options_model' => '\Object\Format\UoM'],
 		// print
 		'um_usri18n_print_format' => ['name' => 'Print Format', 'domain' => 'code', 'null' => true],
 		'um_usri18n_print_font' => ['name' => 'Print Font', 'domain' => 'code', 'null' => true],
