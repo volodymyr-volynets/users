@@ -35,14 +35,18 @@ class ServiceProviders extends \Object\DataSource {
 		'territory_id' => ['name' => 'Territory', 'domain' => 'territory_id'],
 		'address' => ['name' => 'Address', 'type' => 'text'],
 		'limit' => ['name' => 'Limit', 'type' => 'smallint', 'required' => true],
+		'hash_prefix' => ['name' => 'Hash Prefix', 'type' => 'text', 'required' => true],
 	];
 
 	public function query($parameters, $options = []) {
 		// fetch queue type
-		$temp = \Numbers\Users\Organizations\Model\Services::queryBuilderStatic()->select()->columns(['on_service_queue_type_id'])->where('AND', ['a.on_service_id', '=', $parameters['service_id']])->query(null);
-		$service_data = $temp['rows'][0] ?? [];
+		$service_data = \Numbers\Users\Organizations\DataSource\Service\QueueSettings::getStatic([
+			'where' => [
+				'service_id' => $parameters['service_id']
+			]
+		]);
 		// generate hash
-		$hash = 'ORG::' . $parameters['selected_organizations'] . '::QUEUE::' . $service_data['on_service_queue_type_id'] . '::SERV::' . $parameters['service_id'] . '::LOC::' . $parameters['location_id'];
+		$hash = $parameters['hash_prefix'] . '::ORGANIZATION::' . $parameters['selected_organizations'] . '::QUEUE::' . $service_data['on_service_queue_type_id'] . '::SERVICE::' . $parameters['service_id'] . '::LOCATION::' . $parameters['location_id'];
 		switch ($parameters['assignment_type_id']) {
 			case 13: $parameters['filter_by_territory_postal_code'] = 1; break;
 			case 17: $parameters['filter_by_territory_county'] = 1; break;
@@ -62,6 +66,7 @@ class ServiceProviders extends \Object\DataSource {
 			'percent_records' => 'COALESCE(d.last_records_count / d.total_records_count * 100, 0)',
 			'hash' => "'{$hash}'",
 			'queue_type_id' => $service_data['on_service_queue_type_id'],
+			'queue_method_id' => $service_data['on_quetype_method_id']
 		]);
 		// joins
 		$query2 = \Numbers\Users\Organizations\Model\Queue\OwnerTypes::queryBuilderStatic(['alias' => 'subquery2'])->select()->columns(['on_ownertype_id'])->where('AND', ['subquery2.on_ownertype_code', '=', 'SP']);
@@ -70,7 +75,23 @@ class ServiceProviders extends \Object\DataSource {
 			['AND', ['b.um_usrassqueue_owner_type_id', 'IN', '(' . $query2->sql() . ')', true], false],
 			['AND', ['b.um_usrassqueue_queue_type_id', '=', $service_data['on_service_queue_type_id'], false], false]
 		]);
+		// prioritized routing
+		if ($service_data['on_quetype_method_id'] == 20) {
+			$this->query->columns([
+				'priority_percent' => 'COALESCE(p.um_quepriority_priority, 1)',
+				'priority_order' => 'COALESCE(p.um_quepriority_priority, 1) - COALESCE(d.last_records_count / d.total_records_count * 100, 0)'
+			]);
+			$this->query->join('LEFT', new \Numbers\Users\Users\Model\Queue\Priorities(), 'p', 'ON', [
+				['AND', ['a.um_user_id', '=', 'p.um_quepriority_user_id', true], false],
+				['AND', ['b.um_usrassqueue_queue_type_id', '=', 'p.um_quepriority_queue_type_id', true], false],
+				['AND', ['b.um_usrassqueue_owner_type_id', '=', 'p.um_quepriority_owner_type_id', true], false],
+				['AND', ['p.um_quepriority_service_id', '=', $parameters['service_id'], false], false],
+				['AND', ['p.um_quepriority_location_id', '=', $parameters['location_id'], false], false],
+				['AND', ['p.um_quepriority_inactive', '=', 0, false], false],
+			]);
+		}
 		$this->query->join('LEFT', function (& $query) use ($parameters, $service_data, $hash) {
+			$reset_date = date('Y-m-01'); // reset on the 1st of every month
 			$query3 = \Numbers\Users\Users\Model\Queues::queryBuilderStatic(['alias' => 'inner_x'])
 				->select()
 				->columns(['count' => 'COUNT(*)'])
@@ -80,7 +101,7 @@ class ServiceProviders extends \Object\DataSource {
 				->where('AND', function (& $query) {
 					$query->where('OR', ['inner_x.um_queue_temporary_until', 'IS', null]);
 					$query->where('OR', ['inner_x.um_queue_temporary_until', '>', \Format::now('timestamp'), false]);
-			});
+				})->where('AND', ['inner_x.um_queue_inserted_timestamp', '>=', $reset_date]);
 			$query = \Numbers\Users\Users\Model\Queues::queryBuilderStatic(['alias' => 'inner_v'])->select();
 			$query->columns([
 				'user_id' => 'inner_v.um_queue_user_id',
@@ -96,6 +117,8 @@ class ServiceProviders extends \Object\DataSource {
 				$query->where('OR', ['inner_v.um_queue_temporary_until', 'IS', null]);
 				$query->where('OR', ['inner_v.um_queue_temporary_until', '>', \Format::now('timestamp'), false]);
 			});
+			// reset queue every month
+			$query->where('AND', ['inner_v.um_queue_inserted_timestamp', '>=', $reset_date]);
 		}, 'd', 'ON', [
 			['AND', ['d.user_id', '=', 'a.um_user_id', true], false],
 		]);
@@ -186,6 +209,19 @@ class ServiceProviders extends \Object\DataSource {
 		// limit
 		$this->query->limit($parameters['limit']);
 		// order
-		$this->query->orderby(['last_timestamp' => SORT_ASC]);
+		if ($service_data['on_quetype_method_id'] == 20) { // prioritized routing
+			$this->query->orderby(['priority_order' => SORT_DESC, 'last_timestamp' => SORT_ASC]);
+		} else if ($service_data['on_quetype_method_id'] == 15) { // round robin (randomized)
+			$this->query->columns([
+				'last_timestamp' => "COALESCE(d.last_timestamp, '2000-01-01')",
+				'random_value' => $this->query->db_object->sqlHelper('random')
+			]);
+			$this->query->orderby(['last_timestamp' => SORT_ASC, 'random_value' => SORT_DESC]);
+		} else { // sequential round robin
+			$this->query->orderby(['last_timestamp' => SORT_ASC]);
+		}
+		// debug
+		//print_r2($this->query->sql());
+		//exit;
 	}
 }

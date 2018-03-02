@@ -173,6 +173,16 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['um_usrassqueue_queue_type_id', 'um_usrassqueue_owner_type_id'],
 			'order' => 35004
 		],
+		'queues_priorities_container' => [
+			'label_name' => 'Priorities',
+			'type' => 'subdetails',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Users\Model\User\Assignment\Queues',
+			'details_key' => '\Numbers\Users\Users\Model\Queue\Priorities',
+			'details_pk' => ['um_quepriority_service_id', 'um_quepriority_location_id'],
+			'order' => 35007,
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -519,6 +529,16 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrassqueue_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
+		'queues_priorities_container' => [
+			'row1' => [
+				'um_quepriority_service_id' => ['order' => 1, 'row_order' => 100, 'order_for_defaults' => 31000, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 85, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_quepriority_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+			],
+			'row2' => [
+				'um_quepriority_location_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Location', 'domain' => 'location_id', 'null' => true, 'required' => true, 'percent' => 70, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Locations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_quepriority_priority' => ['order' => 2, 'label_name' => 'Priority', 'domain' => 'percent', 'null' => true, 'percent' => 30],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -620,6 +640,14 @@ class Users extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_usrassqueue_tenant_id', 'um_usrassqueue_user_id', 'um_usrassqueue_queue_type_id', 'um_usrassqueue_owner_type_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrassqueue_tenant_id', 'um_user_id' => 'um_usrassqueue_user_id'],
+				'details' => [
+					'\Numbers\Users\Users\Model\Queue\Priorities' => [
+						'name' => 'Queue Priorities',
+						'pk' => ['um_quepriority_tenant_id', 'um_quepriority_user_id', 'um_quepriority_queue_type_id', 'um_quepriority_owner_type_id', 'um_quepriority_service_id', 'um_quepriority_location_id'],
+						'type' => '1M',
+						'map' => ['um_usrassqueue_tenant_id' => 'um_quepriority_tenant_id', 'um_usrassqueue_user_id' => 'um_quepriority_user_id', 'um_usrassqueue_queue_type_id' => 'um_quepriority_queue_type_id', 'um_usrassqueue_owner_type_id' => 'um_quepriority_owner_type_id'],
+					]
+				]
 			],
 			'\Numbers\Users\Users\Model\User\Notifications' => [
 				'name' => 'Notifications',

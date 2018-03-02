@@ -14,8 +14,9 @@ class Methods extends \Object\Data {
 		'on_quemethod_icon' => 'icon_class',
 	];
 	public $data = [
-		10 => ['on_quemethod_name' => 'Round Robin', 'on_quemethod_icon' => 'fab fa-chrome'],
-		20 => ['on_quemethod_name' => 'Prioritized', 'on_quemethod_icon' => 'fab fa-docker'],
-		30 => ['on_quemethod_name' => 'Cherry Picking', 'on_quemethod_icon' => 'fab fa-sistrix'],
+		10 => ['on_quemethod_name' => 'Round Robin (Sequential)', 'on_quemethod_icon' => 'fab fa-chrome'],
+		15 => ['on_quemethod_name' => 'Round Robin (Randomized)', 'on_quemethod_icon' => 'fab fa-grav'],
+		20 => ['on_quemethod_name' => 'Prioritized Routing', 'on_quemethod_icon' => 'fab fa-docker'],
+		//30 => ['on_quemethod_name' => 'Cherry Picking', 'on_quemethod_icon' => 'fab fa-sistrix'],
 	];
 }
