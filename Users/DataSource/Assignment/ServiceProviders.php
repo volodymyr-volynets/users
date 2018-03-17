@@ -12,6 +12,7 @@ class ServiceProviders extends \Object\DataSource {
 	public $single_value;
 	public $options_map =[
 		'um_user_name' => 'name',
+		'um_user_photo_file_id' => 'photo_id',
 		'um_user_inactive' => 'inactive'
 	];
 	public $options_active =[
@@ -46,7 +47,8 @@ class ServiceProviders extends \Object\DataSource {
 			]
 		]);
 		// generate hash
-		$hash = $parameters['hash_prefix'] . '::ORGANIZATION::' . $parameters['selected_organizations'] . '::QUEUE::' . $service_data['on_service_queue_type_id'] . '::SERVICE::' . $parameters['service_id'] . '::LOCATION::' . $parameters['location_id'];
+		$hash = $parameters['hash_prefix'] . '::QUEUE::' . $service_data['on_service_queue_type_id'] . '::SERVICE::' . $parameters['service_id'] . '::LOCATION::' . $parameters['location_id'];
+		// set flags
 		switch ($parameters['assignment_type_id']) {
 			case 13: $parameters['filter_by_territory_postal_code'] = 1; break;
 			case 17: $parameters['filter_by_territory_county'] = 1; break;
@@ -59,6 +61,7 @@ class ServiceProviders extends \Object\DataSource {
 		$this->query->columns([
 			'um_user_id' => 'a.um_user_id',
 			'um_user_name' => 'a.um_user_name',
+			'um_user_photo_file_id' => 'a.um_user_photo_file_id',
 			'um_user_inactive' => 'a.um_user_inactive',
 			'last_timestamp' => 'COALESCE(d.last_timestamp, a.um_user_inserted_timestamp)',
 			'last_records_count' => 'd.last_records_count',
@@ -94,7 +97,7 @@ class ServiceProviders extends \Object\DataSource {
 			$reset_date = date('Y-m-01'); // reset on the 1st of every month
 			$query3 = \Numbers\Users\Users\Model\Queues::queryBuilderStatic(['alias' => 'inner_x'])
 				->select()
-				->columns(['count' => 'COUNT(*)'])
+				->columns(['count' => 'SUM(inner_x.um_queue_operator)'])
 				->where('AND', ['inner_x.um_queue_hash', '=', $hash])
 				->where('AND', ['inner_x.um_queue_type_id', '=', $service_data['on_service_queue_type_id']])
 				->where('AND', ['inner_x.um_queue_inactive', '=', 0])
@@ -105,7 +108,7 @@ class ServiceProviders extends \Object\DataSource {
 			$query = \Numbers\Users\Users\Model\Queues::queryBuilderStatic(['alias' => 'inner_v'])->select();
 			$query->columns([
 				'user_id' => 'inner_v.um_queue_user_id',
-				'last_records_count' => 'COUNT(*)',
+				'last_records_count' => 'SUM(inner_v.um_queue_operator)',
 				'last_timestamp' => 'MAX(inner_v.um_queue_inserted_timestamp)',
 				'total_records_count' => '(' . $query3->sql() . ')'
 			]);

@@ -35,6 +35,9 @@ class Users extends \Object\DataSource {
 		'only_id_column' => ['name' => 'Only ID Column', 'type' => 'boolean'],
 		'include_himself' => ['name' => 'Include Himself', 'type' => 'boolean'],
 		'skip_himself' => ['name' => 'Skip Himself', 'type' => 'boolean'],
+		/* queue filter */
+		'owners_id' => ['name' => 'Owners #', 'domain' => 'type_id', 'multiple_column' => true],
+		'queue_type_id' => ['name' => 'Queue Type #', 'domain' => 'type_id', 'multiple_column' => true],
 	];
 
 	public function query($parameters, $options = []) {

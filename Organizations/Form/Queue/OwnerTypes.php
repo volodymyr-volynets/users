@@ -29,6 +29,10 @@ class OwnerTypes extends \Object\Form\Wrapper\Base {
 			'on_ownertype_name' => [
 				'on_ownertype_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
 			],
+			'on_ownertype_multiple' => [
+				'on_ownertype_multiple' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Multiple', 'type' => 'boolean', 'percent' => 15],
+				'on_ownertype_can_delete' => ['order' => 2, 'label_name' => 'Can Delete', 'type' => 'boolean', 'percent' => 15],
+			]
 		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP

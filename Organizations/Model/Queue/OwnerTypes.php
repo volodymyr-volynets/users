@@ -17,6 +17,8 @@ class OwnerTypes extends \Object\Table {
 		'on_ownertype_id' => ['name' => 'Type #', 'domain' => 'type_id_sequence'],
 		'on_ownertype_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_ownertype_name' => ['name' => 'Name', 'domain' => 'name'],
+		'on_ownertype_multiple' => ['name' => 'Multiple', 'type' => 'boolean'],
+		'on_ownertype_can_delete' => ['name' => 'Can Delete', 'type' => 'boolean'],
 		'on_ownertype_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

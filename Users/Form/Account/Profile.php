@@ -59,7 +59,6 @@ class Profile extends \Object\Form\Wrapper\Base {
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
 			'photo' => ['order' => 500, 'label_name' => 'Photo'],
 			'internalization' => ['order' => 600, 'label_name' => 'Internalization'],
-			'working_hours' => ['order' => 700, 'label_name' => 'Working Hours'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA
 		]
 	];

@@ -322,12 +322,12 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'login_container' => [
 			'um_user_login_enabled' => [
-				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 50],
-				'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c']
+				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 50, 'skip_during_export' => true],
+				'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c', 'skip_during_export' => true]
 			],
 			'um_user_login_last_set' => [
-				'um_user_login_last_set' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password Last Changed', 'type' => 'date', 'persistent' => true, 'method' => 'calendar', 'calendar_icon' => 'right', 'percent' => 50, 'readonly' => true],
-				'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Reset Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false, 'empty_value' => true]
+				'um_user_login_last_set' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password Last Changed', 'type' => 'date', 'persistent' => true, 'method' => 'calendar', 'calendar_icon' => 'right', 'percent' => 50, 'readonly' => true, 'skip_during_export' => true],
+				'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Reset Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false, 'empty_value' => true, 'skip_during_export' => true]
 			]
 		],
 		'security_answers_container' => [
@@ -387,13 +387,13 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'photo_container' => [
 			'__logo_upload' => [
-				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Photo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '250x250', 'thumbnail_size' => '50x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 250x250.'],
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Photo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '250x250', 'thumbnail_size' => '50x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 250x250.', 'skip_during_export' => true],
 			],
 			'__logo_preview' => [
-				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Photo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'um_user_photo_file_id'],
+				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Photo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'um_user_photo_file_id', 'skip_during_export' => true],
 			],
 			self::HIDDEN => [
-				'um_user_photo_file_id' => ['label_name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
+				'um_user_photo_file_id' => ['label_name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden', 'skip_during_export' => true],
 			]
 		],
 		'assignments_container' => [
@@ -639,7 +639,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'map' => ['um_user_tenant_id' => 'um_usrassgeoarea_tenant_id', 'um_user_id' => 'um_usrassgeoarea_user_id'],
 			],
 			'\Numbers\Users\Users\Model\User\Assignment\Queues' => [
-				'name' => 'Queues Assignments',
+				'name' => 'Queues',
 				'pk' => ['um_usrassqueue_tenant_id', 'um_usrassqueue_user_id', 'um_usrassqueue_queue_type_id', 'um_usrassqueue_owner_type_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrassqueue_tenant_id', 'um_user_id' => 'um_usrassqueue_user_id'],

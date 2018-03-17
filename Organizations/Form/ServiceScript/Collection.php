@@ -4,7 +4,6 @@ namespace Numbers\Users\Organizations\Form\ServiceScript;
 class Collection extends \Object\Form\Wrapper\Collection {
 	public $collection_link = 'on_service_script_executing_collection';
 	public $data = [];
-	public $__options;
 
 	public function __construct($options = []) {
 		$linked_type_code = $options['input']['__linked_type_code'];

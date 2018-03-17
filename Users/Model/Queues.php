@@ -20,6 +20,7 @@ class Queues extends \Object\Table {
 		'um_queue_hash' => ['name' => 'Hash', 'domain' => 'code'],
 		'um_queue_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'um_queue_temporary_until' => ['name' => 'Temporary Until', 'type' => 'timestamp', 'null' => true],
+		'um_queue_operator' => ['name' => 'Operator', 'domain' => 'type_id', 'default' => 1], // 1 or -1
 		'um_queue_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
