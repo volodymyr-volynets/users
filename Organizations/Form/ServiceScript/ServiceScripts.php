@@ -59,13 +59,6 @@ class ServiceScripts extends \Object\Form\Wrapper\Base {
 				}
 			}
 		}
-		if (!\Application::$controller->can('Record_Execute_Service_Script', 'Edit')) {
-			$form->misc_settings['global']['readonly'] = true;
-		}
-	}
-
-	public function validate(& $form) {
-
 	}
 
 	public function save(& $form) {

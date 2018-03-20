@@ -36,9 +36,15 @@ class Availability extends \Object\Form\Wrapper\Base {
 				'travel' => ['order' => 2, 'label_name' => 'Travel Time', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 40, 'placeholder' => 'Travel Time (Minutes)', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\Duration', 'options_options' => ['i18n' => 'skip_sorting']],
 				'holidays' => ['order' => 3, 'label_name' => 'Allow Holidays', 'type' => 'boolean', 'percent' => 20],
 			],
-			'users' => [
+			'user_id' => [
 				'user_id' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Users', 'domain' => 'user_id', 'null' => true, 'required' => true, 'percent' => 100, 'multiple_column' => 1, 'method' => 'multiselect', 'options_model' => '\Numbers\Users\Users\DataSource\Users', 'options_depends' => ['selected_organizations' => 'organization_id'], 'options_params' => ['include_himself' => true]],
-			]
+			],
+			'service_id' => [
+				'service_id' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Service', 'domain' => 'service_id', 'null' => true, 'required' => true, 'percent' => 100, 'multiple_column' => 1, 'method' => 'multiselect', 'options_model' => '\Numbers\Users\Organizations\DataSource\Services', 'options_depends' => ['selected_organizations' => 'organization_id'], 'onchange' => 'this.form.submit();'],
+			],
+			'location_id' => [
+				'location_id' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Location', 'domain' => 'location_id', 'null' => true, 'required' => true, 'percent' => 100, 'multiple_column' => 1, 'method' => 'multiselect', 'options_model' => '\Numbers\Users\Users\DataSource\Assignment\Locations', 'options_depends' => ['selected_organizations' => 'organization_id', 'service_id' => 'service_id'], 'options_params' => ['assignment_type_id' => 50]],
+			],
 		],
 		'buttons' => [
 			self::BUTTONS => [

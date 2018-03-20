@@ -1,7 +1,9 @@
 <?php
 
 namespace Numbers\Users\Organizations\Form\ServiceScript;
+
 class Collection extends \Object\Form\Wrapper\Collection {
+
 	public $collection_link = 'on_service_script_executing_collection';
 	public $data = [];
 
@@ -24,7 +26,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 				]
 			]);
 		}
-		if (!empty($data)) {
+		if (!empty($data) && \Application::$controller->can('Record_View_Service_Script', 'Edit')) {
 			$this->data = [
 				self::MAIN_SCREEN => [
 					'options' => [
@@ -52,18 +54,32 @@ class Collection extends \Object\Form\Wrapper\Collection {
 			foreach ($data as $k => $v) {
 				$input = $options['input'];
 				$input['on_execsscript_id'] = $k;
-				$input['__anchor'] = "form_on_service_script_form_id_{$k}_form_anchor";
-				$this->data[self::MAIN_SCREEN][self::ROWS]['row1'][self::FORMS]['on_service_script_form_id_' . $k] = [
-					'model' => '\Numbers\Users\Organizations\Form\ServiceScript\ServiceScripts',
+				// view
+				$this->data[self::MAIN_SCREEN][self::ROWS]['row1'][self::FORMS]['on_service_script_form_as_text_id_' . $k] = [
+					'model' => '\Numbers\Users\Organizations\Form\ServiceScript\ServiceScriptAsText',
 					'options' => [
 						'label_name' => $v['on_execsscript_service_script_name'],
-						'form_link' => 'on_service_script_form_id_' . $k,
+						'form_link' => 'on_service_script_form_as_text_id_' . $k,
 						'percent' => 100,
 						'input' => $input,
-						'bypass_hidden_from_input' => ($options['__parent_options']['bypass_input'] ?? []),
 					],
 					'order' => $index
 				];
+				// edit
+				if (\Application::$controller->can('Record_Execute_Service_Script', 'Edit')) {
+					$input['__anchor'] = "form_on_service_script_form_id_{$k}_form_anchor";
+					$this->data[self::MAIN_SCREEN][self::ROWS]['row1'][self::FORMS]['on_service_script_form_id_' . $k] = [
+						'model' => '\Numbers\Users\Organizations\Form\ServiceScript\ServiceScripts',
+						'options' => [
+							'label_name' => $v['on_execsscript_service_script_name'] . ' (Edit)',
+							'form_link' => 'on_service_script_form_id_' . $k,
+							'percent' => 100,
+							'input' => $input,
+							'bypass_hidden_from_input' => ($options['__parent_options']['bypass_input'] ?? []),
+						],
+						'order' => ($index + 1)
+					];
+				}
 				$index++;
 			}
 		}
@@ -71,7 +87,5 @@ class Collection extends \Object\Form\Wrapper\Collection {
 		parent::__construct($options);
 	}
 
-	public function distribute() {
-
-	}
+	public function distribute() {}
 }
