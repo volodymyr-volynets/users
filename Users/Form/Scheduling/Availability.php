@@ -26,15 +26,17 @@ class Availability extends \Object\Form\Wrapper\Base {
 				'datetime_end' => ['order' => 2, 'label_name' => 'Datetime End', 'type' => 'datetime', 'percent' => 50, 'required' => true, 'method' => 'calendar', 'calendar_icon' => 'right'],
 			],
 			'days' => [
-				'days' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Days', 'domain' => 'type_id', 'null' => true, 'percent' => 100, 'multiple_column' => 1, 'placeholder' => 'Days', 'method' => 'multiselect', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\WeekDays', 'options_options' => ['i18n' => 'skip_sorting']],
+				'days' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Days', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 100, 'multiple_column' => 1, 'placeholder' => 'Days', 'method' => 'multiselect', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\WeekDays', 'options_options' => ['i18n' => 'skip_sorting']],
 			],
 			'type_id' => [
-				'type_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\SubTypes', 'options_options' => ['i18n' => 'skip_sorting']],
+				'appointment_type_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Appointment Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\Types'],
+				'subtype_id' => ['order' => 2, 'label_name' => 'Sub Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\SubTypes', 'options_options' => ['i18n' => 'skip_sorting']],
 			],
 			'duration' => [
-				'duration' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Duration', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 40, 'placeholder' => 'Duration (Minutes)', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\Duration', 'options_options' => ['i18n' => 'skip_sorting']],
-				'travel' => ['order' => 2, 'label_name' => 'Travel Time', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 40, 'placeholder' => 'Travel Time (Minutes)', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\Duration', 'options_options' => ['i18n' => 'skip_sorting']],
-				'holidays' => ['order' => 3, 'label_name' => 'Allow Holidays', 'type' => 'boolean', 'percent' => 20],
+				'duration' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Duration', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 30, 'placeholder' => 'Duration (Minutes)', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\Duration', 'options_options' => ['i18n' => 'skip_sorting']],
+				'travel' => ['order' => 2, 'label_name' => 'Travel Time', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 30, 'placeholder' => 'Travel Time (Minutes)', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\Duration', 'options_options' => ['i18n' => 'skip_sorting']],
+				'override_existing' => ['order' => 3, 'label_name' => 'Override Existing', 'type' => 'boolean', 'percent' => 20],
+				'allow_holidays' => ['order' => 4, 'label_name' => 'Allow Holidays', 'type' => 'boolean', 'percent' => 20],
 			],
 			'user_id' => [
 				'user_id' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Users', 'domain' => 'user_id', 'null' => true, 'required' => true, 'percent' => 100, 'multiple_column' => 1, 'method' => 'multiselect', 'options_model' => '\Numbers\Users\Users\DataSource\Users', 'options_depends' => ['selected_organizations' => 'organization_id'], 'options_params' => ['include_himself' => true]],
@@ -54,6 +56,109 @@ class Availability extends \Object\Form\Wrapper\Base {
 	];
 
 	public function save(& $form) {
+		$intervals_model = new \Numbers\Users\Users\Model\Scheduling\Intervals();
+		$intervals_model->db_object->begin();
+		foreach ($form->values['user_id'] as $user_k => $user_v) {
+			foreach ($form->values['service_id'] as $service_k => $service_v) {
+				foreach ($form->values['location_id'] as $location_k => $location_v) {
+					// delete existing appointments
+					if (!empty($form->values['override_existing'])) {
+						$query = $intervals_model->queryBuilder()->delete();
+						$query->where('AND', ['a.um_schedinterval_type_id', '=', 3000]);
+						$query->where('AND', ['a.um_schedinterval_appointment_type_id', '=', $form->values['appointment_type_id']]);
+						$query->where('AND', ['a.um_schedinterval_organization_id', '=', $form->values['organization_id']]);
+						$query->where('AND', ['a.um_schedinterval_service_id', '=', $service_k]);
+						$query->where('AND', ['a.um_schedinterval_location_id', '=', $location_k]);
+						$query->where('AND', ['a.um_schedinterval_user_id', '=', $user_k]);
+						$query->where('AND', ['a.um_schedinterval_work_starts', '>=', $form->values['datetime_start']]);
+						$query->where('AND', ['a.um_schedinterval_work_starts', '<=', $form->values['datetime_end']]);
+						$result = $query->query();
+						if (!$result['success']) {
+							$intervals_model->db_object->rollback();
+							$form->error(DANGER, $result['error']);
+							return false;
+						}
+					}
+					// single appointment
+					if ($form->values['subtype_id'] == 10) {
+						$result = $intervals_model->collection()->merge([
+							'um_schedinterval_name' => 'Appointment Availability',
+							'um_schedinterval_type_id' => 3000,
+							'um_schedinterval_appointment_type_id' => $form->values['appointment_type_id'],
+							'um_schedinterval_status_id' => 10,
+							'um_schedinterval_work_starts' => $form->values['datetime_start'],
+							'um_schedinterval_work_ends' => $form->values['datetime_end'],
+							'um_schedinterval_user_id' => $user_k,
+							'um_schedinterval_organization_id' => $form->values['organization_id'],
+							'um_schedinterval_service_id' => $service_k,
+							'um_schedinterval_location_id' => $location_k,
+							'um_schedinterval_timezone_code' => \Format::$options['timezone_code'],
+							'um_schedinterval_inactive' => 0
+						]);
+						if (!$result['success']) {
+							$intervals_model->db_object->rollback();
+							$form->error(DANGER, $result['error']);
+							return false;
+						}
+					} else if ($form->values['subtype_id'] == 20) {
+						$datetime_start = new \DateTime($form->values['datetime_start']);
+						$datetime_end = new \DateTime($form->values['datetime_end']);
+						$merge_data = [];
+						for ($current_date = $datetime_start; ($current_date->diff($datetime_end)->days >= 0 && $current_date->diff($datetime_end)->invert == 0); $current_date->add(new \DateInterval('P1D'))) {
+							// skip holidays
+							// todo
+							// skip week day
+							$week_day = (int) $current_date->format('w');
+							if ($week_day === 0) $week_day = 7;
+							if (empty($form->values['days'][$week_day])) {
+								continue;
+							}
+							// recalcualte time
+							$current_date->setTime(0, 0, 0, 0);
+							$current_date1 = clone $current_date;
+							$current_date2 = clone $current_date;
+							$start_time = $current_date1->add(new \DateInterval('PT' . \Helper\Date::extractMinutes($datetime_start) . 'M'));
+							$end_time = $current_date2->add(new \DateInterval('PT' . (\Helper\Date::extractMinutes($datetime_end) - $form->values['duration']) . 'M'));
+							// add appointments
+							while ($start_time->diff($end_time)->i >= 0 && $start_time->diff($end_time)->invert == 0) {
+								$start_time_cloned = clone $start_time;
+								$start_time_cloned->add(new \DateInterval('PT'. $form->values['duration'] . 'M'));
+								$merge_data[] = [
+									'um_schedinterval_name' => 'Appointment Availability for ' . $start_time->format('Y-m-d H:i:s'),
+									'um_schedinterval_type_id' => 3000,
+									'um_schedinterval_appointment_type_id' => $form->values['appointment_type_id'],
+									'um_schedinterval_status_id' => 10,
+									'um_schedinterval_work_starts' => $start_time->format(\DateTime::ATOM),
+									'um_schedinterval_work_ends' => $start_time_cloned->format(\DateTime::ATOM),
+									'um_schedinterval_user_id' => $user_k,
+									'um_schedinterval_organization_id' => $form->values['organization_id'],
+									'um_schedinterval_service_id' => $service_k,
+									'um_schedinterval_location_id' => $location_k,
+									'um_schedinterval_timezone_code' => \Format::$options['timezone_code'],
+									'um_schedinterval_inactive' => 0
+								];
+								// add capacity here
+								// todo
+								// increment date
+								$start_time->add(new \DateInterval('PT' . ($form->values['duration'] + $form->values['travel']) . 'M'));
+							}
+						}
+						// insert appointments
+						if (!empty($merge_data)) {
+							$result = $intervals_model->collection()->mergeMultiple($merge_data);
+							if (!$result['success']) {
+								$intervals_model->db_object->rollback();
+								$form->error(DANGER, $result['error']);
+								return false;
+							}
+							$merge_data = [];
+						}
+					}
+				}
+			}
+		}
+		$intervals_model->db_object->commit();
+		$form->error(SUCCESS, \Object\Content\Messages::OPERATION_EXECUTED);
 		return true;
 	}
 }

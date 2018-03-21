@@ -51,6 +51,7 @@ class Intervals extends \Object\Form\Wrapper\Base {
 			'um_schedinterval_type_id' => [
 				'um_schedinterval_type_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Types', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
 				'um_schedinterval_status_id' => ['order' => 2, 'label_name' => 'Status', 'domain' => 'type_id', 'null' => true, 'required' => true, 'placeholder' => 'Status', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Statuses', 'options_options' => ['i18n' => 'skip_sorting']],
+				'um_schedinterval_appointment_type_id' => ['order' => 3, 'label_name' => 'Appointment Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\Types'],
 			],
 			'um_schedinterval_shift_id' => [
 				'um_schedinterval_shift_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Shift', 'domain' => 'shift_id', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Shifts::optionsActive', 'onchange' => 'this.form.submit();'],
@@ -68,6 +69,9 @@ class Intervals extends \Object\Form\Wrapper\Base {
 			'um_schedinterval_organization_id' => [
 				'um_schedinterval_organization_id' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],
 				'um_schedinterval_location_id' => ['order' => 2, 'label_name' => 'Location', 'domain' => 'location_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Locations::optionsActive'],
+			],
+			'um_schedinterval_service_id' => [
+				'um_schedinterval_service_id' => ['order' => 1, 'row_order' => 725, 'label_name' => 'Product / Service', 'domain' => 'service_id', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Services::optionsActive'],
 			],
 			'um_schedinterval_location_name' => [
 				'um_schedinterval_location_name' => ['order' => 1, 'row_order' => 750, 'label_name' => 'Location Name', 'domain' => 'name', 'null' => true, 'percent' => 100],

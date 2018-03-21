@@ -48,7 +48,7 @@ class Locations extends \Object\DataSource {
 			case 50: /* no assignment service, display all locations */ break;
 			default: $this->query->where('AND', 'FALSE');
 		}
-		$parameters['postal_code'] = strtoupper($parameters['postal_code']);
+		$parameters['postal_code'] = strtoupper($parameters['postal_code'] ?? '');
 		// columns
 		$this->query->columns([
 			'on_location_id' => 'a.on_location_id',

@@ -17,6 +17,7 @@ class Intervals extends \Object\Table {
 		'um_schedinterval_id' => ['name' => 'Interval #', 'domain' => 'interval_id_sequence'],
 		'um_schedinterval_name' => ['name' => 'Name', 'domain' => 'name', 'null' => true],
 		'um_schedinterval_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Types'],
+		'um_schedinterval_appointment_type_id' => ['name' => 'Appointment Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\Types'],
 		'um_schedinterval_status_id' => ['name' => 'Status', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Statuses'],
 		'um_schedinterval_shift_id' => ['name' => 'Shift #', 'domain' => 'shift_id', 'null' => true],
 		'um_schedinterval_work_starts' => ['name' => 'Work Starts', 'type' => 'datetime'],
@@ -25,6 +26,7 @@ class Intervals extends \Object\Table {
 		'um_schedinterval_lunch_ends' => ['name' => 'Lunch Ends', 'type' => 'datetime', 'null' => true],
 		'um_schedinterval_user_id' => ['name' => 'User #', 'domain' => 'user_id', 'null' => true],
 		'um_schedinterval_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id', 'null' => true],
+		'um_schedinterval_service_id' => ['name' => 'Service #', 'domain' => 'service_id', 'null' => true],
 		'um_schedinterval_location_id' => ['name' => 'Location #', 'domain' => 'location_id', 'null' => true],
 		'um_schedinterval_country_code' => ['name' => 'Country Code', 'domain' => 'country_code', 'null' => true],
 		'um_schedinterval_province_code' => ['name' => 'Province Code', 'domain' => 'province_code', 'null' => true],
@@ -58,6 +60,12 @@ class Intervals extends \Object\Table {
 			'columns' => ['um_schedinterval_tenant_id', 'um_schedinterval_location_id'],
 			'foreign_model' => '\Numbers\Users\Organizations\Model\Locations',
 			'foreign_columns' => ['on_location_tenant_id', 'on_location_id']
+		],
+		'um_schedinterval_service_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_schedinterval_tenant_id', 'um_schedinterval_service_id'],
+			'foreign_model' => '\Numbers\Users\Organizations\Model\Services',
+			'foreign_columns' => ['on_service_tenant_id', 'on_service_id']
 		],
 		'um_schedinterval_province_code_fk' => [
 			'type' => 'fk',
