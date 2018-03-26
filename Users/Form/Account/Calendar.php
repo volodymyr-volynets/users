@@ -112,7 +112,11 @@ class Calendar extends \Object\Form\Wrapper\Base {
 					$form->values['date_hidden'] = $date1->format('Y-m-d');
 				}
 				$date1 = new \DateTime($form->values['date_hidden']);
-				$date1->modify('last Sunday'); // this Sunday
+				if ($date1->format('N') == 7) {
+					$date1->modify('this Sunday');
+				} else {
+					$date1->modify('last Sunday');
+				}
 				$form->values['date1'] = $date1->format('Y-m-d');
 				$date2 = new \DateTime($form->values['date_hidden']);
 				$date2->modify('next Saturday');
