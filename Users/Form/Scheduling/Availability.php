@@ -79,10 +79,14 @@ class Availability extends \Object\Form\Wrapper\Base {
 							return false;
 						}
 					}
+					// load service and location
+					$service_name = \Numbers\Users\Organizations\Model\Services::loadById($service_k, 'on_service_name');
+					$location_name = \Numbers\Users\Organizations\Model\Locations::loadById($location_k, 'on_location_name');
 					// single appointment
 					if ($form->values['subtype_id'] == 10) {
 						$result = $intervals_model->collection()->merge([
-							'um_schedinterval_name' => 'Appointment Availability',
+							'um_schedinterval_name' => 'Availability',
+							'um_schedinterval_hash_name' => 'Availability::' . $service_name . '::' . $location_name . '::' . $user_k,
 							'um_schedinterval_type_id' => 3000,
 							'um_schedinterval_appointment_type_id' => $form->values['appointment_type_id'],
 							'um_schedinterval_status_id' => 10,
@@ -104,7 +108,7 @@ class Availability extends \Object\Form\Wrapper\Base {
 						$datetime_start = new \DateTime($form->values['datetime_start']);
 						$datetime_end = new \DateTime($form->values['datetime_end']);
 						$merge_data = [];
-						for ($current_date = $datetime_start; ($current_date->diff($datetime_end)->days >= 0 && $current_date->diff($datetime_end)->invert == 0); $current_date->add(new \DateInterval('P1D'))) {
+						for ($current_date = clone $datetime_start; ($current_date->diff($datetime_end)->days >= 0 && $current_date->diff($datetime_end)->invert == 0); $current_date->add(new \DateInterval('P1D'))) {
 							// skip holidays
 							// todo
 							// skip week day
@@ -124,7 +128,8 @@ class Availability extends \Object\Form\Wrapper\Base {
 								$start_time_cloned = clone $start_time;
 								$start_time_cloned->add(new \DateInterval('PT'. $form->values['duration'] . 'M'));
 								$merge_data[] = [
-									'um_schedinterval_name' => 'Appointment Availability for ' . $start_time->format('Y-m-d H:i:s'),
+									'um_schedinterval_name' => 'Availability',
+									'um_schedinterval_hash_name' => 'Availability::' . $service_name . '::' . $location_name . '::' . $user_k,
 									'um_schedinterval_type_id' => 3000,
 									'um_schedinterval_appointment_type_id' => $form->values['appointment_type_id'],
 									'um_schedinterval_status_id' => 10,

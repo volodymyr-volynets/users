@@ -16,6 +16,7 @@ class Intervals extends \Object\Table {
 		'um_schedinterval_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_schedinterval_id' => ['name' => 'Interval #', 'domain' => 'interval_id_sequence'],
 		'um_schedinterval_name' => ['name' => 'Name', 'domain' => 'name', 'null' => true],
+		'um_schedinterval_hash_name' => ['name' => 'Hash Name', 'domain' => 'code', 'null' => true],
 		'um_schedinterval_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Types'],
 		'um_schedinterval_appointment_type_id' => ['name' => 'Appointment Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Appointment\Types'],
 		'um_schedinterval_status_id' => ['name' => 'Status', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Users\Model\Scheduling\Interval\Statuses'],

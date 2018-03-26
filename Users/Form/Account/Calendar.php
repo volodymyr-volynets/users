@@ -112,7 +112,7 @@ class Calendar extends \Object\Form\Wrapper\Base {
 					$form->values['date_hidden'] = $date1->format('Y-m-d');
 				}
 				$date1 = new \DateTime($form->values['date_hidden']);
-				$date1->modify('last Sunday');
+				$date1->modify('last Sunday'); // this Sunday
 				$form->values['date1'] = $date1->format('Y-m-d');
 				$date2 = new \DateTime($form->values['date_hidden']);
 				$date2->modify('next Saturday');
@@ -137,7 +137,7 @@ class Calendar extends \Object\Form\Wrapper\Base {
 			$query->where('AND', [$query->db_object->cast('a.um_schedinterval_work_ends', 'date'), '>=', $form->values['date1']]);
 		});
 		$query->where('AND', ['um_schedinterval_inactive', '=', 0]);
-		$query->orderby(['um_schedinterval_work_starts' => SORT_ASC, 'um_schedinterval_work_ends' => SORT_ASC]);
+		$query->orderby(['um_schedinterval_work_starts' => SORT_ASC, 'um_schedinterval_work_ends' => SORT_ASC, 'um_schedinterval_name' => SORT_ASC, 'um_schedinterval_hash_name' => SORT_ASC]);
 		$data = $query->query();
 		// load holidays
 		$query = \Numbers\Users\Users\Model\Scheduling\Holidays::queryBuilderStatic()->select();
@@ -315,13 +315,13 @@ class Calendar extends \Object\Form\Wrapper\Base {
 				$data_slot_counter++;
 				while ($date1->format('Y-m-d') != $date2->format('Y-m-d')) {
 					$v['slot_counter'] = $data_slot_counter;
-					$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_name']);
+					$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_hash_name'] ?? $v['um_schedinterval_name']);
 					$v['slot_text_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::determineTextColor($v['slot_color']);
 					$data_arranged['multiple_days'][$date1->format('Y-m-d')][$data_slot_counter] = $v;
 					$date1->modify('+1 day');
 				}
 			} else { // single day intervals
-				$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_name']);
+				$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_hash_name'] ?? $v['um_schedinterval_name']);
 				$v['slot_text_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::determineTextColor($v['slot_color']);
 				$data_arranged['single_day'][$date1->format('w')][$date1->format('G')][$k] = $v;
 			}
@@ -407,7 +407,7 @@ class Calendar extends \Object\Form\Wrapper\Base {
 							$result.= '<td class="numbers_account_calendar_cell">';
 						}
 							if (!empty($data_arranged['single_day'][$k][$i])) {
-								$zindex = 1000;
+								$zindex = 1;
 								$width = 100;
 								foreach ($data_arranged['single_day'][$k][$i] as $k2 => $v2) {
 									$date1 = new \DateTime(\Format::readDate($v2['um_schedinterval_work_starts'], 'datetime'));
@@ -417,7 +417,7 @@ class Calendar extends \Object\Form\Wrapper\Base {
 									// see if we have overlaps
 									if (!empty($data_single_day_lock[$k])) {
 										foreach ($data_single_day_lock[$k] as $v3) {
-											if (($date1 > $v3['start'] && $date1 < $v3['end']) || $date2 < $v3['end']) {
+											if (($date1 >= $v3['start'] && $date1 <= $v3['end']) || $date2 <= $v3['end']) {
 												$width-= 5;
 											}
 										}
