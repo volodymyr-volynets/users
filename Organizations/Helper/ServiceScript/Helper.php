@@ -116,12 +116,16 @@ class Helper {
 		foreach ($questions as $k => $v) {
 			$order = $counter * 10000 + $v['on_servquestion_order'] * 1000;
 			// question first
+			$mandatory = '';
+			if (!empty($v['on_servquestion_required'])) {
+				$mandatory = ' ' . \HTML::mandatory(['type' => 'mandatory']);
+			}
 			$form->elements['top']['ss_field_' . $k . '_question']['ss_field_' . $k . '_question'] = [
 				'order' => 1,
 				'row_order' => $order,
 				'type' => 'text',
 				'method' => 'div',
-				'value' => '<b>' . \Format::id($counter) . '. ' . i18n(null, $v['on_servquestion_name']) . '</b>',
+				'value' => '<b>' . \Format::id($counter) . '. ' . i18n(null, $v['on_servquestion_name']) . '</b>' . $mandatory,
 				'percent' => 100,
 				'required' => 'c'
 			];

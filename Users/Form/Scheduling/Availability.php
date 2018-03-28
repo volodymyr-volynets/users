@@ -86,7 +86,7 @@ class Availability extends \Object\Form\Wrapper\Base {
 					if ($form->values['subtype_id'] == 10) {
 						$result = $intervals_model->collection()->merge([
 							'um_schedinterval_name' => 'Availability',
-							'um_schedinterval_hash_name' => 'Availability::' . $service_name . '::' . $location_name . '::' . $user_k,
+							'um_schedinterval_hash_name' => $service_name . '::' . $location_name . '::' . $user_k,
 							'um_schedinterval_type_id' => 3000,
 							'um_schedinterval_appointment_type_id' => $form->values['appointment_type_id'],
 							'um_schedinterval_status_id' => 10,
@@ -129,7 +129,7 @@ class Availability extends \Object\Form\Wrapper\Base {
 								$start_time_cloned->add(new \DateInterval('PT'. $form->values['duration'] . 'M'));
 								$merge_data[] = [
 									'um_schedinterval_name' => 'Availability',
-									'um_schedinterval_hash_name' => 'Availability::' . $service_name . '::' . $location_name . '::' . $user_k,
+									'um_schedinterval_hash_name' => $service_name . '::' . $location_name . '::' . $user_k,
 									'um_schedinterval_type_id' => 3000,
 									'um_schedinterval_appointment_type_id' => $form->values['appointment_type_id'],
 									'um_schedinterval_status_id' => 10,

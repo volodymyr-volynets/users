@@ -28,12 +28,13 @@ class Collection extends \Object\Form\Wrapper\Collection {
 						'type' => 'info',
 						'header' => [
 							'icon' => ['type' => 'far fa-user'],
-							'title' => 'Owners'
+							'title' => 'Owners / Appointments'
 						]
 					],
 					'its_own_segment' => true
 				]
 			];
+			// owners
 			$input = $options['input'];
 			$input['um_owneruser_linked_type_code'] = $linked_type_code;
 			$input['um_owneruser_linked_module_id'] = $linked_module_id;
@@ -42,13 +43,30 @@ class Collection extends \Object\Form\Wrapper\Collection {
 			$this->data[self::MAIN_SCREEN][self::ROWS]['row1'][self::FORMS]['um_owners_form_id'] = [
 				'model' => '\Numbers\Users\Users\Form\Owner\ExistingOwners',
 				'options' => [
-					'label_name' => 'Existing Owners',
+					'label_name' => 'Owners',
 					'form_link' => 'um_owners_form_id',
 					'percent' => 100,
 					'input' => $input,
 					'bypass_hidden_from_input' => ($options['__parent_options']['bypass_input'] ?? []),
 				],
 				'order' => 1
+			];
+			// appointments
+			$input = $options['input'];
+			$input['um_schedinterval_linked_type_code'] = $linked_type_code;
+			$input['um_schedinterval_linked_module_id'] = $linked_module_id;
+			$input['um_schedinterval_linked_id'] = $linked_id;
+			$input['__anchor'] = 'form_um_appointments_form_id_form_anchor';
+			$this->data[self::MAIN_SCREEN][self::ROWS]['row1'][self::FORMS]['um_appointments_form_id'] = [
+				'model' => '\Numbers\Users\Users\Form\Owner\ExistingAppointments',
+				'options' => [
+					'label_name' => 'Appointments',
+					'form_link' => 'um_appointments_form_id',
+					'percent' => 100,
+					'input' => $input,
+					'bypass_hidden_from_input' => ($options['__parent_options']['bypass_input'] ?? []),
+				],
+				'order' => 2
 			];
 		}
 		// change owners only if you permitted

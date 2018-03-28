@@ -3,7 +3,7 @@
 namespace Numbers\Users\Users\Form\Owner;
 class ExistingOwners extends \Object\Form\Wrapper\Base {
 	public $form_link = 'um_owners_form_id';
-	public $module_code = 'ON';
+	public $module_code = 'UM';
 	public $title = 'U/M Existing Owners Form';
 	public $options = [
 		'actions' => [

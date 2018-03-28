@@ -319,13 +319,13 @@ class Calendar extends \Object\Form\Wrapper\Base {
 				$data_slot_counter++;
 				while ($date1->format('Y-m-d') != $date2->format('Y-m-d')) {
 					$v['slot_counter'] = $data_slot_counter;
-					$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_hash_name'] ?? $v['um_schedinterval_name']);
+					$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_name'] . '::' . $v['um_schedinterval_hash_name']);
 					$v['slot_text_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::determineTextColor($v['slot_color']);
 					$data_arranged['multiple_days'][$date1->format('Y-m-d')][$data_slot_counter] = $v;
 					$date1->modify('+1 day');
 				}
 			} else { // single day intervals
-				$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_hash_name'] ?? $v['um_schedinterval_name']);
+				$v['slot_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::colorFromString($v['um_schedinterval_name'] . '::' . $v['um_schedinterval_hash_name']);
 				$v['slot_text_color'] = \Numbers\Frontend\HTML\Renderers\Common\Colors::determineTextColor($v['slot_color']);
 				$data_arranged['single_day'][$date1->format('w')][$date1->format('G')][$k] = $v;
 			}

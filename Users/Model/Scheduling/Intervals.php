@@ -34,6 +34,11 @@ class Intervals extends \Object\Table {
 		'um_schedinterval_timezone_code' => ['name' => 'Timezone Code', 'domain' => 'timezone_code'],
 		'um_schedinterval_description' => ['name' => 'Description', 'domain' => 'description', 'null' => true],
 		'um_schedinterval_location_name' => ['name' => 'Location Name', 'domain' => 'name', 'null' => true],
+		// linked columns
+		'um_schedinterval_linked_type_code' => ['name' => 'Linked Type', 'domain' => 'group_code', 'null' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Service\Executed\Linked\Types'],
+		'um_schedinterval_linked_module_id' => ['name' => 'Linked Module #', 'domain' => 'module_id', 'null' => true],
+		'um_schedinterval_linked_id' => ['name' => 'Linked #', 'domain' => 'big_id', 'null' => true], // we do not have fk for this field
+		// other
 		'um_schedinterval_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
@@ -73,7 +78,13 @@ class Intervals extends \Object\Table {
 			'columns' => ['um_schedinterval_tenant_id', 'um_schedinterval_country_code', 'um_schedinterval_province_code'],
 			'foreign_model' => '\Numbers\Countries\Countries\Model\Provinces',
 			'foreign_columns' => ['cm_province_tenant_id', 'cm_province_country_code', 'cm_province_province_code']
-		]
+		],
+		'um_schedinterval_linked_module_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_schedinterval_tenant_id', 'um_schedinterval_linked_module_id'],
+			'foreign_model' => '\Numbers\Tenants\Tenants\Model\Modules',
+			'foreign_columns' => ['tm_module_tenant_id', 'tm_module_id']
+		],
 	];
 	public $indexes = [
 		'um_scheduling_intervals_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['um_schedinterval_name']]
