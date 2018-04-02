@@ -512,8 +512,9 @@ class Users extends \Object\Form\Wrapper\Base {
 				'show_google_map' => ['order' => 2, 'label_name' => null, 'percent' => 30, 'value' => 'Draw Area', 'method' => 'button', 'onclick' => 'Numbers.Modal.show(\'form_um_users_modal_google_map_modal_dialog\'); Numbers.NumbersUsersUsersFormUsers.initialize(this);'],
 			],
 			self::HIDDEN => [
-				'um_usrassgeoarea_organization_id' => ['order' => 1, 'row_order' => 200, 'order_for_defaults' => 32000, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
+				'um_usrassgeoarea_organization_id' => ['order' => 1, 'order_for_defaults' => 32000, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'default' => 'dependent::101', 'method' => 'hidden'],
 				'um_usrassgeoarea_polygon' => ['order' => 2, 'label_name' => 'Polygon', 'type' => 'geometry', 'null' => true, 'required' => true, 'class' => 'um_usrassgeoarea_polygon'],
+				'um_usrassgeoarea_polygon__geometry' => ['order' => 3, 'label_name' => 'Polygon (JSON)', 'type' => 'geometry', 'null' => true, 'required' => true, 'class' => 'um_usrassgeoarea_polygon__geometry'],
 			]
 		],
 		'google_map_modal' => [
