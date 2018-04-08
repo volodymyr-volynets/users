@@ -118,17 +118,7 @@ class ExistingOwners extends \Object\Form\Wrapper\Base {
 	}
 
 	public function success(& $form) {
-		$params = [];
-		if (!empty($form->options['bypass_hidden_from_input'])) {
-			foreach ($form->options['bypass_hidden_from_input'] as $v) {
-				$params[$v] = $form->options['input'][$v] ?? '';
-			}
-		}
-		if (!empty($form->options['collection_current_tab_id'])) {
-			$params[$form->options['collection_current_tab_id']] = $form->form_link;
-		}
-		$url = \Application::get('mvc.full') . '?' . http_build_query2($params) . '#' . $form->options['input']['__anchor'];
-		$form->redirect($url);
+		$form->redirectOnSuccess();
 	}
 
 	public function overrideTabs(& $form, & $tab_options, & $tab_name, & $neighbouring_values = []) {

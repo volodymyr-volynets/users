@@ -71,7 +71,10 @@ class Collection extends \Object\Form\Wrapper\Collection {
 					$input['on_execwflow_id'] = $k;
 					$input['on_execwflow_step_id'] = $next_result['step_id'];
 					$input['on_execwflow_workflow_id'] = $v['on_execwflow_workflow_id'];
-					$input['__anchor'] = "form_on_workflow_form_id_{$k}_form_anchor";
+					$input['on_execwflow_linked_type_code'] = $on_execwflow_linked_type_code;
+					$input['on_execwflow_linked_module_id'] = $on_execwflow_linked_module_id;
+					$input['on_execwflow_linked_id'] = $on_execwflow_linked_id;
+					$input['__anchor'] = "form_on_workflow_form_id_{$k}_next_form_anchor";
 					$this->data[self::MAIN_SCREEN][self::ROWS]['row' . $k][self::FORMS]['on_workflow_form_id_' . $k . '_next'] = [
 						'model' => $next_result['form_model'],
 						'options' => [

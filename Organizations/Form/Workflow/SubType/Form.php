@@ -110,13 +110,6 @@ class Form extends \Object\Form\Wrapper\Base {
 	}
 
 	public function success(& $form) {
-		$params = [];
-		if (!empty($form->options['bypass_hidden_from_input'])) {
-			foreach ($form->options['bypass_hidden_from_input'] as $v) {
-				$params[$v] = $form->options['input'][$v] ?? '';
-			}
-		}
-		$url = \Application::get('mvc.full') . '?' . http_build_query2($params) . '#' . $form->options['input']['__anchor'];
-		$form->redirect($url);
+		$form->redirectOnSuccess();
 	}
 }

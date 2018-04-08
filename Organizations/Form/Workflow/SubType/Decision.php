@@ -41,43 +41,22 @@ class Decision extends \Object\Form\Wrapper\Base {
 			]
 		]);
 		$index = 1;
+		$radio_options = [];
 		foreach (self::$cached_next_steps as $k => $v) {
-			$this->elements['top']['row' . $k]['field_' . $k] = [
-				'order' => 1,
-				'row_order' => $index,
-				'label_name' => $v['on_workstpnext_name'],
-				'method' => 'checkbox',
-				'percent' => 100,
-				'onchange' => 'this.form.submit();'
-			];
-			$index++;
+			$radio_options[$k]['name'] = $v['on_workstpnext_name'];
 		}
+		$this->elements['top']['row1']['chosen_step'] = [
+			'order' => 1,
+			'row_order' => 100,
+			'label_name' => 'Decision',
+			'type' => 'group_id',
+			'required' => true,
+			'method' => 'radio',
+			'options' => $radio_options,
+			'percent' => 100
+		];
 		// call parent constructor
 		parent::__construct($options);
-	}
-
-	public function refresh(& $form) {
-		if (!empty($form->misc_settings['__form_onchange_field_values_key'][0])) {
-			foreach (self::$cached_next_steps as $k => $v) {
-				if ($form->misc_settings['__form_onchange_field_values_key'][0] != 'field_' . $k) {
-					$form->values['field_' . $k] = 0;
-				}
-			}
-		}
-	}
-
-	public function validate(& $form) {
-		$first = null;
-		$form->values['chosen_step'] = null;
-		foreach (self::$cached_next_steps as $k => $v) {
-			if (!$first) $first = $k;
-			if (!empty($form->values['field_' . $k])) {
-				$form->values['chosen_step'] = $k;
-			}
-		}
-		if (empty($form->values['chosen_step'])) {
-			$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'field_' . $first);
-		}
 	}
 
 	public function save(& $form) {
@@ -100,13 +79,6 @@ class Decision extends \Object\Form\Wrapper\Base {
 	}
 
 	public function success(& $form) {
-		$params = [];
-		if (!empty($form->options['bypass_hidden_from_input'])) {
-			foreach ($form->options['bypass_hidden_from_input'] as $v) {
-				$params[$v] = $form->options['input'][$v] ?? '';
-			}
-		}
-		$url = \Application::get('mvc.full') . '?' . http_build_query2($params) . '#' . $form->options['input']['__anchor'];
-		\Request::redirect($url);
+		$form->redirectOnSuccess();
 	}
 }
