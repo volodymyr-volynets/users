@@ -157,7 +157,12 @@ class System extends \Object\Import {
 					'sm_resource_menu_url' => null,
 					'sm_resource_menu_options_generator' => null,
 					'sm_resource_inactive' => 0,
-					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [],
+					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [
+						[
+							'sm_rsrcftr_feature_code' => 'UM::SCHEDULING',
+							'sm_rsrcftr_inactive' => 0
+						]
+					],
 					'\Numbers\Backend\System\Modules\Model\Resource\Map' => []
 				],
 				[
