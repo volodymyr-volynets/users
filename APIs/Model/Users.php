@@ -18,6 +18,7 @@ class Users extends \Object\Table {
 		'ua_apiusr_id' => ['name' => 'User #', 'domain' => 'user_id_sequence'],
 		'ua_apiusr_code' => ['name' => 'User Number', 'domain' => 'group_code', 'null' => true],
 		'ua_apiusr_name' => ['name' => 'Name', 'domain' => 'name'],
+		'ua_apiusr_user_id' => ['name' => 'Assigned User #', 'domain' => 'user_id'],
 		// login
 		'ua_apiusr_login_username' => ['name' => 'Username', 'domain' => 'login', 'null' => true],
 		'ua_apiusr_login_password' => ['name' => 'Password', 'domain' => 'password', 'null' => true],

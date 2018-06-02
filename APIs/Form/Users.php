@@ -32,7 +32,10 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'ua_apiusr_login_username' => [
 				'ua_apiusr_login_username' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'required' => true, 'percent' => 50],
-				'ua_apiusr_login_password_new' => ['order' => 2, 'label_name' => 'Password', 'domain' => 'password', 'null' => true, 'required' => 'c', 'percent' => 50, 'empty_value' => true],
+				'ua_apiusr_login_password_new' => ['order' => 2, 'label_name' => 'Password', 'domain' => 'password', 'null' => true, 'required' => 'c', 'percent' => 50, 'method' => 'password', 'empty_value' => true],
+			],
+			'ua_apiusr_user_id' => [
+				'ua_apiusr_user_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Assigned User', 'domain' => 'user_id', 'null' => true, 'required' => true, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive'],
 			]
 		],
 		'buttons' => [
