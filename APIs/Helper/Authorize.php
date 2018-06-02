@@ -42,6 +42,8 @@ class Authorize {
 			// authorize entity if we got here
 			unset($user['login_password'], $api_user[0]['ua_apiusr_login_password']);
 			$user['api_user'] = $api_user[0];
+			// create new session
+			session_regenerate_id();
 			\User::userAuthorize($user);
 			// success
 			$result['success'] = true;

@@ -16,6 +16,14 @@ class Users extends \Object\Form\Wrapper\Base {
 	];
 	public $containers = [
 		'top' => ['default_row_type' => 'grid', 'order' => 100],
+		'permissions_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\APIs\Model\User\Permissions',
+			'details_pk' => ['ua_usrperm_resource_id'],
+			'order' => 800
+		],
 		'buttons' => ['default_row_type' => 'grid', 'order' => 900],
 	];
 	public $rows = [];
@@ -38,6 +46,15 @@ class Users extends \Object\Form\Wrapper\Base {
 				'ua_apiusr_user_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Assigned User', 'domain' => 'user_id', 'null' => true, 'required' => true, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive'],
 			]
 		],
+		'permissions_container' => [
+			'row1' => [
+				'ua_usrperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'acl_handle_exceptions' => true, 'sm_resource_type' => 150], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'ua_usrperm_module_id', 'resource_id' => 'ua_usrperm_resource_id']],
+				'ua_usrperm_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'ua_usrperm_module_id' => ['order' => 1, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -46,6 +63,14 @@ class Users extends \Object\Form\Wrapper\Base {
 	public $collection = [
 		'name' => 'Users',
 		'model' => '\Numbers\Users\APIs\Model\Users',
+		'details' => [
+			'\Numbers\Users\APIs\Model\User\Permissions' => [
+				'name' => 'Permissions',
+				'pk' => ['ua_usrperm_tenant_id', 'ua_usrperm_user_id', 'ua_usrperm_module_id', 'ua_usrperm_resource_id'],
+				'type' => '1M',
+				'map' => ['ua_apiusr_tenant_id' => 'ua_usrperm_tenant_id', 'ua_apiusr_id' => 'ua_usrperm_user_id']
+			],
+		]
 	];
 
 	public function validate(& $form) {
