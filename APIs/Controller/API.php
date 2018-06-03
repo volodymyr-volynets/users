@@ -64,14 +64,14 @@ class API extends \Object\Controller {
 		if (empty(self::$content_types[$this->api_format])) {
 			$this->api_format = 'json';
 		}
-		$this->$api_model = $mvc['post_action'][0] ?? null;
-		if (empty($this->$api_model)) {
+		$this->api_model = $mvc['post_action'][0] ?? null;
+		if (empty($this->api_model)) {
 			\Layout::renderAs([
 				'success' => false,
 				'error' => ['You must specify API model!']
 			], self::$content_types[$this->api_format]);
 		}
-		$temp = str_replace('APIs', 'Apis', $this->$api_model);
+		$temp = str_replace('APIs', 'Apis', $this->api_model);
 		$model = split_on_uppercase($temp);
 		foreach ($model as $k => $v) {
 			if ($v == 'Apis') $model[$k] = 'APIs';
@@ -83,6 +83,9 @@ class API extends \Object\Controller {
 			], self::$content_types[$this->api_format]);
 		}
 		$this->api_format = strtolower($this->api_format);
+		// check if we have access
+		
+		//'\\' . implode('\\', $model)
 		// process input
 		$this->input = \Request::input(null, true);
 		$input2 = file_get_contents('php://input');
@@ -92,8 +95,11 @@ class API extends \Object\Controller {
 			} else if (is_xml($input2)) {
 				$xml = simplexml_load_string($input2);
 				$input2 = xml2array($xml);
+			} else {
+				parse_str($input2, $output);
+				$input2 = $output;
 			}
-			$this->input = array_merge($this->input, $input2);
+			$this->input = array_merge($this->input, $input2 ?? []);
 		}
 		$this->api_object = \Factory::model('\\' . implode('\\', $model), false, [$this->input]);
 	}

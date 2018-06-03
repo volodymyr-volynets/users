@@ -41,8 +41,8 @@ class APIs extends \Object\Import {
 					'\Numbers\Backend\System\Modules\Model\Resource\Map' => []
 				],
 				[
-					'sm_resource_id' => '::id::\Numbers\Users\Users\APIs\Users\Groups',
-					'sm_resource_code' => '\Numbers\Users\Users\APIs\Users\Groups',
+					'sm_resource_id' => '::id::\Numbers\Users\Users\APIs\User\Groups',
+					'sm_resource_code' => '\Numbers\Users\Users\APIs\User\Groups',
 					'sm_resource_type' => 150,
 					'sm_resource_classification' => 'APIs',
 					'sm_resource_name' => 'U/M User Groups API',

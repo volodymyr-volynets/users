@@ -22,7 +22,9 @@ class Authorize {
 			$model = new \Numbers\Users\APIs\Model\Users();
 			$api_user = $model->get([
 				'where' => [
-					'ua_apiusr_login_username' => $username
+					'ua_apiusr_login_username' => $username,
+					'ua_apiusr_inactive' => 0,
+					'ua_apiusr_hold' => 0
 				],
 				'pk' => null
 			]);
@@ -36,12 +38,25 @@ class Authorize {
 				$result['error'][] = 'Invalid credentials!';
 				break;
 			}
+			// fetch permisions
+			$permissions = \Numbers\Users\APIs\Model\User\Permissions::getStatic([
+				'columns' => ['ua_usrperm_module_id', 'ua_usrperm_resource_id', 'ua_usrperm_inactive'],
+				'where' => [
+					'ua_usrperm_user_id' => $api_user[0]['ua_apiusr_id']
+				],
+				'pk' => null
+			]);
+			$api_permissions = [];
+			foreach ($permissions as $k => $v) {
+				$api_permissions[$v['ua_usrperm_module_id']][$v['ua_usrperm_resource_id']] = $v['ua_usrperm_inactive'];
+			}
 			// fetch user
 			$datasource = new \Numbers\Users\Users\DataSource\Login();
 			$user = $datasource->get(['where' => ['user_id' => $api_user[0]['ua_apiusr_user_id']]]);
 			// authorize entity if we got here
 			unset($user['login_password'], $api_user[0]['ua_apiusr_login_password']);
 			$user['api_user'] = $api_user[0];
+			$user['api_permissions'] = $api_permissions;
 			// create new session
 			session_regenerate_id();
 			\User::userAuthorize($user);
