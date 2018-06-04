@@ -128,8 +128,15 @@ class API extends \Object\Controller {
 	 * Restful
 	 */
 	public function actionRestful() {
-		$input = \Request::input(null, true);
-		
-		echo 'RESTFUL';
+		$method = strtolower($this->input['__method'] ?? '');
+		$method_name = 'action' . ucfirst(self::$rest_methods[$method]);
+		if (!method_exists($this->api_object, $method_name)) {
+			\Layout::renderAs([
+				'success' => false,
+				'error' => ['Method does not exists!']
+			], self::$content_types[$this->api_format]);
+		}
+		$result = $this->api_object->{$method_name}($this->input);
+		\Layout::renderAs($result, self::$content_types[$this->api_format]);
 	}
 }

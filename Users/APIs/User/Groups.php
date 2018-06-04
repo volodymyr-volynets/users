@@ -1,7 +1,7 @@
 <?php
 
 namespace Numbers\Users\Users\APIs\User;
-class Groups extends \Numbers\Users\APIs\Abstract2\API{
+class Groups extends \Numbers\Users\APIs\Abstract2\API {
 
 	public $instructions = [
 		'read' => [
@@ -47,8 +47,8 @@ class Groups extends \Numbers\Users\APIs\Abstract2\API{
 		]
 	];
 
-	public function actionCreate($input) {
-		$temp = \Numbers\Users\Users\Form\Groups::API()->insert($input);
+	public function actionCreate($options) {
+		$temp = \Numbers\Users\Users\Form\Groups::API()->insert($options);
 		return [
 			'success' => $temp['success'],
 			'error' => $temp['error'],
@@ -56,8 +56,8 @@ class Groups extends \Numbers\Users\APIs\Abstract2\API{
 		];
 	}
 
-	public function actionRead($input) {
-		$temp = \Numbers\Users\Users\Form\Groups::API()->get($input);
+	public function actionRead($options) {
+		$temp = \Numbers\Users\Users\Form\Groups::API()->get($options);
 		if ($temp['values_loaded']) {
 			return [
 				'success' => true,
@@ -73,8 +73,8 @@ class Groups extends \Numbers\Users\APIs\Abstract2\API{
 		}
 	}
 
-	public function actionUpdate($input) {
-		$temp = \Numbers\Users\Users\Form\Groups::API()->update($input);
+	public function actionUpdate($options) {
+		$temp = \Numbers\Users\Users\Form\Groups::API()->update($options);
 		return [
 			'success' => $temp['success'],
 			'error' => $temp['error'],
@@ -82,8 +82,8 @@ class Groups extends \Numbers\Users\APIs\Abstract2\API{
 		];
 	}
 
-	public function actionDelete($input) {
-		$temp = \Numbers\Users\Users\Form\Groups::API()->delete($input);
+	public function actionDelete($options) {
+		$temp = \Numbers\Users\Users\Form\Groups::API()->delete($options);
 		return [
 			'success' => $temp['success'],
 			'error' => $temp['error'],

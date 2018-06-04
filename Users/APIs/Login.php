@@ -1,7 +1,7 @@
 <?php
 
 namespace Numbers\Users\Users\APIs;
-class Login extends \Numbers\Users\APIs\Abstract2\API{
+class Login extends \Numbers\Users\APIs\Abstract2\API {
 
 	public $instructions = [
 		'create' => [
@@ -12,8 +12,8 @@ class Login extends \Numbers\Users\APIs\Abstract2\API{
 			'output' => [
 				'success' => ['name' => 'Success', 'type' => 'boolean'],
 				'error' => ['name' => 'Error(s)', 'type' => 'array'],
-				'session' => ['name' => 'Session', 'type' => 'string'],
-				'auth_tkt' => ['name' => 'Auth Token', 'type' => 'string'],
+				'session' => ['name' => 'Session', 'type' => 'varchar'],
+				'auth_tkt' => ['name' => 'Auth Token', 'type' => 'varchar'],
 			]
 		],
 		'delete' => [
@@ -27,10 +27,10 @@ class Login extends \Numbers\Users\APIs\Abstract2\API{
 		]
 	];
 
-	public function actionCreate($input) {
-		return \Numbers\Users\APIs\Helper\Authorize::authorizeWithCredentials($input['ua_apiusr_login_username'], $input['ua_apiusr_login_password']);
+	public function actionCreate($options) {
+		return \Numbers\Users\APIs\Helper\Authorize::authorizeWithCredentials($options['ua_apiusr_login_username'], $options['ua_apiusr_login_password']);
 	}
-	public function actionDelete($input) {
-		return \Numbers\Users\APIs\Helper\Authorize::signOut($input['__session_id']);
+	public function actionDelete($options) {
+		return \Numbers\Users\APIs\Helper\Authorize::signOut($options['__session_id']);
 	}
 }
