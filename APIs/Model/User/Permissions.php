@@ -7,37 +7,37 @@ class Permissions extends \Object\Table {
 	public $module_code = 'UA';
 	public $title = 'U/A User Permissions';
 	public $name = 'ua_api_user_permissions';
-	public $pk = ['ua_usrperm_tenant_id', 'ua_usrperm_user_id', 'ua_usrperm_module_id', 'ua_usrperm_resource_id'];
+	public $pk = ['ua_apiusrperm_tenant_id', 'ua_apiusrperm_user_id', 'ua_apiusrperm_module_id', 'ua_apiusrperm_resource_id'];
 	public $tenant = true;
 	public $orderby = [
-		'ua_usrperm_inserted_timestamp' => SORT_ASC
+		'ua_apiusrperm_inserted_timestamp' => SORT_ASC
 	];
 	public $limit;
-	public $column_prefix = 'ua_usrperm_';
+	public $column_prefix = 'ua_apiusrperm_';
 	public $columns = [
-		'ua_usrperm_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'ua_usrperm_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
-		'ua_usrperm_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
-		'ua_usrperm_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],
-		'ua_usrperm_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
+		'ua_apiusrperm_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
+		'ua_apiusrperm_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
+		'ua_apiusrperm_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
+		'ua_apiusrperm_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],
+		'ua_apiusrperm_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'ua_api_user_permissions_pk' => ['type' => 'pk', 'columns' => ['ua_usrperm_tenant_id', 'ua_usrperm_user_id', 'ua_usrperm_module_id', 'ua_usrperm_resource_id']],
-		'ua_usrperm_user_id_fk' => [
+		'ua_api_user_permissions_pk' => ['type' => 'pk', 'columns' => ['ua_apiusrperm_tenant_id', 'ua_apiusrperm_user_id', 'ua_apiusrperm_module_id', 'ua_apiusrperm_resource_id']],
+		'ua_apiusrperm_user_id_fk' => [
 			'type' => 'fk',
-			'columns' => ['ua_usrperm_tenant_id', 'ua_usrperm_user_id'],
+			'columns' => ['ua_apiusrperm_tenant_id', 'ua_apiusrperm_user_id'],
 			'foreign_model' => '\Numbers\Users\APIs\Model\Users',
 			'foreign_columns' => ['ua_apiusr_tenant_id', 'ua_apiusr_id']
 		],
-		'ua_usrperm_resource_id_fk' => [
+		'ua_apiusrperm_resource_id_fk' => [
 			'type' => 'fk',
-			'columns' => ['ua_usrperm_resource_id'],
+			'columns' => ['ua_apiusrperm_resource_id'],
 			'foreign_model' => '\Numbers\Backend\System\Modules\Model\Resources',
 			'foreign_columns' => ['sm_resource_id']
 		],
-		'ua_usrperm_module_id_fk' => [
+		'ua_apiusrperm_module_id_fk' => [
 			'type' => 'fk',
-			'columns' => ['ua_usrperm_tenant_id', 'ua_usrperm_module_id'],
+			'columns' => ['ua_apiusrperm_tenant_id', 'ua_apiusrperm_module_id'],
 			'foreign_model' => '\Numbers\Tenants\Tenants\Model\Modules',
 			'foreign_columns' => ['tm_module_tenant_id', 'tm_module_id']
 		]
