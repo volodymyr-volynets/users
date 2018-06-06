@@ -18,6 +18,28 @@ class SoapServerHendler {
 			if ($v == 'Apis') $model[$k] = 'APIs';
 		}
 		$model = \Factory::model('\\' . implode('\\', $model));
+		// transform alias
+		if (!empty($model->aliases) && isset($model->aliases[$model_method[1]])) {
+			$model_method[1] = $model->aliases[$model_method[1]];
+		}
 		return call_user_func_array([& $model, 'action' . ucfirst($model_method[1])], $arguments);
+	}
+
+	/**
+	 * Renew WSDL
+	 *
+	 * @param string $wsdl
+	 * @param string $username
+	 * @return string
+	 */
+	public static function renewWSDL($wsdl, $username) {
+		// fix wsdl
+		if (strpos($wsdl, 'http') !== 0) {
+			$wsdl = \Request::host() . ltrim($wsdl, '/');
+		}
+		// append token
+		$crypt = new \Crypt();
+		$wsdl.= '&token_id=' . $crypt->tokenCreate($username, '');
+		return $wsdl;
 	}
 }

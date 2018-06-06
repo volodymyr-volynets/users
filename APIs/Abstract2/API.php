@@ -4,15 +4,50 @@ namespace Numbers\Users\APIs\Abstract2;
 abstract class API {
 
 	/**
+	 * Authorized
+	 *
+	 * @var boolean
+	 */
+	public $authorized = false;
+
+	/**
+	 * Aliases
+	 *
+	 * @var array
+	 */
+	public $aliases = [
+		//'alias' => 'function'
+	];
+
+	/**
+	 * Aliases
+	 *
+	 * @var array
+	 */
+	public $aliases_default = [
+		'get' => 'read',
+		'put' => 'update',
+		'post' => 'create',
+		'delete' => 'delete'
+	];
+
+	/**
 	 * Constructor
 	 *
-	 * @param array $input
+	 * @param array $options
 	 */
-	public function __construct(array $input = []) {
+	public function __construct(array $options = []) {
+		// process instructions
 		foreach ($this->instructions as $k => $v) {
 			foreach ($v as $k2 => $v2) {
 				$this->instructions[$k][$k2] = \Object\Data\Common::processDomainsAndTypes($this->instructions[$k][$k2]);
 			}
+		}
+		// merge aliases
+		if (!empty($this->aliases)) {
+			$this->aliases = array_merge($this->aliases_default, $this->aliases);
+		} else {
+			$this->aliases = $this->aliases_default;
 		}
 	}
 }

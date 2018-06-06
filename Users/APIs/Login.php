@@ -6,8 +6,8 @@ class Login extends \Numbers\Users\APIs\Abstract2\API {
 	public $instructions = [
 		'create' => [
 			'input' => [
-				'ua_apiusr_login_username' => ['name' => 'Username', 'domain' => 'login', 'required' => true],
-				'ua_apiusr_login_password' => ['name' => 'Password', 'domain' => 'password', 'required' => true],
+				'username' => ['name' => 'Username', 'domain' => 'login', 'required' => true],
+				'password' => ['name' => 'Password', 'domain' => 'password', 'required' => true],
 			],
 			'output' => [
 				'success' => ['name' => 'Success', 'type' => 'boolean'],
@@ -28,7 +28,7 @@ class Login extends \Numbers\Users\APIs\Abstract2\API {
 	];
 
 	public function actionCreate($options) {
-		return \Numbers\Users\APIs\Helper\Authorize::authorizeWithCredentials($options['ua_apiusr_login_username'], $options['ua_apiusr_login_password']);
+		return \Numbers\Users\APIs\Helper\Authorize::authorizeWithCredentials($options['username'], $options['password']);
 	}
 	public function actionDelete($options) {
 		return \Numbers\Users\APIs\Helper\Authorize::signOut($options['__session_id']);

@@ -8,9 +8,11 @@ class Authorize {
 	 *
 	 * @param string $username
 	 * @param string $password
+	 * @param array $options
+	 *		bool skip_password_validation
 	 * @return array
 	 */
-	public static function authorizeWithCredentials($username, $password) : array {
+	public static function authorizeWithCredentials($username, $password, $options = []) : array {
 		$result = [
 			'success' => false,
 			'error' => [],
@@ -34,21 +36,23 @@ class Authorize {
 			}
 			// validate password
 			$crypt = new \Crypt();
-			if (!$crypt->passwordVerify($password, $api_user[0]['ua_apiusr_login_password'])) {
-				$result['error'][] = 'Invalid credentials!';
-				break;
+			if (empty($options['skip_password_validation'])) {
+				if (!$crypt->passwordVerify($password, $api_user[0]['ua_apiusr_login_password'])) {
+					$result['error'][] = 'Invalid credentials!';
+					break;
+				}
 			}
 			// fetch permisions
 			$permissions = \Numbers\Users\APIs\Model\User\Permissions::getStatic([
-				'columns' => ['ua_usrperm_module_id', 'ua_usrperm_resource_id', 'ua_usrperm_inactive'],
+				'columns' => ['ua_apiusrperm_module_id', 'ua_apiusrperm_resource_id', 'ua_apiusrperm_inactive'],
 				'where' => [
-					'ua_usrperm_user_id' => $api_user[0]['ua_apiusr_id']
+					'ua_apiusrperm_user_id' => $api_user[0]['ua_apiusr_id']
 				],
 				'pk' => null
 			]);
 			$api_permissions = [];
 			foreach ($permissions as $k => $v) {
-				$api_permissions[$v['ua_usrperm_module_id']][$v['ua_usrperm_resource_id']] = $v['ua_usrperm_inactive'];
+				$api_permissions[$v['ua_apiusrperm_module_id']][$v['ua_apiusrperm_resource_id']] = $v['ua_apiusrperm_inactive'];
 			}
 			// fetch user
 			$datasource = new \Numbers\Users\Users\DataSource\Login();

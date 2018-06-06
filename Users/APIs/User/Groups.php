@@ -47,6 +47,8 @@ class Groups extends \Numbers\Users\APIs\Abstract2\API {
 		]
 	];
 
+	public $aliases = [];
+
 	public function actionCreate($options) {
 		$temp = \Numbers\Users\Users\Form\Groups::API()->insert($options);
 		return [

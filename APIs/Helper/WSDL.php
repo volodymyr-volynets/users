@@ -22,12 +22,22 @@ class WSDL {
 			'pk' => ['sm_resource_id']
 		]);
 		$all_apis = [];
+		$all_aliases = [];
 		foreach ($apis as $k => $v) {
 			$model = \Factory::model($v['sm_resource_code']);
 			if (empty($model->instructions)) continue;
 			foreach ($model->instructions as $k2 => $v2) {
 				$method = str_replace('\\', '', $v['sm_resource_code']) . '_' . $k2;
 				$all_apis[$method] = $v2;
+				// handle aliases
+				foreach ($model->aliases as $k3 => $v3) {
+					if ($v3 == $k2) {
+						$method2 = str_replace('\\', '', $v['sm_resource_code']) . '_' . $k3;
+						if ($method != $method2) {
+							$all_aliases[$method][$method2] = 1;
+						}
+					}
+				}
 			}
 		}
 		// types
@@ -73,6 +83,14 @@ class WSDL {
 					$result.= '<input message="tns:' . $k . '_Request"/>' . "\n";
 					$result.= '<output message="tns:' . $k . '_Response"/>' . "\n";
 				$result.= '</operation>' . "\n";
+				if (!empty($all_aliases[$k])) {
+					foreach ($all_aliases[$k] as $k2 => $v2) {
+						$result.= '<operation name="' . $k2 . '">' . "\n";
+							$result.= '<input message="tns:' . $k . '_Request"/>' . "\n";
+							$result.= '<output message="tns:' . $k . '_Response"/>' . "\n";
+						$result.= '</operation>' . "\n";
+					}
+				}
 			}
 		$result.= '</portType>' . "\n";
 		// binding
@@ -88,6 +106,19 @@ class WSDL {
 						$result.= '<soap:body use="encoded" namespace="urn:Numbers" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' . "\n";
 					$result.= '</output>' . "\n";
 				$result.= '</operation>' . "\n";
+				if (!empty($all_aliases[$k])) {
+					foreach ($all_aliases[$k] as $k2 => $v2) {
+						$result.= '<operation name="' . $k2 . '">' . "\n";
+							$result.= '<soap:operation soapAction="urn:FilterAction"/>' . "\n";
+							$result.= '<input>' . "\n";
+								$result.= '<soap:body use="encoded" namespace="urn:Numbers" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' . "\n";
+							$result.= '</input>' . "\n";
+							$result.= '<output>' . "\n";
+								$result.= '<soap:body use="encoded" namespace="urn:Numbers" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' . "\n";
+							$result.= '</output>' . "\n";
+						$result.= '</operation>' . "\n";
+					}
+				}
 			}
 		$result.= '</binding>' . "\n";
 		// endpoint

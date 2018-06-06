@@ -83,9 +83,6 @@ class API extends \Object\Controller {
 			], self::$content_types[$this->api_format]);
 		}
 		$this->api_format = strtolower($this->api_format);
-		// check if we have access
-		
-		//'\\' . implode('\\', $model)
 		// process input
 		$this->input = \Request::input(null, true);
 		$input2 = file_get_contents('php://input');
@@ -102,10 +99,13 @@ class API extends \Object\Controller {
 			$this->input = array_merge($this->input, $input2 ?? []);
 		}
 		$this->api_object = \Factory::model('\\' . implode('\\', $model), false, [$this->input]);
-	}
-
-	public function actionSoap() {
-		echo 'SOAP';
+		// acl
+		if (!$this->api_object->authorized) {
+			\Layout::renderAs([
+				'success' => false,
+				'error' => ['You do not have permission to call this API!']
+			], self::$content_types[$this->api_format]);
+		}
 	}
 
 	/**
