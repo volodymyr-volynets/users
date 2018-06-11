@@ -37,10 +37,14 @@ abstract class API {
 	 * @param array $options
 	 */
 	public function __construct(array $options = []) {
+		// permissions
+		
+		
 		// process instructions
 		foreach ($this->instructions as $k => $v) {
 			foreach ($v as $k2 => $v2) {
 				$this->instructions[$k][$k2] = \Object\Data\Common::processDomainsAndTypes($this->instructions[$k][$k2]);
+				// todo: convert to SOAP types
 			}
 		}
 		// merge aliases

@@ -35,10 +35,11 @@ class Roles extends \Object\Form\Wrapper\Base {
 			],
 			'ua_apirol_name' => [
 				'ua_apirol_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 85, 'required' => true],
-				'ua_apirol_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+				'ua_apirol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
 			'ua_apirol_icon' => [
-				'ua_apirol_icon' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
+				'ua_apirol_icon' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 75, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
+				'ua_apirol_weight' => ['order' => 2, 'label_name' => 'Weight', 'domain' => 'weight', 'null' => true],
 			]
 		],
 		'permissions_container' => [
