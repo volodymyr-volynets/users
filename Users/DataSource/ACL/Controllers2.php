@@ -82,7 +82,6 @@ class Controllers2 extends \Numbers\Users\Users\DataSource\ACL\Controllers {
 	 * @return string
 	 */
 	public function determineClassificationIcon(string $classification) : string {
-		if ($classification == 'APIs') return 'fab fa-bity';
 		if ($classification == 'Settings') return 'fas fa-cogs';
 		if ($classification == 'Account') return 'far fa-user';
 		if ($classification == 'Reports') return 'fas fa-table';

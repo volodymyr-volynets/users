@@ -87,7 +87,7 @@ class Login extends \Object\DataSource {
 				'role_ids' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('inner_b.um_role_id', 'character varying'), 'delimiter' => ';;']),
 				'super_admin' => 'SUM(inner_b.um_role_super_admin)',
 				'handle_exceptions' => 'SUM(inner_b.um_role_handle_exceptions)',
-				'maximum_role_weight' => 'MAX(COALESCE(inner_b.um_role_weight, 0))'
+				'maximum_role_weight' => 'MAX(inner_b.um_role_weight)'
 			]);
 			// join
 			$query->join('INNER', new \Numbers\Users\Users\Model\Roles(), 'inner_b', 'ON', [
