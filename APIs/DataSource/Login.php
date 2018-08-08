@@ -52,7 +52,7 @@ class Login extends \Object\DataSource {
 			$query->columns([
 				'inner_a.ua_apiusrrol_user_id',
 				'roles' => $query->db_object->sqlHelper('string_agg', ['expression' => 'inner_b.ua_apirol_code', 'delimiter' => ';;']),
-				'role_ids' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('inner_b.ua_apirol_id', 'character varying'), 'delimiter' => ';;']),
+				'role_ids' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('inner_b.ua_apirol_id', 'varchar'), 'delimiter' => ';;']),
 				'maximum_role_weight' => 'MAX(COALESCE(inner_b.ua_apirol_weight, 0))'
 			]);
 			// join
