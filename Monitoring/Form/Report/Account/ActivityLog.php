@@ -1,10 +1,10 @@
 <?php
 
-namespace Numbers\Users\Monitoring\Form\Report;
+namespace Numbers\Users\Monitoring\Form\Report\Account;
 class ActivityLog extends \Object\Form\Wrapper\Report {
-	public $form_link = 'activity_log_report';
+	public $form_link = 'account_activity_log_report';
 	public $module_code = 'SM';
-	public $title = 'S/M Activity Log Report';
+	public $title = 'S/M Account Activity Log Report';
 	public $options = [
 		'segment' => self::SEGMENT_REPORT,
 		'actions' => [
@@ -37,14 +37,12 @@ class ActivityLog extends \Object\Form\Wrapper\Report {
 			'date' => [
 				'sm_monusage_timestamp1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Date & Time', 'type' => 'datetime', 'percent' => 25, 'required' => true, 'method'=> 'calendar', 'calendar_icon' => 'right', 'null' => true, 'query_builder' => 'a.sm_monusage_timestamp;>='],
 				'sm_monusage_timestamp2' => ['order' => 2, 'label_name' => 'Date & Time', 'type' => 'datetime', 'percent' => 25, 'required' => true, 'method'=> 'calendar', 'calendar_icon' => 'right', 'null' => true, 'query_builder' => 'a.sm_monusage_timestamp;<='],
-				'sm_monusage_user_id1' => ['order' => 3, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_user_id;>='],
-				'sm_monusage_user_id2' => ['order' => 4, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_user_id;<='],
+				'sm_monusage_session_id1' => ['order' => 3, 'row_order' => 200, 'label_name' => 'Session #', 'domain' => 'big_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_session_id;>='],
+				'sm_monusage_session_id2' => ['order' => 4, 'label_name' => 'Session #', 'domain' => 'big_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_session_id;<='],
 			],
-			'session' => [
-				'sm_monusage_session_id1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Session #', 'domain' => 'big_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_session_id;>='],
-				'sm_monusage_session_id2' => ['order' => 2, 'label_name' => 'Session #', 'domain' => 'big_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_session_id;<='],
-				'sm_monusage_user_ip1' => ['order' => 3, 'label_name' => 'User IP', 'domain' => 'ip', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_user_ip;>='],
-				'sm_monusage_user_ip2' => ['order' => 4, 'label_name' => 'User IP', 'domain' => 'ip', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_user_ip;<='],
+			self::HIDDEN => [
+				'sm_monusage_user_id1' => ['order' => 3, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_user_id;>=', 'method' => 'hidden'],
+				'sm_monusage_user_id2' => ['order' => 4, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_monusage_user_id;<=', 'method' => 'hidden'],
 			]
 		],
 		'sort' => [

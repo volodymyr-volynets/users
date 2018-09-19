@@ -27,19 +27,10 @@ class Monitor {
 			'sm_monusage_user_id' => \User::id(),
 			'sm_monusage_user_ip' => \Request::ip(),
 			'sm_monusage_resource_id' => null,
-			'sm_monusage_resource_name' => null,
 			'sm_monusage_duration' => microtime(true),
-			'sm_monusage_actions' => []
+			'sm_monusage_method' => \Request::method(),
+			'\Numbers\Users\Monitoring\Model\Usage\Actions' => []
 		];
-	}
-
-	/**
-	 * Action
-	 *
-	 * @param string $description
-	 */
-	public function action(string $description) {
-		
 	}
 
 	/**
@@ -51,9 +42,25 @@ class Monitor {
 			self::$usage['sm_monusage_duration'] = round(microtime(true) - self::$usage['sm_monusage_duration'], 4);
 			self::$usage['sm_monusage_resource_id'] = \Application::$controller->controller_id ?? null;
 			self::$usage['sm_monusage_resource_name'] = \Application::$controller->title ?? get_class(\Application::$controller);
+			// usage actions
+			$usage_actions = \Application::$controller->getUsageActions();
+			if (!empty($usage_actions)) {
+				foreach ($usage_actions as $k => $v) {
+					self::$usage['\Numbers\Users\Monitoring\Model\Usage\Actions'][] = [
+						'sm_monusgact_action_id' => ($k + 1),
+						'sm_monusgact_usage_code' => $v['usage_code'],
+						'sm_monusgact_message' => $v['message'],
+						'sm_monusgact_replace' => $v['replace'],
+						'sm_monusgact_affected_rows' => $v['affected_rows'],
+						'sm_monusgact_error_rows' => $v['error_rows'],
+						'sm_monusgact_url' => $v['url'],
+						'sm_monusgact_history' => $v['history']
+					];
+				}
+			}
 			// add data to database
-			$model = new \Numbers\Users\Monitoring\Model\Usages();
-			$model->db_object->insert($model->full_table_name, [self::$usage]);
+			$collection = new \Numbers\Users\Monitoring\Model\Collection\Usages();
+			$collection->merge(self::$usage);
 		}
 	}
 }
