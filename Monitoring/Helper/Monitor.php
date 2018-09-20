@@ -152,7 +152,7 @@ class Monitor {
 		$counter = count($_SESSION['numbers']['flag_monitoring_steps']) - 5;
 		foreach ($_SESSION['numbers']['flag_monitoring_steps'] as $k => $v) {
 			if ($counter <= 0) break;
-			if ($k == $key) continue;
+			if ($k == $key) break;
 			array_shift($_SESSION['numbers']['flag_monitoring_steps']);
 			$counter--;
 		}
