@@ -123,10 +123,5 @@ class Users extends \Object\Table {
 		'scope' => 'enterprise'
 	];
 
-	public $triggers = [
-		'update_direct_postal_code_actuals' => '\Numbers\Users\Users\Model\User\Assignment\PostalCode\Actuals::triggerUpdateActuals',
-		'update_direct_postal_code_details' => '\Numbers\Users\Users\Model\User\Assignment\PostalCode\Details::triggerUpdateDetails',
-		'update_territory_postal_details' => '\Numbers\Users\Users\Model\User\Assignment\Territory\PostalCode\Details::triggerUpdateDetails',
-		'update_territory_county_details' => '\Numbers\Users\Users\Model\User\Assignment\Territory\County\Details::triggerUpdateDetails'
-	];
+	public $triggers = [];
 }
