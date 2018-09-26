@@ -94,10 +94,6 @@ class Users extends \Object\Table {
 	public $cache_tags = [];
 	public $cache_memory = false;
 
-	public $relation = [
-		'field' => 'um_user_id',
-	];
-
 	public $who = [
 		'inserted' => true,
 		'updated' => true
