@@ -25,6 +25,9 @@ class Resources {
 		'roles' => [
 			'primary' => [
 				'datasource' => '\Numbers\Users\Users\DataSource\ACL\Roles'
+			],
+			'teams' => [
+				'datasource' => '\Numbers\Users\Users\DataSource\ACL\Teams'
 			]
 		],
 		'menu' => [

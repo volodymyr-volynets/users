@@ -20,8 +20,6 @@ class Manages extends \Object\Table {
 		'um_rolman_parent_role_id' => ['name' => 'Parent Role #', 'domain' => 'role_id'],
 		'um_rolman_child_role_id' => ['name' => 'Child Role #', 'domain' => 'role_id'],
 		'um_rolman_view_users_type_id' => ['name' => 'View Users', 'domain' => 'type_id', 'default' =>0, 'options_model' => '\Numbers\Users\Users\Model\Role\Manage\ViewUsersTypes'],
-		'um_rolman_assign_roles' => ['name' => 'Assign Roles', 'type' => 'boolean'],
-		'um_rolman_reset_password' => ['name' => 'Reset Password', 'type' => 'boolean'],
 		// todo - refactor here
 		'um_rolman_assignment_code' => ['name' => 'Assignment Code', 'domain' => 'type_code', 'null' => true],
 		'um_rolman_manage_children' => ['name' => 'Manage Children', 'type' => 'boolean'],

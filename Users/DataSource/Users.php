@@ -103,6 +103,7 @@ class Users extends \Object\DataSource {
 					$query->where('OR', ['a.um_user_id', '=', \User::id(), false]);
 				}
 				// user can see roles he can assign
+				/*
 				$query->where('OR', function (& $query) {
 					$manages_datasource_model = new \Numbers\Users\Users\DataSource\Role\Manages();
 					$manages_datasource_sql = $manages_datasource_model->sql([
@@ -125,6 +126,7 @@ class Users extends \Object\DataSource {
 						$query->where('AND', 'FALSE');
 					}
 				});
+				*/
 			});
 		}
 	}

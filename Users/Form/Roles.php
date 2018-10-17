@@ -33,8 +33,30 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Permissions',
-			'details_pk' => ['um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'],
+			'details_pk' => ['um_rolperm_module_id', 'um_rolperm_resource_id'],
 			'order' => 35000
+		],
+		'permission_actions_container' => [
+			'type' => 'subdetails',
+			'label_name' => 'Actions',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Users\Model\Role\Permissions',
+			'details_key' => '\Numbers\Users\Users\Model\Role\Permission\Actions',
+			'details_pk' => ['um_rolperaction_method_code', 'um_rolperaction_action_id'],
+			'order' => 1000,
+			'required' => true
+		],
+		'permission_subresources_container' => [
+			'type' => 'subdetails',
+			'label_name' => 'Subresources',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Users\Model\Role\Permissions',
+			'details_key' => '\Numbers\Users\Users\Model\Role\Permission\Subresources',
+			'details_pk' => ['um_rolsubres_rsrsubres_module_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'],
+			'order' => 2000,
+			'required' => false
 		],
 		'parents_container' => [
 			'type' => 'details',
@@ -65,7 +87,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Features',
-			'details_pk' => ['um_rolnoti_module_id', 'um_rolnoti_feature_code'],
+			'details_pk' => ['um_rolfeature_module_id', 'um_rolfeature_feature_code'],
 			'order' => 35000
 		]
 	];
@@ -120,10 +142,9 @@ class Roles extends \Object\Form\Wrapper\Base {
 		],
 		'general_container' => [
 			'um_role_type_id' => [
-				'um_role_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'default' => 10, 'percent' => 40, 'required' => true, 'no_choose' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Role\Types'],
+				'um_role_type_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_id', 'default' => 10, 'percent' => 55, 'required' => true, 'no_choose' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Role\Types'],
 				'um_role_global' => ['order' => 2, 'label_name' => 'Global', 'type' => 'boolean', 'percent' => 15, 'onchange' => 'this.form.submit();'],
 				'um_role_super_admin' => ['order' => 3, 'label_name' => 'Super Admin', 'type' => 'boolean', 'percent' => 15],
-				'um_role_handle_exceptions' => ['order' => 4, 'label_name' => 'Handle Exceptions', 'type' => 'boolean', 'percent' => 15],
 				'um_role_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
 			'um_role_icon' => [
@@ -156,20 +177,33 @@ class Roles extends \Object\Form\Wrapper\Base {
 				'um_rolman_manage_children' => ['order' => 3, 'label_name' => 'Manage Children', 'type' => 'boolean', 'percent' => 15],
 				//'um_rolman_assignment_code' => ['order' => 4, 'label_name' => 'Follow Assignment', 'domain' => 'type_code', 'null' => true, 'percent' => 55, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types::optionsActive', 'options_depends' => ['um_assigntype_parent_role_id' => 'parent::um_role_id', 'um_assigntype_child_role_id' => 'detail::um_rolman_child_role_id']],
 			],
-			'row3' => [
-				'um_rolman_assign_roles' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Assign Roles', 'type' => 'boolean', 'percent' => 15],
-				'um_rolman_reset_password' => ['order' => 2, 'label_name' => 'Reset Password', 'type' => 'boolean', 'percent' => 15],
-			]
 		],
 		'permissions_container' => [
 			'row1' => [
-				'um_rolperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 60, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolperm_module_id', 'resource_id' => 'um_rolperm_resource_id']],
-				'um_rolperm_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Resource\Map::optionsJson', 'options_depends' => ['sm_rsrcmp_resource_id' => 'um_rolperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['action_id' => 'um_rolperm_action_id', 'method_code' => 'um_rolperm_method_code']],
+				'um_rolperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolperm_module_id', 'resource_id' => 'um_rolperm_resource_id']],
 				'um_rolperm_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			self::HIDDEN => [
-				'um_rolperm_method_code' => ['order' => 1, 'label_name' => 'Method', 'domain' => 'code', 'required' => true, 'null' => true, 'method' => 'hidden'],
 				'um_rolperm_module_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
+		'permission_actions_container' => [
+			'row1' => [
+				'um_rolperaction_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 85, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Resource\Map::optionsJson', 'options_depends' => ['sm_rsrcmp_resource_id' => 'detail::um_rolperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['action_id' => 'um_rolperaction_action_id', 'method_code' => 'um_rolperaction_method_code']],
+				'um_rolperaction_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+			],
+			self::HIDDEN => [
+				'um_rolperaction_method_code' => ['order' => 1, 'label_name' => 'Method', 'domain' => 'code', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
+		'permission_subresources_container' => [
+			'row1' => [
+				'um_rolsubres_rsrsubres_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Subresources::optionsJson', 'options_depends' => ['resource_id' => 'detail::um_rolperm_resource_id', 'resource_module_id' => 'detail::um_rolperm_module_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolsubres_rsrsubres_module_id', 'rsrsubres_id' => 'um_rolsubres_rsrsubres_id']],
+				'um_rolsubres_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Subresource\Actions::optionsGroupped', 'options_depends' => ['rsrsubres_id' => 'um_rolsubres_rsrsubres_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_rolsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+			],
+			self::HIDDEN => [
+				'um_rolsubres_rsrsubres_module_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
 			]
 		],
 		'notifications_container' => [
@@ -212,15 +246,35 @@ class Roles extends \Object\Form\Wrapper\Base {
 			],
 			'\Numbers\Users\Users\Model\Role\Permissions' => [
 				'name' => 'Permissions',
-				'pk' => ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_module_id', 'um_rolperm_resource_id', 'um_rolperm_method_code', 'um_rolperm_action_id'],
+				'pk' => ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_module_id', 'um_rolperm_resource_id'],
 				'type' => '1M',
-				'map' => ['um_role_tenant_id' => 'um_rolperm_tenant_id', 'um_role_id' => 'um_rolperm_role_id']
+				'map' => ['um_role_tenant_id' => 'um_rolperm_tenant_id', 'um_role_id' => 'um_rolperm_role_id'],
+				'details' => [
+					'\Numbers\Users\Users\Model\Role\Permission\Actions' => [
+						'name' => 'Permission Actions',
+						'pk' => ['um_rolperaction_tenant_id', 'um_rolperaction_role_id', 'um_rolperaction_module_id', 'um_rolperaction_resource_id', 'um_rolperaction_method_code', 'um_rolperaction_action_id'],
+						'type' => '1M',
+						'map' => ['um_rolperm_tenant_id' => 'um_rolperaction_tenant_id', 'um_rolperm_role_id' => 'um_rolperaction_role_id', 'um_rolperm_module_id' => 'um_rolperaction_module_id', 'um_rolperm_resource_id' => 'um_rolperaction_resource_id'],
+					],
+					'\Numbers\Users\Users\Model\Role\Permission\Subresources' => [
+						'name' => 'Permission Subresources',
+						'pk' => ['um_rolsubres_tenant_id', 'um_rolsubres_role_id', 'um_rolsubres_module_id', 'um_rolsubres_resource_id', 'um_rolsubres_rsrsubres_module_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'],
+						'type' => '1M',
+						'map' => ['um_rolperm_tenant_id' => 'um_rolsubres_tenant_id', 'um_rolperm_role_id' => 'um_rolsubres_role_id', 'um_rolperm_module_id' => 'um_rolsubres_module_id', 'um_rolperm_resource_id' => 'um_rolsubres_resource_id'],
+					]
+				]
 			],
 			'\Numbers\Users\Users\Model\Role\Notifications' => [
 				'name' => 'Notifications',
 				'pk' => ['um_rolnoti_tenant_id', 'um_rolnoti_role_id', 'um_rolnoti_module_id', 'um_rolnoti_feature_code'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolnoti_tenant_id', 'um_role_id' => 'um_rolnoti_role_id']
+			],
+			'\Numbers\Users\Users\Model\Role\Features' => [
+				'name' => 'Features',
+				'pk' => ['um_rolfeature_tenant_id', 'um_rolfeature_role_id', 'um_rolfeature_module_id', 'um_rolfeature_feature_code'],
+				'type' => '1M',
+				'map' => ['um_role_tenant_id' => 'um_rolfeature_tenant_id', 'um_role_id' => 'um_rolfeature_role_id']
 			],
 			'\Numbers\Users\Users\Model\Role\Organizations' => [
 				'name' => 'Organizations',

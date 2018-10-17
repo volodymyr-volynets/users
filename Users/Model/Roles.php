@@ -23,7 +23,6 @@ class Roles extends \Object\Table {
 		'um_role_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		'um_role_global' => ['name' => 'Global', 'type' => 'boolean'],
 		'um_role_super_admin' => ['name' => 'Super Admin', 'type' => 'boolean'],
-		'um_role_handle_exceptions' => ['name' => 'Handle Exceptions', 'type' => 'boolean'],
 		'um_role_weight' => ['name' => 'Weight', 'domain' => 'weight', 'null' => true], // based on this field priorities would be set
 		'um_role_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];

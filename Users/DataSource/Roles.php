@@ -66,10 +66,6 @@ class Roles extends \Object\DataSource {
 					unset($data[$k]);
 					continue;
 				}
-				if (!empty($options['existing_values']) && is_scalar($options['existing_values'])) $options['existing_values'] = [$options['existing_values']];
-				if (!\Numbers\Users\Users\Helper\Role\Manages::can(\User::get('role_ids'), [$v['um_role_id']], 'um_rolman_assign_roles', 1) && (empty($options['existing_values']) || (!empty($options['existing_values']) && !in_array($v['um_role_id'], $options['existing_values'])))) {
-					unset($data[$k]);
-				}
 			}
 		}
 		return $data;

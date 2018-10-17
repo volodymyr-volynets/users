@@ -60,19 +60,49 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['um_usrnoti_module_id', 'um_usernoti_feature_code'],
 			'order' => 35000
 		],
+		'features_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Features',
+			'details_pk' => ['um_usrfeature_module_id', 'um_usrfeature_feature_code'],
+			'order' => 35000
+		],
 		'permissions_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\User\Permissions',
-			'details_pk' => ['um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id'],
+			'details_pk' => ['um_usrperm_resource_id'],
 			'order' => 35000
+		],
+		'permission_actions_container' => [
+			'type' => 'subdetails',
+			'label_name' => 'Actions',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Users\Model\User\Permissions',
+			'details_key' => '\Numbers\Users\Users\Model\User\Permission\Actions',
+			'details_pk' => ['um_usrperaction_method_code', 'um_usrperaction_action_id'],
+			'order' => 1000,
+			'required' => true
+		],
+		'permission_subresources_container' => [
+			'type' => 'subdetails',
+			'label_name' => 'Subresources',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Users\Model\User\Permissions',
+			'details_key' => '\Numbers\Users\Users\Model\User\Permission\Subresources',
+			'details_pk' => ['um_usrsubres_rsrsubres_module_id', 'um_usrsubres_rsrsubres_id', 'um_usrsubres_action_id'],
+			'order' => 2000,
+			'required' => false
 		],
 		'teams_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
-			'details_key' => '\Numbers\Users\Users\Model\User\Team\Map',
+			'details_key' => '\Numbers\Users\Users\Model\Team\Map',
 			'details_pk' => ['um_usrtmmap_team_id'],
 			'order' => 35000
 		],
@@ -95,14 +125,13 @@ class Users extends \Object\Form\Wrapper\Base {
 			'login' => ['order' => 200, 'label_name' => 'Login'],
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
+			'teams' => ['order' => 410, 'label_name' => 'Teams'],
 			'photo' => ['order' => 420, 'label_name' => 'Photo'],
 			'permissions' => ['order' => 440, 'label_name' => 'Permissions'],
-			//'notifications' => ['order' => 450, 'label_name' => 'Notifications'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
 		],
 		'tabs2' => [
-			'teams' => ['order' => 50, 'label_name' => 'Teams'],
 			'internalization' => ['order' => 100, 'label_name' => 'Internalization']
 		],
 	];
@@ -128,6 +157,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			'roles' => [
 				'roles' => ['container' => 'roles_container', 'order' => 100],
 			],
+			'teams' => [
+				'teams' => ['container' => 'teams_container', 'order' => 100],
+			],
 			'organizations' => [
 				'organizations' => ['container' => 'organizations_container', 'order' => 100],
 			],
@@ -136,13 +168,13 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'permissions' => [
 				'permissions' => ['container' => 'permissions_container', 'order' => 100],
+				'notifications_label' => ['container' => 'notification_label_container', 'order' => 150],
 				'notifications' => ['container' => 'notifications_container', 'order' => 200],
+				'feature_label' => ['container' => 'feature_label_container', 'order' => 250],
+				'features' => ['container' => 'features_container', 'order' => 300],
 			],
 		],
 		'tabs2' => [
-			'teams' => [
-				'teams' => ['container' => 'teams_container', 'order' => 100],
-			],
 			'internalization' => [
 				'internalization' => ['container' => 'internalization_container', 'order' => 100],
 			]
@@ -273,22 +305,57 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrnoti_feature_code' => ['order' => 4, 'label_name' => 'Feature', 'domain' => 'feature_code', 'required' => true, 'null' => true, 'method' => 'hidden']
 			]
 		],
-		'permissions_container' => [
+		'notification_label_container' => [
+			'separator_1' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 300, 'label_name' => 'Notifications', 'icon' => 'far fa-envelope', 'percent' => 100],
+			],
+		],
+		'features_container' => [
 			'row1' => [
-				'um_usrperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 60, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'acl_handle_exceptions' => true], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrperm_module_id', 'resource_id' => 'um_usrperm_resource_id']],
-				'um_usrperm_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Resource\Map::optionsJson', 'options_depends' => ['sm_rsrcmp_resource_id' => 'um_usrperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['action_id' => 'um_usrperm_action_id', 'method_code' => 'um_usrperm_method_code']],
-				'um_usrperm_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_usrfeature_module_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Feature', 'domain' => 'module_id', 'required' => true, 'details_unique_select' => true, 'null' => true, 'percent' => 95, 'placeholder' => 'Feature', 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\DataSource\Module\Features::optionsJson', 'options_params' => ['sm_feature_type' => 40], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrfeature_module_id', 'feature_code' => 'um_usrfeature_feature_code']],
+				'um_usrfeature_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			self::HIDDEN => [
-				'um_usrperm_method_code' => ['order' => 1, 'label_name' => 'Method', 'domain' => 'code', 'required' => true, 'null' => true, 'method' => 'hidden'],
-				'um_usrperm_module_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+				'um_usrfeature_feature_code' => ['order' => 4, 'label_name' => 'Feature', 'domain' => 'feature_code', 'required' => true, 'null' => true, 'method' => 'hidden']
+			]
+		],
+		'feature_label_container' => [
+			'separator_1' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 300, 'label_name' => 'Features', 'icon' => 'far fa-gem', 'percent' => 100],
+			],
+		],
+		'permissions_container' => [
+			'row1' => [
+				'um_usrperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'acl_handle_exceptions' => true], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrperm_module_id', 'resource_id' => 'um_usrperm_resource_id']],
+				'um_usrperm_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_usrperm_module_id' => ['order' => 1, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
+		'permission_actions_container' => [
+			'row1' => [
+				'um_usrperaction_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 85, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Resource\Map::optionsJson', 'options_depends' => ['sm_rsrcmp_resource_id' => 'detail::um_usrperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['action_id' => 'um_usrperaction_action_id', 'method_code' => 'um_usrperaction_method_code']],
+				'um_usrperaction_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+			],
+			self::HIDDEN => [
+				'um_usrperaction_method_code' => ['order' => 1, 'label_name' => 'Method', 'domain' => 'code', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
+		'permission_subresources_container' => [
+			'row1' => [
+				'um_usrsubres_rsrsubres_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Subresources::optionsJson', 'options_depends' => ['resource_id' => 'detail::um_usrperm_resource_id', 'resource_module_id' => 'detail::um_usrperm_module_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrsubres_rsrsubres_module_id', 'rsrsubres_id' => 'um_usrsubres_rsrsubres_id']],
+				'um_usrsubres_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Subresource\Actions::optionsGroupped', 'options_depends' => ['rsrsubres_id' => 'um_usrsubres_rsrsubres_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_usrsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+			],
+			self::HIDDEN => [
+				'um_usrsubres_rsrsubres_module_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
 			]
 		],
 		'teams_container' => [
 			'row1' => [
-				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'team_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Teams', 'onchange' => 'this.form.submit();'],
-				'um_usrtmmap_role_id' => ['order' => 2, 'label_name' => 'Role', 'domain' => 'role_id', 'null' => true, 'percent' => 45, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Team\Roles::optionsActive'],
-				'um_usrtmmap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'team_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Teams::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrtmmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'buttons' => [
@@ -309,7 +376,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
 			],
-			'\Numbers\Users\Users\Model\User\Team\Map' => [
+			'\Numbers\Users\Users\Model\Team\Map' => [
 				'name' => 'Groups',
 				'pk' => ['um_usrtmmap_tenant_id', 'um_usrtmmap_user_id', 'um_usrtmmap_team_id'],
 				'type' => '1M',
@@ -339,11 +406,31 @@ class Users extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrnoti_tenant_id', 'um_user_id' => 'um_usrnoti_user_id']
 			],
+			'\Numbers\Users\Users\Model\User\Features' => [
+				'name' => 'Features',
+				'pk' => ['um_usrfeature_tenant_id', 'um_usrfeature_user_id', 'um_usrfeature_module_id', 'um_usrfeature_feature_code'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrfeature_tenant_id', 'um_user_id' => 'um_usrfeature_user_id']
+			],
 			'\Numbers\Users\Users\Model\User\Permissions' => [
 				'name' => 'Permissions',
-				'pk' => ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id'],
+				'pk' => ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id'],
 				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrperm_tenant_id', 'um_user_id' => 'um_usrperm_user_id']
+				'map' => ['um_user_tenant_id' => 'um_usrperm_tenant_id', 'um_user_id' => 'um_usrperm_user_id'],
+				'details' => [
+					'\Numbers\Users\Users\Model\User\Permission\Actions' => [
+						'name' => 'Permission Actions',
+						'pk' => ['um_usrperaction_tenant_id', 'um_usrperaction_user_id', 'um_usrperaction_module_id', 'um_usrperaction_resource_id', 'um_usrperaction_method_code', 'um_usrperaction_action_id'],
+						'type' => '1M',
+						'map' => ['um_usrperm_tenant_id' => 'um_usrperaction_tenant_id', 'um_usrperm_user_id' => 'um_usrperaction_user_id', 'um_usrperm_module_id' => 'um_usrperaction_module_id', 'um_usrperm_resource_id' => 'um_usrperaction_resource_id'],
+					],
+					'\Numbers\Users\Users\Model\User\Permission\Subresources' => [
+						'name' => 'Permission Subresources',
+						'pk' => ['um_usrsubres_tenant_id', 'um_usrsubres_user_id', 'um_usrsubres_module_id', 'um_usrsubres_resource_id', 'um_usrsubres_rsrsubres_module_id', 'um_usrsubres_rsrsubres_id', 'um_usrsubres_action_id'],
+						'type' => '1M',
+						'map' => ['um_usrperm_tenant_id' => 'um_usrsubres_tenant_id', 'um_usrperm_user_id' => 'um_usrsubres_user_id', 'um_usrperm_module_id' => 'um_usrsubres_module_id', 'um_usrperm_resource_id' => 'um_usrsubres_resource_id'],
+					]
+				]
 			],
 			'\Numbers\Users\Users\Model\User\Security\Answers' => [
 				'name' => 'Security Answers',
@@ -388,14 +475,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		);
 		// password
 		if (!empty($form->values['um_user_login_password_new'])) {
-			// see if we can change password for this role
-			$roles = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Roles'], 'um_usrrol_role_id');
-			if (\Numbers\Users\Users\Helper\Role\Manages::can(\User::get('role_ids'), $roles, 'um_rolman_reset_password', 1)) {
-				$crypt = new \Crypt();
-				$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
-			} else {
-				$form->error(DANGER, 'You do not have permission to reset password!', 'um_user_login_password_new');
-			}
+			$crypt = new \Crypt();
+			$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
 		}
 		// photo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {

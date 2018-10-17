@@ -7,7 +7,7 @@ class Permissions extends \Object\Table {
 	public $module_code = 'UM';
 	public $title = 'U/M User Permissions';
 	public $name = 'um_user_permissions';
-	public $pk = ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id'];
+	public $pk = ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id'];
 	public $tenant = true;
 	public $orderby = [
 		'um_usrperm_inserted_timestamp' => SORT_ASC
@@ -19,12 +19,10 @@ class Permissions extends \Object\Table {
 		'um_usrperm_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'um_usrperm_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
 		'um_usrperm_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],
-		'um_usrperm_method_code' => ['name' => 'Method Code', 'domain' => 'code'],
-		'um_usrperm_action_id' => ['name' => 'Action #', 'domain' => 'action_id'],
 		'um_usrperm_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'um_user_permissions_pk' => ['type' => 'pk', 'columns' => ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id']],
+		'um_user_permissions_pk' => ['type' => 'pk', 'columns' => ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id']],
 		'um_usrperm_user_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_usrperm_tenant_id', 'um_usrperm_user_id'],
@@ -33,9 +31,9 @@ class Permissions extends \Object\Table {
 		],
 		'um_usrperm_resource_id_fk' => [
 			'type' => 'fk',
-			'columns' => ['um_usrperm_resource_id', 'um_usrperm_method_code', 'um_usrperm_action_id'],
-			'foreign_model' => '\Numbers\Backend\System\Modules\Model\Resource\Map',
-			'foreign_columns' => ['sm_rsrcmp_resource_id', 'sm_rsrcmp_method_code', 'sm_rsrcmp_action_id']
+			'columns' => ['um_usrperm_resource_id'],
+			'foreign_model' => '\Numbers\Backend\System\Modules\Model\Resources',
+			'foreign_columns' => ['sm_resource_id']
 		],
 		'um_usrperm_module_id_fk' => [
 			'type' => 'fk',

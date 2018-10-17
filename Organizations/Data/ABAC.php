@@ -29,34 +29,5 @@ class ABAC extends \Object\Import {
 				]
 			]
 		],
-		'abac_services' => [
-			'options' => [
-				'pk' => ['sm_abacservice_id'],
-				'model' => '\Numbers\Backend\ABAC\Model\Collection\Services',
-				'method' => 'save'
-			],
-			'data' => [
-				[
-					'sm_abacservice_id' => '::id::ON::ORGANIZATIONS',
-					'sm_abacservice_code' => 'ON::ORGANIZATIONS',
-					'sm_abacservice_name' => 'O/N Organizations',
-					'sm_abacservice_module_code' => 'ON',
-					'sm_abacservice_parent_abacservice_id' => null,
-					'sm_abacservice_feature' => 1,
-					'sm_abacservice_inactive' => 0,
-					'\Numbers\Backend\ABAC\Model\Service\Actions' => []
-				],
-				[
-					'sm_abacservice_id' => '::id::ON::ORGANIZATION_ASSIGNMENTS',
-					'sm_abacservice_code' => 'ON::ORGANIZATION_ASSIGNMENTS',
-					'sm_abacservice_name' => 'O/N Organization Assignments',
-					'sm_abacservice_module_code' => 'ON',
-					'sm_abacservice_parent_abacservice_id' => '::id::ON::ORGANIZATIONS',
-					'sm_abacservice_feature' => 0,
-					'sm_abacservice_inactive' => 0,
-					'\Numbers\Backend\ABAC\Model\Service\Actions' => []
-				],
-			]
-		]
 	];
 }

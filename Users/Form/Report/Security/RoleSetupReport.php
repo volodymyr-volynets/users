@@ -63,9 +63,8 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 		$report->addHeader(DEF, 'row1', [
 			'um_role_id' => ['label_name' => 'Role #', 'percent' => 10],
 			'um_role_name' => ['label_name' => 'Role Name', 'percent' => 50],
-			'um_role_global' => ['label_name' => 'Global', 'percent' => 10, 'data_align' => 'center'],
-			'um_role_super_admin' => ['label_name' => 'Super Admin', 'percent' => 10, 'data_align' => 'center'],
-			'um_role_handle_exceptions' => ['label_name' => 'Exceptions', 'percent' => 10, 'data_align' => 'center'],
+			'um_role_global' => ['label_name' => 'Global', 'percent' => 15, 'data_align' => 'center'],
+			'um_role_super_admin' => ['label_name' => 'Super Admin', 'percent' => 15, 'data_align' => 'center'],
 			'um_role_inactive' => ['label_name' => 'Active', 'percent' => 10, 'data_align' => 'center'],
 		]);
 		$report->addHeader(DEF, 'row2', [
@@ -128,16 +127,6 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 		[
 			'skip_rendering' => true
 		]);
-		$report->addHeader(DEF, 'manages2', [
-			'blank' => ['label_name' => '', 'percent' => 10],
-			'name' => ['label_name' => '', 'percent' => 20],
-			'um_rolman_assign_roles' => ['label_name' => 'Assign Roles', 'percent' => 15],
-			'um_rolman_reset_password' => ['label_name' => 'Reset Password', 'percent' => 15],
-			'blank2' => ['label_name' => ' ', 'percent' => 40],
-		],
-		[
-			'skip_rendering' => true
-		]);
 		// query the data
 		$query = \Numbers\Users\Users\Model\Roles::queryBuilderStatic()->select();
 		$query->columns([
@@ -148,7 +137,6 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 			'um_role_name' => 'a.um_role_name',
 			'um_role_global' => 'a.um_role_global',
 			'um_role_super_admin' => 'a.um_role_super_admin',
-			'um_role_handle_exceptions' => 'a.um_role_handle_exceptions',
 			'um_role_inactive' => 'a.um_role_inactive',
 			'organizations' => 'b.organizations',
 			'inherits' => 'c.inherits',
@@ -234,7 +222,6 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 			$v['um_role_id'] = ['value' => \Format::id($v['um_role_id']), 'url' => \Request::buildURL('/Numbers/Users/Users/Controller/Roles/_Edit', ['um_role_id' => $v['um_role_id']])];
 			$v['um_role_global'] = \Object\Content\Messages::active($v['um_role_global']);
 			$v['um_role_super_admin'] = \Object\Content\Messages::active($v['um_role_super_admin']);
-			$v['um_role_handle_exceptions'] = \Object\Content\Messages::active($v['um_role_handle_exceptions']);
 			$v['um_role_inactive'] = \Object\Content\Messages::active($v['um_role_inactive'], true);
 			$v['um_role_type_id'] = $types[$v['um_role_type_id']]['name'];
 			$v['um_role_department_id'] = $departments[$v['um_role_department_id']]['name'] ?? null;

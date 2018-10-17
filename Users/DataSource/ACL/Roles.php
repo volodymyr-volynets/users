@@ -27,7 +27,6 @@ class Roles extends \Object\DataSource {
 			'type_id' => 'a.um_role_type_id',
 			'name' => 'a.um_role_name',
 			'super_admin' => 'a.um_role_super_admin',
-			//'handle_exceptions' => 'a.um_role_handle_exceptions',
 			'inactive' => 'a.um_role_inactive',
 			'b.parents',
 			'c.permissions'
@@ -49,14 +48,19 @@ class Roles extends \Object\DataSource {
 			['AND', ['a.um_role_id', '=', 'b.um_rolrol_child_role_id', true], false]
 		]);
 		$this->query->join('LEFT', function (& $query) {
-			$query = \Numbers\Users\Users\Model\Role\Permissions::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query = \Numbers\Users\Users\Model\Role\Permission\Actions::queryBuilderStatic(['alias' => 'inner_a'])->select();
 			$query->columns([
-				'inner_a.um_rolperm_role_id',
-				'permissions' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_rolperm_resource_id, inner_a.um_rolperm_method_code, inner_a.um_rolperm_action_id, inner_a.um_rolperm_inactive, inner_a.um_rolperm_module_id)", 'delimiter' => ';;'])
+				'inner_a.um_rolperaction_role_id',
+				'permissions' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_rolperaction_resource_id, inner_a.um_rolperaction_method_code, inner_a.um_rolperaction_action_id, (inner_a.um_rolperaction_inactive + inner_b.um_rolperm_inactive), inner_a.um_rolperaction_module_id)", 'delimiter' => ';;'])
 			]);
-			$query->groupby(['inner_a.um_rolperm_role_id']);
+			$query->join('INNER', new \Numbers\Users\Users\Model\Role\Permissions(), 'inner_b', 'ON', [
+				['AND', ['inner_a.um_rolperaction_role_id', '=', 'inner_b.um_rolperm_role_id', true], false],
+				['AND', ['inner_a.um_rolperaction_module_id', '=', 'inner_b.um_rolperm_module_id', true], false],
+				['AND', ['inner_a.um_rolperaction_resource_id', '=', 'inner_b.um_rolperm_resource_id', true], false]
+			]);
+			$query->groupby(['inner_a.um_rolperaction_role_id']);
 		}, 'c', 'ON', [
-			['AND', ['a.um_role_id', '=', 'c.um_rolperm_role_id', true], false]
+			['AND', ['a.um_role_id', '=', 'c.um_rolperaction_role_id', true], false]
 		]);
 		// where
 		$this->query->where('AND', ['a.um_role_inactive', '=', 0]);
