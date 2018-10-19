@@ -57,6 +57,7 @@ class Login extends \Object\DataSource {
 			'maximum_role_weight' => 'b.maximum_role_weight',
 			'linked_accounts' => 'g.linked_accounts',
 			'teams' => 'h.teams',
+			'features' => 'j.features',
 			// internalization
 			'i18n_group_id' => 'd.um_usri18n_group_id',
 			'i18n_language_code' => 'd.um_usri18n_language_code',
@@ -159,6 +160,16 @@ class Login extends \Object\DataSource {
 		}, 'h', 'ON', [
 			['AND', ['a.um_user_id', '=', 'h.um_usrtmmap_user_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\Features::queryBuilderStatic(['alias' => 'inner_j'])->select();
+			$query->columns([
+				'inner_j.um_usrfeature_user_id',
+				'features' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('~~', inner_j.um_usrfeature_feature_code, inner_j.um_usrfeature_module_id, inner_j.um_usrfeature_inactive)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_j.um_usrfeature_user_id']);
+		}, 'j', 'ON', [
+			['AND', ['a.um_user_id', '=', 'j.um_usrfeature_user_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
@@ -234,7 +245,18 @@ class Login extends \Object\DataSource {
 			} else {
 				$data[$k]['permissions'] = [];
 			}
-			//linked_accounts
+			// features
+			if (!empty($v['features'])) {
+				$data[$k]['features'] = [];
+				$temp = explode(';;', $v['features']);
+				foreach ($temp as $v2) {
+					$v2 = explode('~~', $v2);
+					$data[$k]['features'][$v2[0]][(int) $v2[1]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['features'] = [];
+			}
+			// linked_accounts
 			if (!empty($v['linked_accounts'])) {
 				$data[$k]['linked_accounts'] = [];
 				$temp = explode(';;', $v['linked_accounts']);

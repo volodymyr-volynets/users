@@ -25,7 +25,8 @@ class Teams extends \Object\DataSource {
 			'id' => 'a.um_team_id',
 			'name' => 'a.um_team_name',
 			'inactive' => 'a.um_team_inactive',
-			'c.permissions'
+			'c.permissions',
+			'j.features'
 		]);
 		// join
 		$this->query->join('LEFT', function (& $query) {
@@ -43,6 +44,16 @@ class Teams extends \Object\DataSource {
 		}, 'c', 'ON', [
 			['AND', ['a.um_team_id', '=', 'c.um_temperaction_team_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\Team\Features::queryBuilderStatic(['alias' => 'inner_j'])->select();
+			$query->columns([
+				'inner_j.um_temfeature_team_id',
+				'features' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('~~', inner_j.um_temfeature_feature_code, inner_j.um_temfeature_module_id, inner_j.um_temfeature_inactive)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_j.um_temfeature_team_id']);
+		}, 'j', 'ON', [
+			['AND', ['a.um_team_id', '=', 'j.um_temfeature_team_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_team_inactive', '=', 0]);
 	}
@@ -59,6 +70,17 @@ class Teams extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['permissions'] = [];
+			}
+			// features, the same logic as in login datasource!!!
+			if (!empty($v['features'])) {
+				$data[$k]['features'] = [];
+				$temp = explode(';;', $v['features']);
+				foreach ($temp as $v2) {
+					$v2 = explode('~~', $v2);
+					$data[$k]['features'][$v2[0]][(int) $v2[1]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['features'] = [];
 			}
 		}
 		return $data;

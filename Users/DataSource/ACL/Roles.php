@@ -29,7 +29,8 @@ class Roles extends \Object\DataSource {
 			'super_admin' => 'a.um_role_super_admin',
 			'inactive' => 'a.um_role_inactive',
 			'b.parents',
-			'c.permissions'
+			'c.permissions',
+			'j.features'
 		]);
 		// join
 		$this->query->join('LEFT', function (& $query) {
@@ -62,6 +63,16 @@ class Roles extends \Object\DataSource {
 		}, 'c', 'ON', [
 			['AND', ['a.um_role_id', '=', 'c.um_rolperaction_role_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\Role\Features::queryBuilderStatic(['alias' => 'inner_j'])->select();
+			$query->columns([
+				'inner_j.um_rolfeature_role_id',
+				'features' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('~~', inner_j.um_rolfeature_feature_code, inner_j.um_rolfeature_module_id, inner_j.um_rolfeature_inactive)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_j.um_rolfeature_role_id']);
+		}, 'j', 'ON', [
+			['AND', ['a.um_role_id', '=', 'j.um_rolfeature_role_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_role_inactive', '=', 0]);
 	}
@@ -89,6 +100,17 @@ class Roles extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['permissions'] = [];
+			}
+			// features, the same logic as in login datasource!!!
+			if (!empty($v['features'])) {
+				$data[$k]['features'] = [];
+				$temp = explode(';;', $v['features']);
+				foreach ($temp as $v2) {
+					$v2 = explode('~~', $v2);
+					$data[$k]['features'][$v2[0]][(int) $v2[1]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['features'] = [];
 			}
 		}
 		return $data;
