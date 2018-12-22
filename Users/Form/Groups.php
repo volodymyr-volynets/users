@@ -27,6 +27,9 @@ class Groups extends \Object\Form\Wrapper\Base {
 			],
 			'um_usrgrp_name' => [
 				'um_usrgrp_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
+			],
+			'um_usrgrp_organization_id' => [
+				'um_usrgrp_organization_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10]],
 			]
 		],
 		'buttons' => [

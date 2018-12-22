@@ -18,7 +18,8 @@ class Catalogs extends \Object\Table {
 		'dt_catalog_storage_id' => ['name' => 'Storage #', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Documents\Base\Model\Storages'],
 		'dt_catalog_name' => ['name' => 'Name', 'domain' => 'name'],
 		'dt_catalog_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
-		'dt_catalog_readonly' => ['name' => 'Readonly', 'type' => 'boolean'],
+		'dt_catalog_readonly' => ['name' => 'Readonly', 'type' => 'boolean'], // cannot delete after upload
+		'dt_catalog_approval' => ['name' => 'Approval', 'type' => 'boolean'],
 		'dt_catalog_temporary' => ['name' => 'Temporary', 'type' => 'boolean'],
 		'dt_catalog_primary' => ['name' => 'Primary', 'type' => 'boolean'],
 		'dt_catalog_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

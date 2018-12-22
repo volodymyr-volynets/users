@@ -30,12 +30,13 @@ class Catalogs extends \Object\Form\Wrapper\Base {
 			],
 			'dt_catalog_storage_id' => [
 				'dt_catalog_storage_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Storage', 'domain' => 'type_id', 'persistent' => 'if_set', 'required' => true, 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Documents\Base\Model\Storages'],
-				'dt_catalog_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'persistent' => 'if_set', 'required' => true, 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive'],
+				'dt_catalog_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'persistent' => 'if_set', 'required' => true, 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],
 			],
 			'dt_catalog_readonly' => [
-				'dt_catalog_readonly' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Readonly', 'type' => 'boolean', 'percent' => 25],
-				'dt_catalog_temporary' => ['order' => 2, 'label_name' => 'Temporary', 'type' => 'boolean', 'percent' => 25],
-				'dt_catalog_primary' => ['order' => 3, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 25],
+				'dt_catalog_readonly' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Readonly', 'type' => 'boolean', 'percent' => 15],
+				'dt_catalog_temporary' => ['order' => 2, 'label_name' => 'Temporary', 'type' => 'boolean', 'percent' => 15],
+				'dt_catalog_primary' => ['order' => 3, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
+				'dt_catalog_approval' => ['order' => 4, 'label_name' => 'Approval', 'type' => 'boolean', 'percent' => 15],
 			]
 		],
 		'buttons' => [

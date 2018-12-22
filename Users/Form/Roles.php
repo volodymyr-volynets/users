@@ -54,7 +54,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_parent_key' => '\Numbers\Users\Users\Model\Role\Permissions',
 			'details_key' => '\Numbers\Users\Users\Model\Role\Permission\Subresources',
-			'details_pk' => ['um_rolsubres_rsrsubres_module_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'],
+			'details_pk' => ['um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'],
 			'order' => 2000,
 			'required' => false
 		],
@@ -64,14 +64,6 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Role\Children',
 			'details_pk' => ['um_rolrol_parent_role_id'],
-			'order' => 35000
-		],
-		'manages_container' => [
-			'type' => 'details',
-			'details_rendering_type' => 'grid_with_label',
-			'details_new_rows' => 1,
-			'details_key' => '\Numbers\Users\Users\Model\Role\Manages',
-			'details_pk' => ['um_rolrol_child_role_id'],
 			'order' => 35000
 		],
 		'notifications_container' => [
@@ -104,7 +96,6 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'permissions' => ['order' => 300, 'label_name' => 'Permisions'],
 			'notifications' => ['order' => 400, 'label_name' => 'Notifications'],
 			'features' => ['order' => 450, 'label_name' => 'Features'],
-			'manages' => ['order' => 500, 'label_name' => 'Manage'],
 		]
 	];
 	public $elements = [
@@ -136,9 +127,6 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'features' => [
 				'features' => ['container' => 'features_container', 'order' => 100],
 			],
-			'manages' => [
-				'manages' => ['container' => 'manages_container', 'order' => 100],
-			]
 		],
 		'general_container' => [
 			'um_role_type_id' => [
@@ -157,7 +145,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 		],
 		'organizations_container' => [
 			'row1' => [
-				'um_rolorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_rolorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10], 'onchange' => 'this.form.submit();'],
 				'um_rolorg_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
@@ -167,20 +155,9 @@ class Roles extends \Object\Form\Wrapper\Base {
 				'um_rolrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
-		'manages_container' => [
-			'row1' => [
-				'um_rolman_child_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_rolman_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
-			],
-			'row2' => [
-				'um_rolman_view_users_type_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'View Users', 'domain' => 'type_id', 'null' => true, 'percent' => 20, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Role\Manage\ViewUsersTypes'],
-				'um_rolman_manage_children' => ['order' => 3, 'label_name' => 'Manage Children', 'type' => 'boolean', 'percent' => 15],
-				//'um_rolman_assignment_code' => ['order' => 4, 'label_name' => 'Follow Assignment', 'domain' => 'type_code', 'null' => true, 'percent' => 55, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types::optionsActive', 'options_depends' => ['um_assigntype_parent_role_id' => 'parent::um_role_id', 'um_assigntype_child_role_id' => 'detail::um_rolman_child_role_id']],
-			],
-		],
 		'permissions_container' => [
 			'row1' => [
-				'um_rolperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolperm_module_id', 'resource_id' => 'um_rolperm_resource_id']],
+				'um_rolperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolperm_module_id', 'resource_id' => 'um_rolperm_resource_id']],
 				'um_rolperm_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			self::HIDDEN => [
@@ -189,7 +166,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 		],
 		'permission_actions_container' => [
 			'row1' => [
-				'um_rolperaction_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 85, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Resource\Map::optionsJson', 'options_depends' => ['sm_rsrcmp_resource_id' => 'detail::um_rolperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['action_id' => 'um_rolperaction_action_id', 'method_code' => 'um_rolperaction_method_code']],
+				'um_rolperaction_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 85, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Resource\Map::optionsJson', 'options_depends' => ['sm_rsrcmp_resource_id' => 'detail::um_rolperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['action_id' => 'um_rolperaction_action_id', 'method_code' => 'um_rolperaction_method_code']],
 				'um_rolperaction_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
 			self::HIDDEN => [
@@ -198,13 +175,10 @@ class Roles extends \Object\Form\Wrapper\Base {
 		],
 		'permission_subresources_container' => [
 			'row1' => [
-				'um_rolsubres_rsrsubres_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Subresources::optionsJson', 'options_depends' => ['resource_id' => 'detail::um_rolperm_resource_id', 'resource_module_id' => 'detail::um_rolperm_module_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolsubres_rsrsubres_module_id', 'rsrsubres_id' => 'um_rolsubres_rsrsubres_id']],
-				'um_rolsubres_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Subresource\Actions::optionsGroupped', 'options_depends' => ['rsrsubres_id' => 'um_rolsubres_rsrsubres_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_rolsubres_rsrsubres_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Subresources::optionsGrouped', 'options_depends' => ['resource_id' => 'detail::um_rolperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_rolsubres_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Subresource\Actions::optionsGrouped', 'options_depends' => ['rsrsubres_id' => 'um_rolsubres_rsrsubres_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
 				'um_rolsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
-			self::HIDDEN => [
-				'um_rolsubres_rsrsubres_module_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
-			]
 		],
 		'notifications_container' => [
 			'row1' => [
@@ -238,12 +212,6 @@ class Roles extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolrol_tenant_id', 'um_role_id' => 'um_rolrol_child_role_id']
 			],
-			'\Numbers\Users\Users\Model\Role\Manages' => [
-				'name' => 'Manages',
-				'pk' => ['um_rolman_tenant_id', 'um_rolman_parent_role_id', 'um_rolman_child_role_id'],
-				'type' => '1M',
-				'map' => ['um_role_tenant_id' => 'um_rolman_tenant_id', 'um_role_id' => 'um_rolman_parent_role_id']
-			],
 			'\Numbers\Users\Users\Model\Role\Permissions' => [
 				'name' => 'Permissions',
 				'pk' => ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_module_id', 'um_rolperm_resource_id'],
@@ -258,7 +226,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 					],
 					'\Numbers\Users\Users\Model\Role\Permission\Subresources' => [
 						'name' => 'Permission Subresources',
-						'pk' => ['um_rolsubres_tenant_id', 'um_rolsubres_role_id', 'um_rolsubres_module_id', 'um_rolsubres_resource_id', 'um_rolsubres_rsrsubres_module_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'],
+						'pk' => ['um_rolsubres_tenant_id', 'um_rolsubres_role_id', 'um_rolsubres_module_id', 'um_rolsubres_resource_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'],
 						'type' => '1M',
 						'map' => ['um_rolperm_tenant_id' => 'um_rolsubres_tenant_id', 'um_rolperm_role_id' => 'um_rolsubres_role_id', 'um_rolperm_module_id' => 'um_rolsubres_module_id', 'um_rolperm_resource_id' => 'um_rolsubres_resource_id'],
 					]
@@ -292,7 +260,6 @@ class Roles extends \Object\Form\Wrapper\Base {
 			}
 			// empty other values
 			$form->values['\Numbers\Users\Users\Model\Role\Children'] = [];
-			$form->values['\Numbers\Users\Users\Model\Role\Manages'] = [];
 			$form->values['\Numbers\Users\Users\Model\Role\Organizations'] = [];
 		}
 		// roles must have mandatory organizations
@@ -312,7 +279,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 	public function overrideTabs(& $form, & $tab_options, & $tab_name, & $neighbouring_values = []) {
 		// we hide all tabs if global
 		if (!empty($form->values['um_role_global'])) {
-			if (in_array($tab_name, ['organizations', 'parents', 'assigments', 'manages'])) {
+			if (in_array($tab_name, ['organizations', 'parents', 'assigments'])) {
 				return ['hidden' => true];
 			}
 		}

@@ -42,8 +42,18 @@ class Comments extends \Object\Table {
 		$this->columns['wg_comment_id'] = ['name' => 'Comment #', 'domain' => 'big_id_sequence'];
 		$this->determineModelMap($class, 'comments', $virtual_class_name, $options);
 		$this->columns['wg_comment_value'] = ['name' => 'Comment', 'domain' => 'comment'];
-		$this->columns['wg_comment_important'] = ['name' => 'Inportant', 'type' => 'boolean'];
+		$this->columns['wg_comment_important'] = ['name' => 'Important', 'type' => 'boolean'];
+		$this->columns['wg_comment_public'] = ['name' => 'Public', 'type' => 'boolean'];
 		$this->columns['wg_comment_file_1'] = ['name' => 'File 1', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_file_2'] = ['name' => 'File 2', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_file_3'] = ['name' => 'File 3', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_file_4'] = ['name' => 'File 4', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_file_5'] = ['name' => 'File 5', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_file_6'] = ['name' => 'File 6', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_file_7'] = ['name' => 'File 7', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_file_8'] = ['name' => 'File 8', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_file_9'] = ['name' => 'File 9', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_file_10'] = ['name' => 'File 10', 'domain' => 'file_id', 'null' => true];
 		// add constraints
 		$this->constraints[$this->name . '_pk'] = [
 			'type' => 'pk',

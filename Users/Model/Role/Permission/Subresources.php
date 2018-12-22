@@ -7,7 +7,7 @@ class Subresources extends \Object\Table {
 	public $module_code = 'UM';
 	public $title = 'U/M Role Permission Subresources';
 	public $name = 'um_role_permission_subresources';
-	public $pk = ['um_rolsubres_tenant_id', 'um_rolsubres_role_id', 'um_rolsubres_module_id', 'um_rolsubres_resource_id', 'um_rolsubres_rsrsubres_module_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'];
+	public $pk = ['um_rolsubres_tenant_id', 'um_rolsubres_role_id', 'um_rolsubres_module_id', 'um_rolsubres_resource_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'];
 	public $tenant = true;
 	public $orderby = [
 		'um_rolsubres_timestamp' => SORT_ASC
@@ -20,13 +20,12 @@ class Subresources extends \Object\Table {
 		'um_rolsubres_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_rolsubres_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
 		'um_rolsubres_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],
-		'um_rolsubres_rsrsubres_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
 		'um_rolsubres_rsrsubres_id' => ['name' => 'Subresource #', 'domain' => 'resource_id'],
 		'um_rolsubres_action_id' => ['name' => 'Action #', 'domain' => 'action_id'],
 		'um_rolsubres_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
-		'um_role_permission_subresources_pk' => ['type' => 'pk', 'columns' => ['um_rolsubres_tenant_id', 'um_rolsubres_role_id', 'um_rolsubres_module_id', 'um_rolsubres_resource_id', 'um_rolsubres_rsrsubres_module_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id']],
+		'um_role_permission_subresources_pk' => ['type' => 'pk', 'columns' => ['um_rolsubres_tenant_id', 'um_rolsubres_role_id', 'um_rolsubres_module_id', 'um_rolsubres_resource_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id']],
 		'um_rolsubres_resource_id_fk' => [
 			'type' => 'fk',
 			'columns' => ['um_rolsubres_tenant_id', 'um_rolsubres_role_id', 'um_rolsubres_module_id', 'um_rolsubres_resource_id'],

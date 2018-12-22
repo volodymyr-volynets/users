@@ -58,6 +58,7 @@ class Login extends \Object\DataSource {
 			'linked_accounts' => 'g.linked_accounts',
 			'teams' => 'h.teams',
 			'features' => 'j.features',
+			'subresources' => 'k.subresources',
 			// internalization
 			'i18n_group_id' => 'd.um_usri18n_group_id',
 			'i18n_language_code' => 'd.um_usri18n_language_code',
@@ -170,6 +171,22 @@ class Login extends \Object\DataSource {
 		}, 'j', 'ON', [
 			['AND', ['a.um_user_id', '=', 'j.um_usrfeature_user_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\Permission\Subresources::queryBuilderStatic(['alias' => 'inner_k'])->select();
+			// join
+			$query->join('INNER', new \Numbers\Users\Users\Model\User\Permissions(), 'inner_k2', 'ON', [
+				['AND', ['inner_k2.um_usrperm_user_id', '=', 'inner_k.um_usrsubres_user_id', true], false],
+				['AND', ['inner_k2.um_usrperm_module_id', '=', 'inner_k.um_usrsubres_module_id', true], false],
+				['AND', ['inner_k2.um_usrperm_resource_id', '=', 'inner_k.um_usrsubres_resource_id', true], false],
+			]);
+			$query->columns([
+				'inner_k.um_usrsubres_user_id',
+				'subresources' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_k.um_usrsubres_resource_id, inner_k.um_usrsubres_rsrsubres_id, inner_k.um_usrsubres_action_id, (inner_k.um_usrsubres_inactive + inner_k2.um_usrperm_inactive), inner_k.um_usrsubres_module_id)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_k.um_usrsubres_user_id']);
+		}, 'k', 'ON', [
+			['AND', ['a.um_user_id', '=', 'k.um_usrsubres_user_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
@@ -234,7 +251,7 @@ class Login extends \Object\DataSource {
 					unset($data[$k][$k2]);
 				}
 			}
-			// process permissions, the same logic as in roles datasource!!!
+			// permissions
 			if (!empty($v['permissions'])) {
 				$data[$k]['permissions'] = [];
 				$temp = explode(';;', $v['permissions']);
@@ -244,6 +261,17 @@ class Login extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['permissions'] = [];
+			}
+			// subresources
+			if (!empty($v['subresources'])) {
+				$data[$k]['subresources'] = [];
+				$temp = explode(';;', $v['subresources']);
+				foreach ($temp as $v2) {
+					$v2 = explode('::', $v2);
+					$data[$k]['subresources'][(int) $v2[0]][(int) $v2[1]][(int )$v2[2]][(int) $v2[4]] = (int) $v2[3];
+				}
+			} else {
+				$data[$k]['subresources'] = [];
 			}
 			// features
 			if (!empty($v['features'])) {

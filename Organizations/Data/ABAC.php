@@ -21,10 +21,12 @@ class ABAC extends \Object\Import {
 					'sm_abacattr_flag_abac' => 1,
 					'sm_abacattr_flag_assingment' => 1,
 					'sm_abacattr_flag_attribute' => 1,
+					'sm_abacattr_flag_link' => 0,
 					'sm_abacattr_model_id' => '::primary_model::\Numbers\Users\Organizations\Model\Organizations',
 					'sm_abacattr_domain' => '::from::columns::on_organization_id::domain',
 					'sm_abacattr_type' => '::from::columns::on_organization_id::type',
 					'sm_abacattr_is_numeric_key' => '::from::columns::on_organization_id::is_numeric_key',
+					'sm_abacattr_environment_method' => '\Numbers\Users\Organizations\Helper\ABAC\Environment::getOrganizations',
 					'sm_abacattr_inactive' => 0
 				]
 			]

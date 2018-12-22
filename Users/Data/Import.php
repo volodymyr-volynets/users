@@ -181,6 +181,22 @@ class Import extends \Object\Import {
 						]
 					]
 				],
+				[
+					'sm_feature_module_code' => 'UM',
+					'sm_feature_code' => 'UM::USER_BECOME',
+					'sm_feature_type' => 40,
+					'sm_feature_name' => 'U/M User Become',
+					'sm_feature_icon' => 'fas fa-eye',
+					'sm_feature_activation_model' => null,
+					'sm_feature_activated_by_default' => 1,
+					'sm_feature_inactive' => 0,
+					'\Numbers\Backend\System\Modules\Model\Module\Dependencies' => [
+						[
+							'sm_mdldep_child_module_code' => 'UM',
+							'sm_mdldep_child_feature_code' => 'UM::USERS'
+						]
+					]
+				],
 			]
 		]
 	];

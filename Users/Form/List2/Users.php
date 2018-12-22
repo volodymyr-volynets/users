@@ -41,11 +41,11 @@ class Users extends \Object\Form\Wrapper\List2 {
 				'um_user_type_id1' => ['order' => 3, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 50, 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\Model\User\Types', 'query_builder' => 'a.um_user_type_id'],
 			],
 			'roles_filter' => [
-				'roles_filter' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Roles', 'domain' => 'role_id', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\DataSource\Roles', 'options_params' => ['organizations_for_current_user' => 1, 'skip_acl' => 1]],
-				'organization_filter' => ['order' => 2, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations'],
+				'um_usrrol_role_id1' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Roles', 'domain' => 'role_id', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsGrouped', 'subquery_builder' => ['model' => '\Numbers\Users\Users\Model\User\Roles', 'alias' => 'inner_b2', 'column' => 'inner_b2.um_usrrol_role_id', 'on' => [['a.um_user_id', '=', 'inner_b2.um_usrrol_user_id']]]],
+				'um_usrorg_organization_id1' => ['order' => 2, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGrouped', 'subquery_builder' => ['model' => '\Numbers\Users\Users\Model\User\Organizations', 'alias' => 'inner_a2', 'column' => 'inner_a2.um_usrorg_organization_id', 'on' => [['a.um_user_id', '=', 'inner_a2.um_usrorg_user_id']]]],
 			],
 			'um_user_hold1' => [
-				'um_user_hold1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;='],
+				'um_user_hold1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_hold;='],
 				'um_user_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;=']
 			],
 			'full_text_search' => [
@@ -77,15 +77,13 @@ class Users extends \Object\Form\Wrapper\List2 {
 			],
 			'row3' => [
 				'blank' => ['order' => 1, 'row_order' => 300, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10, 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Users::renderBecome'],
-				'roles' => ['order' => 2, 'label_name' => 'Roles', 'domain' => 'role_id', 'null' => true, 'percent' => 50, 'options_model' => '\Numbers\Users\Users\Model\Roles'],
-				'organizations' => ['order' => 3, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'null' => true, 'percent' => 40, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations'],
+				'um_usrrol_role_id' => ['order' => 2, 'label_name' => 'Roles', 'domain' => 'role_id', 'null' => true, 'percent' => 45, 'options_model' => '\Numbers\Users\Users\Model\Roles', 'subquery' => ['model' => '\Numbers\Users\Users\Model\User\Roles', 'alias' => 'inner_b', 'groupby' => 'um_usrrol_user_id', 'on' => [['a.um_user_id', '=', 'inner_b.um_usrrol_user_id']]]],
+				'um_usrorg_organization_id' => ['order' => 3, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'null' => true, 'percent' => 45, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations', 'subquery' => ['model' => '\Numbers\Users\Users\Model\User\Organizations', 'alias' => 'inner_a', 'groupby' => 'um_usrorg_user_id', 'on' => [['a.um_user_id', '=', 'inner_a.um_usrorg_user_id']]]],
 			]
 		]
 	];
-	public $query_primary_model = '\Numbers\Users\Users\DataSource\Users';
-	public $query_primary_parameters = [
-		'include_all_columns' => true
-	];
+	public $query_primary_model = '\Numbers\Users\Users\Model\Users';
+	public $query_primary_parameters = [];
 	public $list_options = [
 		'pagination_top' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
 		'pagination_bottom' => '\Numbers\Frontend\HTML\Form\Renderers\HTML\Pagination\Base',
@@ -104,7 +102,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 
 	public function renderBecome(& $form, & $options, & $value, & $neighbouring_values) {
 		// check if we have permissions
-		if (\User::id() != $neighbouring_values['um_user_id'] && !empty($neighbouring_values['um_user_login_enabled']) && \Numbers\Users\Users\Helper\Role\Manages::can(\User::get('role_ids'), $neighbouring_values['roles'], 'um_rolman_view_users_type_id', 20)) {
+		if (\User::id() != $neighbouring_values['um_user_id'] && !empty($neighbouring_values['um_user_login_enabled']) && \Can::userFeatureExists('UM::USER_BECOME')) {
 			$user_id = is_array($neighbouring_values['um_user_id']) ? $neighbouring_values['um_user_id']['value'] : $neighbouring_values['um_user_id'];
 			return \HTML::a([
 				'href' => \Numbers\Users\Users\Helper\LoginWithToken::URL($user_id),
@@ -113,87 +111,5 @@ class Users extends \Object\Form\Wrapper\List2 {
 		} else {
 			return '';
 		}
-	}
-
-	public function listQuery(& $form) {
-		$result = [
-			'success' => false,
-			'error' => [],
-			'total' => 0,
-			'rows' => []
-		];
-		// joins
-		$form->query->join('LEFT', function (& $query) {
-			$query = \Numbers\Users\Users\Model\User\Roles::queryBuilderStatic(['alias' => 'inner_a'])->select();
-			$query->columns([
-				'inner_a.um_usrrol_user_id',
-				'roles' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('um_usrrol_role_id', 'varchar'), 'delimiter' => ';;'])
-			]);
-			$query->groupby(['inner_a.um_usrrol_user_id']);
-		}, 'b', 'ON', [
-			['AND', ['a.um_user_id', '=', 'b.um_usrrol_user_id', true], false]
-		]);
-		$form->query->join('LEFT', function (& $query) {
-			$query = \Numbers\Users\Users\Model\User\Organizations::queryBuilderStatic(['alias' => 'inner_b'])->select();
-			$query->columns([
-				'inner_b.um_usrorg_user_id',
-				'organizations' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('um_usrorg_organization_id', 'varchar'), 'delimiter' => ';;'])
-			]);
-			$query->groupby(['inner_b.um_usrorg_user_id']);
-		}, 'c', 'ON', [
-			['AND', ['a.um_user_id', '=', 'c.um_usrorg_user_id', true], false]
-		]);
-		// where
-		if (!empty($form->values['roles_filter'])) {
-			$roles_filter = $form->values['roles_filter'];
-			$form->query->where('AND', function (& $query) use ($roles_filter) {
-				$query = \Numbers\Users\Users\Model\User\Roles::queryBuilderStatic(['alias' => 'inner_c'])->select();
-				$query->columns(1);
-				$query->where('AND', ['a.um_user_id', '=', 'inner_c.um_usrrol_user_id', true]);
-				$query->where('AND', ['inner_c.um_usrrol_role_id', '=', $roles_filter, false]);
-			}, 'EXISTS');
-		}
-		if (!empty($form->values['organization_filter'])) {
-			$organization_filter = $form->values['organization_filter'];
-			$form->query->where('AND', function (& $query) use ($organization_filter) {
-				$query = \Numbers\Users\Users\Model\User\Organizations::queryBuilderStatic(['alias' => 'inner_d'])->select();
-				$query->columns(1);
-				$query->where('AND', ['a.um_user_id', '=', 'inner_d.um_usrorg_user_id', true]);
-				$query->where('AND', ['inner_d.um_usrorg_organization_id', '=', $organization_filter, false]);
-			}, 'EXISTS');
-		}
-		// query #1 get counter
-		$counter_query = clone $form->query;
-		$counter_query->columns(['counter' => 'COUNT(*)'], ['empty_existing' => true]);
-		$temp = $counter_query->query();
-		if (!$temp['success']) {
-			array_merge3($result['error'], $temp['error']);
-			return $result;
-		}
-		$result['total'] = $temp['rows'][0]['counter'];
-		// query #2 get rows
-		$form->processListQueryOrderBy();
-		$form->query->offset($form->values['__offset'] ?? 0);
-		$form->query->limit($form->values['__limit']);
-		$temp = $form->query->query();
-		if (!$temp['success']) {
-			array_merge3($result['error'], $temp['error']);
-			return $result;
-		}
-		foreach ($temp['rows'] as $k => $v) {
-			if (empty($v['roles'])) {
-				$temp['rows'][$k]['roles'] = [];
-			} else {
-				$temp['rows'][$k]['roles'] = explode(';;', $v['roles']);
-			}
-			if (empty($v['organizations'])) {
-				$temp['rows'][$k]['organizations'] = [];
-			} else {
-				$temp['rows'][$k]['organizations'] = explode(';;', $v['organizations']);
-			}
-		}
-		$result['rows'] = & $temp['rows'];
-		$result['success'] = true;
-		return $result;
 	}
 }

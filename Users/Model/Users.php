@@ -32,6 +32,7 @@ class Users extends \Object\Table {
 		'um_user_phone2' => ['name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true],
 		'um_user_cell' => ['name' => 'Cell Phone', 'domain' => 'phone', 'null' => true],
 		'um_user_fax' => ['name' => 'Fax', 'domain' => 'phone', 'null' => true],
+		'um_user_alternative_contact' => ['name' => 'Alternative Contact', 'domain' => 'description', 'null' => true],
 		// login
 		'um_user_login_enabled' => ['name' => 'Login Enabled', 'type' => 'boolean'],
 		'um_user_login_username' => ['name' => 'Username', 'domain' => 'login', 'null' => true],
@@ -39,9 +40,13 @@ class Users extends \Object\Table {
 		'um_user_login_last_set' => ['name' => 'Last Set', 'type' => 'date', 'null' => true],
 		// photo
 		'um_user_photo_file_id' => ['name' => 'Photo File #', 'domain' => 'file_id', 'null' => true],
-		// operating country / province
+		'um_user_about_nickname' => ['name' => 'About Nickname', 'domain' => 'name', 'null' => true],
+		'um_user_about_description' => ['name' => 'About Description', 'domain' => 'description', 'null' => true],
+		// operating country / province / currency code & type
 		'um_user_operating_country_code' => ['name' => 'Operating Country Code', 'domain' => 'country_code', 'null' => true],
 		'um_user_operating_province_code' => ['name' => 'Operating Province Code', 'domain' => 'province_code', 'null' => true],
+		'um_user_operating_currency_code' => ['name' => 'Operating Currency Code', 'domain' => 'currency_code', 'null' => true],
+		'um_user_operating_currency_type' => ['name' => 'Operating Currency Type', 'domain' => 'currency_type', 'null' => true],
 		// inactive & hold
 		'um_user_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'um_user_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
@@ -113,6 +118,20 @@ class Users extends \Object\Table {
 		]
 	];
 
+	public $comments = [
+		'map' => [
+			'um_user_tenant_id' => 'wg_comment_tenant_id',
+			'um_user_id' => 'wg_comment_user_id'
+		]
+	];
+
+	public $documents = [
+		'map' => [
+			'um_user_tenant_id' => 'wg_document_tenant_id',
+			'um_user_id' => 'wg_document_user_id'
+		]
+	];
+
 	public $data_asset = [
 		'classification' => 'client_confidential',
 		'protection' => 2,
@@ -120,4 +139,32 @@ class Users extends \Object\Table {
 	];
 
 	public $triggers = [];
+
+	/**
+	 * Cached users with avatar
+	 *
+	 * @var array
+	 */
+	public static $cached_users_with_avatar = [];
+
+	/**
+	 * Get username with avatar
+	 *
+	 * @param int $user_id
+	 * @return string
+	 */
+	public static function getUsernameWithAvatar(int $user_id) : string {
+		if (isset(self::$cached_users_with_avatar[$user_id])) {
+			return self::$cached_users_with_avatar[$user_id];
+		} else {
+			$result = '';
+			$user = \Numbers\Users\Users\Model\Users::loadById($user_id);
+			if (!empty($user['um_user_photo_file_id'])) {
+				$result.= \HTML::img(['src' => \Numbers\Users\Documents\Base\Base::generateURL($user['um_user_photo_file_id'], true, ''), 'class' => 'navbar-menu-item-avatar-img', 'alt' => 'Avatar', 'width' => 25, 'height' => 25]) . ' ';
+			}
+			$result.= $user['um_user_name'];
+			self::$cached_users_with_avatar[$user_id] = $result;
+			return $result;
+		}
+	}
 }

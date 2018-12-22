@@ -52,7 +52,7 @@ class Teams extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_parent_key' => '\Numbers\Users\Users\Model\Team\Permissions',
 			'details_key' => '\Numbers\Users\Users\Model\Team\Permission\Subresources',
-			'details_pk' => ['um_temsubres_rsrsubres_module_id', 'um_temsubres_rsrsubres_id', 'um_temsubres_action_id'],
+			'details_pk' => ['um_temsubres_rsrsubres_id', 'um_temsubres_action_id'],
 			'order' => 2000,
 			'required' => false
 		],
@@ -91,7 +91,8 @@ class Teams extends \Object\Form\Wrapper\Base {
 				'um_team_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
 			],
 			'um_team_icon' => [
-				'um_team_icon' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
+				'um_team_icon' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
+				'um_team_weight' => ['order' => 2, 'label_name' => 'Weight', 'type' => 'integer', 'null' => true, 'required' => true, 'percent' => 50]
 			]
 		],
 		'tabs' => [
@@ -110,7 +111,7 @@ class Teams extends \Object\Form\Wrapper\Base {
 		],
 		'organizations_container' => [
 			'row1' => [
-				'um_temorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_temorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10], 'onchange' => 'this.form.submit();'],
 				'um_temorg_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
@@ -134,13 +135,10 @@ class Teams extends \Object\Form\Wrapper\Base {
 		],
 		'permission_subresources_container' => [
 			'row1' => [
-				'um_temsubres_rsrsubres_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Subresources::optionsJson', 'options_depends' => ['resource_id' => 'detail::um_temperm_resource_id', 'resource_module_id' => 'detail::um_temperm_module_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_temsubres_rsrsubres_module_id', 'rsrsubres_id' => 'um_temsubres_rsrsubres_id']],
-				'um_temsubres_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Subresource\Actions::optionsGroupped', 'options_depends' => ['rsrsubres_id' => 'um_temsubres_rsrsubres_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_temsubres_rsrsubres_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Subresources::optionsGrouped', 'options_depends' => ['resource_id' => 'detail::um_temperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_temsubres_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Subresource\Actions::optionsGrouped', 'options_depends' => ['rsrsubres_id' => 'um_temsubres_rsrsubres_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
 				'um_temsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
-			self::HIDDEN => [
-				'um_temsubres_rsrsubres_module_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
-			]
 		],
 		'notifications_container' => [
 			'row1' => [
@@ -188,7 +186,7 @@ class Teams extends \Object\Form\Wrapper\Base {
 					],
 					'\Numbers\Users\Users\Model\Team\Permission\Subresources' => [
 						'name' => 'Permission Subresources',
-						'pk' => ['um_temsubres_tenant_id', 'um_temsubres_team_id', 'um_temsubres_module_id', 'um_temsubres_resource_id', 'um_temsubres_rsrsubres_module_id', 'um_temsubres_rsrsubres_id', 'um_temsubres_action_id'],
+						'pk' => ['um_temsubres_tenant_id', 'um_temsubres_team_id', 'um_temsubres_module_id', 'um_temsubres_resource_id', 'um_temsubres_rsrsubres_id', 'um_temsubres_action_id'],
 						'type' => '1M',
 						'map' => ['um_temperm_tenant_id' => 'um_temsubres_tenant_id', 'um_temperm_team_id' => 'um_temsubres_team_id', 'um_temperm_module_id' => 'um_temsubres_module_id', 'um_temperm_resource_id' => 'um_temsubres_resource_id'],
 					]

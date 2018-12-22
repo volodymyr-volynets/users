@@ -9,7 +9,7 @@ class Locations extends \Object\Controller\Permission {
 		echo $form->render();
 	}
 	public function actionEdit() {
-		$form = new \Numbers\Users\Organizations\Form\Locations([
+		$form = new \Numbers\Users\Organizations\Form\Collection\Location\Collection([
 			'input' => \Request::input()
 		]);
 		echo $form->render();

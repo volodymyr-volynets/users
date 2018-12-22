@@ -22,6 +22,11 @@ class Resources {
 				'datasource' => '\Numbers\Users\Users\DataSource\ACL\Controllers'
 			]
 		],
+		'subresources' => [
+			'primary' => [
+				'datasource' => '\Numbers\Users\Users\DataSource\ACL\AllSubresources'
+			]
+		],
 		'roles' => [
 			'primary' => [
 				'datasource' => '\Numbers\Users\Users\DataSource\ACL\Roles'

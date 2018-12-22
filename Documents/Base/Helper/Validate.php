@@ -15,7 +15,7 @@ class Validate {
 	 */
 	public static $validation_extensions = [
 		'images' => ['bmp', 'gif', 'jpg', 'jpeg', 'tif', 'tiff', 'png'],
-		'documents' => ['pdf', 'xls', 'xlsx', 'doc', 'docx'],
+		'documents' => ['pdf', 'xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx'],
 		'audio' => ['mp3', 'wav']
 	];
 

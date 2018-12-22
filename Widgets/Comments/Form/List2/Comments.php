@@ -9,7 +9,7 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		'segment' => null,
 		'actions' => [
 			'refresh' => true,
-			'new' => ['onclick' => 'Numbers.Modal.show(\'form_wg_comments_modal_new_comment_dialog\');', 'href' => 'javascript:void(0);', 'action_code' => 'Record_Make_Comment'],
+			//'new' => ['onclick' => 'Numbers.Modal.show(\'form_wg_comments_modal_new_comment_dialog\');', 'href' => 'javascript:void(0);'],
 			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
 		]
 	];
@@ -52,12 +52,16 @@ class Comments extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'new_comment' => [
+			'new_note_template_id' => [
+				'new_note_template_id' => ['order' => 1, 'row_order' => 50, 'label_name' => 'Template', 'domain' => 'group_id', 'null' => true, 'percent' => 100, 'placeholder' => \Object\Content\Messages::PLEASE_CHOOSE, 'method' => 'select', 'options_model' => '\Numbers\Users\Widgets\Comments\Model\Templates::optionsActive', 'onchange' => 'this.form.submit();'],
+			],
 			'new_comment_value' => [
-				'new_comment_value' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Comment', 'domain' => 'comment', 'null' => true, 'percent' => 100, 'required' => 'c', 'method' => 'textarea', 'style' => 'min-height: 10em;']
+				'new_comment_value' => ['order' => 1, 'row_order' => 100, 'label_name' => '', 'domain' => 'comment', 'null' => true, 'percent' => 100, 'required' => 'c', 'method' => 'wysiwyg', 'wysiwyg_height' => 250]
 			],
 			'new_comment_important' => [
-				'new_comment_important' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Important', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 50],
-				'new_comment_upload_1' => ['order' => 2, 'label_name' => 'File', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents']], 'description' => 'Extensions: Images, Audio, Documents'],
+				'new_comment_important' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Important', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
+				'new_comment_public' => ['order' => 2, 'label_name' => 'Public', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
+				'new_comment_upload_1' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'null' => true, 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents']], 'description' => 'Extensions: Images, Audio, Documents'],
 			],
 			'buttons' => [
 				self::BUTTON_SUBMIT_OTHER => self::BUTTON_SUBMIT_OTHER_DATA + ['row_order' => 32000],
@@ -66,11 +70,16 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'wg_comment_id' => ['order' => 1, 'label_name' => '#', 'domain' => 'big_id', 'percent' => 10],
+				'wg_comment_id' => ['order' => 1, 'row_order' => 100, 'label_name' => '#', 'domain' => 'big_id', 'percent' => 10],
 				'wg_comment_important' => ['order' => 2, 'label_name' => 'Important', 'type' => 'boolean', 'percent' => 10],
-				'wg_comment_inserted_timestamp' => ['order' => 3, 'label_name' => 'Datetime', 'type' => 'timestamp', 'percent' => 10, 'format' => '\Format::niceTimestamp'],
-				'wg_comment_inserted_user_id' => ['order' => 4, 'label_name' => 'User', 'domain' => 'user_id', 'percent' => 15, 'options_model' => '\Numbers\Users\Users\Model\Users'],
-				'wg_comment_value' => ['order' => 5, 'label_name' => 'Comment', 'domain' => 'name', 'percent' => 55, 'custom_renderer' => '\Numbers\Users\Widgets\Comments\Form\List2\Comments::renderCommentField'],
+				'wg_comment_inserted_user_id' => ['order' => 3, 'label_name' => 'User', 'domain' => 'name', 'percent' => 25, 'custom_renderer' => '\Numbers\Users\Widgets\Comments\Form\List2\Comments::renderCommentUser', 'skip_fts' => true],
+				'wg_comment_value' => ['order' => 4, 'label_name' => 'Comment', 'domain' => 'name', 'percent' => 65],
+			],
+			'row2' => [
+				'__about' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 10],
+				'wg_comment_public' => ['order' => 2, 'label_name' => 'Public', 'type' => 'boolean', 'percent' => 10],
+				'wg_comment_inserted_timestamp' => ['order' => 3, 'label_name' => 'Datetime', 'type' => 'timestamp', 'percent' => 25, 'format' => '\Format::niceTimestamp'],
+				'wg_comment_file_1' => ['order' => 4, 'label_name' => 'Files', 'domain' => 'name', 'percent' => 65, 'custom_renderer' => '\Numbers\Users\Widgets\Comments\Form\List2\Comments::renderCommentFiles', 'skip_fts' => true],
 			]
 		]
 	];
@@ -97,6 +106,32 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		}
 	}
 
+	public function refresh(& $form) {
+		if (isset($_POST['new_comment_value'])) {
+			$form->values['new_comment_value'] = $_POST['new_comment_value'];
+		}
+		// user can add new notes if he has subresource permission
+		if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_New')) {
+			$form->options['actions']['new'] = [
+				'onclick' => 'Numbers.Modal.show(\'form_wg_comments_modal_new_comment_dialog\');',
+				'href' => 'javascript:void(0);'
+			];
+		}
+		// load template
+		if (!empty($form->values['new_note_template_id'])) {
+			$template = \Numbers\Users\Widgets\Comments\Model\Templates::getStatic([
+				'where' => [
+					'um_notetemplate_id' => $form->values['new_note_template_id']
+				],
+				'pk' => null,
+				'single_row' => true
+			]);
+			$form->values['new_note_template_id'] = null;
+			$form->values['new_comment_value'] = nl2br($template['um_notetemplate_template']);
+			\Layout::onload('Numbers.Modal.show(\'form_wg_comments_modal_new_comment_dialog\');');
+		}
+	}
+
 	public function validate(& $form) {
 		// if we have new comment
 		if (!empty($form->process_submit[self::BUTTON_SUBMIT_OTHER])) {
@@ -111,26 +146,35 @@ class Comments extends \Object\Form\Wrapper\List2 {
 						$data[$v] = (int) $form->options['input'][$k];
 					}
 				}
-				// add file
+				// add files
 				if (!empty($form->values['new_comment_upload_1'])) {
-					$form->values['new_comment_upload_1']['__image_properties'] = $form->fields['new_comment_upload_1']['options']['validator_params'] ?? [];
+					if (count($form->values['new_comment_upload_1']) > 10) {
+						$form->error(DANGER, 'You can upload up to [number] files!', null, ['replace' => ['[number]' => \Format::id(10)]]);
+						return;
+					}
 					$upload_model = new \Numbers\Users\Documents\Base\Base();
-					// add file
 					$catalog = $upload_model->fetchPrimaryCatalog(\User::get('organization_id'));
 					if (empty($catalog)) {
 						$form->error(DANGER, 'You must set primary catalog!');
 						$model->db_object->rollback();
 						return;
 					}
-					$result = $upload_model->upload($form->values['new_comment_upload_1'], $catalog);
-					if (!$result['success']) {
-						$form->error(DANGER, $result['error']);
-						$model->db_object->rollback();
-						return;
+					$counter = 1;
+					foreach ($form->values['new_comment_upload_1'] as $k => $v) {
+						$v['__image_properties'] = $form->fields['new_comment_upload_1']['options']['validator_params'] ?? [];
+						$result = $upload_model->upload($v, $catalog);
+						if (!$result['success']) {
+							$form->error(DANGER, $result['error']);
+							$model->db_object->rollback();
+							return;
+						}
+						$data['wg_comment_file_' . $counter] = $result['file_id'];
+						$counter++;
 					}
-					$data['wg_comment_file_1'] = $result['file_id'];
 				}
-				$data['wg_comment_value'] = $form->values['new_comment_value'];
+				$data['wg_comment_value'] = $_POST['new_comment_value'] ?? $form->values['new_comment_value'];
+				$data['wg_comment_value'] = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $data['wg_comment_value']);
+				$data['wg_comment_public'] = $form->values['new_comment_public'];
 				$data['wg_comment_important'] = !empty($form->values['new_comment_important']) ? 1 : 0;
 				$comments_result = \Factory::model($model->comments_model)->merge($data);
 				if (!$comments_result['success']) {
@@ -140,6 +184,7 @@ class Comments extends \Object\Form\Wrapper\List2 {
 				}
 				$form->values['new_comment_value'] = '';
 				$form->values['new_comment_important'] = 0;
+				$form->values['new_comment_public'] = 0;
 				$model->db_object->commit();
 			}
 		}
@@ -193,24 +238,32 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		return $result;
 	}
 
-	public function renderCommentField(& $form, & $options, & $value, & $neighbouring_values) {
-		$result = $value;
-		if (!empty($neighbouring_values['wg_comment_file_1'])) {
-			$file = \Numbers\Users\Documents\Base\Model\Files::getStatic([
-				'where' => [
-					'dt_file_id' => $neighbouring_values['wg_comment_file_1']
-				],
-				'pk' => null
-			]);
-			$result.= '<hr/>';
-			if (in_array($file[0]['dt_file_extension'], \Numbers\Users\Documents\Base\Helper\Validate::$validation_extensions['images'])) {
-				$result.= '<div>' . \HTML::img(['src' => \Numbers\Users\Documents\Base\Base::generateURL($neighbouring_values['wg_comment_file_1'])]) . '</div>';
-			} else if (in_array($file[0]['dt_file_extension'], \Numbers\Users\Documents\Base\Helper\Validate::$validation_extensions['audio'])) {
-				$result.= \HTML::audio(['src' => \Numbers\Users\Documents\Base\Base::generateURL($neighbouring_values['wg_comment_file_1']), 'mime' => $file[0]['dt_file_mime']]);
+	public function renderCommentUser(& $form, & $options, & $value, & $neighbouring_values) {
+		return \Numbers\Users\Users\Model\Users::getUsernameWithAvatar($neighbouring_values['wg_comment_inserted_user_id']);
+	}
+
+	public function renderCommentFiles(& $form, & $options, & $value, & $neighbouring_values) {
+		$result = '';
+		$files = [];
+		for ($i = 1; $i <= 10; $i++) {
+			if (!empty($neighbouring_values['wg_comment_file_' . $i])) {
+				$files[]= $neighbouring_values['wg_comment_file_' . $i];
 			} else {
-				$result.= \HTML::a(['href' => \Numbers\Users\Documents\Base\Base::generateURL($neighbouring_values['wg_comment_file_1']), 'value' => i18n(null, 'Download')]);
+				break;
 			}
 		}
-		return nl2br($result);
+		if (!empty($files)) {
+			$files = \Numbers\Users\Documents\Base\Model\Files::getStatic([
+				'where' => [
+					'dt_file_id' => $files
+				],
+				'pk' => ['dt_file_id']
+			]);
+			foreach ($files as $k => $v) {
+				$result.= \HTML::a(['href' => \Numbers\Users\Documents\Base\Base::generateURL($k, false, $v['dt_file_name']), 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name']]);
+				$result.= '<br/>';
+			}
+		}
+		return $result;
 	}
 }

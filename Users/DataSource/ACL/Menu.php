@@ -18,6 +18,7 @@ class Menu extends \Object\DataSource {
 	public $cache_memory = false;
 
 	public $primary_model = '\Numbers\Backend\System\Modules\Model\Resources';
+	public $primary_params = ['skip_acl' => true];
 	public $parameters = [];
 
 	public function query($parameters, $options = []) {

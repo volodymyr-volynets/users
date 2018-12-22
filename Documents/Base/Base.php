@@ -142,11 +142,15 @@ class Base {
 	 *
 	 * @param int $file_id
 	 * @param bool $thumbnail
+	 * @param string $name
 	 * @return string
 	 */
-	public static function generateURL(int $file_id, bool $thumbnail = false) : string {
+	public static function generateURL(int $file_id, bool $thumbnail = false, string $name = '') : string {
 		$crypt = new \Crypt();
-		return \Request::buildURL('/Numbers/Users/Documents/Base/Controller/GetFile', [
+		if (!empty($name)) {
+			$name = urlencode($name);
+		}
+		return \Request::buildURL('/Numbers/Users/Documents/Base/Controller/GetFile/_Index/' . $name, [
 			'token' => urldecode($crypt->tokenCreate($file_id, $thumbnail ? 'thumbnail.view' : 'file.view'))
 		]);
 	}

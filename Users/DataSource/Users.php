@@ -35,9 +35,6 @@ class Users extends \Object\DataSource {
 		'only_id_column' => ['name' => 'Only ID Column', 'type' => 'boolean'],
 		'include_himself' => ['name' => 'Include Himself', 'type' => 'boolean'],
 		'skip_himself' => ['name' => 'Skip Himself', 'type' => 'boolean'],
-		/* queue filter */
-		'owners_id' => ['name' => 'Owners #', 'domain' => 'type_id', 'multiple_column' => true],
-		'queue_type_id' => ['name' => 'Queue Type #', 'domain' => 'type_id', 'multiple_column' => true],
 	];
 
 	public function query($parameters, $options = []) {
@@ -89,44 +86,6 @@ class Users extends \Object\DataSource {
 					$query->where('AND', ['inner_o.um_usrorg_user_id', '=', 'a.um_user_id', true]);
 					$query->where('AND', ['inner_o.um_usrorg_organization_id', '=', $parameters['selected_organizations']]);
 				}, true);
-			});
-		}
-		// acl for not super admins
-		if (!\User::get('super_admin') && empty($parameters['skip_acl'])) {
-			$this->query->where('AND', function (& $query) use ($parameters) {
-				// allow existing values
-				if (!empty($parameters['existing_values'])) {
-					$query->where('OR', ['a.um_user_id', '=', $parameters['existing_values']]);
-				}
-				// user can see him self
-				if (!empty($parameters['include_himself'])) {
-					$query->where('OR', ['a.um_user_id', '=', \User::id(), false]);
-				}
-				// user can see roles he can assign
-				/*
-				$query->where('OR', function (& $query) {
-					$manages_datasource_model = new \Numbers\Users\Users\DataSource\Role\Manages();
-					$manages_datasource_sql = $manages_datasource_model->sql([
-						'where' => [
-							'selected_roles' => \User::get('role_ids'),
-							'selected_users' => \User::id()
-						]
-					], $this->cache_tags);
-					$query->where('AND', ['a.um_user_id', 'IN', $manages_datasource_sql, true]);
-					// user is assigned to organization
-					$organizations = \User::get('organizations');
-					if (!empty($organizations)) {
-						$query->where('AND', function (& $query) use ($organizations) {
-							$query = \Numbers\Users\Users\Model\User\Organizations::queryBuilderStatic(['alias' => 'inner_d'])->select();
-							$query->columns(1);
-							$query->where('AND', ['inner_d.um_usrorg_user_id', '=', 'a.um_user_id', true]);
-							$query->where('AND', ['inner_d.um_usrorg_organization_id', 'IN', $organizations, false]);
-						}, true);
-					} else {
-						$query->where('AND', 'FALSE');
-					}
-				});
-				*/
 			});
 		}
 	}

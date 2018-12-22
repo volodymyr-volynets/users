@@ -136,7 +136,7 @@ class Tenant extends \Object\Import {
 					'on_orgtype_name' => 'Professional and Trade',
 					'on_orgtype_parent_type_code' => 'NONPROFIT',
 					'on_orgtype_inactive' => 0
-				]
+				],
 			]
 		],
 	];

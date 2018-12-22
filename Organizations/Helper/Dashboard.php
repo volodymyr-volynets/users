@@ -22,7 +22,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 			],
 			2 => [
 				'name' => 'Locations',
-				'icon' => 'fas fa-coffee',
+				'icon' => 'fas fa-code-branch',
 				'acl' => [
 					'resource_id' => '\Numbers\Users\Organizations\Controller\Locations',
 					'method_code' => 'Index',

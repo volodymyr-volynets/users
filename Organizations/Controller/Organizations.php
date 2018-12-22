@@ -9,7 +9,7 @@ class Organizations extends \Object\Controller\Permission {
 		echo $form->render();
 	}
 	public function actionEdit() {
-		$form = new \Numbers\Users\Organizations\Form\Organizations([
+		$form = new \Numbers\Users\Organizations\Form\Collection\Organization\Collection([
 			'input' => \Request::input()
 		]);
 		echo $form->render();

@@ -54,7 +54,6 @@ class Profile extends \Object\Form\Wrapper\Base {
 		],
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
-			'login' => ['order' => 200, 'label_name' => 'Login'],
 			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
 			'roles' => ['order' => 400, 'label_name' => 'Roles'],
 			'photo' => ['order' => 500, 'label_name' => 'Photo'],
@@ -76,9 +75,6 @@ class Profile extends \Object\Form\Wrapper\Base {
 			'general' => [
 				'general' => ['container' => 'general_container', 'order' => 100],
 				'contact' => ['container' => 'contact_container', 'order' => 200]
-			],
-			'login' => [
-				'login' => ['container' => 'login_container', 'order' => 100],
 			],
 			'organizations' => [
 				'organizations' => ['container' => 'organizations_container', 'order' => 100],
@@ -122,12 +118,6 @@ class Profile extends \Object\Form\Wrapper\Base {
 				'um_user_fax' => ['order' => 2, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 			]
 		],
-		'login_container' => [
-			'um_user_login_enabled' => [
-				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 50, 'persistent' => true, 'readonly' => true],
-				'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c']
-			]
-		],
 		'internalization_container' => [
 			'um_usri18n_group_id' => [
 				'um_usri18n_group_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Group', 'domain' => 'group_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Groups::optionsActive'],
@@ -138,7 +128,7 @@ class Profile extends \Object\Form\Wrapper\Base {
 			],
 			'um_usri18n_timezone_code' => [
 				'um_usri18n_timezone_code' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Timezone', 'domain' => 'timezone_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Timezones::optionsActive'],
-				'um_usri18n_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive'],
+				'um_usri18n_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],
 			],
 			'format' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 500, 'label_name' => 'Format', 'icon' => 'far fa-hourglass', 'percent' => 100],
@@ -163,14 +153,14 @@ class Profile extends \Object\Form\Wrapper\Base {
 		],
 		'roles_container' => [
 			'row1' => [
-				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'persistent' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Roles', 'onchange' => 'this.form.submit();'],
+				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'persistent' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Roles', 'onchange' => 'this.form.submit();'],
 				'um_usrrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5, 'persistent' => true]
 			]
 		],
 		'organizations_container' => [
 			'row1' => [
-				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'persistent' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 5, 'persistent' => true],
+				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'persistent' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15, 'persistent' => true],
 				'um_usrorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5, 'persistent' => true]
 			]
 		],
@@ -197,18 +187,21 @@ class Profile extends \Object\Form\Wrapper\Base {
 		'details' => [
 			'\Numbers\Users\Users\Model\User\Group\Map' => [
 				'name' => 'Groups',
+				'readonly' => true,
 				'pk' => ['um_usrgrmap_tenant_id', 'um_usrgrmap_user_id', 'um_usrgrmap_group_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Roles' => [
 				'name' => 'Roles',
+				'readonly' => true,
 				'pk' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id']
 			],
 			'\Numbers\Users\Users\Model\User\Organizations' => [
 				'name' => 'Organizations',
+				'readonly' => true,
 				'pk' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id']

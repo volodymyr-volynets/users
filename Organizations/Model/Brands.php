@@ -40,7 +40,8 @@ class Brands extends \Object\Table {
 	public $optimistic_lock = true;
 	public $options_map = [
 		'on_brand_name' => 'name',
-		'on_brand_logo_file_id' => 'photo_id'
+		'on_brand_logo_file_id' => 'photo_id',
+		'on_brand_inactive' => 'inactive'
 	];
 	public $options_active = [
 		'on_brand_inactive' => 0

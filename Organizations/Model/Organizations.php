@@ -19,6 +19,8 @@ class Organizations extends \Object\Table {
 		'on_organization_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_organization_name' => ['name' => 'Name', 'domain' => 'name'],
 		'on_organization_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
+		'on_organization_subtype_id' => ['name' => 'Subtype', 'domain' => 'type_id', 'default' => 10, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Subtypes'],
+		'on_organization_parent_organization_id' => ['name' => 'Parent Organization #', 'domain' => 'organization_id', 'null' => true],
 		// contact
 		'on_organization_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],
 		'on_organization_email2' => ['name' => 'Secondary Email', 'domain' => 'email', 'null' => true],
@@ -26,18 +28,29 @@ class Organizations extends \Object\Table {
 		'on_organization_phone2' => ['name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true],
 		'on_organization_cell' => ['name' => 'Cell Phone', 'domain' => 'phone', 'null' => true],
 		'on_organization_fax' => ['name' => 'Fax', 'domain' => 'phone', 'null' => true],
+		'on_organization_alternative_contact' => ['name' => 'Alternative Contact', 'domain' => 'description', 'null' => true],
 		// logo
 		'on_organization_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true],
+		'on_organization_about_nickname' => ['name' => 'About Nickname', 'domain' => 'name', 'null' => true],
+		'on_organization_about_description' => ['name' => 'About Description', 'domain' => 'description', 'null' => true],
 		// operating country / province
 		'on_organization_operating_country_code' => ['name' => 'Operating Country Code', 'domain' => 'country_code', 'null' => true],
 		'on_organization_operating_province_code' => ['name' => 'Operating Province Code', 'domain' => 'province_code', 'null' => true],
+		'on_organization_operating_currency_code' => ['name' => 'Operating Currency Code', 'domain' => 'currency_code', 'null' => true],
+		'on_organization_operating_currency_type' => ['name' => 'Operating Currency Type', 'domain' => 'currency_type', 'null' => true],
 		// inactive & hold
 		'on_organization_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'on_organization_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'on_organizations_pk' => ['type' => 'pk', 'columns' => ['on_organization_tenant_id', 'on_organization_id']],
-		'on_organization_code_un' => ['type' => 'unique', 'columns' => ['on_organization_tenant_id', 'on_organization_code']]
+		'on_organization_code_un' => ['type' => 'unique', 'columns' => ['on_organization_tenant_id', 'on_organization_code']],
+		'on_organization_parent_organization_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['on_organization_tenant_id', 'on_organization_parent_organization_id'],
+			'foreign_model' => '\Numbers\Users\Organizations\Model\Organizations',
+			'foreign_columns' => ['on_organization_tenant_id', 'on_organization_id']
+		]
 	];
 	public $indexes = [
 		'on_organizations_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['on_organization_code', 'on_organization_name', 'on_organization_phone', 'on_organization_email']],
@@ -53,8 +66,13 @@ class Organizations extends \Object\Table {
 	public $options_map = [
 		'on_organization_name' => 'name',
 		'on_organization_icon' => 'icon_class',
+		'on_organization_logo_file_id' => 'photo_id',
+		'on_organization_parent_organization_id' => 'parent_id',
+		'on_organization_inactive' => 'inactive'
 	];
-	public $options_active = [];
+	public $options_active = [
+		'on_organization_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];
@@ -64,7 +82,8 @@ class Organizations extends \Object\Table {
 	public $cache_memory = false;
 
 	public $who = [
-		'inserted' => true
+		'inserted' => true,
+		'updated' => true
 	];
 
 	public $addresses = [
@@ -78,6 +97,20 @@ class Organizations extends \Object\Table {
 		'map' => [
 			'on_organization_tenant_id' => 'wg_attribute_tenant_id',
 			'on_organization_id' => 'wg_attribute_organization_id'
+		]
+	];
+
+	public $comments = [
+		'map' => [
+			'on_organization_tenant_id' => 'wg_comment_tenant_id',
+			'on_organization_id' => 'wg_comment_organization_id'
+		]
+	];
+
+	public $documents = [
+		'map' => [
+			'on_organization_tenant_id' => 'wg_document_tenant_id',
+			'on_organization_id' => 'wg_document_organization_id'
 		]
 	];
 

@@ -19,12 +19,13 @@ class Users extends \Object\Form\Wrapper\Base {
 		'top' => ['default_row_type' => 'grid', 'order' => 100],
 		'tabs' => ['default_row_type' => 'grid', 'order' => 500, 'type' => 'tabs'],
 		'tabs2' => ['default_row_type' => 'grid', 'order' => 600, 'type' => 'tabs'],
-		'tabs3' => ['default_row_type' => 'grid', 'order' => 600, 'type' => 'tabs'],
+		'assignment_tabs' => ['default_row_type' => 'grid', 'order' => 700, 'type' => 'tabs'],
 		'buttons' => ['default_row_type' => 'grid', 'order' => 900],
 		// child containers
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
-		'permissions_container' => ['default_row_type' => 'grid', 'order' => 34000],
+		'login_container' => ['default_row_type' => 'grid', 'order' => 32105, 'acl_subresource_edit' => ['UM::USER_LOGIN']],
+		'operating_container' => ['default_row_type' => 'grid', 'order' => 32105, 'acl_subresource_edit' => ['UM::USER_OPERATING']],
 		'photo_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'roles_container' => [
 			'type' => 'details',
@@ -33,7 +34,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Users\Model\User\Roles',
 			'details_pk' => ['um_usrrol_role_id'],
 			'required' => true,
-			'order' => 35000
+			'order' => 35000,
+			'acl_subresource_edit' => ['UM::USER_ROLES']
 		],
 		'organizations_container' => [
 			'type' => 'details',
@@ -42,7 +44,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Users\Model\User\Organizations',
 			'details_pk' => ['um_usrorg_organization_id'],
 			'required' => true,
-			'order' => 35001
+			'order' => 35001,
+			'acl_subresource_edit' => ['UM::USER_ORGANIZATIONS']
 		],
 		'internalization_container' => [
 			'type' => 'details',
@@ -58,7 +61,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\User\Notifications',
 			'details_pk' => ['um_usrnoti_module_id', 'um_usernoti_feature_code'],
-			'order' => 35000
+			'order' => 35000,
+			'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
 		],
 		'features_container' => [
 			'type' => 'details',
@@ -66,7 +70,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\User\Features',
 			'details_pk' => ['um_usrfeature_module_id', 'um_usrfeature_feature_code'],
-			'order' => 35000
+			'order' => 35000,
+			'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
 		],
 		'permissions_container' => [
 			'type' => 'details',
@@ -74,7 +79,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\User\Permissions',
 			'details_pk' => ['um_usrperm_resource_id'],
-			'order' => 35000
+			'order' => 35000,
+			'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
 		],
 		'permission_actions_container' => [
 			'type' => 'subdetails',
@@ -85,7 +91,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Users\Model\User\Permission\Actions',
 			'details_pk' => ['um_usrperaction_method_code', 'um_usrperaction_action_id'],
 			'order' => 1000,
-			'required' => true
+			'required' => true,
+			'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
 		],
 		'permission_subresources_container' => [
 			'type' => 'subdetails',
@@ -94,9 +101,10 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_parent_key' => '\Numbers\Users\Users\Model\User\Permissions',
 			'details_key' => '\Numbers\Users\Users\Model\User\Permission\Subresources',
-			'details_pk' => ['um_usrsubres_rsrsubres_module_id', 'um_usrsubres_rsrsubres_id', 'um_usrsubres_action_id'],
+			'details_pk' => ['um_usrsubres_rsrsubres_id', 'um_usrsubres_action_id'],
 			'order' => 2000,
-			'required' => false
+			'required' => false,
+			'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
 		],
 		'teams_container' => [
 			'type' => 'details',
@@ -104,7 +112,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\Team\Map',
 			'details_pk' => ['um_usrtmmap_team_id'],
-			'order' => 35000
+			'order' => 35000,
+			'acl_subresource_edit' => ['UM::USER_TEAMS']
 		],
 		'security_answers_container' => [
 			'type' => 'details',
@@ -112,7 +121,30 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Users\Model\User\Security\Answers',
 			'details_pk' => ['um_usrsecanswer_question_id'],
-			'order' => 36000
+			'order' => 36000,
+			'acl_subresource_edit' => ['UM::USER_LOGIN']
+		],
+		'assignments_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 0,
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Virtual',
+			'details_pk' => ['um_usrassign_assignusrtype_id'],
+			'details_cannot_delete' => true,
+			'details_empty_warning_message' => true,
+			'order' => 35002,
+			'acl_subresource_edit' => ['UM::USER_TO_USER_ASSIGNMENTS']
+		],
+		'assignments_reverse_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 0,
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse',
+			'details_pk' => ['um_usrassign_assignusrtype_id'],
+			'details_cannot_delete' => true,
+			'details_empty_warning_message' => true,
+			'order' => 35003,
+			'acl_subresource_edit' => ['UM::USER_TO_USER_ASSIGNMENTS']
 		],
 	];
 	public $rows = [
@@ -122,18 +154,25 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
-			'login' => ['order' => 200, 'label_name' => 'Login'],
-			'organizations' => ['order' => 300, 'label_name' => 'Organizations'],
-			'roles' => ['order' => 400, 'label_name' => 'Roles'],
-			'teams' => ['order' => 410, 'label_name' => 'Teams'],
-			'photo' => ['order' => 420, 'label_name' => 'Photo'],
-			'permissions' => ['order' => 440, 'label_name' => 'Permissions'],
-			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
-			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
+			'login' => ['order' => 200, 'label_name' => 'Login', 'acl_subresource_hide' => ['UM::USER_LOGIN']],
+			'photo' => ['order' => 300, 'label_name' => 'About'],
+			'operating' => ['order' => 350, 'label_name' => 'Operations', 'acl_subresource_hide' => ['UM::USER_OPERATING']],
+			'internalization' => ['order' => 400, 'label_name' => 'Internalization'],
+			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA + ['acl_subresource_hide' => ['UM::USER_ADDRESSES']],
+			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA + ['acl_subresource_hide' => ['UM::USER_ATTRIBUTES']],
 		],
 		'tabs2' => [
-			'internalization' => ['order' => 100, 'label_name' => 'Internalization']
+			'organizations' => ['order' => 100, 'label_name' => 'Organizations', 'acl_subresource_hide' => ['UM::USER_ORGANIZATIONS']],
+			'roles' => ['order' => 200, 'label_name' => 'Roles', 'acl_subresource_hide' => ['UM::USER_ROLES']],
+			'teams' => ['order' => 300, 'label_name' => 'Teams', 'acl_subresource_hide' => ['UM::USER_TEAMS']],
+			'permissions' => ['order' => 400, 'label_name' => 'Permissions', 'acl_subresource_hide' => ['UM::USER_PERMISSIONS']],
+			'notifications' => ['order' => 500, 'label_name' => 'Notifications', 'acl_subresource_hide' => ['UM::USER_NOTIFICATIONS']],
+			'features' => ['order' => 600, 'label_name' => 'Features', 'acl_subresource_hide' => ['UM::USER_FEATURES']],
+			'assignments' => ['order' => 800, 'label_name' => 'Assignments', 'acl_subresource_hide' => ['UM::USER_ASSIGNMENTS']],
 		],
+		'assignment_tabs' => [
+			'assignment_tabs_users' => ['order' => 100, 'label_name' => 'User To User', 'acl_subresource_hide' => ['UM::USER_TO_USER_ASSIGNMENTS']],
+		]
 	];
 	public $elements = [
 		'top' => [
@@ -154,29 +193,44 @@ class Users extends \Object\Form\Wrapper\Base {
 				'login' => ['container' => 'login_container', 'order' => 100],
 				'security_answers' => ['container' => 'security_answers_container', 'order' => 200],
 			],
+			'photo' => [
+				'photo' => ['container' => 'photo_container', 'order' => 100],
+			],
+			'internalization' => [
+				'internalization' => ['container' => 'internalization_container', 'order' => 100],
+			],
+			'operating' => [
+				'operating' => ['container' => 'operating_container', 'order' => 100],
+			]
+		],
+		'tabs2' => [
+			'organizations' => [
+				'organizations' => ['container' => 'organizations_container', 'order' => 100],
+			],
 			'roles' => [
 				'roles' => ['container' => 'roles_container', 'order' => 100],
 			],
 			'teams' => [
 				'teams' => ['container' => 'teams_container', 'order' => 100],
 			],
-			'organizations' => [
-				'organizations' => ['container' => 'organizations_container', 'order' => 100],
-			],
-			'photo' => [
-				'photo' => ['container' => 'photo_container', 'order' => 100],
+			'assignments' => [
+				'assignments' => ['container' => 'assignment_tabs', 'order' => 100],
 			],
 			'permissions' => [
 				'permissions' => ['container' => 'permissions_container', 'order' => 100],
-				'notifications_label' => ['container' => 'notification_label_container', 'order' => 150],
-				'notifications' => ['container' => 'notifications_container', 'order' => 200],
-				'feature_label' => ['container' => 'feature_label_container', 'order' => 250],
-				'features' => ['container' => 'features_container', 'order' => 300],
 			],
+			'notifications' => [
+				'notifications' => ['container' => 'notifications_container', 'order' => 100],
+			],
+			'features' => [
+				'features' => ['container' => 'features_container', 'order' => 100],
+			]
 		],
-		'tabs2' => [
-			'internalization' => [
-				'internalization' => ['container' => 'internalization_container', 'order' => 100],
+		'assignment_tabs' => [
+			'assignment_tabs_users' => [
+				'user_assignments' => ['container' => 'assignments_container', 'order' => 100],
+				'user_assignments_label' => ['container' => 'user_assignments_label', 'order' => 150],
+				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 200],
 			]
 		],
 		'general_container' => [
@@ -194,13 +248,6 @@ class Users extends \Object\Form\Wrapper\Base {
 			'um_user_company' => [
 				'um_user_company' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Company', 'domain' => 'name', 'null' => true, 'percent' => 100, 'required' => 'c'],
 			],
-			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 350, 'label_name' => 'Operating Location', 'icon' => 'far fa-flag', 'percent' => 100],
-			],
-			'um_user_operating_country_code' => [
-				'um_user_operating_country_code' => ['order' => 1, 'row_order' => 360, 'label_name' => 'Operating Country', 'domain' => 'country_code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
-				'um_user_operating_province_code' => ['order' => 2, 'label_name' => 'Operating Province', 'domain' => 'province_code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'um_user_operating_country_code']],
-			],
 			'separator_2' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'far fa-envelope', 'percent' => 100],
 			],
@@ -216,8 +263,21 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_user_cell' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 				'um_user_fax' => ['order' => 2, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 			],
+			'um_user_alternative_contact' => [
+				'um_user_alternative_contact' => ['order' => 1, 'row_order' => 800, 'label_name' => 'Alternative Contact', 'domain' => 'description', 'null' => true, 'percent' => 100, 'method' => 'textarea'],
+			],
 			self::HIDDEN => [
 				'um_user_numeric_phone' => ['label_name' => 'Primary Phone (Numeric)', 'domain' => 'numeric_phone', 'null' => true],
+			]
+		],
+		'operating_container' => [
+			'um_user_operating_country_code' => [
+				'um_user_operating_country_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Operating Country', 'domain' => 'country_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_user_operating_province_code' => ['order' => 2, 'label_name' => 'Operating Province', 'domain' => 'province_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'um_user_operating_country_code']],
+			],
+			'um_user_operating_currency_code' => [
+				'um_user_operating_currency_code' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Operating Currency Code', 'domain' => 'currency_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Currencies\Model\Currencies::optionsActive'],
+				'um_user_operating_currency_type' => ['order' => 2, 'label_name' => 'Operating Currency Type', 'domain' => 'currency_type', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Currencies\Model\Types::optionsActive'],
 			]
 		],
 		'login_container' => [
@@ -246,7 +306,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'um_usri18n_timezone_code' => [
 				'um_usri18n_timezone_code' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Timezone', 'domain' => 'timezone_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Timezones::optionsActive'],
-				'um_usri18n_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive'],
+				'um_usri18n_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10]],
 			],
 			'format' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 500, 'label_name' => 'Format', 'icon' => 'far fa-hourglass', 'percent' => 100],
@@ -280,17 +340,21 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'organizations_container' => [
 			'row1' => [
-				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\DataSource\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10], 'onchange' => 'this.form.submit();'],
 				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
 				'um_usrorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'photo_container' => [
 			'__logo_upload' => [
-				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Photo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '250x250', 'thumbnail_size' => '50x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 250x250.', 'skip_during_export' => true],
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Photo', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '250x250', 'thumbnail_size' => '50x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 250x250.', 'skip_during_export' => true],
+				'__logo_preview' => ['order' => 2, 'label_name' => 'Preview Photo', 'percent' => 50, 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'um_user_photo_file_id', 'skip_during_export' => true],
 			],
-			'__logo_preview' => [
-				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Photo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'um_user_photo_file_id', 'skip_during_export' => true],
+			'um_user_about_nickname' => [
+				'um_user_about_nickname' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Nickname', 'domain' => 'name', 'null' => true, 'percent' => 100],
+			],
+			'um_user_about_description' => [
+				'um_user_about_description' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Description', 'domain' => 'description', 'null' => true, 'percent' => 100, 'method' => 'textarea'],
 			],
 			self::HIDDEN => [
 				'um_user_photo_file_id' => ['label_name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden', 'skip_during_export' => true],
@@ -305,11 +369,6 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrnoti_feature_code' => ['order' => 4, 'label_name' => 'Feature', 'domain' => 'feature_code', 'required' => true, 'null' => true, 'method' => 'hidden']
 			]
 		],
-		'notification_label_container' => [
-			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 300, 'label_name' => 'Notifications', 'icon' => 'far fa-envelope', 'percent' => 100],
-			],
-		],
 		'features_container' => [
 			'row1' => [
 				'um_usrfeature_module_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Feature', 'domain' => 'module_id', 'required' => true, 'details_unique_select' => true, 'null' => true, 'percent' => 95, 'placeholder' => 'Feature', 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\DataSource\Module\Features::optionsJson', 'options_params' => ['sm_feature_type' => 40], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrfeature_module_id', 'feature_code' => 'um_usrfeature_feature_code']],
@@ -318,11 +377,6 @@ class Users extends \Object\Form\Wrapper\Base {
 			self::HIDDEN => [
 				'um_usrfeature_feature_code' => ['order' => 4, 'label_name' => 'Feature', 'domain' => 'feature_code', 'required' => true, 'null' => true, 'method' => 'hidden']
 			]
-		],
-		'feature_label_container' => [
-			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 300, 'label_name' => 'Features', 'icon' => 'far fa-gem', 'percent' => 100],
-			],
 		],
 		'permissions_container' => [
 			'row1' => [
@@ -344,18 +398,48 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'permission_subresources_container' => [
 			'row1' => [
-				'um_usrsubres_rsrsubres_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Subresources::optionsJson', 'options_depends' => ['resource_id' => 'detail::um_usrperm_resource_id', 'resource_module_id' => 'detail::um_usrperm_module_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrsubres_rsrsubres_module_id', 'rsrsubres_id' => 'um_usrsubres_rsrsubres_id']],
-				'um_usrsubres_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Subresource\Actions::optionsGroupped', 'options_depends' => ['rsrsubres_id' => 'um_usrsubres_rsrsubres_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_usrsubres_rsrsubres_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Subresources::optionsGrouped', 'options_depends' => ['resource_id' => 'detail::um_usrperm_resource_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_usrsubres_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Subresource\Actions::optionsGrouped', 'options_depends' => ['rsrsubres_id' => 'um_usrsubres_rsrsubres_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
 				'um_usrsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
-			self::HIDDEN => [
-				'um_usrsubres_rsrsubres_module_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
-			]
 		],
 		'teams_container' => [
 			'row1' => [
 				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'team_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Teams::optionsActive', 'onchange' => 'this.form.submit();'],
 				'um_usrtmmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			]
+		],
+		'assignments_container' => [
+			'row1' => [
+				'um_usrassign_assignusrtype_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'assignment_id', 'readonly' => true, 'percent' => 70, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
+				'um_usrassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
+				'um_usrassign_multiple' => ['order' => 3, 'label_name' => 'Multiple', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
+			],
+			'row2' => [
+				'um_usrassign_child_user_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'User(s)', 'domain' => 'user_id', 'multiple_column' => 'um_usrassign_child_user_id', 'percent' => 100, 'method' => 'multiselect', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive', 'options_depends' => ['selected_roles' => 'um_usrassign_child_role_id']]
+			],
+			self::HIDDEN => [
+				'um_usrassign_parent_role_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Role #', 'domain' => 'role_id'],
+				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id'],
+			]
+		],
+		'user_assignments_label' => [
+			'user_assignments_label' => [
+				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'label_name' => 'Reverse Assignments', 'icon' => 'fas fa-link', 'percent' => 100],
+			]
+		],
+		'assignments_reverse_container' => [
+			'row1' => [
+				'um_usrassign_assignusrtype_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'assignment_id', 'readonly' => true, 'percent' => 70, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
+				'um_usrassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
+				'um_usrassign_multiple' => ['order' => 3, 'label_name' => 'Multiple', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
+			],
+			'row2' => [
+				'um_usrassign_parent_user_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'User(s)', 'domain' => 'user_id', 'multiple_column' => 'um_usrassign_parent_user_id', 'percent' => 100, 'method' => 'multiselect', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive', 'options_depends' => ['selected_roles' => 'um_usrassign_parent_role_id']]
+			],
+			self::HIDDEN => [
+				'um_usrassign_parent_role_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Parent Role #', 'domain' => 'role_id', 'method' => 'hidden'],
+				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id', 'method' => 'hidden'],
 			]
 		],
 		'buttons' => [
@@ -365,10 +449,6 @@ class Users extends \Object\Form\Wrapper\Base {
 	public $collection = [
 		'name' => 'Users',
 		'model' => '\Numbers\Users\Users\Model\Users',
-		'acl_datasource' => '\Numbers\Users\Users\DataSource\Users',
-		'acl_parameters' => [
-			'only_id_column' => true
-		],
 		'details' => [
 			'\Numbers\Users\Users\Model\User\Group\Map' => [
 				'name' => 'Groups',
@@ -380,19 +460,19 @@ class Users extends \Object\Form\Wrapper\Base {
 				'name' => 'Groups',
 				'pk' => ['um_usrtmmap_tenant_id', 'um_usrtmmap_user_id', 'um_usrtmmap_team_id'],
 				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrtmmap_tenant_id', 'um_user_id' => 'um_usrtmmap_user_id']
+				'map' => ['um_user_tenant_id' => 'um_usrtmmap_tenant_id', 'um_user_id' => 'um_usrtmmap_user_id'],
 			],
 			'\Numbers\Users\Users\Model\User\Roles' => [
 				'name' => 'Roles',
 				'pk' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'],
 				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id']
+				'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id'],
 			],
 			'\Numbers\Users\Users\Model\User\Organizations' => [
 				'name' => 'Organizations',
 				'pk' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'],
 				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id']
+				'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id'],
 			],
 			'\Numbers\Users\Users\Model\User\Internalization' => [
 				'name' => 'Internalization',
@@ -426,7 +506,7 @@ class Users extends \Object\Form\Wrapper\Base {
 					],
 					'\Numbers\Users\Users\Model\User\Permission\Subresources' => [
 						'name' => 'Permission Subresources',
-						'pk' => ['um_usrsubres_tenant_id', 'um_usrsubres_user_id', 'um_usrsubres_module_id', 'um_usrsubres_resource_id', 'um_usrsubres_rsrsubres_module_id', 'um_usrsubres_rsrsubres_id', 'um_usrsubres_action_id'],
+						'pk' => ['um_usrsubres_tenant_id', 'um_usrsubres_user_id', 'um_usrsubres_module_id', 'um_usrsubres_resource_id', 'um_usrsubres_rsrsubres_id', 'um_usrsubres_action_id'],
 						'type' => '1M',
 						'map' => ['um_usrperm_tenant_id' => 'um_usrsubres_tenant_id', 'um_usrperm_user_id' => 'um_usrsubres_user_id', 'um_usrperm_module_id' => 'um_usrsubres_module_id', 'um_usrperm_resource_id' => 'um_usrsubres_resource_id'],
 					]
@@ -436,8 +516,20 @@ class Users extends \Object\Form\Wrapper\Base {
 				'name' => 'Security Answers',
 				'pk' => ['um_usrsecanswer_tenant_id', 'um_usrsecanswer_user_id', 'um_usrsecanswer_question_id'],
 				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrsecanswer_tenant_id', 'um_user_id' => 'um_usrsecanswer_user_id']
-			]
+				'map' => ['um_user_tenant_id' => 'um_usrsecanswer_tenant_id', 'um_user_id' => 'um_usrsecanswer_user_id'],
+			],
+			'\Numbers\Users\Users\Model\User\Assignments' => [
+				'name' => 'User Assignments',
+				'pk' => ['um_usrassign_tenant_id', 'um_usrassign_assignusrtype_id', 'um_usrassign_parent_user_id', 'um_usrassign_child_user_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_parent_user_id']
+			],
+			'\Numbers\Users\Users\Model\User\Assignment\Reverse' => [
+				'name' => 'User Assignments (Reverse)',
+				'pk' => ['um_usrassign_tenant_id', 'um_usrassign_assignusrtype_id', 'um_usrassign_parent_user_id', 'um_usrassign_child_user_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_child_user_id']
+			],
 		]
 	];
 	public $notification = [
@@ -504,19 +596,24 @@ class Users extends \Object\Form\Wrapper\Base {
 			}
 			$form->values['um_user_photo_file_id'] = $result['file_id'];
 		}
-		// polygons
-		if ($form->hasErrors() && !empty($form->errors['fields'])) {
-			foreach ($form->errors['fields'] as $k => $v) {
-				if (strpos($k, 'um_usrassgeoarea_polygon') !== false) {
-					$form->errors['fields'][str_replace('um_usrassgeoarea_polygon', 'show_google_map', $k)] = $v;
-				}
-			}
-		}
 		// numeric phone
 		if (!empty($form->values['um_user_phone'])) {
 			$form->values['um_user_numeric_phone'] = \Object\Validator\Phone::plainNumber($form->values['um_user_phone']);
 		} else {
 			$form->values['um_user_numeric_phone'] = null;
+		}
+		// user to user assignments
+		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'] as $k => $v) {
+			$key = "\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse[$k][um_usrassign_parent_user_id]";
+			if (!empty($v['um_usrassign_mandatory']) && empty($v['um_usrassign_parent_user_id'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, $key);
+			}
+		}
+		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'] as $k => $v) {
+			$key = "\Numbers\Users\Users\Model\User\Assignment\Virtual[$k][um_usrassign_child_user_id]";
+			if (!empty($v['um_usrassign_mandatory']) && empty($v['um_usrassign_child_user_id'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, $key);
+			}
 		}
 	}
 
@@ -534,36 +631,97 @@ class Users extends \Object\Form\Wrapper\Base {
 	}
 
 	public function processDefaultValue(& $form, $key, $default, & $value, & $neighbouring_values, $changed_field = [], $options = []) {
-		if ($key == 'um_usrasspostal_organization_id') {
-			if (!empty($neighbouring_values['um_usrasspostal_service_id'])) {
-				$data = \Numbers\Users\Organizations\Model\Services::loadById($neighbouring_values['um_usrasspostal_service_id']);
-				$value = $neighbouring_values['um_usrasspostal_organization_id'] = $data['on_service_organization_id'];
-			} else {
-				$value = $neighbouring_values['um_usrasspostal_organization_id'] = null;
+
+	}
+
+	public function processAllValues(& $form) {
+		if (empty($form->values['\Numbers\Users\Users\Model\User\Roles'])) return;
+		// direct assigments
+		if (empty($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual']) || strpos($form->options['input']['__form_onchange_field_values_key'] ?? '', 'um_usrrol_role_id') !== false) {
+			$virtual = $form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'] ?? [];
+			$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'] = [];
+			$data = \Numbers\Users\Users\Model\User\Assignment\Types::getStatic([
+				'where' => [
+					'um_assignusrtype_parent_role_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Roles'], 'um_usrrol_role_id'),
+				],
+				'pk' => ['um_assignusrtype_id']
+			]);
+			foreach ($data as $k => $v) {
+				$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'][$k] = [
+					'um_usrassign_assignusrtype_id' => $v['um_assignusrtype_id'],
+					'um_usrassign_parent_role_id' => $v['um_assignusrtype_parent_role_id'],
+					'um_usrassign_child_role_id' => $v['um_assignusrtype_child_role_id'],
+					'um_usrassign_mandatory' => $v['um_assignusrtype_mandatory'],
+					'um_usrassign_multiple' => $v['um_assignusrtype_multiple'],
+					'um_usrassign_child_user_id' => $virtual[$k]['um_usrassign_child_user_id'] ?? []
+				];
+				foreach ($form->values['\Numbers\Users\Users\Model\User\Assignments'] ?? [] as $v2) {
+					if ($v['um_assignusrtype_id'] == $v2['um_usrassign_assignusrtype_id'] && $v['um_assignusrtype_parent_role_id'] == $v2['um_usrassign_parent_role_id'] && $v['um_assignusrtype_child_role_id'] == $v2['um_usrassign_child_role_id']) {
+						$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'][$k]['um_usrassign_child_user_id'][$v2['um_usrassign_child_user_id']]['um_usrassign_child_user_id'] = $v2['um_usrassign_child_user_id'];
+					}
+				}
 			}
 		}
-		if ($key == 'um_usrassterr_organization_id') {
-			if (!empty($neighbouring_values['um_usrassterr_service_id'])) {
-				$data = \Numbers\Users\Organizations\Model\Services::loadById($neighbouring_values['um_usrassterr_service_id']);
-				$value = $neighbouring_values['um_usrassterr_organization_id'] = $data['on_service_organization_id'];
-			} else {
-				$value = $neighbouring_values['um_usrassterr_organization_id'] = null;
+		// create direct assigmnets
+		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'] ?? [] as $k => $v) {
+			foreach ($v['um_usrassign_child_user_id'] ?? [] as $k2 => $v2) {
+				if (is_array($v2)) {
+					$value = $v2['um_usrassign_child_user_id'];
+				} else {
+					$value = $v2;
+				}
+				$key = \Tenant::id() . '::' . $v['um_usrassign_assignusrtype_id'] . '::' . ($form->values['um_user_id'] ?? '') . '::' . $value;
+				$form->values['\Numbers\Users\Users\Model\User\Assignments'][$key] = [
+					'um_usrassign_assignusrtype_id' => $v['um_usrassign_assignusrtype_id'],
+					'um_usrassign_parent_user_id' => $form->values['um_user_id'],
+					'um_usrassign_child_user_id' => (int) $value,
+					'um_usrassign_parent_role_id' => $v['um_usrassign_parent_role_id'],
+					'um_usrassign_child_role_id' => $v['um_usrassign_child_role_id'],
+				];
 			}
 		}
-		if ($key == 'um_usrassloc_organization_id') {
-			if (!empty($neighbouring_values['um_usrassloc_service_id'])) {
-				$data = \Numbers\Users\Organizations\Model\Services::loadById($neighbouring_values['um_usrassloc_service_id']);
-				$value = $neighbouring_values['um_usrassloc_organization_id'] = $data['on_service_organization_id'];
-			} else {
-				$value = $neighbouring_values['um_usrassloc_organization_id'] = null;
+		// reverse assigmnents
+		if (empty($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse']) || strpos($form->options['input']['__form_onchange_field_values_key'] ?? '', 'um_usrrol_role_id') !== false) {
+			$virtual = $form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'] ?? [];
+			$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'] = [];
+			$data = \Numbers\Users\Users\Model\User\Assignment\Types::getStatic([
+				'where' => [
+					'um_assignusrtype_child_role_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Roles'], 'um_usrrol_role_id'),
+				],
+				'pk' => ['um_assignusrtype_id']
+			]);
+			foreach ($data as $k => $v) {
+				$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'][$k] = [
+					'um_usrassign_assignusrtype_id' => $v['um_assignusrtype_id'],
+					'um_usrassign_parent_role_id' => $v['um_assignusrtype_parent_role_id'],
+					'um_usrassign_child_role_id' => $v['um_assignusrtype_child_role_id'],
+					'um_usrassign_mandatory' => $v['um_assignusrtype_mandatory'],
+					'um_usrassign_multiple' => $v['um_assignusrtype_multiple'],
+					'um_usrassign_parent_user_id' => $virtual[$k]['um_usrassign_parent_user_id'] ?? []
+				];
+				foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Reverse'] ?? [] as $v2) {
+					if ($v['um_assignusrtype_id'] == $v2['um_usrassign_assignusrtype_id'] && $v['um_assignusrtype_parent_role_id'] == $v2['um_usrassign_parent_role_id'] && $v['um_assignusrtype_child_role_id'] == $v2['um_usrassign_child_role_id']) {
+						$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'][$k]['um_usrassign_parent_user_id'][$v2['um_usrassign_parent_user_id']]['um_usrassign_parent_user_id'] = $v2['um_usrassign_parent_user_id'];
+					}
+				}
 			}
 		}
-		if ($key == 'um_usrassgeoarea_organization_id') {
-			if (!empty($neighbouring_values['um_usrassgeoarea_service_id'])) {
-				$data = \Numbers\Users\Organizations\Model\Services::loadById($neighbouring_values['um_usrassgeoarea_service_id']);
-				$value = $neighbouring_values['um_usrassgeoarea_organization_id'] = $data['on_service_organization_id'];
-			} else {
-				$value = $neighbouring_values['um_usrassgeoarea_organization_id'] = null;
+		// create reverse assigmnets
+		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'] ?? [] as $k => $v) {
+			foreach ($v['um_usrassign_parent_user_id'] ?? [] as $k2 => $v2) {
+				if (is_array($v2)) {
+					$value = $v2['um_usrassign_parent_user_id'];
+				} else {
+					$value = $v2;
+				}
+				$key = \Tenant::id() . '::' . $v['um_usrassign_assignusrtype_id'] . '::' . $value . '::' . ($form->values['um_user_id'] ?? '');
+				$form->values['\Numbers\Users\Users\Model\User\Assignment\Reverse'][$key] = [
+					'um_usrassign_assignusrtype_id' => $v['um_usrassign_assignusrtype_id'],
+					'um_usrassign_parent_user_id' => (int) $value,
+					'um_usrassign_child_user_id' => $form->values['um_user_id'],
+					'um_usrassign_parent_role_id' => $v['um_usrassign_parent_role_id'],
+					'um_usrassign_child_role_id' => $v['um_usrassign_child_role_id'],
+				];
 			}
 		}
 	}

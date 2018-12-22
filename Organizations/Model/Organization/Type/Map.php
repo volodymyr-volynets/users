@@ -5,7 +5,7 @@ class Map extends \Object\Table {
 	public $db_link;
 	public $db_link_flag;
 	public $module_code = 'ON';
-	public $title = 'O/N Type Map';
+	public $title = 'O/N Organization Type Map';
 	public $name = 'on_organization_type_map';
 	public $pk = ['on_orgtpmap_tenant_id', 'on_orgtpmap_organization_id', 'on_orgtpmap_type_code'];
 	public $tenant = true;

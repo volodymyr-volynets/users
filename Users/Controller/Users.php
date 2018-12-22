@@ -9,7 +9,7 @@ class Users extends \Object\Controller\Permission {
 		echo $form->render();
 	}
 	public function actionEdit() {
-		$form = new \Numbers\Users\Users\Form\Users([
+		$form = new \Numbers\Users\Users\Form\Collection\Users\Collection([
 			'input' => \Request::input()
 		]);
 		echo $form->render();

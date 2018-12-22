@@ -121,7 +121,7 @@ class Monitor {
 					];
 					// update history
 					if (!empty($v['history']) && !$history_added) {
-						$this->updateHistory($v['url'], \Application::$controller->title ?? '');
+						$this->updateHistory($v['url'] . '', \Application::$controller->title ?? '');
 						$history_added = true;
 					}
 				}

@@ -19,7 +19,8 @@ class WSDL {
 				'sm_resource_inactive' => 0
 			],
 			'columns' => ['sm_resource_id', 'sm_resource_code'],
-			'pk' => ['sm_resource_id']
+			'pk' => ['sm_resource_id'],
+			'skip_acl' => true,
 		]);
 		$all_apis = [];
 		$all_aliases = [];

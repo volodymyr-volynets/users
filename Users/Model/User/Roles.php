@@ -5,7 +5,7 @@ class Roles extends \Object\Table {
 	public $db_link;
 	public $db_link_flag;
 	public $module_code = 'UM';
-	public $title = 'U/M Roles';
+	public $title = 'U/M User Roles';
 	public $name = 'um_user_roles';
 	public $pk = ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'];
 	public $tenant = true;

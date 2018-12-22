@@ -16,6 +16,7 @@ class Groups extends \Object\Table {
 		'um_usrgrp_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_usrgrp_id' => ['name' => 'Group #', 'domain' => 'group_id_sequence'],
 		'um_usrgrp_name' => ['name' => 'Name', 'domain' => 'name'],
+		'um_usrgrp_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'um_usrgrp_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

@@ -18,7 +18,7 @@ class Locations extends \Object\Table {
 		'on_location_id' => ['name' => 'Location #', 'domain' => 'location_id_sequence'],
 		'on_location_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_location_name' => ['name' => 'Name', 'domain' => 'name'],
-		'on_location_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Organizations\Model\Location\Types'],
+		'on_location_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		// contact
 		'on_location_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],
 		'on_location_email2' => ['name' => 'Secondary Email', 'domain' => 'email', 'null' => true],
@@ -26,6 +26,11 @@ class Locations extends \Object\Table {
 		'on_location_phone2' => ['name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true],
 		'on_location_cell' => ['name' => 'Cell Phone', 'domain' => 'phone', 'null' => true],
 		'on_location_fax' => ['name' => 'Fax', 'domain' => 'phone', 'null' => true],
+		'on_location_alternative_contact' => ['name' => 'Alternative Contact', 'domain' => 'description', 'null' => true],
+		// about
+		'on_location_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true],
+		'on_location_about_nickname' => ['name' => 'About Nickname', 'domain' => 'name', 'null' => true],
+		'on_location_about_description' => ['name' => 'About Description', 'domain' => 'description', 'null' => true],
 		// primary address
 		'on_location_address_line1' => ['name' => 'Address Line 1', 'domain' => 'name'],
 		'on_location_address_line2' => ['name' => 'Address Line 2', 'domain' => 'name', 'null' => true],
@@ -37,20 +42,22 @@ class Locations extends \Object\Table {
 		'on_location_longitude' => ['name' => 'Longitude', 'domain' => 'geo_coordinate'],
 		// organization
 		'on_location_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
+		'on_location_customer_organization_id' => ['name' => 'Customer Organization #', 'domain' => 'organization_id', 'null' => true],
+		'on_location_number' => ['name' => 'Location Number', 'domain' => 'location_number'],
 		'on_location_brand_id' => ['name' => 'Brand #', 'domain' => 'brand_id'],
 		'on_location_district_id' => ['name' => 'District #', 'domain' => 'district_id'],
 		'on_location_market_id' => ['name' => 'Market #', 'domain' => 'market_id'],
 		'on_location_region_id' => ['name' => 'Region #', 'domain' => 'region_id'],
-		'on_location_item_master_id' => ['name' => 'Item Master #', 'domain' => 'item_master_id'],
-		// logo
-		'on_location_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true],
+		'on_location_item_master_id' => ['name' => 'Item Master #', 'domain' => 'item_master_id', 'null' => true],
+		'on_location_construction_date' => ['name' => 'Construction Date', 'type' => 'date', 'null' => true],
 		// inactive & hold
 		'on_location_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'on_location_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'on_locations_pk' => ['type' => 'pk', 'columns' => ['on_location_tenant_id', 'on_location_id']],
-		'on_location_code_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_code']],
+		'on_location_code_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_organization_id', 'on_location_number']],
+		'on_location_number_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_code']],
 		'on_location_item_master_id_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_id', 'on_location_item_master_id']],
 		'on_location_organization_id_fk' => [
 			'type' => 'fk',
@@ -102,6 +109,7 @@ class Locations extends \Object\Table {
 	public $optimistic_lock = true;
 	public $options_map = [
 		'on_location_name' => 'name',
+		'on_location_icon' => 'icon_class',
 		'on_location_logo_file_id' => 'photo_id',
 		'on_location_inactive' => 'inactive'
 	];
@@ -117,7 +125,8 @@ class Locations extends \Object\Table {
 	public $cache_memory = false;
 
 	public $who = [
-		'inserted' => true
+		'inserted' => true,
+		'updated' => true
 	];
 
 	public $addresses = [
@@ -131,6 +140,20 @@ class Locations extends \Object\Table {
 		'map' => [
 			'on_location_tenant_id' => 'wg_attribute_tenant_id',
 			'on_location_id' => 'wg_attribute_location_id'
+		]
+	];
+
+	public $comments = [
+		'map' => [
+			'on_location_tenant_id' => 'wg_comment_tenant_id',
+			'on_location_id' => 'wg_comment_location_id'
+		]
+	];
+
+	public $documents = [
+		'map' => [
+			'on_location_tenant_id' => 'wg_document_tenant_id',
+			'on_location_id' => 'wg_document_location_id'
 		]
 	];
 

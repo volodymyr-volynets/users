@@ -60,7 +60,7 @@ class Types extends \Object\Table {
 	/**
 	 * @see $this->options()
 	 */
-	public function optionsGroupped(array $options = []) {
+	public function optionsGrouped($options = []) {
 		$options['options_map'] = [
 			'on_orgtype_name' => 'name',
 			'on_orgtype_parent_type_code' => 'parent'

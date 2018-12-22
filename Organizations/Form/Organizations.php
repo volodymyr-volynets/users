@@ -22,21 +22,15 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'logo_container' => ['default_row_type' => 'grid', 'order' => 32200],
-		'children_container' => [
-			'type' => 'details',
-			'details_rendering_type' => 'table',
-			'details_new_rows' => 1,
-			'details_key' => '\Numbers\Users\Organizations\Model\Organization\Children',
-			'details_pk' => ['on_orgchl_child_organization_id'],
-			'order' => 35000
-		],
+		'operating_container' => ['default_row_type' => 'grid', 'order' => 32201, 'acl_subresource_edit' => ['ON::ORG_OPERATING']],
 		'business_hours_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
 			'details_key' => '\Numbers\Users\Organizations\Model\Organization\BusinessHours',
 			'details_pk' => ['on_orgbhour_day_id'],
-			'order' => 35000
+			'order' => 35000,
+			'acl_subresource_edit' => ['ON::ORG_BUSINESS_HOURS']
 		],
 	];
 	public $rows = [
@@ -46,11 +40,11 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		],
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
-			'children' => ['order' => 200, 'label_name' => 'Children'],
-			'logo' => ['order' => 300, 'label_name' => 'Logo'],
-			'business_hours' => ['order' => 400, 'label_name' => 'Business Hours'],
-			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
-			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA,
+			'logo' => ['order' => 300, 'label_name' => 'About'],
+			'operating' => ['order' => 350, 'label_name' => 'Operations', 'acl_subresource_hide' => ['ON::ORG_OPERATING']],
+			'business_hours' => ['order' => 400, 'label_name' => 'Business Hours', 'acl_subresource_hide' => ['ON::ORG_BUSINESS_HOURS']],
+			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA  + ['acl_subresource_hide' => ['ON::ORG_ADDRESSES']],
+			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA  + ['acl_subresource_hide' => ['ON::ORG_ATTRIBUTES']],
 		]
 	];
 	public $elements = [
@@ -68,31 +62,28 @@ class Organizations extends \Object\Form\Wrapper\Base {
 				'general' => ['container' => 'general_container', 'order' => 100],
 				'contact' => ['container' => 'contact_container', 'order' => 200]
 			],
-			'children' => [
-				'children' => ['container' => 'children_container', 'order' => 100]
-			],
 			'logo' => [
 				'logo' => ['container' => 'logo_container', 'order' => 100]
+			],
+			'operating' => [
+				'operating' => ['container' => 'operating_container', 'order' => 100]
 			],
 			'business_hours' => [
 				'business_hours' => ['container' => 'business_hours_container', 'order' => 100]
 			]
 		],
 		'general_container' => [
-			'um_user_type_id' => [
-				'\Numbers\Users\Organizations\Model\Organization\Type\Map' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Types', 'domain' => 'type_code', 'null' => true, 'multiple_column' => 'on_orgtpmap_type_code', 'percent' => 90, 'method' => 'multiselect', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Types::optionsGroupped'],
+			'type' => [
+				'\Numbers\Users\Organizations\Model\Organization\Type\Map' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization Type(s)', 'domain' => 'type_code', 'null' => true, 'multiple_column' => 'on_orgtpmap_type_code', 'percent' => 90, 'method' => 'multiselect', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Types::optionsGrouped'],
 				'on_organization_hold' => ['order' => 3, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
 				'on_organization_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
+			'on_organization_subtype_id' => [
+				'on_organization_subtype_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Subtype', 'domain' => 'type_id', 'null' => true, 'default' => 10, 'required' => true, 'percent' => 50, 'placeholder' => 'Subtype', 'method' => 'select', 'no_choose' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Subtypes'],
+				'on_organization_parent_organization_id' => ['order' => 1, 'label_name' => 'Parent Organization', 'domain' => 'organization_id', 'null' => true, 'required' => 'c', 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_depends' => ['on_organization_id;<>' => 'parent::on_organization_id'], 'options_params' => ['on_organization_subtype_id' => 10], 'options_options' => ['skip_acl' => true]],
+			],
 			'on_organization_icon' => [
-				'on_organization_icon' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
-			],
-			'separator_1' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 300, 'label_name' => 'Operating Location', 'icon' => 'far fa-flag', 'percent' => 100],
-			],
-			'on_organization_operating_country_code' => [
-				'on_organization_operating_country_code' => ['order' => 1, 'row_order' => 350, 'label_name' => 'Operating Country', 'domain' => 'country_code', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
-				'on_organization_operating_province_code' => ['order' => 2, 'label_name' => 'Operating Province', 'domain' => 'province_code', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'on_organization_operating_country_code']],
+				'on_organization_icon' => ['order' => 1, 'row_order' => 250, 'label_name', 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
 			],
 			'separator_2' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'far fa-envelope', 'percent' => 100],
@@ -108,23 +99,34 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			'on_organization_cell' => [
 				'on_organization_cell' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
 				'on_organization_fax' => ['order' => 2, 'label_name' => 'Fax', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+			],
+			'on_organization_alternative_contact' => [
+				'on_organization_alternative_contact' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Alternative Contact', 'domain' => 'description', 'null' => true, 'percent' => 100, 'method' => 'textarea'],
+			],
+		],
+		'operating_container' => [
+			'on_organization_operating_country_code' => [
+				'on_organization_operating_country_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Operating Country', 'domain' => 'country_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
+				'on_organization_operating_province_code' => ['order' => 2, 'label_name' => 'Operating Province', 'domain' => 'province_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'on_organization_operating_country_code']],
+			],
+			'on_organization_operating_currency_code' => [
+				'on_organization_operating_currency_code' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Operating Currency Code', 'domain' => 'currency_code', 'null' => true, 'required' => 'c', 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Currencies\Model\Currencies::optionsActive'],
+				'on_organization_operating_currency_type' => ['order' => 2, 'label_name' => 'Operating Currency Type', 'domain' => 'currency_type', 'null' => true, 'required' => 'c', 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Currencies\Model\Types::optionsActive'],
 			]
 		],
 		'logo_container' => [
 			'__logo_upload' => [
-				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Logo', 'type' => 'mixed', 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '200x80', 'thumbnail_size' => '125x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 200x80.'],
+				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Logo', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '200x80', 'thumbnail_size' => '125x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 200x80.'],
+				'__logo_preview' => ['order' => 2, 'label_name' => 'Preview Logo', 'percent' => 50, 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'on_organization_logo_file_id'],
 			],
-			'__logo_preview' => [
-				'__logo_preview' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Preview Logo', 'custom_renderer' => '\Numbers\Users\Documents\Base\Helper\Preview::renderPreview', 'preview_file_id' => 'on_organization_logo_file_id'],
+			'on_organization_about_nickname' => [
+				'on_organization_about_nickname' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Nickname', 'domain' => 'name', 'null' => true, 'percent' => 100],
+			],
+			'on_organization_about_description' => [
+				'on_organization_about_description' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Description', 'domain' => 'description', 'null' => true, 'percent' => 100, 'method' => 'textarea'],
 			],
 			self::HIDDEN => [
 				'on_organization_logo_file_id' => ['label_name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
-			]
-		],
-		'children_container' => [
-			'row1' => [
-				'on_orgchl_child_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => false, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive', 'onchange' => 'this.form.submit();'],
-				'on_orgchl_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'business_hours_container' => [
@@ -152,12 +154,6 @@ class Organizations extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['on_organization_tenant_id' => 'on_orgtpmap_tenant_id', 'on_organization_id' => 'on_orgtpmap_organization_id']
 			],
-			'\Numbers\Users\Organizations\Model\Organization\Children' => [
-				'name' => 'Children',
-				'pk' => ['on_orgchl_tenant_id', 'on_orgchl_parent_organization_id', 'on_orgchl_child_organization_id'],
-				'type' => '1M',
-				'map' => ['on_organization_tenant_id' => 'on_orgchl_tenant_id', 'on_organization_id' => 'on_orgchl_parent_organization_id'],
-			],
 			'\Numbers\Users\Organizations\Model\Organization\BusinessHours' => [
 				'name' => 'Business Hours',
 				'pk' => ['on_orgbhour_tenant_id', 'on_orgbhour_organization_id', 'on_orgbhour_day_id'],
@@ -168,6 +164,19 @@ class Organizations extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
+		// customer organization
+		if ($form->values['on_organization_subtype_id'] == 20) {
+			if (empty($form->values['on_organization_operating_currency_code'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_organization_operating_currency_code');
+			}
+			if (empty($form->values['on_organization_operating_currency_type'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_organization_operating_currency_type');
+			}
+			if (empty($form->values['on_organization_parent_organization_id'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_organization_parent_organization_id');
+			}
+		}
+		// logo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
 			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];
 			$model = new \Numbers\Users\Documents\Base\Base();

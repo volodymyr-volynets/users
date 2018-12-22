@@ -8,11 +8,26 @@ class Files extends \Object\Validator\Base {
 	 */
 	public function validate($value, $options = []) {
 		$result = $this->result;
-		if (is_null($value)) {
+		if (is_null($value) || empty($value)) {
 			$result['success'] = true;
 			return $result;
 		}
 		$model = new \Numbers\Users\Documents\Base\Helper\Validate();
+		// if we have multiple files
+		if (!isset($value['tmp_name'])) {
+			foreach ($value as $v) {
+				if (empty($v['tmp_name'])) continue;
+				$upload_result = $model->validateUploadedFile($v, $options['types'] ?? []);
+				if (!$upload_result['success']) {
+					$result['error'][] = $upload_result['error'];
+					return $result;
+				}
+			}
+			$result['success'] = true;
+			$result['data'] = $value;
+			return $result;
+		}
+		// single file upload
 		$upload_result = $model->validateUploadedFile($value, $options['types'] ?? []);
 		if (!$upload_result['success']) {
 			$result['error'][] = $upload_result['error'];

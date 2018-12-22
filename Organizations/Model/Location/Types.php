@@ -2,15 +2,16 @@
 
 namespace Numbers\Users\Organizations\Model\Location;
 class Types extends \Object\Data {
-	public $column_key = 'on_loctype_id';
+	public $column_key = 'on_loctype_code';
 	public $column_prefix = 'on_loctype_';
 	public $columns = [
-		'on_loctype_id' => ['name' => 'Type #', 'domain' => 'type_id'],
+		'on_loctype_code' => ['name' => 'Type #', 'domain' => 'type_code'],
 		'on_loctype_name' => ['name' => 'Name', 'type' => 'text']
 	];
 	public $data = [
-		10 => ['on_loctype_name' => 'Warehouse'],
-		20 => ['on_loctype_name' => 'Distribution Center'],
-		30 => ['on_loctype_name' => 'Store'],
+		'WAREHOUSE' => ['on_loctype_name' => 'Warehouse'],
+		'DIST_CENTER' => ['on_loctype_name' => 'Distribution Center'],
+		'STORE' => ['on_loctype_name' => 'Store'],
+		'SERVICE_LOC' => ['on_loctype_name' => 'Service Location'],
 	];
 }
