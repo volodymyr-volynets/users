@@ -50,7 +50,7 @@ class OrganizationAccessReport extends \Object\Form\Wrapper\Report {
 	];
 	const REPORT_SORT_OPTIONS = [
 		'um_user_id' => ['name' => 'User #'],
-		'um_user_name' => ['name' => 'User Name'],
+		'um_user_name' => ['name' => 'Name'],
 	];
 	public $report_default_sort = [
 		'um_user_id' => SORT_ASC

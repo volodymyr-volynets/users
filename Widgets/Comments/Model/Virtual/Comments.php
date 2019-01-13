@@ -80,6 +80,8 @@ class Comments extends \Object\Table {
 		$this->processWhoColumns(['inserted'], $data);
 		$data['wg_comment_id'] = $this->sequence('wg_comment_id');
 		$data['wg_comment_tenant_id'] = \Tenant::id();
-		return $this->db_object->insert($this->full_table_name, [$data]);
+		$result = $this->db_object->insert($this->full_table_name, [$data]);
+		$this->resetCache(); // reset cache tags
+		return $result;
 	}
 }

@@ -60,12 +60,27 @@
 }
 
 /* Dashboard */
+.numbers_postlogin_dashboard_content_div {
+	float: left;
+	width: 25%;
+}
+.numbers_postlogin_dashboard_content_inner {
+	margin-left: 2em;
+	font-size: 0.75em;
+}
+.numbers_postlogin_dashboard_content_inner a {
+	color: black;
+}
 .numbers_postlogin_dashboard_div {
 	text-align: center;
-	height: 5em;
+	height: 7em;
 	overflow: hidden;
-	font-size: 0.6rem;
+	font-size: 0.75em;
 }
 .numbers_postlogin_dashboard_icon {
 	font-size: 2em;
+}
+.numbers_postlogin_dashboard_no_margin {
+	padding: 0;
+	margin: 0;
 }

@@ -1,10 +1,10 @@
 <?php
 
 namespace Numbers\Users\Users\Form\Report\Security;
-class RoleSetupReport extends \Object\Form\Wrapper\Report {
-	public $form_link = 'um_role_setup_report';
+class TeamSetupReport extends \Object\Form\Wrapper\Report {
+	public $form_link = 'um_team_setup_report';
 	public $module_code = 'UM';
-	public $title = 'U/M Security Role Setup Report';
+	public $title = 'U/M Security Team Setup Report';
 	public $options = [
 		'segment' => self::SEGMENT_REPORT,
 		'actions' => [
@@ -34,10 +34,10 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 			]
 		],
 		'filter' => [
-			'date' => [
-				'um_role_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'role_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_role_id;>='],
-				'um_role_id2' => ['order' => 2, 'label_name' => 'Role #', 'domain' => 'role_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_role_id;<='],
-				'um_role_type_id1' => ['order' => 3, 'label_name' => 'Type', 'type' => 'type_id', 'percent' => 50, 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\Model\Role\Types', 'query_builder' => 'a.um_role_type_id;=']
+			'um_team_id' => [
+				'um_team_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team #', 'domain' => 'team_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_team_id;>='],
+				'um_team_id2' => ['order' => 2, 'label_name' => 'Team #', 'domain' => 'team_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.um_team_id;<='],
+				'um_team_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_team_inactive;=']
 			],
 			'include_users' => [
 				'include_users' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Include Users', 'type' => 'boolean']
@@ -52,11 +52,11 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 		self::REPORT_BUTTONS => self::REPORT_BUTTONS_DATA
 	];
 	const REPORT_SORT_OPTIONS = [
-		'um_role_id' => ['name' => 'Role #'],
-		'um_role_name' => ['name' => 'Name'],
+		'um_team_id' => ['name' => 'Role #'],
+		'um_team_name' => ['name' => 'Name'],
 	];
 	public $report_default_sort = [
-		'um_role_id' => SORT_ASC
+		'um_team_id' => SORT_ASC
 	];
 	public function buildReport(& $form) {
 		// create new report
@@ -64,17 +64,17 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 		$report->addReport(DEF, $form);
 		// add header
 		$report->addHeader(DEF, 'row1', [
-			'um_role_id' => ['label_name' => 'Role #', 'percent' => 10],
-			'um_role_name' => ['label_name' => 'Role Name', 'percent' => 50],
-			'um_role_global' => ['label_name' => 'Global', 'percent' => 15, 'data_align' => 'center'],
-			'um_role_super_admin' => ['label_name' => 'Super Admin', 'percent' => 15, 'data_align' => 'center'],
-			'um_role_inactive' => ['label_name' => 'Active', 'percent' => 10, 'data_align' => 'center'],
+			'um_team_id' => ['label_name' => 'Role #', 'percent' => 10],
+			'um_team_name' => ['label_name' => 'Role Name', 'percent' => 50],
+			'um_team_global' => ['label_name' => 'Global', 'percent' => 15, 'data_align' => 'center'],
+			'um_team_super_admin' => ['label_name' => 'Super Admin', 'percent' => 15, 'data_align' => 'center'],
+			'um_team_inactive' => ['label_name' => 'Active', 'percent' => 10, 'data_align' => 'center'],
 		]);
 		$report->addHeader(DEF, 'row2', [
 			'blank' => ['label_name' => ' ', 'percent' => 10],
-			'um_role_code' => ['label_name' => 'Role Code', 'percent' => 20],
-			'um_role_type_id' => ['label_name' => 'Type', 'percent' => 20],
-			'um_role_department_id' => ['label_name' => 'Department', 'percent' => 50]
+			'um_team_code' => ['label_name' => 'Role Code', 'percent' => 20],
+			'um_team_type_id' => ['label_name' => 'Type', 'percent' => 20],
+			'um_team_department_id' => ['label_name' => 'Department', 'percent' => 50]
 		]);
 		$report->addHeader(DEF, 'separator', [
 			'blank' => ['label_name' => ' ', 'percent' => 100]
@@ -94,7 +94,7 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 		$report->addHeader(DEF, 'inherits', [
 			'blank' => ['label_name' => '', 'percent' => 10],
 			'name' => ['label_name' => 'Inherited Roles:', 'percent' => 20],
-			'role_id' => ['label_name' => 'Role #', 'percent' => 10],
+			'team_id' => ['label_name' => 'Role #', 'percent' => 10],
 			'role_name' => ['label_name' => 'Role Name', 'percent' => 60],
 		],
 		[
@@ -151,18 +151,12 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 			'skip_rendering' => true
 		]);
 		// query the data
-		$query = \Numbers\Users\Users\Model\Roles::queryBuilderStatic()->select();
+		$query = \Numbers\Users\Users\Model\Teams::queryBuilderStatic()->select();
 		$query->columns([
-			'um_role_id' => 'a.um_role_id',
-			'um_role_code' => 'a.um_role_code',
-			'um_role_type_id' => 'a.um_role_type_id',
-			'um_role_department_id' => 'a.um_role_department_id',
-			'um_role_name' => 'a.um_role_name',
-			'um_role_global' => 'a.um_role_global',
-			'um_role_super_admin' => 'a.um_role_super_admin',
-			'um_role_inactive' => 'a.um_role_inactive',
+			'um_team_id' => 'a.um_team_id',
+			'um_team_name' => 'a.um_team_name',
+			'um_team_inactive' => 'a.um_team_inactive',
 			'organizations' => 'b.organizations',
-			'inherits' => 'c.inherits',
 			'permissions' => 'd.permissions',
 			'notifications' => 'e.notifications',
 			'subresources' => 'f.subresources',
@@ -175,125 +169,105 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 		}
 		// join organizations
 		$query->join('LEFT', function (& $query) {
-			$query = \Numbers\Users\Users\Model\Role\Organizations::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query = \Numbers\Users\Users\Model\Team\Organizations::queryBuilderStatic(['alias' => 'inner_a'])->select();
 			$query->columns([
-				'inner_a.um_rolorg_role_id',
-				'organizations' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_rolorg_organization_id)", 'delimiter' => ';;'])
+				'inner_a.um_temorg_team_id',
+				'organizations' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_temorg_organization_id)", 'delimiter' => ';;'])
 			]);
 			// join
 			$query->join('INNER', new \Numbers\Users\Organizations\Model\Organizations(), 'inner_b', 'ON', [
-				['AND', ['inner_a.um_rolorg_organization_id', '=', 'inner_b.on_organization_id', true], false]
+				['AND', ['inner_a.um_temorg_organization_id', '=', 'inner_b.on_organization_id', true], false]
 			]);
-			$query->groupby(['inner_a.um_rolorg_role_id']);
-			$query->where('AND', ['inner_a.um_rolorg_inactive', '=', 0]);
+			$query->groupby(['inner_a.um_temorg_team_id']);
+			$query->where('AND', ['inner_a.um_temorg_inactive', '=', 0]);
 			$query->where('AND', ['inner_b.on_organization_inactive', '=', 0]);
 		}, 'b', 'ON', [
-			['AND', ['a.um_role_id', '=', 'b.um_rolorg_role_id', true], false]
-		]);
-		// join children
-		$query->join('LEFT', function (& $query) {
-			$query = \Numbers\Users\Users\Model\Role\Children::queryBuilderStatic(['alias' => 'inner_a'])->select();
-			$query->columns([
-				'inner_a.um_rolrol_child_role_id',
-				'inherits' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_rolrol_parent_role_id)", 'delimiter' => ';;'])
-			]);
-			// join
-			$query->join('INNER', new \Numbers\Users\Users\Model\Roles(), 'inner_b', 'ON', [
-				['AND', ['inner_a.um_rolrol_parent_role_id', '=', 'inner_b.um_role_id', true], false]
-			]);
-			$query->groupby(['inner_a.um_rolrol_child_role_id']);
-			$query->where('AND', ['inner_a.um_rolrol_inactive', '=', 0]);
-			$query->where('AND', ['inner_b.um_role_inactive', '=', 0]);
-		}, 'c', 'ON', [
-			['AND', ['a.um_role_id', '=', 'c.um_rolrol_child_role_id', true], false]
+			['AND', ['a.um_team_id', '=', 'b.um_temorg_team_id', true], false]
 		]);
 		// join permissions
 		$query->join('LEFT', function (& $query) {
-			$query = \Numbers\Users\Users\Model\Role\Permission\Actions::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query = \Numbers\Users\Users\Model\Team\Permission\Actions::queryBuilderStatic(['alias' => 'inner_a'])->select();
 			$query->columns([
-				'inner_a.um_rolperaction_role_id',
-				'permissions' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_rolperaction_module_id, inner_a.um_rolperaction_resource_id, inner_a.um_rolperaction_action_id)", 'delimiter' => ';;'])
+				'inner_a.um_temperaction_team_id',
+				'permissions' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_temperaction_module_id, inner_a.um_temperaction_resource_id, inner_a.um_temperaction_action_id)", 'delimiter' => ';;'])
 			]);
-			$query->join('INNER', new \Numbers\Users\Users\Model\Role\Permissions(), 'inner_b', 'ON', [
-				['AND', ['inner_a.um_rolperaction_role_id', '=', 'inner_b.um_rolperm_role_id', true], false],
-				['AND', ['inner_a.um_rolperaction_module_id', '=', 'inner_b.um_rolperm_module_id', true], false],
-				['AND', ['inner_a.um_rolperaction_resource_id', '=', 'inner_b.um_rolperm_resource_id', true], false]
+			$query->join('INNER', new \Numbers\Users\Users\Model\Team\Permissions(), 'inner_b', 'ON', [
+				['AND', ['inner_a.um_temperaction_team_id', '=', 'inner_b.um_temperm_team_id', true], false],
+				['AND', ['inner_a.um_temperaction_module_id', '=', 'inner_b.um_temperm_module_id', true], false],
+				['AND', ['inner_a.um_temperaction_resource_id', '=', 'inner_b.um_temperm_resource_id', true], false]
 			]);
-			$query->groupby(['inner_a.um_rolperaction_role_id']);
-			$query->where('AND', ['inner_a.um_rolperaction_inactive', '=', 0]);
-			$query->where('AND', ['inner_b.um_rolperm_inactive', '=', 0]);
+			$query->groupby(['inner_a.um_temperaction_team_id']);
+			$query->where('AND', ['inner_a.um_temperaction_inactive', '=', 0]);
+			$query->where('AND', ['inner_b.um_temperm_inactive', '=', 0]);
 		}, 'd', 'ON', [
-			['AND', ['a.um_role_id', '=', 'd.um_rolperaction_role_id', true], false]
+			['AND', ['a.um_team_id', '=', 'd.um_temperaction_team_id', true], false]
 		]);
 		// join notifications
 		$query->join('LEFT', function (& $query) {
-			$query = \Numbers\Users\Users\Model\Role\Notifications::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query = \Numbers\Users\Users\Model\Team\Notifications::queryBuilderStatic(['alias' => 'inner_a'])->select();
 			$query->columns([
-				'inner_a.um_rolnoti_role_id',
-				'notifications' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('**', inner_a.um_rolnoti_module_id, inner_a.um_rolnoti_feature_code)", 'delimiter' => ';;'])
+				'inner_a.um_temnoti_team_id',
+				'notifications' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('**', inner_a.um_temnoti_module_id, inner_a.um_temnoti_feature_code)", 'delimiter' => ';;'])
 			]);
-			$query->groupby(['inner_a.um_rolnoti_role_id']);
-			$query->where('AND', ['inner_a.um_rolnoti_inactive', '=', 0]);
+			$query->groupby(['inner_a.um_temnoti_team_id']);
+			$query->where('AND', ['inner_a.um_temnoti_inactive', '=', 0]);
 		}, 'e', 'ON', [
-			['AND', ['a.um_role_id', '=', 'e.um_rolnoti_role_id', true], false]
+			['AND', ['a.um_team_id', '=', 'e.um_temnoti_team_id', true], false]
 		]);
 		// join features
 		$query->join('LEFT', function (& $query) {
-			$query = \Numbers\Users\Users\Model\Role\Features::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query = \Numbers\Users\Users\Model\Team\Features::queryBuilderStatic(['alias' => 'inner_a'])->select();
 			$query->columns([
-				'inner_a.um_rolfeature_role_id',
-				'features' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('**', inner_a.um_rolfeature_module_id, inner_a.um_rolfeature_feature_code)", 'delimiter' => ';;'])
+				'inner_a.um_temfeature_team_id',
+				'features' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('**', inner_a.um_temfeature_module_id, inner_a.um_temfeature_feature_code)", 'delimiter' => ';;'])
 			]);
-			$query->groupby(['inner_a.um_rolfeature_role_id']);
-			$query->where('AND', ['inner_a.um_rolfeature_inactive', '=', 0]);
+			$query->groupby(['inner_a.um_temfeature_team_id']);
+			$query->where('AND', ['inner_a.um_temfeature_inactive', '=', 0]);
 		}, 'g', 'ON', [
-			['AND', ['a.um_role_id', '=', 'g.um_rolfeature_role_id', true], false]
+			['AND', ['a.um_team_id', '=', 'g.um_temfeature_team_id', true], false]
 		]);
 		// join subresources
 		$query->join('LEFT', function (& $query) {
-			$query = \Numbers\Users\Users\Model\Role\Permission\Subresources::queryBuilderStatic(['alias' => 'inner_a'])->select();
+			$query = \Numbers\Users\Users\Model\Team\Permission\Subresources::queryBuilderStatic(['alias' => 'inner_a'])->select();
 			$query->columns([
-				'inner_a.um_rolsubres_role_id',
-				'subresources' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_rolsubres_module_id, inner_a.um_rolsubres_resource_id, inner_a.um_rolsubres_action_id, inner_a.um_rolsubres_rsrsubres_id)", 'delimiter' => ';;'])
+				'inner_a.um_temsubres_team_id',
+				'subresources' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_temsubres_module_id, inner_a.um_temsubres_resource_id, inner_a.um_temsubres_action_id, inner_a.um_temsubres_rsrsubres_id)", 'delimiter' => ';;'])
 			]);
-			$query->join('INNER', new \Numbers\Users\Users\Model\Role\Permissions(), 'inner_b', 'ON', [
-				['AND', ['inner_a.um_rolsubres_role_id', '=', 'inner_b.um_rolperm_role_id', true], false],
-				['AND', ['inner_a.um_rolsubres_module_id', '=', 'inner_b.um_rolperm_module_id', true], false],
-				['AND', ['inner_a.um_rolsubres_resource_id', '=', 'inner_b.um_rolperm_resource_id', true], false]
+			$query->join('INNER', new \Numbers\Users\Users\Model\Team\Permissions(), 'inner_b', 'ON', [
+				['AND', ['inner_a.um_temsubres_team_id', '=', 'inner_b.um_temperm_team_id', true], false],
+				['AND', ['inner_a.um_temsubres_module_id', '=', 'inner_b.um_temperm_module_id', true], false],
+				['AND', ['inner_a.um_temsubres_resource_id', '=', 'inner_b.um_temperm_resource_id', true], false]
 			]);
-			$query->groupby(['inner_a.um_rolsubres_role_id']);
-			$query->where('AND', ['inner_a.um_rolsubres_inactive', '=', 0]);
-			$query->where('AND', ['inner_b.um_rolperm_inactive', '=', 0]);
+			$query->groupby(['inner_a.um_temsubres_team_id']);
+			$query->where('AND', ['inner_a.um_temsubres_inactive', '=', 0]);
+			$query->where('AND', ['inner_b.um_temperm_inactive', '=', 0]);
 		}, 'f', 'ON', [
-			['AND', ['a.um_role_id', '=', 'f.um_rolsubres_role_id', true], false]
+			['AND', ['a.um_team_id', '=', 'f.um_temsubres_team_id', true], false]
 		]);
 		// include users
 		if (!empty($form->values['include_users'])) {
 			$query->join('LEFT', function (& $query) {
-				$query = \Numbers\Users\Users\Model\User\Roles::queryBuilderStatic(['alias' => 'inner_a'])->select();
+				$query = \Numbers\Users\Users\Model\Team\Map::queryBuilderStatic(['alias' => 'inner_a'])->select();
 				$query->columns([
-					'inner_a.um_usrrol_role_id',
-					'users' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_usrrol_user_id, inner_a.um_usrrol_inserted_timestamp, COALESCE(inner_a.um_usrrol_inserted_user_id, 0))", 'delimiter' => ';;'])
+					'inner_a.um_usrtmmap_team_id',
+					'users' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_usrtmmap_user_id, inner_a.um_usrtmmap_inserted_timestamp, COALESCE(inner_a.um_usrtmmap_inserted_user_id, 0))", 'delimiter' => ';;'])
 				]);
 				// join
 				$query->join('INNER', new \Numbers\Users\Users\Model\Users(), 'inner_b', 'ON', [
-					['AND', ['inner_a.um_usrrol_user_id', '=', 'inner_b.um_user_id', true], false]
+					['AND', ['inner_a.um_usrtmmap_user_id', '=', 'inner_b.um_user_id', true], false]
 				]);
-				$query->groupby(['inner_a.um_usrrol_role_id']);
-				$query->where('AND', ['inner_a.um_usrrol_inactive', '=', 0]);
+				$query->groupby(['inner_a.um_usrtmmap_team_id']);
+				$query->where('AND', ['inner_a.um_usrtmmap_inactive', '=', 0]);
 				$query->where('AND', ['inner_b.um_user_inactive', '=', 0]);
 			}, 'u', 'ON', [
-				['AND', ['a.um_role_id', '=', 'u.um_usrrol_role_id', true], false]
+				['AND', ['a.um_team_id', '=', 'u.um_usrtmmap_team_id', true], false]
 			]);
 		}
 		$form->processReportQueryFilter($query);
 		$form->processReportQueryOrderBy($query);
 		$data = $query->query(null, ['cache' => false]);
 		// preload models
-		$types = \Numbers\Users\Users\Model\Role\Types::optionsStatic(['i18n' => true]);
-		$departments = \Numbers\Users\Organizations\Model\Departments::optionsStatic(['i18n' => true]);
 		$organizations = \Numbers\Users\Organizations\Model\Organizations::optionsStatic(['i18n' => true]);
-		$roles = \Numbers\Users\Users\Model\Roles::optionsStatic(['i18n' => true]);
 		$modules = \Numbers\Tenants\Tenants\Model\Modules::optionsStatic(['i18n' => true]);
 		$resources = \Numbers\Backend\System\Modules\Model\Resources::optionsStatic(['i18n' => true]);
 		$actions = \Numbers\Backend\System\Modules\Model\Resource\Actions::optionsStatic(['i18n' => true]);
@@ -304,13 +278,9 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 		$counter = 1;
 		foreach ($data['rows'] as $k => $v) {
 			// replaces
-			$role_id = $v['um_role_id'];
-			$v['um_role_id'] = ['value' => \Format::id($v['um_role_id']), 'url' => \Request::buildURL('/Numbers/Users/Users/Controller/Roles/_Edit', ['um_role_id' => $v['um_role_id']])];
-			$v['um_role_global'] = \Object\Content\Messages::active($v['um_role_global']);
-			$v['um_role_super_admin'] = \Object\Content\Messages::active($v['um_role_super_admin']);
-			$v['um_role_inactive'] = \Object\Content\Messages::active($v['um_role_inactive'], true);
-			$v['um_role_type_id'] = $types[$v['um_role_type_id']]['name'];
-			$v['um_role_department_id'] = $departments[$v['um_role_department_id']]['name'] ?? null;
+			$team_id = $v['um_team_id'];
+			$v['um_team_id'] = ['value' => \Format::id($v['um_team_id']), 'url' => \Request::buildURL('/Numbers/Users/Users/Controller/Roles/_Edit', ['um_team_id' => $v['um_team_id']])];
+			$v['um_team_inactive'] = \Object\Content\Messages::active($v['um_team_inactive'], true);
 			// add data
 			$even = $counter % 2 ? ODD : EVEN;
 			$report->addData(DEF, 'row1', $even, $v);
@@ -325,22 +295,6 @@ class RoleSetupReport extends \Object\Form\Wrapper\Report {
 					$report->addData(DEF, 'organizations', $even, [
 						'organization_id' => $v0,
 						'organization_name' => $organizations[(int) $v0]['name']
-					], [
-						'cell_even' => $counter2 % 2 ? ODD : EVEN
-					]);
-					$counter2++;
-				}
-			}
-			// inherits
-			if (!empty($v['inherits'])) {
-				$report->addData(DEF, 'separator', $even, ['blank' => ' ']);
-				$report->addData(DEF, 'inherits', $even, $report->getHeaderForRender(DEF, 'inherits'));
-				$temp = explode(';;', $v['inherits']);
-				$counter2 = $even + 1;
-				foreach ($temp as $v0) {
-					$report->addData(DEF, 'inherits', $even, [
-						'role_id' => $v0,
-						'role_name' => $roles[(int) $v0]['name']
 					], [
 						'cell_even' => $counter2 % 2 ? ODD : EVEN
 					]);

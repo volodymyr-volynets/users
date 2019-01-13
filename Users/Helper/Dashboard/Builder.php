@@ -7,9 +7,10 @@ class Builder {
 	 * Render
 	 */
 	public function render() {
+		\Layout::addCss('/numbers/media_submodules/Numbers_Users_Users_Media_CSS_Base.css');
 		$grid = [
 			'options' => [],
-			'cell_class' => 'col-sm-'
+			'cell_class' => 'numbers_postlogin_dashboard_no_margin col-sm-'
 		];
 		$flag_have_access = false;
 		foreach ($this->data as $k => $v) {
@@ -37,13 +38,20 @@ class Builder {
 				$grid['options'][$k][$k2][$k2] = [
 					'value' => $name,
 					'options' => [
-						'percent' => 100 / 6
+						'percent' => 100 / 12
 					]
 				];
 			}
 		}
 		if (!$flag_have_access) return '';
-		return \HTML::grid($grid);
+		return \HTML::segment([
+			'type' => 'primary',
+			'header' => [
+				'icon' => ['type' => 'sign-out'],
+				'title' => i18n(null, 'Dashboard:')
+			],
+			'value' => \HTML::grid($grid),
+		]);
 	}
 
 	/**

@@ -121,7 +121,7 @@ class Documents extends \Object\Form\Wrapper\List2 {
 
 	public function refresh(& $form) {
 		// user can add new documents if he has subresource permission
-		if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_New')) {
+		if ((!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_New')) || empty($form->options['acl_subresource_edit'])) {
 			$form->options['actions']['new'] = [
 				'onclick' => 'Numbers.Modal.show(\'form_wg_documents_modal_new_file_dialog\');',
 				'href' => 'javascript:void(0);'

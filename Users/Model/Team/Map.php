@@ -47,6 +47,11 @@ class Map extends \Object\Table {
 	public $cache_tags = [];
 	public $cache_memory = false;
 
+	public $who = [
+		'inserted' => true,
+		'updated' => true
+	];
+
 	public $data_asset = [
 		'classification' => 'client_confidential',
 		'protection' => 2,

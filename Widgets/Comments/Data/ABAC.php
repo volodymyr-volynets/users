@@ -32,7 +32,7 @@ class ABAC extends \Object\Import {
 				[
 					'sm_abacattr_id' => '::id::um_notetemplate_organization_id',
 					'sm_abacattr_code' => 'um_notetemplate_organization_id',
-					'sm_abacattr_name' => 'U/M Catalog Organization #',
+					'sm_abacattr_name' => 'U/M Comment Template Organization #',
 					'sm_abacattr_module_code' => 'UM',
 					'sm_abacattr_parent_abacattr_id' => '::id::on_organization_id',
 					'sm_abacattr_tenant' => 1,

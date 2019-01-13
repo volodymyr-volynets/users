@@ -29,7 +29,8 @@ class Templates extends \Object\Form\Wrapper\Base {
 				'um_notetemplate_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
 			],
 			'um_notetemplate_organization_id' => [
-				'um_notetemplate_organization_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],
+				'um_notetemplate_organization_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10]],
+				'um_notetemplate_type_id' => ['order' => 2, 'label_name' => 'Type', 'domain' => 'type_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Widgets\Comments\Model\Template\Types'],
 			],
 			'um_notetemplate_template' => [
 				'um_notetemplate_template' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Template', 'domain' => 'comment', 'percent' => 100, 'required' => true, 'method' => 'textarea', 'rows' => 10, 'placeholder' => 'Template'],

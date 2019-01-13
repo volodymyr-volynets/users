@@ -35,8 +35,8 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 		],
 		'filter' => [
 			'date' => [
-				'sm_resource_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource #', 'domain' => 'resource_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_resource_id;>='],
-				'sm_resource_id2' => ['order' => 2, 'label_name' => 'Resource #', 'domain' => 'resource_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.sm_resource_id;<='],
+				'sm_resource_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource #', 'domain' => 'resource_id', 'percent' => 25, 'null' => true, 'default' => null, 'query_builder' => 'a.sm_resource_id;>='],
+				'sm_resource_id2' => ['order' => 2, 'label_name' => 'Resource #', 'domain' => 'resource_id', 'percent' => 25, 'null' => true, 'default' => null, 'query_builder' => 'a.sm_resource_id;<='],
 				'sm_resource_module_code1' => ['order' => 3, 'label_name' => 'Module', 'type' => 'module_code', 'percent' => 50, 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Backend\System\Modules\Model\Modules', 'query_builder' => 'a.sm_resource_module_code;=']
 			]
 		],
@@ -50,7 +50,7 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 	];
 	const REPORT_SORT_OPTIONS = [
 		'sm_resource_id' => ['name' => 'Resource #'],
-		'sm_resource_name' => ['name' => 'Resource Name'],
+		'sm_resource_name' => ['name' => 'Name'],
 	];
 	public $report_default_sort = [
 		'sm_resource_id' => SORT_ASC
@@ -86,6 +86,15 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 		[
 			'skip_rendering' => true
 		]);
+		$report->addHeader(DEF, 'subresources', [
+			'blank' => ['label_name' => ' ', 'percent' => 10],
+			'name' => ['label_name' => 'Subresources:', 'percent' => 40],
+			'action_id' => ['label_name' => 'Action #', 'percent' => 10],
+			'action_name' => ['label_name' => 'Action Name', 'percent' => 40],
+		],
+		[
+			'skip_rendering' => true
+		]);
 		// query the data
 		$query = \Numbers\Backend\System\Modules\Model\Resources::queryBuilderStatic()->select();
 		$query->columns([
@@ -97,7 +106,8 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 			'sm_resource_acl_public' => 'a.sm_resource_acl_public',
 			'sm_resource_acl_authorized' => 'a.sm_resource_acl_authorized',
 			'sm_resource_acl_permission' => 'a.sm_resource_acl_permission',
-			'actions' => 'b.actions'
+			'actions' => 'b.actions',
+			'subresources' => 'c.subresources'
 		]);
 		// join
 		$query->join('LEFT', function (& $query) {
@@ -116,6 +126,27 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 		}, 'b', 'ON', [
 			['AND', ['a.sm_resource_id', '=', 'b.sm_rsrcmp_resource_id', true], false]
 		]);
+		// join
+		$query->join('LEFT', function (& $query) {
+			$query = \Numbers\Backend\System\Modules\Model\Resource\Subresources::queryBuilderStatic(['alias' => 'inner_c'])->select();
+			$query->columns([
+				'inner_c.sm_rsrsubres_resource_id',
+				'subresources' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_c.sm_rsrsubres_id, inner_c2.sm_rsrsubmap_action_id)", 'delimiter' => ';;'])
+			]);
+			// join
+			$query->join('INNER', new \Numbers\Backend\System\Modules\Model\Resource\Subresource\Map(), 'inner_c2', 'ON', [
+				['AND', ['inner_c.sm_rsrsubres_id', '=', 'inner_c2.sm_rsrsubmap_rsrsubres_id', true], false]
+			]);
+			$query->join('INNER', new \Numbers\Backend\System\Modules\Model\Resource\Actions(), 'inner_c3', 'ON', [
+				['AND', ['inner_c2.sm_rsrsubmap_action_id', '=', 'inner_c3.sm_action_id', true], false]
+			]);
+			$query->groupby(['inner_c.sm_rsrsubres_resource_id']);
+			$query->where('AND', ['inner_c.sm_rsrsubres_inactive', '=', 0]);
+			$query->where('AND', ['inner_c2.sm_rsrsubmap_inactive', '=', 0]);
+			$query->where('AND', ['inner_c3.sm_action_inactive', '=', 0]);
+		}, 'c', 'ON', [
+			['AND', ['a.sm_resource_id', '=', 'c.sm_rsrsubres_resource_id', true], false]
+		]);
 		$query->where('AND', ['a.sm_resource_type', '=', 100]);
 		$query->where('AND', ['a.sm_resource_inactive', '=', 0]);
 		$query->where('AND', function (& $query) {
@@ -129,6 +160,7 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 		// preload models
 		$modules = \Numbers\Backend\System\Modules\Model\Modules::optionsStatic(['i18n' => true]);
 		$actions = \Numbers\Backend\System\Modules\Model\Resource\Actions::optionsStatic(['i18n' => true]);
+		$subresources = \Numbers\Backend\System\Modules\Model\Resource\Subresources::optionsStatic(['i18n' => true]);
 		// add data to report
 		$counter = 1;
 		foreach ($data['rows'] as $k => $v) {
@@ -151,10 +183,38 @@ class ResourceSetupReport extends \Object\Form\Wrapper\Report {
 				$report->addData(DEF, 'actions', $even, $report->getHeaderForRender(DEF, 'actions'));
 				$temp = explode(';;', $v['actions']);
 				$counter2 = $even + 1;
+				sort($temp);
 				foreach ($temp as $v0) {
 					$report->addData(DEF, 'actions', $even, [
 						'action_id' => \Format::id($v0),
 						'action_name' => $actions[(int) $v0]['name']
+					], [
+						'cell_even' => $counter2 % 2 ? ODD : EVEN
+					]);
+					$counter2++;
+				}
+			}
+			// subresources
+			if (!empty($v['subresources'])) {
+				$report->addData(DEF, 'separator', $even, ['blank' => ' ']);
+				$report->addData(DEF, 'subresources', $even, $report->getHeaderForRender(DEF, 'subresources'));
+				$temp = explode(';;', $v['subresources']);
+				$counter2 = $even + 1;
+				$groupped = [];
+				foreach ($temp as $v0) {
+					$temp2 = explode('::', $v0);
+					$groupped[] = [
+						'name' => $subresources[(int) $temp2[0]]['name'],
+						'action_id' => (int) $temp2[1],
+						'action_name' => $actions[(int) $temp2[1]]['name']
+					];
+				}
+				array_key_sort($groupped, ['name' => SORT_ASC, 'action_id' => SORT_ASC], ['name' => SORT_NATURAL, 'action_id' => SORT_NUMERIC]);
+				foreach ($groupped as $v0) {
+					$report->addData(DEF, 'subresources', $even, [
+						'name' => $v0['name'],
+						'action_id' => \Format::id($v0['action_id']),
+						'action_name' => $v0['action_name']
 					], [
 						'cell_even' => $counter2 % 2 ? ODD : EVEN
 					]);

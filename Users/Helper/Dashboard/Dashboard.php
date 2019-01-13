@@ -40,23 +40,9 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 				'name' => '&nbsp;'
 			],
 			6 => [
-				'name' => 'Teams',
-				'icon' => 'fas fa-sitemap',
-				'acl' => [
-					'resource_id' => '\Numbers\Users\Users\Controller\Teams',
-					'method_code' => 'Index',
-					'action_id' => 'List_View'
-				],
-				'url' => '/Numbers/Users/Users/Controller/Teams'
-			],
-		],
-		2 => [
-			1 => [
 				'name' => '&nbsp;'
-			]
-		],
-		3 => [
-			1 => [
+			],
+			7 => [
 				'name' => 'Groups',
 				'icon' => 'far fa-object-group',
 				'acl' => [
@@ -66,7 +52,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 				],
 				'url' => '/Numbers/Users/Users/Controller/Groups'
 			],
-			2 => [
+			8 => [
 				'name' => 'Roles',
 				'icon' => 'far fa-user-circle',
 				'acl' => [
@@ -76,7 +62,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 				],
 				'url' => '/Numbers/Users/Users/Controller/Roles'
 			],
-			3 => [
+			9 => [
 				'name' => 'Titles',
 				'icon' => 'fas fa-blind',
 				'acl' => [
@@ -85,7 +71,97 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'action_id' => 'List_View'
 				],
 				'url' => '/Numbers/Users/Users/Controller/Titles'
+			],
+			10 => [
+				'name' => 'Teams',
+				'icon' => 'fas fa-sitemap',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\Teams',
+					'method_code' => 'Index',
+					'action_id' => 'List_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/Teams'
+			],
+			11 => [
+				'name' => 'Assignment Types',
+				'icon' => 'fas fa-link',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\Assignment\Types',
+					'method_code' => 'Index',
+					'action_id' => 'List_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/Assignment/Types'
+			],
+			12 => [
+				'name' => 'Owner Types',
+				'icon' => 'fab fa-gg',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\Owner\Types',
+					'method_code' => 'Index',
+					'action_id' => 'List_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/Owner/Types'
+			],
+		],
+		2 => [
+			1 => [
+				'name' => '&nbsp;'
 			]
+		],
+		3 => [
+			1 => [
+				'name' => 'Security Reports'
+			],
+			2 => [
+				'name' => 'Organization Access Report',
+				'icon' => 'far fa-building',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\OrganizationAccessReport',
+					'method_code' => 'Index',
+					'action_id' => 'Report_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/Report/Security/OrganizationAccessReport'
+			],
+			3 => [
+				'name' => 'Resource Setup Report',
+				'icon' => 'fas fa-tasks',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\ResourceSetupReport',
+					'method_code' => 'Index',
+					'action_id' => 'Report_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/Report/Security/ResourceSetupReport'
+			],
+			4 => [
+				'name' => 'Role Setup Report',
+				'icon' => 'far fa-user-circle',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\RoleSetupReport',
+					'method_code' => 'Index',
+					'action_id' => 'Report_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/Report/Security/RoleSetupReport'
+			],
+			5 => [
+				'name' => 'Team Setup Report',
+				'icon' => 'fas fa-sitemap',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\TeamSetupReport',
+					'method_code' => 'Index',
+					'action_id' => 'Report_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/Report/Security/TeamSetupReport'
+			],
+			6 => [
+				'name' => 'User Setup Report',
+				'icon' => 'fas fa-user-friends',
+				'acl' => [
+					'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\UserSetupReport',
+					'method_code' => 'Index',
+					'action_id' => 'Report_View'
+				],
+				'url' => '/Numbers/Users/Users/Controller/Report/Security/UserSetupReport'
+			],
 		]
 	];
 

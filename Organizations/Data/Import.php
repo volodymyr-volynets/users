@@ -48,7 +48,7 @@ class Import extends \Object\Import {
 					'sm_feature_code' => 'ON::LOCATIONS',
 					'sm_feature_type' => 10,
 					'sm_feature_name' => 'O/N Locations',
-					'sm_feature_icon' => 'fas fa-code-branch',
+					'sm_feature_icon' => 'fas fa-warehouse',
 					'sm_feature_activation_model' => null,
 					'sm_feature_activated_by_default' => 0,
 					'sm_feature_inactive' => 0,

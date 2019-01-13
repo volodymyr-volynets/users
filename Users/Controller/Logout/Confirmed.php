@@ -19,7 +19,7 @@ class Confirmed extends \Object\Controller {
 			'type' => 'success',
 			'header' => [
 				'icon' => ['type' => 'sign-out'],
-				'title' => 'Sign Out:'
+				'title' => i18n(null, 'Sign Out:')
 			],
 			'value' => \HTML::ul($options)
 		]);

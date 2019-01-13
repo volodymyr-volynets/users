@@ -53,7 +53,7 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		],
 		'new_comment' => [
 			'new_note_template_id' => [
-				'new_note_template_id' => ['order' => 1, 'row_order' => 50, 'label_name' => 'Template', 'domain' => 'group_id', 'null' => true, 'percent' => 100, 'placeholder' => \Object\Content\Messages::PLEASE_CHOOSE, 'method' => 'select', 'options_model' => '\Numbers\Users\Widgets\Comments\Model\Templates::optionsActive', 'onchange' => 'this.form.submit();'],
+				'new_note_template_id' => ['order' => 1, 'row_order' => 50, 'label_name' => 'Template', 'domain' => 'group_id', 'null' => true, 'percent' => 100, 'placeholder' => \Object\Content\Messages::PLEASE_CHOOSE, 'method' => 'select', 'options_model' => '\Numbers\Users\Widgets\Comments\Model\Templates::optionsActive', 'options_params' => ['um_notetemplate_type_id' => 100], 'onchange' => 'this.form.submit();'],
 			],
 			'new_comment_value' => [
 				'new_comment_value' => ['order' => 1, 'row_order' => 100, 'label_name' => '', 'domain' => 'comment', 'null' => true, 'percent' => 100, 'required' => 'c', 'method' => 'wysiwyg', 'wysiwyg_height' => 250]
@@ -108,10 +108,14 @@ class Comments extends \Object\Form\Wrapper\List2 {
 
 	public function refresh(& $form) {
 		if (isset($_POST['new_comment_value'])) {
-			$form->values['new_comment_value'] = $_POST['new_comment_value'];
+			$form->values['new_comment_value'] = \Request::input('new_comment_value', true, false, [
+				'skip_xss_on_keys' => ['new_comment_value'],
+				'trim_empty_html_input' => true,
+				'remove_script_tag' => true
+			]);
 		}
 		// user can add new notes if he has subresource permission
-		if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_New')) {
+		if ((!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_New')) || empty($form->options['acl_subresource_edit'])) {
 			$form->options['actions']['new'] = [
 				'onclick' => 'Numbers.Modal.show(\'form_wg_comments_modal_new_comment_dialog\');',
 				'href' => 'javascript:void(0);'

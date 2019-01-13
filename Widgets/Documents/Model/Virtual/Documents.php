@@ -142,6 +142,8 @@ class Documents extends \Object\Table {
 		if (!empty($data['wg_document_approval_status_id']) && $data['wg_document_approval_status_id'] > 20) {
 			$this->processWhoColumns(['approved'], $data);
 		}
-		return $this->db_object->save($this->full_table_name, $data, ['wg_document_tenant_id', 'wg_document_id'], ['primary_key' => ['wg_document_tenant_id', 'wg_document_id']]);
+		$result = $this->db_object->save($this->full_table_name, $data, ['wg_document_tenant_id', 'wg_document_id'], ['primary_key' => ['wg_document_tenant_id', 'wg_document_id']]);
+		$this->resetCache(); // reset cache tags
+		return $result;
 	}
 }

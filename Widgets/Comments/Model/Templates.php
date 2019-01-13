@@ -17,6 +17,7 @@ class Templates extends \Object\Table {
 		'um_notetemplate_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_notetemplate_id' => ['name' => 'Template #', 'domain' => 'group_id_sequence'],
 		'um_notetemplate_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
+		'um_notetemplate_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'default' => 100, 'options_model' => '\Numbers\Users\Widgets\Comments\Model\Template\Types'],
 		'um_notetemplate_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_notetemplate_template' => ['name' => 'Template', 'domain' => 'comment'],
 		'um_notetemplate_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
