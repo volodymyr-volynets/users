@@ -59,6 +59,19 @@ class Collection extends \Object\Form\Wrapper\Collection {
 							],
 							'order' => 2
 						],
+						'wg_tags' => [
+							'model' => '\Numbers\Users\Widgets\Tags\Form\List2\Tags',
+							'submodule' => 'Numbers.Users.Widgets.Tags',
+							'acl_subresource_hide' => ['UM::USER_TAGS'],
+							'bypass_input' => self::BYPASS,
+							'options' => [
+								'label_name' => 'Tags',
+								'bypass_hidden_from_input' => self::BYPASS,
+								'model_table' => '\Numbers\Users\Users\Model\Users',
+								'acl_subresource_edit' => ['UM::USER_TAGS'],
+							],
+							'order' => 3
+						],
 					]
 				]
 			]

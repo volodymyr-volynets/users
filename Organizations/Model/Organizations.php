@@ -114,6 +114,13 @@ class Organizations extends \Object\Table {
 		]
 	];
 
+	public $tags = [
+		'map' => [
+			'on_organization_tenant_id' => 'wg_tag_tenant_id',
+			'on_organization_id' => 'wg_tag_organization_id'
+		]
+	];
+
 	public $data_asset = [
 		'classification' => 'client_confidential',
 		'protection' => 2,

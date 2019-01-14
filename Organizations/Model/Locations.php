@@ -157,6 +157,13 @@ class Locations extends \Object\Table {
 		]
 	];
 
+	public $tags = [
+		'map' => [
+			'on_location_tenant_id' => 'wg_tag_tenant_id',
+			'on_location_id' => 'wg_tag_location_id'
+		]
+	];
+
 	public $data_asset = [
 		'classification' => 'client_confidential',
 		'protection' => 2,

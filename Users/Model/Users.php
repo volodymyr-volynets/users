@@ -132,6 +132,13 @@ class Users extends \Object\Table {
 		]
 	];
 
+	public $tags = [
+		'map' => [
+			'um_user_tenant_id' => 'wg_tag_tenant_id',
+			'um_user_id' => 'wg_tag_user_id'
+		]
+	];
+
 	public $data_asset = [
 		'classification' => 'client_confidential',
 		'protection' => 2,
