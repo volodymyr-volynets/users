@@ -19,7 +19,13 @@ class Tags extends \Object\Form\Wrapper\List2 {
 			'default_row_type' => 'grid',
 			'order' => 32200,
 			'type' => 'modal',
-			'label_name' => 'Add new comment'
+			'label_name' => 'Add New Tag'
+		],
+		'delete_tag' => [
+			'default_row_type' => 'grid',
+			'order' => 32200,
+			'type' => 'modal',
+			'label_name' => 'Delete Existing Tag?'
 		],
 		self::LIST_CONTAINER => ['default_row_type' => 'grid', 'order' => PHP_INT_MAX],
 	];
@@ -48,13 +54,23 @@ class Tags extends \Object\Form\Wrapper\List2 {
 				self::BUTTON_SUBMIT_OTHER => self::BUTTON_SUBMIT_OTHER_DATA + ['row_order' => 32000],
 			]
 		],
+		'delete_tag' => [
+			'delete_tag_id' => [
+				'delete_tag_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Tag #', 'domain' => 'big_id', 'percent' => 15, 'readonly' => true],
+				'delete_tag_name' => ['order' => 2, 'label_name' => 'Tag Name', 'percent' => 85, 'readonly' => true],
+			],
+			'buttons' => [
+				self::BUTTON_SUBMIT_APPROVE => self::BUTTON_SUBMIT_APPROVE_DATA + ['row_order' => 32000],
+			]
+		],
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
 				'wg_tag_id' => ['order' => 1, 'row_order' => 100, 'label_name' => '#', 'domain' => 'big_id', 'percent' => 10],
-				'um_tag_name' => ['order' => 2, 'label_name' => 'Tag', 'domain' => 'name', 'percent' => 50],
+				'um_tag_name' => ['order' => 2, 'label_name' => 'Tag', 'domain' => 'name', 'percent' => 40],
 				'wg_tag_inserted_timestamp' => ['order' => 3, 'label_name' => 'Datetime', 'type' => 'timestamp', 'percent' => 15, 'format' => '\Format::niceTimestamp'],
 				'wg_tag_inserted_user_id' => ['order' => 4, 'label_name' => 'User', 'domain' => 'name', 'percent' => 25, 'custom_renderer' => '\Numbers\Users\Widgets\Tags\Form\List2\Tags::renderTagUser', 'skip_fts' => true],
+				'__delete' => ['order' => 5, 'label_name' => ' ', 'percent' => 10, 'custom_renderer' => '\Numbers\Users\Widgets\Tags\Form\List2\Tags::renderDeleteLink', 'skip_fts' => true],
 			]
 		]
 	];
@@ -92,24 +108,37 @@ class Tags extends \Object\Form\Wrapper\List2 {
 	}
 
 	public function validate(& $form) {
+		$model = new $form->options['model_table']();
+		$data = [];
+		foreach ($model->tags['map'] as $k => $v) {
+			if (isset($form->options['input'][$k])) {
+				$data[$v] = (int) $form->options['input'][$k];
+			}
+		}
+		if (!empty($form->process_submit[self::BUTTON_SUBMIT_APPROVE]) && !empty($form->values['delete_tag_id'])) {
+			$data['wg_tag_id'] = $form->values['delete_tag_id'];
+			$tags_result = \Factory::model($model->tags_model)->delete($data);
+			if (!$tags_result['success']) {
+				$form->error(DANGER, $tags_result['error']);
+				$model->db_object->rollback();
+				return;
+			} else {
+				$form->error(SUCCESS, \Object\Content\Messages::OPERATION_EXECUTED);
+			}
+			return;
+		}
 		if (!empty($form->process_submit[self::BUTTON_SUBMIT_OTHER])) {
 			if (empty($form->values['new_tag_name'])) {
 				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'new_tag_name');
 			} else {
-				$model = new $form->options['model_table']();
-				$data = [
-					'um_tag_name' => $form->values['new_tag_name'],
-				];
-				foreach ($model->tags['map'] as $k => $v) {
-					if (isset($form->options['input'][$k])) {
-						$data[$v] = (int) $form->options['input'][$k];
-					}
-				}
+				$data['um_tag_name'] = $form->values['new_tag_name'];
 				$tags_result = \Factory::model($model->tags_model)->merge($data);
 				if (!$tags_result['success']) {
 					$form->error(DANGER, $tags_result['error']);
 					$model->db_object->rollback();
 					return;
+				} else {
+					$form->error(SUCCESS, \Object\Content\Messages::OPERATION_EXECUTED);
 				}
 				$form->values['new_tag_name'] = '';
 			}
@@ -174,5 +203,12 @@ class Tags extends \Object\Form\Wrapper\List2 {
 
 	public function renderTagUser(& $form, & $options, & $value, & $neighbouring_values) {
 		return \Numbers\Users\Users\Model\Users::getUsernameWithAvatar($neighbouring_values['wg_tag_inserted_user_id']);
+	}
+
+	public function renderDeleteLink(& $form, & $options, & $value, & $neighbouring_values) {
+		if ((!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_Delete')) || empty($form->options['acl_subresource_edit'])) {
+			return \HTML::a(['href' => 'javascript:void(0);', 'onclick' => '$(\'#form_wg_tags_element_delete_tag_id\').val(' . $neighbouring_values['wg_tag_id'] . '); $(\'#form_wg_tags_element_delete_tag_name\').val(\'' . $neighbouring_values['um_tag_name'] . '\'); Numbers.Modal.show(\'form_wg_tags_modal_delete_tag_dialog\');', 'value' => i18n(null, 'Delete')]);
+		}
+		return '';
 	}
 }
