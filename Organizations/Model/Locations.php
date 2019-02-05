@@ -31,15 +31,6 @@ class Locations extends \Object\Table {
 		'on_location_logo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true],
 		'on_location_about_nickname' => ['name' => 'About Nickname', 'domain' => 'name', 'null' => true],
 		'on_location_about_description' => ['name' => 'About Description', 'domain' => 'description', 'null' => true],
-		// primary address
-		'on_location_address_line1' => ['name' => 'Address Line 1', 'domain' => 'name'],
-		'on_location_address_line2' => ['name' => 'Address Line 2', 'domain' => 'name', 'null' => true],
-		'on_location_city' => ['name' => 'City', 'domain' => 'name'],
-		'on_location_province_code' => ['name' => 'Province Code', 'domain' => 'province_code'],
-		'on_location_country_code' => ['name' => 'Country Code', 'domain' => 'country_code'],
-		'on_location_postal_code' => ['name' => 'Postal Code', 'domain' => 'postal_code'],
-		'on_location_latitude' => ['name' => 'Latitude', 'domain' => 'geo_coordinate'],
-		'on_location_longitude' => ['name' => 'Longitude', 'domain' => 'geo_coordinate'],
 		// organization
 		'on_location_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'on_location_customer_organization_id' => ['name' => 'Customer Organization #', 'domain' => 'organization_id', 'null' => true],

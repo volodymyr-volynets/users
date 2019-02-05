@@ -87,7 +87,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 				self::HEADER_ROW => [
 					'order' => 100,
 					self::FORMS => [
-						'tenant_registration_step2_wizzard' => self::GLOBAL_WIZARD
+						'tenant_registration_step3_wizzard' => self::GLOBAL_WIZARD
 					]
 				],
 				self::MAIN_ROW => [

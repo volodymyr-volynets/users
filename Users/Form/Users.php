@@ -570,6 +570,20 @@ class Users extends \Object\Form\Wrapper\Base {
 			$crypt = new \Crypt();
 			$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
 		}
+		// primary address
+		if (!$form->hasErrors()) {
+			if (!empty($form->values['\Numbers\Users\Users\Model\Users\0Virtual0\Widgets\Addresses'])) {
+				// primary address
+				$primary_first_key = null;
+				$primary_address_type = $form->validateDetailsPrimaryColumn(
+					'\Numbers\Users\Users\Model\Users\0Virtual0\Widgets\Addresses',
+					'wg_address_primary',
+					'wg_address_inactive',
+					'wg_address_type_code',
+					$primary_first_key
+				);
+			}
+		}
 		// photo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
 			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];

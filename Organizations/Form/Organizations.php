@@ -176,6 +176,22 @@ class Organizations extends \Object\Form\Wrapper\Base {
 				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_organization_parent_organization_id');
 			}
 		}
+		// primary address
+		if (!$form->hasErrors()) {
+			if (empty($form->values['\Numbers\Users\Organizations\Model\Organizations\0Virtual0\Widgets\Addresses'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, '\Numbers\Users\Organizations\Model\Organizations\0Virtual0\Widgets\Addresses[1][wg_address_type_code]');
+			} else {
+				// primary address
+				$primary_first_key = null;
+				$primary_address_type = $form->validateDetailsPrimaryColumn(
+					'\Numbers\Users\Organizations\Model\Organizations\0Virtual0\Widgets\Addresses',
+					'wg_address_primary',
+					'wg_address_inactive',
+					'wg_address_type_code',
+					$primary_first_key
+				);
+			}
+		}
 		// logo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
 			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];

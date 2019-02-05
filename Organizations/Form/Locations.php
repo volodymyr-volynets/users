@@ -31,7 +31,6 @@ class Locations extends \Object\Form\Wrapper\Base {
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'logo' => ['order' => 200, 'label_name' => 'About'],
-			'primary_address' => ['order' => 300, 'label_name' => 'Primary Address', 'acl_subresource_hide' => ['ON::LOC_ADDRESSES']],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA + ['acl_subresource_hide' => ['ON::LOC_ADDRESSES']],
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA + ['acl_subresource_hide' => ['ON::LOC_ATTRIBUTES']],
 		]
@@ -49,9 +48,6 @@ class Locations extends \Object\Form\Wrapper\Base {
 		'tabs' => [
 			'general' => [
 				'general' => ['container' => 'general_container', 'order' => 100]
-			],
-			'primary_address' => [
-				'primary_address' => ['container' => 'primary_address_container', 'order' => 100]
 			],
 			'logo' => [
 				'logo' => ['container' => 'logo_container', 'order' => 100]
@@ -104,24 +100,6 @@ class Locations extends \Object\Form\Wrapper\Base {
 				'on_location_alternative_contact' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Alternative Contact', 'domain' => 'description', 'null' => true, 'percent' => 100, 'method' => 'textarea'],
 			],
 		],
-		'primary_address_container' => [
-			'on_location_address_line1' => [
-				'on_location_address_line1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Address Line 1', 'domain' => 'name', 'required' => true, 'percent' => 50],
-				'on_location_address_line2' => ['order' => 2, 'label_name' => 'Address Line 2', 'domain' => 'name', 'null' => true, 'percent' => 50],
-			],
-			'on_location_city' => [
-				'on_location_city' => ['order' => 1, 'row_order' => 200, 'label_name' => 'City', 'domain' => 'name', 'required' => true, 'percent' => 50],
-				'on_location_postal_code' => ['order' => 2, 'label_name' => 'Postal Code', 'domain' => 'postal_code', 'required' => true, 'percent' => 50],
-			],
-			'on_location_country_code' => [
-				'on_location_country_code' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Country', 'domain' => 'country_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
-				'on_location_province_code' => ['order' => 2, 'label_name' => 'Province', 'domain' => 'province_code', 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'on_location_country_code']],
-			],
-			'on_location_latitude' => [
-				'on_location_latitude' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Latitude', 'domain' => 'geo_coordinate', 'null' => true, 'required' => true],
-				'on_location_longitude' => ['order' => 2, 'label_name' => 'Longitude', 'domain' => 'geo_coordinate', 'null' => true, 'required' => true],
-			]
-		],
 		'logo_container' => [
 			'__logo_upload' => [
 				'__logo_upload' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Upload Logo', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images'], 'image_size' => '200x80', 'thumbnail_size' => '125x50'], 'description' => 'Extensions: ' . \Numbers\Users\Documents\Base\Helper\Validate::IMAGE_EXTENSIONS . '. Size: 200x80.'],
@@ -155,6 +133,23 @@ class Locations extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
+		// primary address
+		if (!$form->hasErrors()) {
+			if (empty($form->values['\Numbers\Users\Organizations\Model\Locations\0Virtual0\Widgets\Addresses'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, '\Numbers\Users\Organizations\Model\Locations\0Virtual0\Widgets\Addresses[1][wg_address_type_code]');
+			} else {
+				// primary address
+				$primary_first_key = null;
+				$primary_address_type = $form->validateDetailsPrimaryColumn(
+					'\Numbers\Users\Organizations\Model\Locations\0Virtual0\Widgets\Addresses',
+					'wg_address_primary',
+					'wg_address_inactive',
+					'wg_address_type_code',
+					$primary_first_key
+				);
+			}
+		}
+		// logo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
 			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];
 			$model = new \Numbers\Users\Documents\Base\Base();

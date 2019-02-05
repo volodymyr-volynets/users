@@ -68,6 +68,7 @@ class Organizations extends \Object\Table {
 		'on_organization_icon' => 'icon_class',
 		'on_organization_logo_file_id' => 'photo_id',
 		'on_organization_parent_organization_id' => 'parent_id',
+		'on_organization_subtype_id' => 'subtype_id',
 		'on_organization_inactive' => 'inactive'
 	];
 	public $options_active = [
@@ -126,4 +127,33 @@ class Organizations extends \Object\Table {
 		'protection' => 2,
 		'scope' => 'enterprise'
 	];
+
+	/**
+	 * @see $this->options()
+	 */
+	public function optionsJsonActiveCustomers($options = []) {
+		$data = $this->optionsActive($options);
+		$result = [];
+		foreach ($data as $k => $v) {
+			if ($v['subtype_id'] == 10) {
+				$parent = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $k]);
+				$result[$parent] = $v;
+				$result[$parent]['disabled'] = true;
+				if (!empty($v['parent_id'])) {
+					$result[$parent]['parent'] = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id']]);
+				}
+			} else if ($v['subtype_id'] == 20) {
+				$key = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id'], 'customer_organization_id' => $k]);
+				$result[$key] = $v;
+				$result[$key]['parent'] = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id']]);
+				$result[$key]['__selected_name'] = i18n(null, $data[$v['parent_id']]['name']) . ': ' . i18n(null, $v['name']);
+			}
+		}
+		if (!empty($result)) {
+			$converted = \Helper\Tree::convertByParent($result, 'parent');
+			$result = [];
+			\Helper\Tree::convertTreeToOptionsMulti($converted, 0, ['name_field' => 'name'], $result);
+		}
+		return $result;
+	}
 }
