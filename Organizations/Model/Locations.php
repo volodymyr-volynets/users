@@ -47,8 +47,8 @@ class Locations extends \Object\Table {
 	];
 	public $constraints = [
 		'on_locations_pk' => ['type' => 'pk', 'columns' => ['on_location_tenant_id', 'on_location_id']],
-		'on_location_code_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_organization_id', 'on_location_number']],
-		'on_location_number_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_code']],
+		'on_location_code_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_code']],
+		'on_location_number_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_customer_organization_id', 'on_location_number']],
 		'on_location_item_master_id_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_id', 'on_location_item_master_id']],
 		'on_location_organization_id_fk' => [
 			'type' => 'fk',
@@ -102,7 +102,9 @@ class Locations extends \Object\Table {
 		'on_location_name' => 'name',
 		'on_location_icon' => 'icon_class',
 		'on_location_logo_file_id' => 'photo_id',
-		'on_location_inactive' => 'inactive'
+		'on_location_inactive' => 'inactive',
+		'on_location_market_id' => 'market_id',
+		'on_location_district_id' => 'district_id'
 	];
 	public $options_active = [
 		'on_location_inactive' => 0
@@ -160,4 +162,43 @@ class Locations extends \Object\Table {
 		'protection' => 2,
 		'scope' => 'enterprise'
 	];
+
+	/**
+	 * @see $this->options()
+	 */
+	public function optionsJsonSearch($options = []) {
+		if (!empty($options['show_all'])) {
+			$data = $this->options($options);
+		} else {
+			$data = $this->optionsActive($options);
+		}
+		$markets = \Numbers\Users\Organizations\Model\Markets::optionsStatic();
+		$districts = \Numbers\Users\Organizations\Model\Districts::optionsStatic();
+		$result = [];
+		foreach ($data as $k => $v) {
+			$market_parent = \Object\Table\Options::optionJsonFormatKey(['market_id' => (int) $v['market_id'], 'district_id' => null, 'location_id' => null]);
+			if (!isset($result[$market_parent])) {
+				$result[$market_parent] = $markets[$v['market_id']];
+				$result[$market_parent]['disabled'] = !empty($options['enable_parent']) ? false : true;
+			}
+			$district_parent = \Object\Table\Options::optionJsonFormatKey(['market_id' => (int) $v['market_id'], 'district_id' => (int) $v['district_id'], 'location_id' => null]);
+			if (!isset($result[$district_parent])) {
+				$result[$district_parent] = $districts[$v['district_id']];
+				$result[$district_parent]['disabled'] = !empty($options['enable_parent']) ? false : true;
+				$result[$district_parent]['parent'] = $market_parent;
+			}
+			$key = \Object\Table\Options::optionJsonFormatKey(['market_id' => (int) $v['market_id'], 'district_id' => (int) $v['district_id'], 'location_id' => (int) $k]);
+			if (!empty($options['skip_photo_id'])) {
+				unset($v['photo_id']);
+			}
+			$result[$key] = $v;
+			$result[$key]['parent'] = $district_parent;
+		}
+		if (!empty($result)) {
+			$converted = \Helper\Tree::convertByParent($result, 'parent');
+			$result = [];
+			\Helper\Tree::convertTreeToOptionsMulti($converted, 0, ['name_field' => 'name'], $result);
+		}
+		return $result;
+	}
 }

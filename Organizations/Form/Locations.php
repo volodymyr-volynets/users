@@ -179,7 +179,7 @@ class Locations extends \Object\Form\Wrapper\Base {
 
 	public function overrideTabs(& $form, & $options, & $tab, & $neighbouring_values) {
 		$result = [];
-		if ($tab == 'logo' && empty($form->values['on_location_organization_id']) || !\Can::systemModuleExists('DT')) {
+		if ($tab == 'logo' && (empty($form->values['on_location_organization_id']) || !\Can::systemModuleExists('DT'))) {
 			$result['hidden'] = true;
 		}
 		return $result;

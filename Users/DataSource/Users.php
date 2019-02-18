@@ -73,7 +73,7 @@ class Users extends \Object\DataSource {
 				}, true);
 			});
 		}
-		// selected roles
+		// selected organizations
 		if (!empty($parameters['selected_organizations'])) {
 			$this->query->where('AND', function (& $query) use ($parameters) {
 				// allow existing values

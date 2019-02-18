@@ -537,6 +537,7 @@ class Users extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
+		$users_model = new \Numbers\Users\Users\Model\Users();
 		// personal type
 		if ($form->values['um_user_type_id'] == 10) {
 			if (empty($form->values['um_user_first_name'])) $form->error('danger', \Object\Content\Messages::REQUIRED_FIELD, 'um_user_first_name');
@@ -610,9 +611,26 @@ class Users extends \Object\Form\Wrapper\Base {
 			}
 			$form->values['um_user_photo_file_id'] = $result['file_id'];
 		}
+		// email
+		if (!empty($form->values['um_user_email'])) {
+			// validate if its already exists
+			if (!$users_model->checkUniqueConstraint('um_user_email', $users_model->pk, [
+				'um_user_id' => $form->values['um_user_id'] ?? null,
+				'um_user_email' => $form->values['um_user_email'],
+			])) {
+				$form->error(DANGER, \Object\Content\Messages::DUPLICATE_RECORD, 'um_user_email');
+			}
+		}
 		// numeric phone
 		if (!empty($form->values['um_user_phone'])) {
 			$form->values['um_user_numeric_phone'] = \Object\Validator\Phone::plainNumber($form->values['um_user_phone']);
+			// validate if its already exists
+			if (!$users_model->checkUniqueConstraint('um_user_numeric_phone', $users_model->pk, [
+				'um_user_id' => $form->values['um_user_id'] ?? null,
+				'um_user_numeric_phone' => $form->values['um_user_numeric_phone'],
+			])) {
+				$form->error(DANGER, \Object\Content\Messages::DUPLICATE_RECORD, 'um_user_phone');
+			}
 		} else {
 			$form->values['um_user_numeric_phone'] = null;
 		}

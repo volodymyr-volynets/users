@@ -9,7 +9,6 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		'segment' => null,
 		'actions' => [
 			'refresh' => true,
-			//'new' => ['onclick' => 'Numbers.Modal.show(\'form_wg_comments_modal_new_comment_dialog\');', 'href' => 'javascript:void(0);'],
 			'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
 		]
 	];
@@ -73,7 +72,7 @@ class Comments extends \Object\Form\Wrapper\List2 {
 				'wg_comment_id' => ['order' => 1, 'row_order' => 100, 'label_name' => '#', 'domain' => 'big_id', 'percent' => 10],
 				'wg_comment_important' => ['order' => 2, 'label_name' => 'Important', 'type' => 'boolean', 'percent' => 10],
 				'wg_comment_inserted_user_id' => ['order' => 3, 'label_name' => 'User', 'domain' => 'name', 'percent' => 25, 'custom_renderer' => '\Numbers\Users\Widgets\Comments\Form\List2\Comments::renderCommentUser', 'skip_fts' => true],
-				'wg_comment_value' => ['order' => 4, 'label_name' => 'Comment', 'domain' => 'name', 'percent' => 65],
+				'wg_comment_value' => ['order' => 4, 'label_name' => 'Comment', 'domain' => 'name', 'percent' => 65, 'custom_renderer' => '\Numbers\Users\Widgets\Comments\Form\List2\Comments::renderCommentValue'],
 			],
 			'row2' => [
 				'__about' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 10],
@@ -198,6 +197,7 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		// hide module #
 		if (in_array($options['options']['field_name'], ['__module_id', '__separator__module_id', '__format'])) {
 			$options['options']['row_class'] = 'grid_row_hidden';
+			return;
 		}
 	}
 
@@ -240,6 +240,10 @@ class Comments extends \Object\Form\Wrapper\List2 {
 		$result['rows'] = & $temp['rows'];
 		$result['success'] = true;
 		return $result;
+	}
+
+	public function renderCommentValue(& $form, & $options, & $value, & $neighbouring_values) {
+		return nl2br($value);
 	}
 
 	public function renderCommentUser(& $form, & $options, & $value, & $neighbouring_values) {

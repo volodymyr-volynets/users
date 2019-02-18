@@ -20,6 +20,7 @@ class Tenant extends \Object\Import {
 					'um_role_weight' => 1000000,
 					'um_role_inactive' => 0
 				],
+				/*
 				[
 					'um_role_code' => 'CUSTOMER',
 					'um_role_type_id' => 20,
@@ -40,6 +41,7 @@ class Tenant extends \Object\Import {
 					'um_role_weight' => 1000,
 					'um_role_inactive' => 0
 				]
+				*/
 			]
 		],
 		'titles' => [

@@ -18,7 +18,7 @@ class Types extends \Object\Table {
 		'um_ownertype_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'um_ownertype_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_ownertype_multiple' => ['name' => 'Multiple', 'type' => 'boolean'],
-		'um_ownertype_can_delete' => ['name' => 'Can Delete', 'type' => 'boolean'],
+		'um_ownertype_readonly' => ['name' => 'Readonly', 'type' => 'boolean'],
 		'um_ownertype_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

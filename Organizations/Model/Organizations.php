@@ -132,20 +132,30 @@ class Organizations extends \Object\Table {
 	 * @see $this->options()
 	 */
 	public function optionsJsonActiveCustomers($options = []) {
-		$data = $this->optionsActive($options);
+		if (!empty($options['show_all'])) {
+			$data = $this->options($options);
+		} else {
+			$data = $this->optionsActive($options);
+		}
 		$result = [];
 		foreach ($data as $k => $v) {
 			if ($v['subtype_id'] == 10) {
-				$parent = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $k]);
+				$parent = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $k, 'customer_organization_id' => null]);
+				if (!empty($options['skip_photo_id'])) {
+					unset($v['photo_id']);
+				}
 				$result[$parent] = $v;
-				$result[$parent]['disabled'] = true;
+				$result[$parent]['disabled'] = !empty($options['enable_parent']) ? false : true;
 				if (!empty($v['parent_id'])) {
-					$result[$parent]['parent'] = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id']]);
+					$result[$parent]['parent'] = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id'], 'customer_organization_id' => null]);
 				}
 			} else if ($v['subtype_id'] == 20) {
-				$key = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id'], 'customer_organization_id' => $k]);
+				$key = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id'], 'customer_organization_id' => (int) $k]);
+				if (!empty($options['skip_photo_id'])) {
+					unset($v['photo_id']);
+				}
 				$result[$key] = $v;
-				$result[$key]['parent'] = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id']]);
+				$result[$key]['parent'] = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id'], 'customer_organization_id' => null]);
 				$result[$key]['__selected_name'] = i18n(null, $data[$v['parent_id']]['name']) . ': ' . i18n(null, $v['name']);
 			}
 		}

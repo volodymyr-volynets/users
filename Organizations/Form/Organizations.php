@@ -179,7 +179,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		// primary address
 		if (!$form->hasErrors()) {
 			if (empty($form->values['\Numbers\Users\Organizations\Model\Organizations\0Virtual0\Widgets\Addresses'])) {
-				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, '\Numbers\Users\Organizations\Model\Organizations\0Virtual0\Widgets\Addresses[1][wg_address_type_code]');
+				//$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, '\Numbers\Users\Organizations\Model\Organizations\0Virtual0\Widgets\Addresses[1][wg_address_type_code]');
 			} else {
 				// primary address
 				$primary_first_key = null;

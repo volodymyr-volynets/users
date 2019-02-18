@@ -53,7 +53,7 @@ class Types extends \Object\Form\Wrapper\Base {
 			'um_ownertype_name' => [
 				'um_ownertype_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 70, 'required' => true],
 				'um_ownertype_multiple' => ['order' => 2, 'label_name' => 'Multiple', 'type' => 'boolean', 'percent' => 15],
-				'um_ownertype_can_delete' => ['order' => 3, 'label_name' => 'Can Delete', 'type' => 'boolean', 'percent' => 15],
+				'um_ownertype_readonly' => ['order' => 3, 'label_name' => 'Readonly', 'type' => 'boolean', 'percent' => 15],
 			],
 		],
 		'tabs' => [

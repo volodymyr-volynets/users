@@ -139,6 +139,11 @@ class Users extends \Object\Table {
 		]
 	];
 
+	public $unique = [
+		'um_user_numeric_phone' => 'um_user_numeric_phone_un',
+		'um_user_email' => 'um_user_email_un'
+	];
+
 	public $data_asset = [
 		'classification' => 'client_confidential',
 		'protection' => 2,

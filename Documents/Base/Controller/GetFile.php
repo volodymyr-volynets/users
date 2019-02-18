@@ -24,10 +24,12 @@ class GetFile extends \Object\Controller {
 		$fill_color = imagecolorallocate($image, $color[0], $color[1], $color[2]);
 		imagefilledrectangle($image, 0, 0, $input['width'] ?? 25, $input['height'] ?? 25, $fill_color);
 		// text
-		$fill_color_rgb = hex2rgb(\Numbers\Frontend\HTML\Renderers\Common\Colors::determineTextColor($color_hex));
-		$fill_color = imagecolorallocate($image, $fill_color_rgb[0], $fill_color_rgb[1], $fill_color_rgb[2]);
-		$font = __DIR__ . '/../Font/arial.ttf';
-		imagettftext($image, $input['height'] - 8, 0, 5, $input['height'] - 4, $fill_color, $font, $input['text'][0]);
+		if (function_exists('imagettftext')) {
+			$fill_color_rgb = hex2rgb(\Numbers\Frontend\HTML\Renderers\Common\Colors::determineTextColor($color_hex));
+			$fill_color = imagecolorallocate($image, $fill_color_rgb[0], $fill_color_rgb[1], $fill_color_rgb[2]);
+			$font = __DIR__ . '/../Font/arial.ttf';
+			imagettftext($image, $input['height'] - 8, 0, 5, $input['height'] - 4, $fill_color, $font, $input['text'][0]);
+		}
 		// image
 		header ('Content-Type: image/png');
 		imagepng($image);
