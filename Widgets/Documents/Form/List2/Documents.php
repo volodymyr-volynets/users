@@ -15,18 +15,6 @@ class Documents extends \Object\Form\Wrapper\List2 {
 		'tabs' => ['default_row_type' => 'grid', 'order' => 1000, 'type' => 'tabs', 'class' => 'numbers_form_filter_sort_container'],
 		'filter' => ['default_row_type' => 'grid', 'order' => 1500],
 		'sort' => self::LIST_SORT_CONTAINER,
-		'new_file' => [
-			'default_row_type' => 'grid',
-			'order' => 32200,
-			'type' => 'modal',
-			'label_name' => 'Add new file'
-		],
-		'approve_file' => [
-			'default_row_type' => 'grid',
-			'order' => 32200,
-			'type' => 'modal',
-			'label_name' => 'Approve / Decline Document Package'
-		],
 		self::LIST_CONTAINER => ['default_row_type' => 'grid', 'order' => PHP_INT_MAX],
 	];
 	public $rows = [
@@ -44,34 +32,6 @@ class Documents extends \Object\Form\Wrapper\List2 {
 			'__sort' => [
 				'__sort' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Sort', 'domain' => 'code', 'details_unique_select' => true, 'percent' => 50, 'null' => true, 'method' => 'select', 'options' => self::LIST_SORT_OPTIONS, 'onchange' => 'this.form.submit();'],
 				'__order' => ['order' => 2, 'label_name' => 'Order', 'type' => 'smallint', 'default' => SORT_ASC, 'percent' => 50, 'null' => true, 'method' => 'select', 'no_choose' => true, 'options_model' => '\Object\Data\Model\Order', 'onchange' => 'this.form.submit();'],
-			]
-		],
-		'new_file' => [
-			'new_file_catalog_code' => [
-				'new_file_catalog_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Catalog', 'domain' => 'group_code', 'null' => true, 'percent' => 100, 'required' => 'c', 'method' => 'select', 'options_model' => '\Numbers\Users\Documents\Base\Model\Catalogs::optionsActive']
-			],
-			'new_fileimportant' => [
-				'new_file_important' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Important', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
-				'new_file_public' => ['order' => 2, 'label_name' => 'Public', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
-				'new_file_upload_1' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'required' => 'c', 'method' => 'file', 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents']], 'description' => 'Extensions: Images, Audio, Documents'],
-			],
-			'new_comment_value' => [
-				'new_file_comment' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Notes', 'domain' => 'comment', 'null' => true, 'percent' => 100, 'method' => 'textarea']
-			],
-			'buttons' => [
-				self::BUTTON_SUBMIT_OTHER => self::BUTTON_SUBMIT_OTHER_DATA + ['row_order' => 32000],
-			]
-		],
-		'approve_file' => [
-			'message' => [
-				'message_are_you_sure' => ['order' => 1, 'row_order' => 100, 'label_name' => '', 'method' => 'span', 'value' => 'Are you sure?']
-			],
-			self::HIDDEN => [
-				'approve_file_approve_document_id' => ['order' => 1, 'label_name' => 'Document #', 'domain' => 'big_id', 'method' => 'hidden'],
-			],
-			self::BUTTONS => [
-				self::BUTTON_SUBMIT_APPROVE => self::BUTTON_SUBMIT_APPROVE_DATA + ['row_order' => 32000],
-				self::BUTTON_SUBMIT_DECLINE => self::BUTTON_SUBMIT_DECLINE_DATA,
 			]
 		],
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
@@ -108,6 +68,23 @@ class Documents extends \Object\Form\Wrapper\List2 {
 	const LIST_SORT_OPTIONS = [
 		'wg_document_id' => ['name' => 'Document #'],
 	];
+	public $subforms = [
+		'wg_new_document' => [
+			'form' => '\Numbers\Users\Widgets\Documents\Form\NewDocument',
+			'label_name' => 'New Document',
+			'actions' => [
+				'new' => ['name' => 'New'],
+				'delete' => ['name' => 'Delete', 'url_delete' => true],
+			]
+		],
+		'wg_approve_document' => [
+			'form' => '\Numbers\Users\Widgets\Documents\Form\ApproveDocument',
+			'label_name' => 'Approve / Reject Document',
+			'actions' => [
+				'approve' => ['name' => 'Approve'],
+			]
+		]
+	];
 
 	public function overrides(& $form) {
 		if (!empty($form->__options['model_table'])) {
@@ -116,109 +93,6 @@ class Documents extends \Object\Form\Wrapper\List2 {
 				'name' => 'Documents',
 				'model' => $model->documents_model
 			];
-		}
-	}
-
-	public function refresh(& $form) {
-		// user can add new documents if he has subresource permission
-		if ((!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_New')) || empty($form->options['acl_subresource_edit'])) {
-			$form->options['actions']['new'] = [
-				'onclick' => 'Numbers.Modal.show(\'form_wg_documents_modal_new_file_dialog\');',
-				'href' => 'javascript:void(0);'
-			];
-		}
-	}
-
-	public function validate(& $form) {
-		$model = new $form->options['model_table']();
-		// approve document
-		if (!empty($form->process_submit[self::BUTTON_SUBMIT_APPROVE]) || !empty($form->process_submit[self::BUTTON_SUBMIT_DECLINE])) {
-			if (!empty($form->values['approve_file_approve_document_id'])) {
-				$documents_result = \Factory::model($model->documents_model)->merge([
-					'wg_document_id' => $form->values['approve_file_approve_document_id'],
-					'wg_document_approval_status_id' => !empty($form->process_submit[self::BUTTON_SUBMIT_APPROVE]) ? 30 : 40
-				]);
-				if (!$documents_result['success']) {
-					$form->error(DANGER, $documents_result['error']);
-					return;
-				} else {
-					$form->error(SUCCESS, \Object\Content\Messages::OPERATION_EXECUTED);
-					return;
-				}
-			}
-		}
-		// if we have new comment
-		if (!empty($form->process_submit[self::BUTTON_SUBMIT_OTHER])) {
-			if (empty($form->values['new_file_upload_1'])) {
-				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'new_file_upload_1');
-			}
-			if (empty($form->values['new_file_catalog_code'])) {
-				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'new_file_catalog_code');
-			}
-			if ($form->hasErrors()) return;
-			// continue with logic
-			$data = [];
-			$model->db_object->begin();
-			foreach ($model->documents['map'] as $k => $v) {
-				if (isset($form->options['input'][$k])) {
-					$data[$v] = (int) $form->options['input'][$k];
-				}
-			}
-			// add file
-			if (!empty($form->values['new_file_upload_1'])) {
-				if (count($form->values['new_file_upload_1']) > 30) {
-					$form->error(DANGER, 'You can upload up to [number] files!', null, ['replace' => ['[number]' => \Format::id(30)]]);
-					return;
-				}
-				$upload_model = new \Numbers\Users\Documents\Base\Base();
-				$catalog = $upload_model->fetchPrimaryCatalog(\User::get('organization_id'));
-				if (empty($catalog)) {
-					$form->error(DANGER, 'You must set primary catalog!');
-					$model->db_object->rollback();
-					return;
-				}
-				$counter = 1;
-				foreach ($form->values['new_file_upload_1'] as $k => $v) {
-					$v['__image_properties'] = $form->fields['wg_document_file_1']['options']['validator_params'] ?? [];
-					$result = $upload_model->upload($v, $catalog);
-					if (!$result['success']) {
-						$form->error(DANGER, $result['error']);
-						$model->db_object->rollback();
-						return;
-					}
-					$data['wg_document_file_id_' . $counter] = $result['file_id'];
-					$counter++;
-				}
-			}
-			$data['wg_document_catalog_code'] = $form->values['new_file_catalog_code'];
-			$data['wg_document_important'] = !empty($form->values['new_file_important']) ? 1 : 0;
-			$data['wg_document_public'] = !empty($form->values['new_file_public']) ? 1 : 0;
-			$data['wg_document_comment'] = $form->values['new_file_comment'] ?? null;
-			$catalog = \Numbers\Users\Documents\Base\Model\Catalogs::getStatic([
-				'where' => [
-					'dt_catalog_code' => $form->values['new_file_catalog_code'],
-				],
-				'single_row' => true,
-				'pk' => null
-			]);
-			$data['wg_document_readonly'] = $catalog['dt_catalog_readonly'];
-			if (!empty($catalog['dt_catalog_approval'])) {
-				$data['wg_document_approval_status_id'] = 20;
-			} else {
-				$data['wg_document_approval_status_id'] = 10;
-			}
-			$documents_result = \Factory::model($model->documents_model)->merge($data);
-			if (!$documents_result['success']) {
-				$form->error(DANGER, $documents_result['error']);
-				$model->db_object->rollback();
-				return;
-			}
-			$form->values['new_file_important'] = 0;
-			$form->values['new_file_public'] = 0;
-			$form->values['new_file_comment'] = '';
-			$form->values['new_file_catalog_code'] = null;
-			$model->db_object->commit();
-			return;
 		}
 	}
 
@@ -292,11 +166,20 @@ class Documents extends \Object\Form\Wrapper\List2 {
 		if (($neighbouring_values['wg_document_approval_status_id'] ?? 10) == 20) {
 			// if you can approve or decline a document package
 			if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_Approve')) {
-				$new_link = '$(\'#form_wg_documents_element_approve_file_approve_document_id\').val(' . $neighbouring_values['wg_document_id'] . '); Numbers.Modal.show(\'form_wg_documents_modal_approve_file_dialog\');';
+				$temp_collection_link = $form->options['collection_link'] ?? '';
+				$temp_collection_screen_link = $form->options['collection_screen_link'] ?? '';
+				// bypass variables
+				$temp_bypass_hidden_input = [];
+				if (!empty($form->options['bypass_hidden_from_input'])) {
+					foreach ($form->options['bypass_hidden_from_input'] as $v2) {
+						$temp_bypass_hidden_input[$v2] = $form->options['input'][$v2] ?? '';
+					}
+				}
+				$temp_bypass_hidden_input['wg_document_id'] = $neighbouring_values['wg_document_id'];
+				$temp_bypass_hidden_input = json_encode($temp_bypass_hidden_input);
+				$new_link = "Numbers.Form.openSubformWindow('{$temp_collection_link}', '{$temp_collection_screen_link}', '{$this->form_link}', 'wg_approve_document', {$temp_bypass_hidden_input}, {});";
 				$toolbar[] = \HTML::a(['href' => 'javascript:void(0);', 'onclick' => $new_link, 'value' => \HTML::icon(['type' => 'far fa-handshake']) . ' ' . i18n(null, 'Approve / Reject')]);
 			}
-			// delete
-			// todo
 		}
 		return implode(' ', $toolbar);
 	}
@@ -319,7 +202,11 @@ class Documents extends \Object\Form\Wrapper\List2 {
 				'pk' => ['dt_file_id']
 			]);
 			foreach ($files as $k => $v) {
-				$result.= \HTML::a(['href' => \Numbers\Users\Documents\Base\Base::generateURL($k, false, $v['dt_file_name']), 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name']]);
+				if (!empty($neighbouring_values['wg_document_needs_transfer'])) {
+					$result.= \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name'];
+				} else {
+					$result.= \HTML::a(['href' => \Numbers\Users\Documents\Base\Base::generateURL($k, false, $v['dt_file_name']), 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name']]);
+				}
 				$result.= '<br/>';
 			}
 		}

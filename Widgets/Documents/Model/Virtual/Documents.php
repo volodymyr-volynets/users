@@ -50,6 +50,7 @@ class Documents extends \Object\Table {
 		$this->columns['wg_document_readonly'] = ['name' => 'Readonly', 'type' => 'boolean'];
 		$this->columns['wg_document_approval_status_id'] = ['name' => 'Approval Status', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Widgets\Documents\Model\Statuses'];
 		$this->columns['wg_document_have_types'] = ['name' => 'Have Types', 'type' => 'boolean'];
+		$this->columns['wg_document_needs_transfer'] = ['name' => 'Needs Transfer', 'type' => 'boolean'];
 		$this->columns['wg_document_file_id_1'] = ['name' => 'File 1', 'domain' => 'file_id'];
 		$this->columns['wg_document_file_id_2'] = ['name' => 'File 2', 'domain' => 'file_id', 'null' => true];
 		$this->columns['wg_document_file_id_3'] = ['name' => 'File 3', 'domain' => 'file_id', 'null' => true];

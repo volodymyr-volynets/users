@@ -119,16 +119,4 @@ class Tags extends \Object\Table {
 		$this->resetCache(); // reset cache tags
 		return $result;
 	}
-
-	/**
-	 * Delete
-	 *
-	 * @param array $data
-	 * @param array $options
-	 * @return array
-	 */
-	public function delete($data, $options = []) {
-		$data['wg_tag_tenant_id'] = \Tenant::id();
-		return $this->db_object->delete($this->full_table_name, $data, ['wg_tag_tenant_id', 'wg_tag_id']);
-	}
 }
