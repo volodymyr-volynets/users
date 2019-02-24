@@ -11,7 +11,7 @@ class Collection extends \Object\Form\Wrapper\Collection {
 				self::MAIN_ROW => [
 					'order' => 100,
 					self::FORMS => [
-						'um_users' => [
+						'on_locations' => [
 							'model' => '\Numbers\Users\Organizations\Form\Locations',
 							'bypass_values' => [
 								'on_location_id',
