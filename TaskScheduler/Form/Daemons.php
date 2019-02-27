@@ -21,7 +21,7 @@ class Daemons extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'ts_daemon_code' => [
-				'ts_daemon_code' => ['order' => 1, 'row_order' => 100, 'name' => 'Code', 'domain' => 'type_code', 'percent' => 95, 'required' => true, 'navigation' => true],
+				'ts_daemon_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Code', 'domain' => 'type_code', 'percent' => 95, 'required' => true, 'navigation' => true],
 				'ts_daemon_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'ts_daemon_name' => [
@@ -45,7 +45,7 @@ class Daemons extends \Object\Form\Wrapper\Base {
 	public function curlLink(& $form, & $options, & $value, & $neighbouring_values) {
 		$str = '<br/>';
 		if (!empty($form->values['ts_daemon_code'])) {
-			$str.= '/usr/bin/curl -s --data "daemon_code=' . urlencode($form->values['ts_daemon_code']) . '&daemon_token=' . urlencode($form->values['ts_daemon_token']) . '&__submit_button=1" ' . \Request::tenantHost('system') . 'Numbers/Users/TaskScheduler/Controller/External/CronDaemon';
+			$str.= '/usr/bin/curl --insecure --data "daemon_code=' . urlencode($form->values['ts_daemon_code']) . '&daemon_token=' . urlencode($form->values['ts_daemon_token']) . '&__submit_button=1" ' . \Request::tenantHost('system') . 'Numbers/Users/TaskScheduler/Controller/External/CronDaemon';
 		}
 		return $str;
 	}
