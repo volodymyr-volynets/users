@@ -166,33 +166,28 @@ class Locations extends \Object\Table {
 	/**
 	 * @see $this->options()
 	 */
-	public function optionsJsonSearch($options = []) {
-		if (!empty($options['show_all'])) {
-			$data = $this->options($options);
-		} else {
-			$data = $this->optionsActive($options);
-		}
+	public function optionsGrouppedSearch($options = []) {
+		$data = $this->options($options);
 		$markets = \Numbers\Users\Organizations\Model\Markets::optionsStatic();
 		$districts = \Numbers\Users\Organizations\Model\Districts::optionsStatic();
 		$result = [];
 		foreach ($data as $k => $v) {
-			$market_parent = \Object\Table\Options::optionJsonFormatKey(['market_id' => (int) $v['market_id'], 'district_id' => null, 'location_id' => null]);
+			$market_parent = 'MA-' . $v['market_id'];
 			if (!isset($result[$market_parent])) {
 				$result[$market_parent] = $markets[$v['market_id']];
-				$result[$market_parent]['disabled'] = !empty($options['enable_parent']) ? false : true;
+				$result[$market_parent]['disabled'] = true;
 			}
-			$district_parent = \Object\Table\Options::optionJsonFormatKey(['market_id' => (int) $v['market_id'], 'district_id' => (int) $v['district_id'], 'location_id' => null]);
+			$district_parent = 'MA-' . $v['market_id'] . '-DI-' . $v['district_id'];
 			if (!isset($result[$district_parent])) {
 				$result[$district_parent] = $districts[$v['district_id']];
-				$result[$district_parent]['disabled'] = !empty($options['enable_parent']) ? false : true;
+				$result[$district_parent]['disabled'] = true;
 				$result[$district_parent]['parent'] = $market_parent;
 			}
-			$key = \Object\Table\Options::optionJsonFormatKey(['market_id' => (int) $v['market_id'], 'district_id' => (int) $v['district_id'], 'location_id' => (int) $k]);
 			if (!empty($options['skip_photo_id'])) {
 				unset($v['photo_id']);
 			}
-			$result[$key] = $v;
-			$result[$key]['parent'] = $district_parent;
+			$result[$k] = $v;
+			$result[$k]['parent'] = $district_parent;
 		}
 		if (!empty($result)) {
 			$converted = \Helper\Tree::convertByParent($result, 'parent');

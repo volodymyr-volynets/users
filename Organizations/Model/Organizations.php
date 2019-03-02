@@ -166,4 +166,39 @@ class Organizations extends \Object\Table {
 		}
 		return $result;
 	}
+
+	/**
+	 * @see $this->options()
+	 */
+	public function optionsGrouppedActiveCustomers($options = []) {
+		$data = $this->options($options);
+		$result = [];
+		foreach ($data as $k => $v) {
+			if ($v['subtype_id'] == 10) {
+				$parent = 'PO-' . $k;
+				if (!empty($options['skip_photo_id'])) {
+					unset($v['photo_id']);
+				}
+				$result[$parent] = $v;
+				$result[$parent]['disabled'] = true;
+				if (!empty($v['parent_id'])) {
+					$result[$parent]['parent'] = 'PO-' . $v['parent_id'];
+				}
+			} else if ($v['subtype_id'] == 20) {
+				$key = $k;
+				if (!empty($options['skip_photo_id'])) {
+					unset($v['photo_id']);
+				}
+				$result[$key] = $v;
+				$result[$key]['parent'] = 'PO-' . $v['parent_id'];
+				$result[$key]['__selected_name'] = i18n(null, $data[$v['parent_id']]['name']) . ': ' . i18n(null, $v['name']);
+			}
+		}
+		if (!empty($result)) {
+			$converted = \Helper\Tree::convertByParent($result, 'parent');
+			$result = [];
+			\Helper\Tree::convertTreeToOptionsMulti($converted, 0, ['name_field' => 'name'], $result);
+		}
+		return $result;
+	}
 }
