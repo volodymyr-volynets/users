@@ -78,9 +78,8 @@ class Organizations extends \Object\Form\Wrapper\Base {
 				'on_organization_hold' => ['order' => 3, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
 				'on_organization_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
-			'on_organization_subtype_id' => [
-				'on_organization_subtype_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Subtype', 'domain' => 'type_id', 'null' => true, 'default' => 10, 'required' => true, 'percent' => 50, 'placeholder' => 'Subtype', 'method' => 'select', 'no_choose' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Subtypes'],
-				'on_organization_parent_organization_id' => ['order' => 1, 'label_name' => 'Parent Organization', 'domain' => 'organization_id', 'null' => true, 'required' => 'c', 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_depends' => ['on_organization_id;<>' => 'parent::on_organization_id'], 'options_params' => ['on_organization_subtype_id' => 10], 'options_options' => ['skip_acl' => true]],
+			'on_organization_parent_organization_id' => [
+				'on_organization_parent_organization_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Organization', 'domain' => 'organization_id', 'null' => true, 'required' => 'c', 'percent' => 100, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_depends' => ['on_organization_id;<>' => 'parent::on_organization_id'], 'options_options' => ['skip_acl' => true]],
 			],
 			'on_organization_icon' => [
 				'on_organization_icon' => ['order' => 1, 'row_order' => 250, 'label_name', 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
@@ -164,18 +163,6 @@ class Organizations extends \Object\Form\Wrapper\Base {
 	];
 
 	public function validate(& $form) {
-		// customer organization
-		if ($form->values['on_organization_subtype_id'] == 20) {
-			if (empty($form->values['on_organization_operating_currency_code'])) {
-				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_organization_operating_currency_code');
-			}
-			if (empty($form->values['on_organization_operating_currency_type'])) {
-				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_organization_operating_currency_type');
-			}
-			if (empty($form->values['on_organization_parent_organization_id'])) {
-				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'on_organization_parent_organization_id');
-			}
-		}
 		// primary address
 		if (!$form->hasErrors()) {
 			if (empty($form->values['\Numbers\Users\Organizations\Model\Organizations\0Virtual0\Widgets\Addresses'])) {
@@ -194,29 +181,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 		}
 		// logo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
-			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];
-			$model = new \Numbers\Users\Documents\Base\Base();
-			// remove file if exists
-			if (!empty($form->values['on_organization_logo_file_id'])) {
-				$result = $model->delete($form->values['on_organization_logo_file_id']);
-				if (!$result['success']) {
-					$form->error(DANGER, $result['error']);
-					return;
-				}
-				$form->values['on_organization_logo_file_id'] = null;
-			}
-			// add file
-			$catalog = $model->fetchPrimaryCatalog($form->values['on_organization_id']);
-			if (empty($catalog)) {
-				$form->error(DANGER, 'You must set primary catalog!');
-				return;
-			}
-			$result = $model->upload($form->values['__logo_upload'], $catalog);
-			if (!$result['success']) {
-				$form->error(DANGER, $result['error']);
-				return;
-			}
-			$form->values['on_organization_logo_file_id'] = $result['file_id'];
+			\Numbers\Users\Documents\Base\Helper\MassUpload::uploadOneInForm($form, $form->values['__logo_upload'], 'on_organization_logo_file_id', $form->fields['__logo_upload']['options']['validator_params'] ?? []);
 		}
 	}
 

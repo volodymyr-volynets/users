@@ -59,6 +59,7 @@ class Login extends \Object\DataSource {
 			'teams' => 'h.teams',
 			'features' => 'j.features',
 			'subresources' => 'k.subresources',
+			'flags' => 'l.flags',
 			// internalization
 			'i18n_group_id' => 'd.um_usri18n_group_id',
 			'i18n_language_code' => 'd.um_usri18n_language_code',
@@ -187,6 +188,16 @@ class Login extends \Object\DataSource {
 		}, 'k', 'ON', [
 			['AND', ['a.um_user_id', '=', 'k.um_usrsubres_user_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\Flags::queryBuilderStatic(['alias' => 'inner_l', 'skip_acl' => true])->select();
+			$query->columns([
+				'inner_l.um_usrsysflag_user_id',
+				'flags' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_l.um_usrsysflag_sysflag_id, inner_l.um_usrsysflag_action_id, inner_l.um_usrsysflag_inactive, inner_l.um_usrsysflag_module_id)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_l.um_usrsysflag_user_id']);
+		}, 'l', 'ON', [
+			['AND', ['a.um_user_id', '=', 'l.um_usrsysflag_user_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
@@ -283,6 +294,17 @@ class Login extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['features'] = [];
+			}
+			// flags
+			if (!empty($v['flags'])) {
+				$data[$k]['flags'] = [];
+				$temp = explode(';;', $v['flags']);
+				foreach ($temp as $v2) {
+					$v2 = explode('::', $v2);
+					$data[$k]['flags'][(int) $v2[0]][(int)$v2[1]][(int) $v2[3]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['flags'] = [];
 			}
 			// linked_accounts
 			if (!empty($v['linked_accounts'])) {

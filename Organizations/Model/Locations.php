@@ -33,7 +33,7 @@ class Locations extends \Object\Table {
 		'on_location_about_description' => ['name' => 'About Description', 'domain' => 'description', 'null' => true],
 		// organization
 		'on_location_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
-		'on_location_customer_organization_id' => ['name' => 'Customer Organization #', 'domain' => 'organization_id', 'null' => true],
+		'on_location_customer_id' => ['name' => 'Customer #', 'domain' => 'customer_id', 'null' => true],
 		'on_location_number' => ['name' => 'Location Number', 'domain' => 'location_number'],
 		'on_location_brand_id' => ['name' => 'Brand #', 'domain' => 'brand_id'],
 		'on_location_district_id' => ['name' => 'District #', 'domain' => 'district_id'],
@@ -48,7 +48,7 @@ class Locations extends \Object\Table {
 	public $constraints = [
 		'on_locations_pk' => ['type' => 'pk', 'columns' => ['on_location_tenant_id', 'on_location_id']],
 		'on_location_code_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_code']],
-		'on_location_number_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_customer_organization_id', 'on_location_number']],
+		'on_location_number_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_customer_id', 'on_location_number']],
 		'on_location_item_master_id_un' => ['type' => 'unique', 'columns' => ['on_location_tenant_id', 'on_location_id', 'on_location_item_master_id']],
 		'on_location_organization_id_fk' => [
 			'type' => 'fk',

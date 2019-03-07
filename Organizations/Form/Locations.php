@@ -60,11 +60,11 @@ class Locations extends \Object\Form\Wrapper\Base {
 				'on_location_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
 			'on_location_organization_id' => [
-				'on_location_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Primary Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10], 'onchange' => 'this.form.submit();'],
+				'on_location_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'onchange' => 'this.form.submit();'],
 				'on_location_number' => ['order' => 2, 'label_name' => 'Location Number', 'domain' => 'location_number', 'null' => true, 'required' => true, 'percent' => 50],
 			],
-			'on_location_customer_organization_id' => [
-				'on_location_customer_organization_id' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Customer Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive', 'options_depends' => ['on_organization_parent_organization_id' => 'on_location_organization_id'], 'options_params' => ['on_organization_subtype_id' => 20]],
+			'on_location_customer_id' => [
+				'on_location_customer_id' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Customer', 'domain' => 'customer_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Customers::optionsActive', 'options_depends' => ['on_customer_organization_id' => 'on_location_organization_id']],
 			],
 			'on_location_brand_id' => [
 				'on_location_brand_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive'],
@@ -151,29 +151,7 @@ class Locations extends \Object\Form\Wrapper\Base {
 		}
 		// logo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
-			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];
-			$model = new \Numbers\Users\Documents\Base\Base();
-			// remove file if exists
-			if (!empty($form->values['on_location_logo_file_id'])) {
-				$result = $model->delete($form->values['on_location_logo_file_id']);
-				if (!$result['success']) {
-					$form->error(DANGER, $result['error']);
-					return;
-				}
-				$form->values['on_location_logo_file_id'] = null;
-			}
-			// add file
-			$catalog = $model->fetchPrimaryCatalog($form->values['on_location_organization_id']);
-			if (empty($catalog)) {
-				$form->error(DANGER, 'You must set primary catalog!');
-				return;
-			}
-			$result = $model->upload($form->values['__logo_upload'], $catalog);
-			if (!$result['success']) {
-				$form->error(DANGER, $result['error']);
-				return;
-			}
-			$form->values['on_location_logo_file_id'] = $result['file_id'];
+			\Numbers\Users\Documents\Base\Helper\MassUpload::uploadOneInForm($form, $form->values['__logo_upload'], 'on_location_logo_file_id', $form->fields['__logo_upload']['options']['validator_params'] ?? []);
 		}
 	}
 

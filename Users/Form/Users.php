@@ -62,7 +62,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Users\Model\User\Notifications',
 			'details_pk' => ['um_usrnoti_module_id', 'um_usernoti_feature_code'],
 			'order' => 35000,
-			'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
+			'acl_subresource_edit' => ['UM::USER_NOTIFICATIONS']
 		],
 		'features_container' => [
 			'type' => 'details',
@@ -71,7 +71,16 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Users\Model\User\Features',
 			'details_pk' => ['um_usrfeature_module_id', 'um_usrfeature_feature_code'],
 			'order' => 35000,
-			'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
+			'acl_subresource_edit' => ['UM::USER_FEATURES']
+		],
+		'flags_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Flags',
+			'details_pk' => ['um_usrsysflag_module_id', 'um_usrsysflag_sysflag_id', 'um_usrsysflag_action_id'],
+			'order' => 35000,
+			'acl_subresource_edit' => ['UM::USER_FLAGS']
 		],
 		'permissions_container' => [
 			'type' => 'details',
@@ -146,6 +155,16 @@ class Users extends \Object\Form\Wrapper\Base {
 			'order' => 35003,
 			'acl_subresource_edit' => ['UM::USER_TO_USER_ASSIGNMENTS']
 		],
+		'customer_assignments_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Customer\Customers',
+			'details_pk' => ['um_assigncustomer_organization_id', 'um_assigncustomer_customer_id'],
+			'details_empty_warning_message' => true,
+			'order' => 35004,
+			'acl_subresource_edit' => ['UM::USER_TO_CUSTOMER_ASSIGNMENTS']
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -168,10 +187,12 @@ class Users extends \Object\Form\Wrapper\Base {
 			'permissions' => ['order' => 400, 'label_name' => 'Permissions', 'acl_subresource_hide' => ['UM::USER_PERMISSIONS']],
 			'notifications' => ['order' => 500, 'label_name' => 'Notifications', 'acl_subresource_hide' => ['UM::USER_NOTIFICATIONS']],
 			'features' => ['order' => 600, 'label_name' => 'Features', 'acl_subresource_hide' => ['UM::USER_FEATURES']],
+			'flags' => ['order' => 700, 'label_name' => 'Flags', 'acl_subresource_hide' => ['UM::USER_FLAGS']],
 			'assignments' => ['order' => 800, 'label_name' => 'Assignments', 'acl_subresource_hide' => ['UM::USER_ASSIGNMENTS']],
 		],
 		'assignment_tabs' => [
 			'assignment_tabs_users' => ['order' => 100, 'label_name' => 'User To User', 'acl_subresource_hide' => ['UM::USER_TO_USER_ASSIGNMENTS']],
+			'assignment_customer_tabs_users' => ['order' => 200, 'label_name' => 'Customer', 'acl_subresource_hide' => ['UM::USER_TO_CUSTOMER_ASSIGNMENTS']],
 		]
 	];
 	public $elements = [
@@ -219,6 +240,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			'permissions' => [
 				'permissions' => ['container' => 'permissions_container', 'order' => 100],
 			],
+			'flags' => [
+				'flags' => ['container' => 'flags_container', 'order' => 100],
+			],
 			'notifications' => [
 				'notifications' => ['container' => 'notifications_container', 'order' => 100],
 			],
@@ -231,6 +255,9 @@ class Users extends \Object\Form\Wrapper\Base {
 				'user_assignments' => ['container' => 'assignments_container', 'order' => 100],
 				'user_assignments_label' => ['container' => 'user_assignments_label', 'order' => 150],
 				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 200],
+			],
+			'assignment_customer_tabs_users' => [
+				'customer_assignments' => ['container' => 'customer_assignments_container', 'order' => 100]
 			]
 		],
 		'general_container' => [
@@ -306,7 +333,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'um_usri18n_timezone_code' => [
 				'um_usri18n_timezone_code' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Timezone', 'domain' => 'timezone_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Timezones::optionsActive'],
-				'um_usri18n_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10]],
+				'um_usri18n_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive'],
 			],
 			'format' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 500, 'label_name' => 'Format', 'icon' => 'far fa-hourglass', 'percent' => 100],
@@ -340,7 +367,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'organizations_container' => [
 			'row1' => [
-				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10], 'onchange' => 'this.form.submit();'],
+				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'onchange' => 'this.form.submit();'],
 				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
 				'um_usrorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
@@ -376,6 +403,16 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			self::HIDDEN => [
 				'um_usrfeature_feature_code' => ['order' => 4, 'label_name' => 'Feature', 'domain' => 'feature_code', 'required' => true, 'null' => true, 'method' => 'hidden']
+			]
+		],
+		'flags_container' => [
+			'row1' => [
+				'um_usrsysflag_module_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Flag', 'domain' => 'module_id', 'required' => true, 'details_unique_select' => true, 'null' => true, 'percent' => 60, 'placeholder' => 'Flag', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Flags::optionsJson', 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrsysflag_module_id', 'sysflag_id' => 'um_usrsysflag_sysflag_id']],
+				'um_usrsysflag_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Flag\Actions::optionsGrouped', 'options_depends' => ['sysflag_id' => 'um_usrsysflag_sysflag_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_usrsysflag_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_usrsysflag_sysflag_id' => ['order' => 4, 'label_name' => 'System Flag #', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'method' => 'hidden']
 			]
 		],
 		'permissions_container' => [
@@ -442,6 +479,15 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id', 'method' => 'hidden'],
 			]
 		],
+		'customer_assignments_container' => [
+			'row1' => [
+				'um_assigncustomer_customer_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Customer', 'domain' => 'customer_id', 'null' => true, 'required' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'searchable' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Customers::optionsJson', 'options_options' => ['show_all' => true], 'onchange' => 'this.form.submit();', 'json_contains' => ['organization_id' => 'um_assigncustomer_organization_id', 'customer_id' => 'um_assigncustomer_customer_id']],
+				'um_assigncustomer_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_assigncustomer_organization_id' => ['order_for_defaults' => -32000, 'label_name' => 'Primary Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'method' => 'hidden'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -492,6 +538,12 @@ class Users extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrfeature_tenant_id', 'um_user_id' => 'um_usrfeature_user_id']
 			],
+			'\Numbers\Users\Users\Model\User\Flags' => [
+				'name' => 'Flags',
+				'pk' => ['um_usrsysflag_tenant_id', 'um_usrsysflag_user_id', 'um_usrsysflag_module_id', 'um_usrsysflag_sysflag_id', 'um_usrsysflag_action_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrsysflag_tenant_id', 'um_user_id' => 'um_usrsysflag_user_id']
+			],
 			'\Numbers\Users\Users\Model\User\Permissions' => [
 				'name' => 'Permissions',
 				'pk' => ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id'],
@@ -530,6 +582,12 @@ class Users extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_child_user_id']
 			],
+			'\Numbers\Users\Users\Model\User\Assignment\Customer\Customers' => [
+				'name' => 'Customer Assignments',
+				'pk' => ['um_assigncustomer_tenant_id', 'um_assigncustomer_user_id', 'um_assigncustomer_organization_id', 'um_assigncustomer_customer_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_assigncustomer_tenant_id', 'um_user_id' => 'um_assigncustomer_user_id']
+			]
 		]
 	];
 	public $notification = [
@@ -587,29 +645,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		}
 		// photo
 		if (!$form->hasErrors() && !empty($form->values['__logo_upload'])) {
-			$form->values['__logo_upload']['__image_properties'] = $form->fields['__logo_upload']['options']['validator_params'] ?? [];
-			$model = new \Numbers\Users\Documents\Base\Base();
-			// remove file if exists
-			if (!empty($form->values['um_user_photo_file_id'])) {
-				$result = $model->delete($form->values['um_user_photo_file_id']);
-				if (!$result['success']) {
-					$form->error(DANGER, $result['error']);
-					return;
-				}
-				$form->values['um_user_photo_file_id'] = null;
-			}
-			// add file
-			$catalog = $model->fetchPrimaryCatalog($primary_organization_id);
-			if (empty($catalog)) {
-				$form->error(DANGER, 'You must set primary catalog!');
-				return;
-			}
-			$result = $model->upload($form->values['__logo_upload'], $catalog);
-			if (!$result['success']) {
-				$form->error(DANGER, $result['error']);
-				return;
-			}
-			$form->values['um_user_photo_file_id'] = $result['file_id'];
+			\Numbers\Users\Documents\Base\Helper\MassUpload::uploadOneInForm($form, $form->values['__logo_upload'], 'um_user_photo_file_id', $form->fields['__logo_upload']['options']['validator_params'] ?? []);
 		}
 		// email
 		if (!empty($form->values['um_user_email'])) {

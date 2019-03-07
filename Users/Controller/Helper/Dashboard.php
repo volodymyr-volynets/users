@@ -17,7 +17,7 @@ class Dashboard extends \Object\Controller\Authorized {
 		$groupped = [0 => [], 1 => [], 2 => [], 3 => []];
 		$index = 0;
 		foreach ($data as $k => $v) {
-			$name = '<b>' . (!empty($v['icon']) ? (\HTML::icon(['type' => $v['icon']]) . ' ') : null) . $v['name'] . '</b>';
+			$name = \HTML::a(['href' => $v['url'] ?? 'javascript:void(0);', 'value' => (!empty($v['icon']) ? (\HTML::icon(['type' => $v['icon']]) . ' ') : null) . $v['name']]);
 			if (!empty($v['options'])) {
 				\I18n::translateArray($v['options'], true);
 				$name.= '<div class="numbers_postlogin_dashboard_content_inner">';

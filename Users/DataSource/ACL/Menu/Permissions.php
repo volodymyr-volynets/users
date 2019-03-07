@@ -65,6 +65,7 @@ class Permissions {
 							'name' => $v['group' . $i],
 							'title' => null,
 							'icon' => null,
+							'url' => $v['url'],
 							'child_ordered' => $v['child_ordered'],
 							'order' => $v['order'],
 							'separator' => $v['separator'],

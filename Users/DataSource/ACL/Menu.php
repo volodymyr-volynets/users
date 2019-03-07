@@ -56,6 +56,6 @@ class Menu extends \Object\DataSource {
 		$this->query->where('AND', ['a.sm_resource_type', '<', 300]);
 		$this->query->where('AND', ['a.sm_resource_inactive', '=', 0]);
 		// orderby
-		$this->query->orderby(['a.sm_resource_type' => SORT_DESC]);
+		$this->query->orderby(['a.sm_resource_type' => SORT_DESC, 'a.sm_resource_menu_order' => SORT_ASC]);
 	}
 }

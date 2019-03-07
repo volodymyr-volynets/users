@@ -81,7 +81,15 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'details_key' => '\Numbers\Users\Users\Model\Role\Features',
 			'details_pk' => ['um_rolfeature_module_id', 'um_rolfeature_feature_code'],
 			'order' => 35000
-		]
+		],
+		'flags_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\Role\Flags',
+			'details_pk' => ['um_rolsysflag_module_id', 'um_rolsysflag_sysflag_id', 'um_rolsysflag_action_id'],
+			'order' => 35000,
+		],
 	];
 
 	public $rows = [
@@ -96,6 +104,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'permissions' => ['order' => 300, 'label_name' => 'Permisions'],
 			'notifications' => ['order' => 400, 'label_name' => 'Notifications'],
 			'features' => ['order' => 450, 'label_name' => 'Features'],
+			'flags' => ['order' => 500, 'label_name' => 'Flags'],
 		]
 	];
 	public $elements = [
@@ -127,6 +136,9 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'features' => [
 				'features' => ['container' => 'features_container', 'order' => 100],
 			],
+			'flags' => [
+				'flags' => ['container' => 'flags_container', 'order' => 100],
+			],
 		],
 		'general_container' => [
 			'um_role_type_id' => [
@@ -145,7 +157,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 		],
 		'organizations_container' => [
 			'row1' => [
-				'um_rolorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10], 'onchange' => 'this.form.submit();'],
+				'um_rolorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'onchange' => 'this.form.submit();'],
 				'um_rolorg_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
@@ -196,6 +208,16 @@ class Roles extends \Object\Form\Wrapper\Base {
 			],
 			self::HIDDEN => [
 				'um_rolfeature_feature_code' => ['order' => 4, 'label_name' => 'Feature', 'domain' => 'feature_code', 'required' => true, 'null' => true, 'method' => 'hidden']
+			]
+		],
+		'flags_container' => [
+			'row1' => [
+				'um_rolsysflag_module_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Flag', 'domain' => 'module_id', 'required' => true, 'details_unique_select' => true, 'null' => true, 'percent' => 60, 'placeholder' => 'Flag', 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Flags::optionsJson', 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolsysflag_module_id', 'sysflag_id' => 'um_rolsysflag_sysflag_id']],
+				'um_rolsysflag_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Flag\Actions::optionsGrouped', 'options_depends' => ['sysflag_id' => 'um_rolsysflag_sysflag_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_rolsysflag_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_rolsysflag_sysflag_id' => ['order' => 4, 'label_name' => 'System Flag #', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'method' => 'hidden']
 			]
 		],
 		'buttons' => [
@@ -249,7 +271,13 @@ class Roles extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_rolorg_tenant_id', 'um_rolorg_role_id', 'um_rolorg_organization_id'],
 				'type' => '1M',
 				'map' => ['um_role_tenant_id' => 'um_rolorg_tenant_id', 'um_role_id' => 'um_rolorg_role_id']
-			]
+			],
+			'\Numbers\Users\Users\Model\Role\Flags' => [
+				'name' => 'Flags',
+				'pk' => ['um_rolsysflag_tenant_id', 'um_rolsysflag_role_id', 'um_rolsysflag_module_id', 'um_rolsysflag_sysflag_id', 'um_rolsysflag_action_id'],
+				'type' => '1M',
+				'map' => ['um_role_tenant_id' => 'um_rolsysflag_tenant_id', 'um_role_id' => 'um_rolsysflag_role_id']
+			],
 		]
 	];
 

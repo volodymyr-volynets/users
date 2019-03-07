@@ -30,7 +30,7 @@ class Holidays extends \Object\Form\Wrapper\Base {
 				'on_holiday_date' => ['order' => 2, 'label_name' => 'Date', 'type' => 'date', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'calendar', 'calendar_icon' => 'right']
 			],
 			'on_holiday_organization_id' => [
-				'on_holiday_organization_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10]],
+				'on_holiday_organization_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive'],
 			]
 		],
 		'buttons' => [

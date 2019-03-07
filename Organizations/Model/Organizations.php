@@ -19,7 +19,6 @@ class Organizations extends \Object\Table {
 		'on_organization_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'on_organization_name' => ['name' => 'Name', 'domain' => 'name'],
 		'on_organization_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
-		'on_organization_subtype_id' => ['name' => 'Subtype', 'domain' => 'type_id', 'default' => 10, 'options_model' => '\Numbers\Users\Organizations\Model\Organization\Subtypes'],
 		'on_organization_parent_organization_id' => ['name' => 'Parent Organization #', 'domain' => 'organization_id', 'null' => true],
 		// contact
 		'on_organization_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],
@@ -68,7 +67,6 @@ class Organizations extends \Object\Table {
 		'on_organization_icon' => 'icon_class',
 		'on_organization_logo_file_id' => 'photo_id',
 		'on_organization_parent_organization_id' => 'parent_id',
-		'on_organization_subtype_id' => 'subtype_id',
 		'on_organization_inactive' => 'inactive'
 	];
 	public $options_active = [
@@ -127,78 +125,4 @@ class Organizations extends \Object\Table {
 		'protection' => 2,
 		'scope' => 'enterprise'
 	];
-
-	/**
-	 * @see $this->options()
-	 */
-	public function optionsJsonActiveCustomers($options = []) {
-		if (!empty($options['show_all'])) {
-			$data = $this->options($options);
-		} else {
-			$data = $this->optionsActive($options);
-		}
-		$result = [];
-		foreach ($data as $k => $v) {
-			if ($v['subtype_id'] == 10) {
-				$parent = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $k, 'customer_organization_id' => null]);
-				if (!empty($options['skip_photo_id'])) {
-					unset($v['photo_id']);
-				}
-				$result[$parent] = $v;
-				$result[$parent]['disabled'] = !empty($options['enable_parent']) ? false : true;
-				if (!empty($v['parent_id'])) {
-					$result[$parent]['parent'] = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id'], 'customer_organization_id' => null]);
-				}
-			} else if ($v['subtype_id'] == 20) {
-				$key = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id'], 'customer_organization_id' => (int) $k]);
-				if (!empty($options['skip_photo_id'])) {
-					unset($v['photo_id']);
-				}
-				$result[$key] = $v;
-				$result[$key]['parent'] = \Object\Table\Options::optionJsonFormatKey(['parent_id' => (int) $v['parent_id'], 'customer_organization_id' => null]);
-				$result[$key]['__selected_name'] = i18n(null, $data[$v['parent_id']]['name']) . ': ' . i18n(null, $v['name']);
-			}
-		}
-		if (!empty($result)) {
-			$converted = \Helper\Tree::convertByParent($result, 'parent');
-			$result = [];
-			\Helper\Tree::convertTreeToOptionsMulti($converted, 0, ['name_field' => 'name'], $result);
-		}
-		return $result;
-	}
-
-	/**
-	 * @see $this->options()
-	 */
-	public function optionsGrouppedActiveCustomers($options = []) {
-		$data = $this->options($options);
-		$result = [];
-		foreach ($data as $k => $v) {
-			if ($v['subtype_id'] == 10) {
-				$parent = 'PO-' . $k;
-				if (!empty($options['skip_photo_id'])) {
-					unset($v['photo_id']);
-				}
-				$result[$parent] = $v;
-				$result[$parent]['disabled'] = true;
-				if (!empty($v['parent_id'])) {
-					$result[$parent]['parent'] = 'PO-' . $v['parent_id'];
-				}
-			} else if ($v['subtype_id'] == 20) {
-				$key = $k;
-				if (!empty($options['skip_photo_id'])) {
-					unset($v['photo_id']);
-				}
-				$result[$key] = $v;
-				$result[$key]['parent'] = 'PO-' . $v['parent_id'];
-				$result[$key]['__selected_name'] = i18n(null, $data[$v['parent_id']]['name']) . ': ' . i18n(null, $v['name']);
-			}
-		}
-		if (!empty($result)) {
-			$converted = \Helper\Tree::convertByParent($result, 'parent');
-			$result = [];
-			\Helper\Tree::convertTreeToOptionsMulti($converted, 0, ['name_field' => 'name'], $result);
-		}
-		return $result;
-	}
 }

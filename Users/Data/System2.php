@@ -373,6 +373,48 @@ class System2 extends \Object\Import {
 					]
 				],
 				[
+					'sm_rsrsubres_id' => '::id::UM::USER_FLAGS',
+					'sm_rsrsubres_resource_id' => '::id::\Numbers\Users\Users\Controller\Users',
+					'sm_rsrsubres_parent_rsrsubres_id' => null,
+					'sm_rsrsubres_code' => 'UM::USER_FLAGS',
+					'sm_rsrsubres_name' => 'U/M User Flags',
+					'sm_rsrsubres_icon' => 'far fa-flag',
+					'sm_rsrsubres_module_code' => 'UM',
+					'sm_rsrsubres_inactive' => 0,
+					'\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
+						[
+							'sm_rsrsubftr_feature_code' => 'UM::USERS',
+							'sm_rsrsubftr_inactive' => 0
+						]
+					],
+					'\Numbers\Backend\System\Modules\Model\Resource\Subresource\Map' => [
+						[
+							'sm_rsrsubmap_action_id' => '::id::All_Actions',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_View',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_New',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_Edit',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_Inactivate',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_Delete',
+							'sm_rsrsubmap_inactive' => 0
+						],
+					]
+				],
+				[
 					'sm_rsrsubres_id' => '::id::UM::USER_ASSIGNMENTS',
 					'sm_rsrsubres_resource_id' => '::id::\Numbers\Users\Users\Controller\Users',
 					'sm_rsrsubres_parent_rsrsubres_id' => null,
@@ -579,6 +621,48 @@ class System2 extends \Object\Import {
 						[
 							'sm_rsrsubmap_action_id' => '::id::Record_Edit',
 							'sm_rsrsubmap_disabled' => 1,
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_Delete',
+							'sm_rsrsubmap_inactive' => 0
+						],
+					]
+				],
+				[
+					'sm_rsrsubres_id' => '::id::UM::USER_TO_CUSTOMER_ASSIGNMENTS',
+					'sm_rsrsubres_resource_id' => '::id::\Numbers\Users\Users\Controller\Users',
+					'sm_rsrsubres_parent_rsrsubres_id' => '::id::UM::USER_ASSIGNMENTS',
+					'sm_rsrsubres_code' => 'UM::USER_TO_CUSTOMER_ASSIGNMENTS',
+					'sm_rsrsubres_name' => 'U/M User To Customer Assignments',
+					'sm_rsrsubres_icon' => ' far fa-building',
+					'sm_rsrsubres_module_code' => 'ON',
+					'sm_rsrsubres_inactive' => 0,
+					'\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
+						[
+							'sm_rsrsubftr_feature_code' => 'ON::ORGANIZATIONS',
+							'sm_rsrsubftr_inactive' => 0
+						]
+					],
+					'\Numbers\Backend\System\Modules\Model\Resource\Subresource\Map' => [
+						[
+							'sm_rsrsubmap_action_id' => '::id::All_Actions',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_View',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_New',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_Edit',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_Inactivate',
 							'sm_rsrsubmap_inactive' => 0
 						],
 						[

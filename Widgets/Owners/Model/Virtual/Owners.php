@@ -44,6 +44,7 @@ class Owners extends \Object\Table {
 		// add regular columns
 		$this->columns['wg_owner_tenant_id'] = ['name' => 'Tenant #', 'domain' => 'tenant_id'];
 		$this->columns['wg_owner_ownertype_id'] = ['name' => 'Owner Type #', 'domain' => 'type_id'];
+		$this->columns['wg_owner_ownertype_code'] = ['name' => 'Owner Type Code', 'domain' => 'group_code'];
 		$this->columns['wg_owner_user_id'] = ['name' => 'User #', 'domain' => 'user_id'];
 		$this->columns['wg_owner_inactive'] = ['name' => 'Inactive', 'type' => 'boolean'];
 		$this->pk = array_merge(array_values($this->map), ['wg_owner_ownertype_id', 'wg_owner_user_id']);

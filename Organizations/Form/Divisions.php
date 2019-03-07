@@ -60,7 +60,7 @@ class Divisions extends \Object\Form\Wrapper\Base {
 		],
 		'organizations_container' => [
 			'row1' => [
-				'on_diviorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10], 'onchange' => 'this.form.submit();'],
+				'on_diviorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'onchange' => 'this.form.submit();'],
 				'on_diviorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
@@ -70,7 +70,7 @@ class Divisions extends \Object\Form\Wrapper\Base {
 				'on_division_region_id' => ['order' => 2, 'label_name' => 'Region', 'domain' => 'country_number', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Regions::optionsActive'],
 			],
 			'on_division_parent_organization_id' => [
-				'on_division_parent_organization_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Organization', 'domain' => 'organization_id', 'null' => true, 'required' => 'c', 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10]],
+				'on_division_parent_organization_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Organization', 'domain' => 'organization_id', 'null' => true, 'required' => 'c', 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive'],
 				'on_division_parent_division_id' => ['order' => 2, 'label_name' => 'Parent Division', 'domain' => 'division_id', 'null' => true, 'required' => 'c', 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Divisions::optionsActive', 'options_params' => ['on_division_type_id' => 10]],
 			]
 		],

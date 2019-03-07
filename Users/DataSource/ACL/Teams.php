@@ -28,7 +28,8 @@ class Teams extends \Object\DataSource {
 			'inactive' => 'a.um_team_inactive',
 			'c.permissions',
 			'j.features',
-			'k.subresources'
+			'k.subresources',
+			'l.flags'
 		]);
 		// join
 		$this->query->join('LEFT', function (& $query) {
@@ -72,6 +73,16 @@ class Teams extends \Object\DataSource {
 		}, 'k', 'ON', [
 			['AND', ['a.um_team_id', '=', 'k.um_temsubres_team_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\Team\Flags::queryBuilderStatic(['alias' => 'inner_l', 'skip_acl' => true])->select();
+			$query->columns([
+				'inner_l.um_temsysflag_team_id',
+				'flags' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_l.um_temsysflag_sysflag_id, inner_l.um_temsysflag_action_id, inner_l.um_temsysflag_inactive, inner_l.um_temsysflag_module_id)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_l.um_temsysflag_team_id']);
+		}, 'l', 'ON', [
+			['AND', ['a.um_team_id', '=', 'l.um_temsysflag_team_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_team_inactive', '=', 0]);
 	}
@@ -110,6 +121,17 @@ class Teams extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['subresources'] = [];
+			}
+			// flags
+			if (!empty($v['flags'])) {
+				$data[$k]['flags'] = [];
+				$temp = explode(';;', $v['flags']);
+				foreach ($temp as $v2) {
+					$v2 = explode('::', $v2);
+					$data[$k]['flags'][(int) $v2[0]][(int)$v2[1]][(int) $v2[3]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['flags'] = [];
 			}
 		}
 		return $data;

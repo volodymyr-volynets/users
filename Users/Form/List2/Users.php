@@ -42,7 +42,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 			],
 			'roles_filter' => [
 				'um_usrrol_role_id1' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Roles', 'domain' => 'role_id', 'percent' => 50, 'method' => 'multiselect', 'searchable' => true, 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\Model\Roles::optionsGrouped', 'subquery_builder' => ['model' => '\Numbers\Users\Users\Model\User\Roles', 'alias' => 'inner_b2', 'column' => 'inner_b2.um_usrrol_role_id', 'on' => [['a.um_user_id', '=', 'inner_b2.um_usrrol_user_id']]]],
-				'um_usrorg_organization_id1' => ['order' => 2, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'percent' => 50, 'method' => 'multiselect', 'searchable' => true, 'multiple_column' => 1, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGrouped', 'options_params' => ['on_organization_subtype_id' => 10], 'subquery_builder' => ['model' => '\Numbers\Users\Users\Model\User\Organizations', 'alias' => 'inner_a2', 'column' => 'inner_a2.um_usrorg_organization_id', 'on' => [['a.um_user_id', '=', 'inner_a2.um_usrorg_user_id']]]],
+				'um_usrorg_organization_id1' => ['order' => 2, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'percent' => 50, 'method' => 'multiselect', 'searchable' => true, 'multiple_column' => 1, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGrouped', 'subquery_builder' => ['model' => '\Numbers\Users\Users\Model\User\Organizations', 'alias' => 'inner_a2', 'column' => 'inner_a2.um_usrorg_organization_id', 'on' => [['a.um_user_id', '=', 'inner_a2.um_usrorg_user_id']]]],
 			],
 			'um_user_hold1' => [
 				'um_user_hold1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_hold;='],
@@ -76,7 +76,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 				'um_user_hold' => ['order' => 6, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 5],
 			],
 			'row3' => [
-				'blank' => ['order' => 1, 'row_order' => 300, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10, 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Users::renderBecome'],
+				'blank' => ['order' => 1, 'row_order' => 300, 'label_name' => null, 'domain' => 'name', 'null' => true, 'percent' => 10, 'custom_renderer' => '\Numbers\Users\Users\Form\List2\Users::renderBecome', 'skip_fts' => true],
 				'um_usrrol_role_id' => ['order' => 2, 'label_name' => 'Roles', 'domain' => 'role_id', 'null' => true, 'percent' => 45, 'options_model' => '\Numbers\Users\Users\Model\Roles', 'subquery' => ['model' => '\Numbers\Users\Users\Model\User\Roles', 'alias' => 'inner_b', 'groupby' => 'um_usrrol_user_id', 'on' => [['a.um_user_id', '=', 'inner_b.um_usrrol_user_id']]]],
 				'um_usrorg_organization_id' => ['order' => 3, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'null' => true, 'percent' => 45, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations', 'subquery' => ['model' => '\Numbers\Users\Users\Model\User\Organizations', 'alias' => 'inner_a', 'groupby' => 'um_usrorg_user_id', 'on' => [['a.um_user_id', '=', 'inner_a.um_usrorg_user_id']]]],
 			]

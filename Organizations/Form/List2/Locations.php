@@ -41,8 +41,8 @@ class Locations extends \Object\Form\Wrapper\List2 {
 				'on_location_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_location_inactive;=']
 			],
 			'on_location_organization_id' => [
-				'on_location_organization_id1' => ['order' => 1, 'row_order' => 110, 'label_name' => 'Primary Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'options_params' => ['on_organization_subtype_id' => 10], 'query_builder' => 'a.on_location_organization_id;=', 'onchange' => 'this.form.submit();'],
-				'on_location_customer_organization_id1' => ['order' => 2, 'label_name' => 'Customer Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive', 'options_depends' => ['on_organization_parent_organization_id' => 'on_location_organization_id1'], 'options_params' => ['on_organization_subtype_id' => 20], 'query_builder' => 'a.on_location_customer_organization_id;='],
+				'on_location_organization_id1' => ['order' => 1, 'row_order' => 110] + \Numbers\Users\Organizations\Helper\Filter::F_ORGANIZATION_ID + ['query_builder' => 'a.on_location_organization_id;='],
+				'on_location_customer_id1' => ['order' => 2] + \Numbers\Users\Organizations\Helper\Filter::F_CUSTOMER_ID + ['query_builder' => 'a.on_location_customer_id;='],
 			],
 			'full_text_search' => [
 				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_location_name', 'a.on_location_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
