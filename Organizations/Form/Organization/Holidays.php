@@ -29,8 +29,8 @@ class Holidays extends \Object\Form\Wrapper\Base {
 				'on_holiday_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'percent' => 50, 'required' => true],
 				'on_holiday_date' => ['order' => 2, 'label_name' => 'Date', 'type' => 'date', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'calendar', 'calendar_icon' => 'right']
 			],
-			'on_holiday_organization_id' => [
-				'on_holiday_organization_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive'],
+			'organizations' => [
+				'\Numbers\Users\Organizations\Model\Organization\Holiday\Organizations' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization(s)', 'domain' => 'organization_id', 'multiple_column' => 'on_holiorg_organization_id', 'percent' => 100, 'method' => 'multiselect', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive'],
 			]
 		],
 		'buttons' => [
@@ -39,6 +39,14 @@ class Holidays extends \Object\Form\Wrapper\Base {
 	];
 	public $collection = [
 		'name' => 'Holidays',
-		'model' => '\Numbers\Users\Organizations\Model\Organization\Holidays'
+		'model' => '\Numbers\Users\Organizations\Model\Organization\Holidays',
+		'details' => [
+			'\Numbers\Users\Organizations\Model\Organization\Holiday\Organizations' => [
+				'name' => 'Organizations',
+				'pk' => ['on_holiorg_tenant_id', 'on_holiorg_holiday_id', 'on_holiorg_organization_id'],
+				'type' => '1M',
+				'map' => ['on_holiday_tenant_id' => 'on_holiorg_tenant_id', 'on_holiday_id' => 'on_holiorg_holiday_id']
+			]
+		]
 	];
 }

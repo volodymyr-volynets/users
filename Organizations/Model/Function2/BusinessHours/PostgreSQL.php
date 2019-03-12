@@ -8,7 +8,7 @@ class PostgreSQL extends \Object\Function2 {
 	public $name = 'on_calculate_business_time';
 	public $backend = 'PostgreSQL';
 	public $header = 'on_calculate_business_time(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)';
-	public $sql_version = '1.0.0';
+	public $sql_version = '1.0.1';
 	public $definition = 'CREATE OR REPLACE FUNCTION public.on_calculate_business_time(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)
 	RETURNS timestamp
 	LANGUAGE plpgsql
@@ -46,7 +46,16 @@ BEGIN
 			WHERE sub.time_column::date NOT IN (
 					SELECT on_holiday_date
 					FROM public.on_organization_holidays a
-					WHERE a.on_holiday_tenant_id = tenant_id AND a.on_holiday_organization_id = organization_id AND a.on_holiday_inactive = 0
+					WHERE a.on_holiday_tenant_id = tenant_id
+						AND a.on_holiday_inactive = 0
+						AND EXISTS (
+							SELECT
+								1
+							FROM public.on_organization_holiday_organizations AS inner_a
+							WHERE inner_a.on_holiorg_tenant_id = 2
+								AND a.on_holiday_id = inner_a.on_holiorg_holiday_id
+								AND inner_a.on_holiorg_organization_id = organization_id
+						)
 				)
 				AND EXISTS (
 					SELECT

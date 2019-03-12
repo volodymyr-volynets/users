@@ -26,10 +26,24 @@ class Environment {
 					$query2->where('AND', ['inner_b.on_organization_parent_organization_id', '=', 'inner_b2.id', true]);
 				});
 			});
-			$result = $query->query();
+			$result = $query->query(null, ['cache' => true, 'cache_memory' => true]);
 			return array_extract_values_by_key($result['rows'], 'id');
 		} else {
 			return [];
 		}
+	}
+
+	/**
+	 * Get customers
+	 */
+	public function getCustomers() {
+		return [];
+	}
+
+	/**
+	 * Get locations
+	 */
+	public function getLocations() {
+		return [];
 	}
 }

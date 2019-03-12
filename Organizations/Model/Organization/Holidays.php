@@ -19,18 +19,10 @@ class Holidays extends \Object\Table {
 		'on_holiday_id' => ['name' => 'Holiday #', 'domain' => 'holiday_id_sequence'],
 		'on_holiday_date' => ['name' => 'Date', 'type' => 'date'],
 		'on_holiday_name' => ['name' => 'Name', 'domain' => 'name', 'null' => true],
-		'on_holiday_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'on_holiday_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'on_organization_holidays_pk' => ['type' => 'pk', 'columns' => ['on_holiday_tenant_id', 'on_holiday_id']],
-		'on_holiday_date_un' => ['type' => 'unique', 'columns' => ['on_holiday_tenant_id', 'on_holiday_date', 'on_holiday_organization_id']],
-		'on_holiday_organization_id_fk' => [
-			'type' => 'fk',
-			'columns' => ['on_holiday_tenant_id', 'on_holiday_organization_id'],
-			'foreign_model' => '\Numbers\Users\Organizations\Model\Organizations',
-			'foreign_columns' => ['on_organization_tenant_id', 'on_organization_id']
-		]
 	];
 	public $indexes = [
 		'on_organization_holidays_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['on_holiday_name']],

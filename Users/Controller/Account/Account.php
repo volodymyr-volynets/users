@@ -10,7 +10,11 @@ class Account extends \Object\Controller {
 			} else {
 				$avatar = \HTML::icon(['type' => 'fas fa-address-card']);
 			}
-			$label = '<span>' . $avatar . ' ' . \User::get('name') . '</span>';
+			$short_name = \User::get('name');
+			if (strlen($short_name) > 20) {
+				$short_name = substr($short_name, 0, 20) . '...';
+			}
+			$label = '<span title="' . \User::get('name') . '">' . $avatar . ' ' . $short_name . '</span>';
 			\Layout::renderAs([
 				'success' => true,
 				'error' => [],

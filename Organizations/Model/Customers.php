@@ -162,6 +162,7 @@ class Customers extends \Object\Table {
 	 */
 	private function optionsJsonReccursive(& $result, $data, $parent_id, $parent_key) {
 		if (!empty($result[$parent_key])) return;
+		if (!isset($data[(int) $parent_id])) return;
 		$result[$parent_key] = $data[(int) $parent_id];
 		$result[$parent_key]['disabled'] = true;
 		if (!empty($result[$parent_key]['parent_id'])) {
@@ -185,7 +186,7 @@ class Customers extends \Object\Table {
 			}
 			$result[$k] = $v;
 			$result[$k]['parent'] = $parent;
-			$result[$k]['__selected_name'] = i18n(null, $organizations[$v['organization_id']]['name']) . ': ' . i18n(null, $v['name']);
+			$result[$k]['__selected_name'] = i18n(null, $organizations[(int) $v['organization_id']]['name']) . ': ' . i18n(null, $v['name']);
 		}
 		if (!empty($result)) {
 			$converted = \Helper\Tree::convertByParent($result, 'parent');
@@ -200,6 +201,7 @@ class Customers extends \Object\Table {
 	 */
 	private function optionsGrouppedTreeReccursive(& $result, $data, $parent_id, $parent_key) {
 		if (!empty($result[$parent_key])) return;
+		if (!isset($data[(int) $parent_id])) return;
 		$result[$parent_key] = $data[(int) $parent_id];
 		$result[$parent_key]['disabled'] = true;
 		if (!empty($result[$parent_key]['parent_id'])) {

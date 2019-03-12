@@ -44,7 +44,7 @@ class Types extends \Object\Table {
 
 	public $cache = true;
 	public $cache_tags = [];
-	public $cache_memory = false;
+	public $cache_memory = true;
 
 	public $data_asset = [
 		'classification' => 'client_confidential',
