@@ -1,6 +1,6 @@
 <?php
 
-namespace Numbers\Users\Documents\Drivers\AWS;
+namespace Numbers\Users\Documents\Drivers\Amazon;
 class Base implements \Numbers\Users\Documents\Base\Interface2\Base {
 
 	/**
@@ -17,7 +17,6 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base {
 	 */
 	public function __construct(array $options) {
 		$this->options = $options;
-		$this->options['dir'] = rtrim($this->options['dir'], '/') . '/';
 	}
 
 	/**
