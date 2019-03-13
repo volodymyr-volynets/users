@@ -89,20 +89,21 @@ class Base {
 			'where' => [
 				'dt_file_id' => $file_id,
 			],
-			'pk' => null
+			'pk' => null,
+			'single_row' => true,
 		]);
 		// delete in driver
 		$storages = \Numbers\Users\Documents\Base\Model\Storages::getStatic();
-		$storage = $storages[$file_data[0]['dt_file_storage_id']];
+		$storage = $storages[$file_data['dt_file_storage_id']];
 		$class = $storage['submodule'];
 		$file_upload_model = new $class($storage);
-		$file_upload_result = $file_upload_model->delete($file_data[0]);
+		$file_upload_result = $file_upload_model->delete($file_data);
 		if (!$file_upload_result['success']) {
 			$result['error'] = array_merge($result['error'], $file_upload_result['error']);
 			return $result;
 		}
 		// delete record
-		$delete_result = $model->collection()->merge($file_data[0], [
+		$delete_result = $model->collection()->merge($file_data, [
 			'flag_delete_row' => true
 		]);
 		if (!$delete_result['success']) {

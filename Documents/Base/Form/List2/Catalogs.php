@@ -48,9 +48,10 @@ class Catalogs extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'dt_catalog_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 15, 'url_edit' => true],
-				'dt_catalog_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 80],
-				'dt_catalog_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+				'dt_catalog_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 25, 'url_edit' => true],
+				'dt_catalog_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 55],
+				'dt_catalog_primary' => ['order' => 3, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
+				'dt_catalog_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			]
 		]
 	];

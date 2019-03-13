@@ -73,7 +73,8 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 				30,
 				$form->values['wg_document_file_id_1_new'],
 				'wg_document_file_id_',
-				$form->fields['wg_document_file_id_1_new']['options']['validator_params'] ?? []
+				$form->fields['wg_document_file_id_1_new']['options']['validator_params'] ?? [],
+				$form->values['wg_document_catalog_code']
 			);
 		}
 		// process catalog
@@ -89,6 +90,20 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 			$form->values['wg_document_approval_status_id'] = 20;
 		} else {
 			$form->values['wg_document_approval_status_id'] = 10;
+		}
+	}
+
+	public function post(& $form) {
+		if ($form->delete) {
+			$files = array_key_extract_by_prefix($form->original_values, 'wg_document_file_id_', false, true);
+			$files_model = new \Numbers\Users\Documents\Base\Base();
+			foreach ($files as $v) {
+				$files_result = $files_model->delete($v);
+				if (!$files_result['success']) {
+					$form->error(DANGER, $files_result['error']);
+					return;
+				}
+			}
 		}
 	}
 
