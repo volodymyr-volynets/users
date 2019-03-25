@@ -90,7 +90,9 @@ abstract class Task {
 		if (!empty($result['error'])) return $result;
 		// execute
 		$this->options = array_merge_hard($this->options, $options);
+		\Alive::start();
 		$result = $this->execute($this->parameters, $this->options);
+		\Alive::stop();
 		// todo: send email notification
 		return $result;
 	}

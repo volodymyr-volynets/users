@@ -20,7 +20,7 @@ class Owners extends \Object\DataSource {
 	];
 	public $column_prefix = 'um_user_';
 
-	public $cache = false;
+	public $cache = true;
 	public $cache_tags = [];
 	public $cache_memory = false;
 

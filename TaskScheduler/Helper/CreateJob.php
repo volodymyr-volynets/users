@@ -22,6 +22,11 @@ class CreateJob {
 				'ts_jbparam_value' => $v
 			];
 		}
-		\Request::redirect('/Numbers/Users/TaskScheduler/Controller/Jobs/_Edit?' . http_build_query2($params));
+		$url = '/Numbers/Users/TaskScheduler/Controller/Jobs/_Edit?' . http_build_query2($params);
+		if (\Application::get('flag.global.__ajax')) {
+			\Layout::onLoad("window.location.href = '{$url}';");
+		} else {
+			\Request::redirect($url);
+		}
 	}
 }

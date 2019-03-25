@@ -27,7 +27,7 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 				'wg_document_file_id_1_new' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'null' => true, 'required' => true, 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents']], 'description' => 'Extensions: Images, Audio, Documents'],
 			],
 			self::HIDDEN => [
-				'wg_document_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Comment #', 'domain' => 'big_id_sequence', 'null' => true, 'method' => 'hidden'],
+				'wg_document_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Document #', 'domain' => 'big_id_sequence', 'null' => true, 'method' => 'hidden'],
 			],
 		],
 		'buttons' => [

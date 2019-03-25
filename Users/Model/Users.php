@@ -95,9 +95,9 @@ class Users extends \Object\Table {
 		'MySQLi' => 'InnoDB'
 	];
 
-	public $cache = false;
+	public $cache = true;
 	public $cache_tags = [];
-	public $cache_memory = false;
+	public $cache_memory = true;
 
 	public $who = [
 		'inserted' => true,

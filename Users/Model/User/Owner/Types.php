@@ -36,8 +36,13 @@ class Types extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'um_ownertype_name' => 'name',
+		'um_ownertype_inactive' => 'inactive'
+	];
+	public $options_active = [
+		'um_ownertype_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];

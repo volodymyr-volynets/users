@@ -36,8 +36,13 @@ class Templates extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'um_notetemplate_name' => 'name',
+		'um_notetemplate_inactive' => 'inactive'
+	];
+	public $options_active = [
+		'um_notetemplate_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];

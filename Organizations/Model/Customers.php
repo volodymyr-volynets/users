@@ -78,7 +78,7 @@ class Customers extends \Object\Table {
 
 	public $cache = true;
 	public $cache_tags = [];
-	public $cache_memory = false;
+	public $cache_memory = true;
 
 	public $who = [
 		'inserted' => true,

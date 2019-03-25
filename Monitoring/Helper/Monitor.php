@@ -48,6 +48,10 @@ class Monitor {
 			'sm_monusage_method' => \Request::method(),
 			'\Numbers\Users\Monitoring\Model\Usage\Actions' => []
 		];
+		if (!\Application::get('flag.global.__ajax') && !\Helper\Cmd::isCli() && empty(\Application::$controller->skip_monitoring)) {
+			$usages_model = new \Numbers\Users\Monitoring\Model\Usages();
+			self::$usage['sm_monusage_id'] = $usages_model->sequence('sm_monusage_id');
+		}
 		// back link
 		if (!empty($_SESSION['numbers']['flag_monitoring_steps'])) {
 			if (!isset(self::$__history_id)) {
