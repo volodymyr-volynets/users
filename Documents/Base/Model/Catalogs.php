@@ -39,9 +39,12 @@ class Catalogs extends \Object\Table {
 	];
 	public $optimistic_lock = true;
 	public $options_map = [
-		'dt_catalog_name' => 'name'
+		'dt_catalog_name' => 'name',
+		'dt_catalog_inactive' => 'inactive'
 	];
-	public $options_active = [];
+	public $options_active = [
+		'dt_catalog_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];
