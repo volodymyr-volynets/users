@@ -152,27 +152,6 @@ class Comments extends \Object\Form\Wrapper\List2 {
 	}
 
 	public function renderCommentFiles(& $form, & $options, & $value, & $neighbouring_values) {
-		$result = '';
-		$files = [];
-		for ($i = 1; $i <= 10; $i++) {
-			if (!empty($neighbouring_values['wg_comment_file_' . $i])) {
-				$files[]= $neighbouring_values['wg_comment_file_' . $i];
-			} else {
-				break;
-			}
-		}
-		if (!empty($files)) {
-			$files = \Numbers\Users\Documents\Base\Model\Files::getStatic([
-				'where' => [
-					'dt_file_id' => $files
-				],
-				'pk' => ['dt_file_id']
-			]);
-			foreach ($files as $k => $v) {
-				$result.= \HTML::a(['href' => \Numbers\Users\Documents\Base\Base::generateURL($k, false, $v['dt_file_name']), 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name']]);
-				$result.= '<br/>';
-			}
-		}
-		return $result;
+		return \Numbers\Users\Widgets\Comments\Helper\Files::generateURLS($neighbouring_values, 'wg_comment_file_', 10);
 	}
 }
