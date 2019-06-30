@@ -30,6 +30,7 @@ class Owners extends \Object\DataSource {
 		'existing_values' => ['name' => 'Existing Values', 'type' => 'mixed'],
 		'owner_type_code' => ['name' => 'Owner Type Code', 'domain' => 'group_code'],
 		'owner_type_id' => ['name' => 'Owner Type #', 'domain' => 'type_id'],
+		'active' => ['name' => 'Active', 'type' => 'boolean'],
 	];
 
 	public function query($parameters, $options = []) {
@@ -98,6 +99,9 @@ class Owners extends \Object\DataSource {
 				}, 'EXISTS');
 			});
 		});
+		if (!empty($parameters['active'])) {
+			$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
+		}
 	}
 
 	public function process($data, $options = []) {

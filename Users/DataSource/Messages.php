@@ -14,7 +14,7 @@ class Messages extends \Object\DataSource {
 	public $options_active =[];
 	public $column_prefix = '';
 
-	public $cache = true;
+	public $cache = false;
 	public $cache_tags = [];
 	public $cache_memory = false;
 
@@ -45,6 +45,7 @@ class Messages extends \Object\DataSource {
 			'from_name' => 'b.um_mesheader_from_name',
 			'from_email' => 'b.um_mesheader_from_email',
 			'important' => 'b.um_mesheader_important',
+			'body_id' => 'b.um_mesheader_body_id',
 			'body' => 'c.um_mesbody_body',
 			'keywords' => 'b.um_mesheader_keywords',
 			'chat_group_id' => 'b.um_mesheader_chat_group_id',

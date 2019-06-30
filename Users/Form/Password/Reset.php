@@ -22,7 +22,7 @@ class Reset extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'login' => [
 			'username' => [
-				'username' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Username, Phone or Email Address', 'type' => 'varchar', 'length' => 255, 'percent' => 50, 'required' => true, 'autofocus' => true]
+				'username' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Username or Email Address', 'type' => 'varchar', 'length' => 255, 'percent' => 50, 'required' => true, 'autofocus' => true]
 			],
 			self::BUTTONS => [
 				self::BUTTON_SUBMIT => self::BUTTON_SUBMIT_DATA,

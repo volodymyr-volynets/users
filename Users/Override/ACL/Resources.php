@@ -35,6 +35,11 @@ class Resources {
 				'datasource' => '\Numbers\Users\Users\DataSource\ACL\Teams'
 			]
 		],
+		'owners' => [
+			'primary' => [
+				'datasource' => '\Numbers\Users\Users\DataSource\Owner\Roles'
+			],
+		],
 		'menu' => [
 			'primary' => [
 				'datasource' => '\Numbers\Users\Users\DataSource\ACL\Menu\Permissions'

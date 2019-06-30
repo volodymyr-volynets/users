@@ -33,6 +33,7 @@ class Roles extends \Object\DataSource {
 			'b.parents',
 			'c.permissions',
 			'j.features',
+			'm.notifications',
 			'k.subresources',
 			'l.flags'
 		]);
@@ -76,6 +77,16 @@ class Roles extends \Object\DataSource {
 			$query->groupby(['inner_j.um_rolfeature_role_id']);
 		}, 'j', 'ON', [
 			['AND', ['a.um_role_id', '=', 'j.um_rolfeature_role_id', true], false]
+		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\Role\Notifications::queryBuilderStatic(['alias' => 'inner_m', 'skip_acl' => true])->select();
+			$query->columns([
+				'inner_m.um_rolnoti_role_id',
+				'notifications' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('~~', inner_m.um_rolnoti_feature_code, inner_m.um_rolnoti_module_id, inner_m.um_rolnoti_inactive)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_m.um_rolnoti_role_id']);
+		}, 'm', 'ON', [
+			['AND', ['a.um_role_id', '=', 'm.um_rolnoti_role_id', true], false]
 		]);
 		$this->query->join('LEFT', function (& $query) {
 			$query = \Numbers\Users\Users\Model\Role\Permission\Subresources::queryBuilderStatic(['alias' => 'inner_k', 'skip_acl' => true])->select();
@@ -141,6 +152,17 @@ class Roles extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['features'] = [];
+			}
+			// notifications
+			if (!empty($v['notifications'])) {
+				$data[$k]['notifications'] = [];
+				$temp = explode(';;', $v['notifications']);
+				foreach ($temp as $v2) {
+					$v2 = explode('~~', $v2);
+					$data[$k]['notifications'][$v2[0]][(int) $v2[1]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['notifications'] = [];
 			}
 			// subresources
 			if (!empty($v['subresources'])) {

@@ -63,6 +63,18 @@ class Messages extends \Object\Controller\Authorized {
 			'class' => '',
 			'cellpadding' => 2
 		]);
+		$crypt = new \Crypt();
+		if (!empty($data['body_id'])) {
+			$iframe = \HTML::iframe([
+				'src' => \Request::host() . 'Numbers/Users/Users/Controller/Account/Messages/_ViewBody?token=' . $crypt->tokenCreate($data['body_id'], 'message.body'),
+				'width' => '100%',
+				'height' => '100%',
+				'border' => 0,
+				'style' => 'height: 700px;'
+			]);
+		} else {
+			$iframe = '';
+		}
 		$grid = [
 			'options' => [
 				'Links Row' => [
@@ -109,7 +121,7 @@ class Messages extends \Object\Controller\Authorized {
 				'Body Row' => [
 					'Body' => [
 						'Header' => [
-							'value' => $data['body'],
+							'value' => $iframe,
 							'options' => [
 								'percent' => 100,
 							]
@@ -149,5 +161,24 @@ class Messages extends \Object\Controller\Authorized {
 			'data' => $label,
 			'item' => \Request::input('item')
 		], 'application/json');
+	}
+	public function actionViewBody() {
+		$input = \Request::input();
+		// verify token
+		$crypt = new \Crypt();
+		$token_data = $crypt->tokenVerify($input['token'] ?? '', ['message.body']);
+		// fetch body
+		$data = \Numbers\Users\Users\Model\Message\Bodies::getStatic([
+			'where' => [
+				'um_mesbody_id' => $token_data['id']
+			],
+			'pk' => null,
+			'single_row' => true
+		]);
+		if (!empty($data['um_mesbody_bytea'])) {
+			\Layout::renderAs($crypt->uncompress($data['um_mesbody_bytea']), 'text/html', ['extension' => 'plain']);
+		} else {
+			\Layout::renderAs($crypt->uncompress($data['um_mesbody_body']), 'text/html', ['extension' => 'plain']);
+		}
 	}
 }

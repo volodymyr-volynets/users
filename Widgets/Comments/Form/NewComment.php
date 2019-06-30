@@ -38,6 +38,7 @@ class NewComment extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [];
+	public $notification_id;
 
 	public function overrides(& $form) {
 		if (!empty($form->__options['model_table'])) {
@@ -69,6 +70,11 @@ class NewComment extends \Object\Form\Wrapper\Base {
 			$form->values['wg_comment_template_id'] = null;
 			$form->values['wg_comment_value'] = nl2br($template['um_notetemplate_template']);
 		}
+		// public
+		if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_Public')) {
+			$form->element('top', 'wg_comment_important', 'wg_comment_public', ['readonly' => true]);
+			$form->values['wg_comment_public'] = 1;
+		}
 	}
 
 	public function validate(& $form) {
@@ -76,6 +82,9 @@ class NewComment extends \Object\Form\Wrapper\Base {
 		foreach ($model->comments['map'] as $k => $v) {
 			if (isset($form->options['input'][$k])) {
 				$form->values[$v] = (int) $form->options['input'][$k];
+				if (strpos($v, 'tenant_id') === false) {
+					$this->notification_id = $form->values[$v];
+				}
 			}
 		}
 		// add files
@@ -87,6 +96,13 @@ class NewComment extends \Object\Form\Wrapper\Base {
 				'wg_comment_file_',
 				$form->fields['wg_comment_file_1_new']['options']['validator_params'] ?? []
 			);
+		}
+	}
+
+	public function post(& $form) {
+		if (!empty($form->options['notification']['new']) && $form->values['wg_comment_public']) {
+			$method = \Factory::method($form->options['notification']['new']);
+			call_user_func_array($method, [$this->notification_id, \Application::$controller->module_id]);
 		}
 	}
 

@@ -22,7 +22,7 @@ class Login extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'login' => [
 			'username' => [
-				'username' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Username, Phone or Email Address', 'type' => 'varchar', 'length' => 255, 'percent' => 50, 'required' => true, 'autofocus' => true]
+				'username' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Username or Email Address', 'type' => 'varchar', 'length' => 255, 'percent' => 50, 'required' => true, 'autofocus' => true]
 			],
 			'password' => [
 				'password' => ['order' => 2, 'row_order' => 200, 'label_name' => 'Password', 'type' => 'varchar', 'percent' => 50, 'method' => 'password', 'required' => true, 'empty_value' => true]
@@ -37,6 +37,12 @@ class Login extends \Object\Form\Wrapper\Base {
 	public function save(& $form) {
 		$authorize = \Numbers\Users\Users\Model\User\Authorize::authorizeWithCredentials($form->values['username'], $form->values['password']);
 		if ($authorize['success']) {
+			// link from email
+			if (!empty($_SESSION['numbers']['tokens']['email_token'])) {
+				$href = $_SESSION['numbers']['tokens']['email_token']['data']['href'];
+				unset($_SESSION['numbers']['tokens']['email_token']['data']['href']);
+				\Request::redirect($href);
+			}
 			// if we need to redirect to post login page
 			$url = \Application::get('flag.global.default_postlogin_page');
 			if (!empty($url)) {

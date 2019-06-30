@@ -17,7 +17,8 @@ class Bodies extends \Object\Table {
 		'um_mesbody_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_mesbody_id' => ['name' => 'Message #', 'domain' => 'message_id_sequence'],
 		'um_mesbody_type_id' => ['name' => 'Type #', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Users\Model\Message\BodyTypes'],
-		'um_mesbody_body' => ['name' => 'Body', 'type' => 'text']
+		'um_mesbody_body' => ['name' => 'Body', 'type' => 'text', 'null' => true],
+		'um_mesbody_bytea' => ['name' => 'Body (Binary)', 'type' => 'bytea', 'null' => true]
 	];
 	public $constraints = [
 		'um_message_bodies_pk' => ['type' => 'pk', 'columns' => ['um_mesbody_tenant_id', 'um_mesbody_id']],

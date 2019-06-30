@@ -94,10 +94,49 @@ class Sender {
 		// run through translations
 		$subject = i18n(null, self::$cached_notifications[$notification_code]['sm_notification_subject'], ['replace' => $options['replace']['subject'] ?? null]);
 		$subject = strip_tags2($subject); // a must
-		$body = i18n(null, self::$cached_notifications[$notification_code]['sm_notification_body'], ['replace' => $options['replace']['body'] ?? null]);
-		$body = nl2br($body, true);
 		// from
 		$from = self::determineFromSettings(['organization_id' => \User::get('organization_id')]);
+		// email template
+		if (!empty(self::$cached_notifications[$notification_code]['sm_notification_email_model_code'])) {
+			$form = \Factory::model(self::$cached_notifications[$notification_code]['sm_notification_email_model_code'], false, [$options['form']]);
+			\Helper\Ob::start();
+			require(\Application::get(['application', 'path_full']) . 'Layout/' . \Application::get('application.layout.email') . '.html');
+			$body = str_replace([
+				'<!-- [numbers: document title] -->',
+				'<!-- [numbers: document body] -->'
+			], [
+				'<title>' . ($options['title'] ?? '') . '</title>',
+				$form->render()
+			], \Helper\Ob::clean());
+			$bytea = true;
+		} else if (!empty($options['calendar_invite'])) {
+			if (!empty($options['calendar_invite']['original_date'])) {
+				$calendar_invite_original = self::generateCalendarInvite(
+					$email,
+					$options['calendar_invite']['original_date'],
+					i18n(null, $options['calendar_invite']['title']['text'], ['replace' => $options['calendar_invite']['title']['replace'] ?? []]),
+					i18n(null, $options['calendar_invite']['summary']['text'], ['replace' => $options['calendar_invite']['summary']['replace'] ?? []]),
+					$options['calendar_invite']['id'],
+					true,
+					$options['from_email'] ?? $from['data']['email']
+				);
+			}
+			$body = self::generateCalendarInvite(
+				$email,
+				$options['calendar_invite']['date'],
+				i18n(null, $options['calendar_invite']['title']['text'], ['replace' => $options['calendar_invite']['title']['replace'] ?? []]),
+				i18n(null, $options['calendar_invite']['summary']['text'], ['replace' => $options['calendar_invite']['summary']['replace'] ?? []]),
+				$options['calendar_invite']['id'],
+				false,
+				$options['from_email'] ?? $from['data']['email']
+			);
+			$calendar_invite = true;
+			$bytea = false;
+		} else {
+			$body = i18n(null, self::$cached_notifications[$notification_code]['sm_notification_body'], ['replace' => $options['replace']['body'] ?? null]);
+			$body = nl2br($body, true);
+			$bytea = false;
+		}
 		// log notification
 		self::$notification_log[] = [
 			'notification_code' => $notification_code,
@@ -105,6 +144,7 @@ class Sender {
 			'email' => $email,
 			'subject' => $subject,
 			'body' => $body,
+			'bytea' => $bytea,
 			'from_email' => $options['from_email'] ?? $from['data']['email'] ?? null,
 			'from_name' => $options['from_name'] ?? $from['data']['name'] ?? null,
 			'important' => self::$cached_notifications[$notification_code]['sm_notification_important']
@@ -114,11 +154,18 @@ class Sender {
 				'to' => $email,
 				'subject' => $subject,
 				'message' => $body,
-				'important' => self::$cached_notifications[$notification_code]['sm_notification_important']
+				'important' => self::$cached_notifications[$notification_code]['sm_notification_important'],
+				'calendar_invite' => !empty($calendar_invite),
+				'calendar_message' => $body,
 			];
 			if ($from['success']) {
 				$send_options['from']['email'] = $options['from_email'] ?? $from['data']['email'];
 				$send_options['from']['name'] = $options['from_name'] ?? $from['data']['name'];
+			}
+			if (!empty($calendar_invite_original)) {
+				$send_options2 = $send_options;
+				$send_options2['calendar_message'] = $calendar_invite_original;
+				\Mail::send($send_options2);
 			}
 			return \Mail::send($send_options);
 		} else {
@@ -218,9 +265,18 @@ success:
 			if (!empty(self::$cached_notification_bodies[$body_hash])) {
 				$header['um_mesheader_body_id'] = self::$cached_notification_bodies[$body_hash];
 			} else {
+				if (!empty($data['bytea'])) {
+					$crypt = new \Crypt();
+					$bytea = $crypt->compress($data['body']);
+					$body = strip_tags2($data['body']);
+				} else {
+					$bytea = null;
+					$body = $data['body'];
+				}
 				$body_result = \Numbers\Users\Users\Model\Message\Bodies::collectionStatic()->merge([
 					'um_mesbody_type_id' => 20,
-					'um_mesbody_body' => $data['body']
+					'um_mesbody_body' => $body,
+					'um_mesbody_bytea;;bytea' => $bytea,
 				]);
 				if (!$body_result['success']) {
 					$result['error'][] = 'Could not store message body!';
@@ -272,5 +328,91 @@ success:
 			}
 		}
 		$model->db_object->commit();
+	}
+
+	/**
+	 * Determine users
+	 *
+	 * @param string $notification_code
+	 * @param int|array type $users
+	 * @param int|array $organizations
+	 * @param int $module_id
+	 * @return array
+	 */
+	public static function determineUsers(string $notification_code, $users = null, $organizations = null, $module_id = null) : array {
+		$users_ids = \Numbers\Users\Users\DataSource\User\Notifications::getStatic([
+			'where' => [
+				'selected_organizations' => $organizations,
+				'module_id' => $module_id,
+				'feature_code' => $notification_code,
+				'user_ids' => $users,
+			]
+		]);
+		// load users
+		$all_users = [];
+		if (!empty($users_ids)) {
+			$all_users = \Numbers\Users\Users\DataSource\Login::getStatic([
+				'where' => [
+					'user_ids' => array_keys($users_ids),
+				],
+				'pk' => ['id'],
+				'single_row' => false,
+			]);
+			if (!empty($all_users)) {
+				\User::$cached_users = array_merge_hard(\User::$cached_users, $all_users);
+				// filter
+				foreach ($all_users as $k => $v) {
+					if (empty($k)) continue;
+					\User::$override_user_id = $k;
+					if (!\Can::userNotificationExists($notification_code, $module_id)) {
+						unset($all_users[$k]);
+					}
+				}
+				\User::$override_user_id = null;
+			}
+		}
+		return array_keys($all_users);
+	}
+
+	/**
+	 * Generate calendar invite
+	 *
+	 * @param string $email
+	 * @param string $date
+	 * @param string $title
+	 * @param string $summary
+	 * @param string $id
+	 * @param bool $delete
+	 * @return string
+	 */
+	public static function generateCalendarInvite(string $email, string $date, string $title, string $summary, string $id, bool $delete = false, string $from = '') : string {
+		$date = gmdate("Ymd\THis\Z", strtotime($date));
+		$host = \Request::host(['name_only' => true]);
+		$uid =  $id . '@' . $host;
+		$result = "BEGIN:VCALENDAR\r\n";
+		$result.= "PRODID:-//" . $host . "//NONSGML Ical//\r\n";
+		$result.= "VERSION:2.0\r\n";
+		$result.= "METHOD:" . ($delete ? 'CANCEL' : 'REQUEST') . "\r\n";
+		$result.= "BEGIN:VEVENT\r\n";
+		$result.= "UID:" . $uid . "\r\n";
+		$result.= "ATTENDEE:MAILTO:" . $email . "\r\n";
+		$result.= "ORGANIZER:MAILTO:" . $from . "\r\n";
+		$result.= "DESCRIPTION:" . wordwrap(addcslashes($summary, "\n\\,;"), 75, "\r\n ", 1) . "\r\n";
+		$result.= "DTSTART:" . $date . "\r\n";
+		$result.= "DTSTAMP:" . $date . "\r\n";
+		if (!$delete) {
+			$result.= "STATUS:CONFIRMED\r\n";
+			$result.= "DURATION:PT1H\r\n";
+		} else {
+			$result.= "STATUS:CANCELLED\r\n";
+		}
+		$result.= "LOCATION: System\r\n";
+		$result.= "SEQUENCE:" . ($_SERVER['REQUEST_TIME']) . "\r\n";
+		$result.= "SUMMARY:" . wordwrap(addcslashes($title, "\n\\,;"), 75, "\r\n ", 1) . "\r\n";
+		$result.= "URL:" . \Request::host() . "\r\n";
+		$result.= "CLASS:PUBLIC\r\n";
+		$result.= "END:VEVENT\r\n";
+		$result.= "END:VCALENDAR\r\n";
+		return $result;
 	}
 }

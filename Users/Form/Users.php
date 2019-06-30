@@ -361,13 +361,13 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'roles_container' => [
 			'row1' => [
-				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Roles', 'onchange' => 'this.form.submit();'],
+				'um_usrrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Roles', 'onchange' => 'this.form.submit();'],
 				'um_usrrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
 		'organizations_container' => [
 			'row1' => [
-				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'onchange' => 'this.form.submit();'],
+				'um_usrorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'onchange' => 'this.form.submit();'],
 				'um_usrorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
 				'um_usrorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
@@ -442,7 +442,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'teams_container' => [
 			'row1' => [
-				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'team_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Teams::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'team_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\Model\Teams::optionsActive', 'onchange' => 'this.form.submit();'],
 				'um_usrtmmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
@@ -659,6 +659,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		}
 		// numeric phone
 		if (!empty($form->values['um_user_phone'])) {
+			$form->values['um_user_numeric_phone'] = null;
+			/*
 			$form->values['um_user_numeric_phone'] = \Object\Validator\Phone::plainNumber($form->values['um_user_phone']);
 			// validate if its already exists
 			if (!$users_model->checkUniqueConstraint('um_user_numeric_phone', $users_model->pk, [
@@ -667,6 +669,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			])) {
 				$form->error(DANGER, \Object\Content\Messages::DUPLICATE_RECORD, 'um_user_phone');
 			}
+			*/
 		} else {
 			$form->values['um_user_numeric_phone'] = null;
 		}

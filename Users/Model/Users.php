@@ -85,7 +85,7 @@ class Users extends \Object\Table {
 		'um_user_name' => 'name',
 		'um_user_company' => 'name',
 		'um_user_photo_file_id' => 'photo_id',
-		'um_user_inactive' => 'inactive'
+		'um_user_inactive' => 'inactive',
 	];
 	public $options_active = [
 		'um_user_inactive' => 0
@@ -158,6 +158,7 @@ class Users extends \Object\Table {
 	 * @var array
 	 */
 	public static $cached_users_with_avatar = [];
+	public static $cached_users = [];
 
 	/**
 	 * Get username with avatar
@@ -176,6 +177,23 @@ class Users extends \Object\Table {
 			}
 			$result.= $user['um_user_name'];
 			self::$cached_users_with_avatar[$user_id] = $result;
+			return $result;
+		}
+	}
+
+	/**
+	 * Get username with avatar
+	 *
+	 * @param int $user_id
+	 * @return string
+	 */
+	public static function getUsername(int $user_id) : string {
+		if (isset(self::$cached_users[$user_id])) {
+			return self::$cached_users[$user_id];
+		} else {
+			$user = \Numbers\Users\Users\Model\Users::loadById($user_id);
+			$result = $user['um_user_name'];
+			self::$cached_users[$user_id] = $result;
 			return $result;
 		}
 	}

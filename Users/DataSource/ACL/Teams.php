@@ -28,6 +28,7 @@ class Teams extends \Object\DataSource {
 			'inactive' => 'a.um_team_inactive',
 			'c.permissions',
 			'j.features',
+			'm.notifications',
 			'k.subresources',
 			'l.flags'
 		]);
@@ -83,6 +84,16 @@ class Teams extends \Object\DataSource {
 		}, 'l', 'ON', [
 			['AND', ['a.um_team_id', '=', 'l.um_temsysflag_team_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\Team\Notifications::queryBuilderStatic(['alias' => 'inner_m', 'skip_acl' => true])->select();
+			$query->columns([
+				'inner_m.um_temnoti_team_id',
+				'notifications' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('~~', inner_m.um_temnoti_feature_code, inner_m.um_temnoti_module_id, inner_m.um_temnoti_inactive)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_m.um_temnoti_team_id']);
+		}, 'm', 'ON', [
+			['AND', ['a.um_team_id', '=', 'm.um_temnoti_team_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_team_inactive', '=', 0]);
 	}
@@ -110,6 +121,17 @@ class Teams extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['features'] = [];
+			}
+			// notifications
+			if (!empty($v['notifications'])) {
+				$data[$k]['notifications'] = [];
+				$temp = explode(';;', $v['notifications']);
+				foreach ($temp as $v2) {
+					$v2 = explode('~~', $v2);
+					$data[$k]['notifications'][$v2[0]][(int) $v2[1]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['notifications'] = [];
 			}
 			// subresources
 			if (!empty($v['subresources'])) {

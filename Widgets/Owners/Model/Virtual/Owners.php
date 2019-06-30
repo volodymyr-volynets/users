@@ -167,6 +167,7 @@ class Owners extends \Object\Table {
 		// start processing of keys
 		$detail_key_holder = [];
 		$form->generateDetailsPrimaryKey($detail_key_holder, 'reset', $parent_data, $parent_keys, $options);
+		$owner_type_model = new \Numbers\Users\Users\Model\User\Owner\Types();
 		foreach ($data as $k => $v) {
 			// process pk
 			$form->generateDetailsPrimaryKey($detail_key_holder, 'pk', $v, $parent_keys, $options);
@@ -182,8 +183,16 @@ class Owners extends \Object\Table {
 			foreach ($value as $v2) {
 				$temp = explode('::', $k2);
 				$temp[3] = $v2;
+				$temp2 = $owner_type_model->get([
+					'where' => [
+						'um_ownertype_id' => (int) $v['wg_owner_ownertype_id'],
+					],
+					'pk' => null,
+					'single_row' => true
+				]);
 				$result[implode('::', $temp)] = array_merge_hard($detail_key_holder['parent_pks'], [
 					'wg_owner_ownertype_id' => (int) $v['wg_owner_ownertype_id'],
+					'wg_owner_ownertype_code' => $temp2['um_ownertype_code'],
 					'wg_owner_user_id' => $v2,
 					'wg_owner_inactive' => $v['wg_owner_inactive'] ?? 0
 				]);

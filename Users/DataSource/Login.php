@@ -21,6 +21,7 @@ class Login extends \Object\DataSource {
 	public $parameters = [
 		'username' => ['name' => 'Username', 'domain' => 'login'],
 		'user_id' => ['name' => 'User #', 'domain' => 'user_id'],
+		'user_ids' => ['name' => 'User(s) #', 'domain' => 'user_id', 'multiple_column' => true],
 	];
 
 	public function query($parameters, $options = []) {
@@ -58,6 +59,7 @@ class Login extends \Object\DataSource {
 			'linked_accounts' => 'g.linked_accounts',
 			'teams' => 'h.teams',
 			'features' => 'j.features',
+			'notifications' => 'm.notifications',
 			'subresources' => 'k.subresources',
 			'flags' => 'l.flags',
 			// internalization
@@ -189,6 +191,16 @@ class Login extends \Object\DataSource {
 			['AND', ['a.um_user_id', '=', 'k.um_usrsubres_user_id', true], false]
 		]);
 		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\Notifications::queryBuilderStatic(['alias' => 'inner_m', 'skip_acl' => true])->select();
+			$query->columns([
+				'inner_m.um_usrnoti_user_id',
+				'notifications' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('~~', inner_m.um_usrnoti_feature_code, inner_m.um_usrnoti_module_id, inner_m.um_usrnoti_inactive)", 'delimiter' => ';;'])
+			]);
+			$query->groupby(['inner_m.um_usrnoti_user_id']);
+		}, 'm', 'ON', [
+			['AND', ['a.um_user_id', '=', 'm.um_usrnoti_user_id', true], false]
+		]);
+		$this->query->join('LEFT', function (& $query) {
 			$query = \Numbers\Users\Users\Model\User\Flags::queryBuilderStatic(['alias' => 'inner_l', 'skip_acl' => true])->select();
 			$query->columns([
 				'inner_l.um_usrsysflag_user_id',
@@ -204,23 +216,32 @@ class Login extends \Object\DataSource {
 		$this->query->orderby([
 			'um_user_id' => SORT_DESC
 		]);
-		$this->query->limit(1);
-		if (!empty($parameters['user_id'])) {
+		if (!empty($parameters['user_ids'])) {
+			$this->query->where('AND', ['a.um_user_id', '=', $parameters['user_ids']]);
+		} else if (!empty($parameters['user_id'])) {
 			$this->query->where('AND', ['a.um_user_id', '=', (int) $parameters['user_id']]);
+			$this->query->limit(1);
 		} else {
 			$parameters['username'] = trim(strtolower($parameters['username'] . ''));
 			if (strpos($parameters['username'], '@') !== false) {
 				$this->query->where('AND', ['a.um_user_email', '=', $parameters['username']]);
+			/*
 			} else if (is_numeric($parameters['username'])) {
 				$this->query->where('AND', ['a.um_user_numeric_phone', '=', (int) $parameters['username']]);
+			*/
 			} else {
 				$this->query->where('AND', ['a.um_user_login_username', '=', $parameters['username']]);
 			}
+			$this->query->limit(1);
 		}
 	}
 
 	public function process($data, $options = []) {
 		foreach ($data as $k => $v) {
+			// unset password
+			if (!empty($options['parameters']['user_ids'])) {
+				unset($data[$k]['login_password']);
+			}
 			// roles
 			if (!empty($v['roles'])) {
 				$data[$k]['roles'] = explode(';;', $v['roles']);
@@ -294,6 +315,17 @@ class Login extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['features'] = [];
+			}
+			// notifications
+			if (!empty($v['notifications'])) {
+				$data[$k]['notifications'] = [];
+				$temp = explode(';;', $v['notifications']);
+				foreach ($temp as $v2) {
+					$v2 = explode('~~', $v2);
+					$data[$k]['notifications'][$v2[0]][(int) $v2[1]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['notifications'] = [];
 			}
 			// flags
 			if (!empty($v['flags'])) {

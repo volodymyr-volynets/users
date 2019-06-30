@@ -42,8 +42,13 @@ class Regions extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'on_region_name' => 'name',
+		'on_region_inactive' => 'inactive'
+	];
+	public $options_active = [
+		'on_region_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];
