@@ -119,10 +119,14 @@ class ActivityLog extends \Object\Form\Wrapper\Report {
 		foreach ($data['rows'] as $k => $v) {
 			$usage_ids[]= $v['sm_monusage_id'];
 		}
-		$query2 = \Numbers\Users\Monitoring\Model\Usage\Actions::queryBuilderStatic()->select();
-		$query2->columns('a.*');
-		$query2->where('AND', ['a.sm_monusgact_usage_id', '=', $usage_ids, false]);
-		$data2 = $query2->query(['sm_monusgact_usage_id' , 'sm_monusgact_action_id'], ['cache' => false]);
+		if (!empty($usage_ids)) {
+			$query2 = \Numbers\Users\Monitoring\Model\Usage\Actions::queryBuilderStatic()->select();
+			$query2->columns('a.*');
+			$query2->where('AND', ['a.sm_monusgact_usage_id', '=', $usage_ids, false]);
+			$data2 = $query2->query(['sm_monusgact_usage_id' , 'sm_monusgact_action_id'], ['cache' => false]);
+		} else {
+			$data2['rows'] = [];
+		}
 		// preload models
 		$usage_codes = \Object\Controller\Model\UsageCodes::optionsStatic(['i18n' => true]);
 		// build report

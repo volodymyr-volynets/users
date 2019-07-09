@@ -48,10 +48,6 @@ class Monitor {
 			'sm_monusage_method' => \Request::method(),
 			'\Numbers\Users\Monitoring\Model\Usage\Actions' => []
 		];
-		if (!\Application::get('flag.global.__ajax') && !\Helper\Cmd::isCli() && empty(\Application::$controller->skip_monitoring)) {
-			$usages_model = new \Numbers\Users\Monitoring\Model\Usages();
-			self::$usage['sm_monusage_id'] = $usages_model->sequence('sm_monusage_id');
-		}
 		// back link
 		if (!empty($_SESSION['numbers']['flag_monitoring_steps'])) {
 			if (!isset(self::$__history_id)) {
@@ -108,6 +104,9 @@ class Monitor {
 			self::$usage['sm_monusage_duration'] = round(microtime(true) - self::$usage['sm_monusage_duration'], 4);
 			self::$usage['sm_monusage_resource_id'] = \Application::$controller->controller_id ?? null;
 			self::$usage['sm_monusage_resource_name'] = \Application::$controller->title ?? get_class(\Application::$controller);
+			// get sequence last
+			$usages_model = new \Numbers\Users\Monitoring\Model\Usages();
+			self::$usage['sm_monusage_id'] = $usages_model->sequence('sm_monusage_id');
 			// usage actions
 			$usage_actions = \Application::$controller->getUsageActions();
 			$history_added = false;

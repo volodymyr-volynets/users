@@ -21,7 +21,7 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 			'wg_document_comment' => [
 				'wg_document_comment' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Comment', 'domain' => 'comment', 'null' => true, 'percent' => 100, 'method' => 'wysiwyg', 'wysiwyg_height' => 250]
 			],
-			'wg_comment_important' => [
+			'wg_document_important' => [
 				'wg_document_important' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Important', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
 				'wg_document_public' => ['order' => 2, 'label_name' => 'Public', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
 				'wg_document_file_id_1_new' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'null' => true, 'required' => true, 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents']], 'description' => 'Extensions: Images, Audio, Documents'],
@@ -38,6 +38,7 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [];
+	public $notification_id;
 
 	public function overrides(& $form) {
 		if (!empty($form->__options['model_table'])) {
@@ -57,13 +58,22 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 				'remove_script_tag' => true
 			]);
 		}
+		// public
+		if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_Public')) {
+			$form->element('top', 'wg_document_important', 'wg_document_public', ['readonly' => true]);
+			$form->values['wg_document_public'] = 1;
+		}
 	}
 
 	public function validate(& $form) {
+		if ($form->hasErrors()) return;
 		$model = new $form->options['model_table']();
 		foreach ($model->documents['map'] as $k => $v) {
 			if (isset($form->options['input'][$k])) {
 				$form->values[$v] = (int) $form->options['input'][$k];
+				if (strpos($v, 'tenant_id') === false) {
+					$this->notification_id = $form->values[$v];
+				}
 			}
 		}
 		// add files
@@ -104,6 +114,10 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 					return;
 				}
 			}
+		}
+		if (!empty($form->options['notification']['new']) && $form->values['wg_document_public']) {
+			$method = \Factory::method($form->options['notification']['new']);
+			call_user_func_array($method, [$this->notification_id, \Application::$controller->module_id]);
 		}
 	}
 

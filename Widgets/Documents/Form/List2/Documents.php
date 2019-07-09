@@ -121,6 +121,10 @@ class Documents extends \Object\Form\Wrapper\List2 {
 				}
 			}
 		}
+		// public
+		if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_Public')) {
+			$form->query->where('AND', ['a.wg_document_public', '=', 1]);
+		}
 		// query #1 get counter
 		$counter_query = clone $form->query;
 		$counter_query->columns(['counter' => 'COUNT(*)'], ['empty_existing' => true]);

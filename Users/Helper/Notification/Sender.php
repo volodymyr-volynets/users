@@ -363,12 +363,12 @@ success:
 				// filter
 				foreach ($all_users as $k => $v) {
 					if (empty($k)) continue;
-					\User::$override_user_id = $k;
+					\User::setUser($k);
 					if (!\Can::userNotificationExists($notification_code, $module_id)) {
 						unset($all_users[$k]);
 					}
 				}
-				\User::$override_user_id = null;
+				\User::setUser(null);
 			}
 		}
 		return array_keys($all_users);
