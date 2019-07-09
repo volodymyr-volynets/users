@@ -65,7 +65,7 @@ class Roles extends \Object\Table {
 		'MySQLi' => 'InnoDB'
 	];
 
-	public $cache = false;
+	public $cache = true;
 	public $cache_tags = [];
 	public $cache_memory = false;
 
