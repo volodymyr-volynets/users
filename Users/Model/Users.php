@@ -163,10 +163,11 @@ class Users extends \Object\Table {
 	/**
 	 * Get username with avatar
 	 *
-	 * @param int $user_id
+	 * @param int|null $user_id
 	 * @return string
 	 */
-	public static function getUsernameWithAvatar(int $user_id) : string {
+	public static function getUsernameWithAvatar($user_id) : string {
+		if (empty($user_id)) return '';
 		if (isset(self::$cached_users_with_avatar[$user_id])) {
 			return self::$cached_users_with_avatar[$user_id];
 		} else {

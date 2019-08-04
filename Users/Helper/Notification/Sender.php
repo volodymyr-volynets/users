@@ -97,6 +97,7 @@ class Sender {
 		// from
 		$from = self::determineFromSettings(['organization_id' => \User::get('organization_id')]);
 		// email template
+		$attachments = [];
 		if (!empty(self::$cached_notifications[$notification_code]['sm_notification_email_model_code'])) {
 			$form = \Factory::model(self::$cached_notifications[$notification_code]['sm_notification_email_model_code'], false, [$options['form']]);
 			\Helper\Ob::start();
@@ -109,6 +110,9 @@ class Sender {
 				$form->render()
 			], \Helper\Ob::clean());
 			$bytea = true;
+			if (method_exists($form, 'attachments')) {
+				$attachments = $form->attachments();
+			}
 		} else if (!empty($options['calendar_invite'])) {
 			if (!empty($options['calendar_invite']['original_date'])) {
 				$calendar_invite_original = self::generateCalendarInvite(
@@ -157,6 +161,7 @@ class Sender {
 				'important' => self::$cached_notifications[$notification_code]['sm_notification_important'],
 				'calendar_invite' => !empty($calendar_invite),
 				'calendar_message' => $body,
+				'attachments' => $attachments,
 			];
 			if ($from['success']) {
 				$send_options['from']['email'] = $options['from_email'] ?? $from['data']['email'];

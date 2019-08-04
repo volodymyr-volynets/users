@@ -10,7 +10,7 @@ class Locations extends \Object\DataSource {
 	public $limit;
 	public $single_row = true;
 	public $single_value;
-	public $column_prefix = 'on_loczone_';
+	public $column_prefix = 'on_location_';
 
 	public $cache = false;
 	public $cache_tags = [];
