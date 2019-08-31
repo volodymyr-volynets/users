@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Users\Model\Form;
 class ActionTypes extends \Object\Data {
+	public $module_code = 'UM';
+	public $title = 'U/M Form Action Types';
 	public $column_key = 'um_frmactiontype_id';
 	public $column_prefix = 'um_frmactiontype_';
 	public $orderby;

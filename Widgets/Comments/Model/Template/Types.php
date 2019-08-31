@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Widgets\Comments\Model\Template;
 class Types extends \Object\Data {
+	public $module_code = 'UM';
+	public $title = 'U/M Note Template Types';
 	public $column_key = 'um_notetempltype_id';
 	public $column_prefix = 'um_notetempltype_';
 	public $orderby;

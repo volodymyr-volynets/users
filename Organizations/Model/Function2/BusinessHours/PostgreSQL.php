@@ -5,6 +5,8 @@ class PostgreSQL extends \Object\Function2 {
 	public $db_link;
 	public $db_link_flag;
 	public $schema;
+	public $module_code = 'ON';
+	public $title = 'O/N Business Hours Calculator (PostgreSQL)';
 	public $name = 'on_calculate_business_time';
 	public $backend = 'PostgreSQL';
 	public $header = 'on_calculate_business_time(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)';

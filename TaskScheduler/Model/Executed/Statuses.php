@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\TaskScheduler\Model\Executed;
 class Statuses extends \Object\Data {
+	public $module_code = 'TS';
+	public $title = 'T/S Executed Statuses';
 	public $column_key = 'ts_executedjobstatus_id';
 	public $column_prefix = 'ts_executedjobstatus_';
 	public $orderby;

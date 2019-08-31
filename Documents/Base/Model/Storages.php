@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Documents\Base\Model;
 class Storages extends \Object\Data {
+	public $module_code = 'DT';
+	public $title = 'D/T Storages';
 	public $column_key = 'id';
 	public $column_prefix = '';
 	public $orderby;

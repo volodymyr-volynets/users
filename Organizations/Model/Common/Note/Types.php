@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Organizations\Model\Common\Note;
 class Types extends \Object\Data {
+	public $module_code = 'ON';
+	public $title = 'O/N Common Note Types';
 	public $column_key = 'on_comnottype_code';
 	public $column_prefix = 'on_comnottype_';
 	public $columns = [

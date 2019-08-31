@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Users\Model\Message;
 class BodyTypes extends \Object\Data {
+	public $module_code = 'UM';
+	public $title = 'U/M Message Body Types';
 	public $column_key = 'um_mesbdtype_id';
 	public $column_prefix = 'um_mesbdtype_';
 	public $orderby;

@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Widgets\Documents\Model;
 class Statuses extends \Object\Data {
+	public $module_code = 'WG';
+	public $title = 'W/G Document Statuses';
 	public $column_key = 'wg_docstatus_id';
 	public $column_prefix = 'wg_docstatus_';
 	public $columns = [

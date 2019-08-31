@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Organizations\Model\Location\Territory;
 class NodeTypes extends \Object\Data {
+	public $module_code = 'ON';
+	public $title = 'O/N Territory Node Types';
 	public $column_key = 'on_terrnodetype_id';
 	public $column_prefix = 'on_terrnodetype_';
 	public $columns = [

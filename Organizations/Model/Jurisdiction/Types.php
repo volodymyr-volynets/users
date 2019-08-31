@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Organizations\Model\Jurisdiction;
 class Types extends \Object\Data {
+	public $module_code = 'ON';
+	public $title = 'O/N Jurisdiction Types';
 	public $column_key = 'on_juristype_id';
 	public $column_prefix = 'on_juristype_';
 	public $columns = [

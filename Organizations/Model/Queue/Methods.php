@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Organizations\Model\Queue;
 class Methods extends \Object\Data {
+	public $module_code = 'ON';
+	public $title = 'O/N Queue Type Methods';
 	public $column_key = 'on_quemethod_id';
 	public $column_prefix = 'on_quemethod_';
 	public $columns = [

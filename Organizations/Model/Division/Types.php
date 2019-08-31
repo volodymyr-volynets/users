@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Organizations\Model\Division;
 class Types extends \Object\Data {
+	public $module_code = 'ON';
+	public $title = 'O/N Division Types';
 	public $column_key = 'on_divtype_id';
 	public $column_prefix = 'on_divtype_';
 	public $orderby = ['on_divtype_id' => SORT_ASC];

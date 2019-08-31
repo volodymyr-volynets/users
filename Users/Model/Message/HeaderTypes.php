@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Users\Model\Message;
 class HeaderTypes extends \Object\Data {
+	public $module_code = 'UM';
+	public $title = 'U/M Message Header Types';
 	public $column_key = 'um_meshdrtype_id';
 	public $column_prefix = 'um_meshdrtype_';
 	public $orderby;

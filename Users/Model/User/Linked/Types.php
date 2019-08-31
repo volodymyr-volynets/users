@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Users\Model\User\Linked;
 class Types extends \Object\Data {
+	public $module_code = 'UM';
+	public $title = 'U/M User Linked Types';
 	public $column_key = 'um_usrlinktype_code';
 	public $column_prefix = 'um_usrlinktype_';
 	public $orderby = [

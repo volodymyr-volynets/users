@@ -2,6 +2,8 @@
 
 namespace Numbers\Users\Organizations\Model\Organization\BusinessHour;
 class Days extends \Object\Data {
+	public $module_code = 'ON';
+	public $title = 'O/N Organization Business Hour Days';
 	public $column_key = 'on_orgbissday_id';
 	public $column_prefix = 'on_orgbissday_';
 	public $orderby = [
