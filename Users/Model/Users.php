@@ -186,15 +186,21 @@ class Users extends \Object\Table {
 	 * Get username with avatar
 	 *
 	 * @param int $user_id
+	 * @param array $options
+	 *	boolean include_id
 	 * @return string
 	 */
-	public static function getUsername(int $user_id) : string {
+	public static function getUsername(int $user_id, array $options = []) : string {
 		if (isset(self::$cached_users[$user_id])) {
 			return self::$cached_users[$user_id];
 		} else {
 			$user = \Numbers\Users\Users\Model\Users::loadById($user_id);
 			$result = $user['um_user_name'];
 			self::$cached_users[$user_id] = $result;
+			// if we need to include id
+			if (!empty($options['include_id'])) {
+				$result.= ' (' . $user_id . ')';
+			}
 			return $result;
 		}
 	}

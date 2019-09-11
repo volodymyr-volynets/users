@@ -32,6 +32,13 @@ abstract class Task {
 	public $options = [];
 
 	/**
+	 * Now
+	 *
+	 * @var string
+	 */
+	public static $now;
+
+	/**
 	 * Execute
 	 *
 	 * @param array $parameters
@@ -90,10 +97,25 @@ abstract class Task {
 		if (!empty($result['error'])) return $result;
 		// execute
 		$this->options = array_merge_hard($this->options, $options);
+		$this->options['datetime'] = self::now();
 		\Alive::start();
 		$result = $this->execute($this->parameters, $this->options);
 		\Alive::stop();
 		// todo: send email notification
+		return $result;
+	}
+
+	/**
+	 * Now
+	 *
+	 * @return string
+	 */
+	public static function now() {
+		if (!empty(self::$now)) {
+			$result = self::$now;
+		} else {
+			$result = \Format::now('datetime');
+		}
 		return $result;
 	}
 }

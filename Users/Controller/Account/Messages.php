@@ -178,7 +178,7 @@ class Messages extends \Object\Controller\Authorized {
 		if (!empty($data['um_mesbody_bytea'])) {
 			\Layout::renderAs($crypt->uncompress($data['um_mesbody_bytea']), 'text/html', ['extension' => 'plain']);
 		} else {
-			\Layout::renderAs($crypt->uncompress($data['um_mesbody_body']), 'text/html', ['extension' => 'plain']);
+			\Layout::renderAs($data['um_mesbody_body'], 'text/html', ['extension' => 'plain']);
 		}
 	}
 }

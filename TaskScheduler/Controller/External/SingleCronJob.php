@@ -56,6 +56,8 @@ class SingleCronJob extends \Object\Controller {
 			// execute task
 			$class = $job['rows'][0]['ts_task_model'];
 			$job_model = new $class(json_decode($job['rows'][0]['ts_execjb_parameters'], true));
+			// set time
+			\Numbers\Users\TaskScheduler\Abstract2\Task::$now = $job['rows'][0]['ts_execjb_datetime'];
 			$job_result = $job_model->process([
 				'datetime' => $job['rows'][0]['ts_execjb_datetime'],
 				'timezone_code' => $job['rows'][0]['ts_execjb_timezone_code'],

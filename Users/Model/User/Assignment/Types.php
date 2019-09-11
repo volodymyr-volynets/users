@@ -49,7 +49,8 @@ class Types extends \Object\Table {
 		'um_assignusrtype_name' => 'name',
 		'um_assignusrtype_parent_role_id' => 'um_assignusrtype_parent_role_id',
 		'um_assignusrtype_child_role_id' => 'um_assignusrtype_child_role_id',
-		'um_assignusrtype_code' => ['field' => 'um_assignusrtype_code', 'i18n' => false]
+		'um_assignusrtype_code' => ['field' => 'um_assignusrtype_code', 'i18n' => false],
+		'um_assignusrtype_inactive' => 'inactive',
 	];
 	public $options_active = [
 		'um_assignusrtype_inactive' => 0

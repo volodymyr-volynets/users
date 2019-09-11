@@ -461,22 +461,6 @@ class System2 extends \Object\Import {
 							'sm_rsrsubmap_action_id' => '::id::Record_View',
 							'sm_rsrsubmap_inactive' => 0
 						],
-						[
-							'sm_rsrsubmap_action_id' => '::id::Record_New',
-							'sm_rsrsubmap_inactive' => 0
-						],
-						[
-							'sm_rsrsubmap_action_id' => '::id::Record_Edit',
-							'sm_rsrsubmap_inactive' => 0
-						],
-						[
-							'sm_rsrsubmap_action_id' => '::id::Record_Inactivate',
-							'sm_rsrsubmap_inactive' => 0
-						],
-						[
-							'sm_rsrsubmap_action_id' => '::id::Record_Delete',
-							'sm_rsrsubmap_inactive' => 0
-						],
 					]
 				],
 				[

@@ -76,7 +76,7 @@ class Owners extends \Object\DataSource {
 					$query->columns(1);
 					if (!empty($parameters['owner_type_code'])) {
 						$query->where('AND', ['inner_w1.um_ownertype_code', '=', $parameters['owner_type_code']]);
-					} else {
+					} else if (!empty($parameters['owner_type_id'])) {
 						$query->where('AND', ['inner_w1.um_ownertype_id', '=', $parameters['owner_type_id']]);
 					}
 				}, 'EXISTS');
@@ -93,7 +93,7 @@ class Owners extends \Object\DataSource {
 					$query->columns(1);
 					if (!empty($parameters['owner_type_code'])) {
 						$query->where('AND', ['inner_v1.um_ownertype_code', '=', $parameters['owner_type_code']]);
-					} else {
+					} else if (!empty($parameters['owner_type_id'])) {
 						$query->where('AND', ['inner_v1.um_ownertype_id', '=', $parameters['owner_type_id']]);
 					}
 				}, 'EXISTS');

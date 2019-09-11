@@ -9,7 +9,8 @@ class CronDaemon extends \Object\Form\Wrapper\Base {
 		'segment' => self::SEGMENT_TASK,
 		'actions' => [
 			'refresh' => true,
-		]
+		],
+		'no_ajax_form_reload' => true,
 	];
 	public $containers = [
 		'top' => ['default_row_type' => 'grid', 'order' => 100],

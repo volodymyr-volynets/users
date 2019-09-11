@@ -16,6 +16,8 @@ class CronDaemon extends \Object\Controller {
 		if (empty($input['datetime'])) {
 			$input['datetime'] = \Format::now('datetime');
 		}
+		// we need to set "now" in abstract
+		\Numbers\Users\TaskScheduler\Abstract2\Task::$now = $input['datetime'];
 		// form to get parameters
 		$form = new \Numbers\Users\TaskScheduler\Form\External\CronDaemon([
 			'input' => $input

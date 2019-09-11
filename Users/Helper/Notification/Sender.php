@@ -98,20 +98,23 @@ class Sender {
 		$from = self::determineFromSettings(['organization_id' => \User::get('organization_id')]);
 		// email template
 		$attachments = [];
+		$cc = [];
 		if (!empty(self::$cached_notifications[$notification_code]['sm_notification_email_model_code'])) {
 			$form = \Factory::model(self::$cached_notifications[$notification_code]['sm_notification_email_model_code'], false, [$options['form']]);
-			\Helper\Ob::start();
-			require(\Application::get(['application', 'path_full']) . 'Layout/' . \Application::get('application.layout.email') . '.html');
+			$template = \Helper\Ob::require(\Application::get(['application', 'path_full']) . 'Layout' . DIRECTORY_SEPARATOR . \Application::get('application.layout.email') . '.html');
 			$body = str_replace([
 				'<!-- [numbers: document title] -->',
 				'<!-- [numbers: document body] -->'
 			], [
 				'<title>' . ($options['title'] ?? '') . '</title>',
 				$form->render()
-			], \Helper\Ob::clean());
+			], $template);
 			$bytea = true;
 			if (method_exists($form, 'attachments')) {
 				$attachments = $form->attachments();
+			}
+			if (method_exists($form, 'cc')) {
+				$cc = $form->cc();
 			}
 		} else if (!empty($options['calendar_invite'])) {
 			if (!empty($options['calendar_invite']['original_date'])) {
@@ -163,6 +166,9 @@ class Sender {
 				'calendar_message' => $body,
 				'attachments' => $attachments,
 			];
+			if (!empty($cc)) {
+				$send_options['cc'] = $cc;
+			}
 			if ($from['success']) {
 				$send_options['from']['email'] = $options['from_email'] ?? $from['data']['email'];
 				$send_options['from']['name'] = $options['from_name'] ?? $from['data']['name'];
