@@ -12,6 +12,7 @@ class Filter {
 	const F_REGION_ID = ['label_name' => 'Region', 'domain' => 'region_id', 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Organizations\Model\Regions'];
 	const F_BRAND_ID = ['label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Organizations\Model\Brands'];
 	// other
+	const F_ORGANIZATION_ID_SINGLE = ['label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'method' => 'select', 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGrouped'];
 	const F_CUSTOMER_ID_SINGLE = ['label_name' => 'Customer', 'domain' => 'customer_id', 'null' => true, 'method' => 'select', 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Customers::optionsGrouppedTree'];
 	const F_LOCATION_ID_SINGLE = ['label_name' => 'Location', 'domain' => 'location_id', 'null' => true, 'method' => 'select', 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\DataSource\LocationsWithNumber', 'options_options' => ['skip_photo_id' => true]];
 }

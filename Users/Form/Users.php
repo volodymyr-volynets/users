@@ -133,38 +133,8 @@ class Users extends \Object\Form\Wrapper\Base {
 			'order' => 36000,
 			'acl_subresource_edit' => ['UM::USER_LOGIN']
 		],
-		'assignments_container' => [
-			'type' => 'details',
-			'details_rendering_type' => 'table',
-			'details_new_rows' => 0,
-			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Virtual',
-			'details_pk' => ['um_usrassign_assignusrtype_id'],
-			'details_cannot_delete' => true,
-			'details_empty_warning_message' => true,
-			'order' => 35002,
-			'acl_subresource_edit' => ['UM::USER_TO_USER_ASSIGNMENTS']
-		],
-		'assignments_reverse_container' => [
-			'type' => 'details',
-			'details_rendering_type' => 'table',
-			'details_new_rows' => 0,
-			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse',
-			'details_pk' => ['um_usrassign_assignusrtype_id'],
-			'details_cannot_delete' => true,
-			'details_empty_warning_message' => true,
-			'order' => 35003,
-			'acl_subresource_edit' => ['UM::USER_TO_USER_ASSIGNMENTS']
-		],
-		'customer_assignments_container' => [
-			'type' => 'details',
-			'details_rendering_type' => 'table',
-			'details_new_rows' => 1,
-			'details_key' => '\Numbers\Users\Users\Model\User\Assignment\Customer\Customers',
-			'details_pk' => ['um_assigncustomer_organization_id', 'um_assigncustomer_customer_id'],
-			'details_empty_warning_message' => true,
-			'order' => 35004,
-			'acl_subresource_edit' => ['UM::USER_TO_CUSTOMER_ASSIGNMENTS']
-		],
+		'assignments_container' => ['default_row_type' => 'grid', 'order' => 35003, 'custom_renderer' => '\Numbers\Users\Users\Form\Users::renderUserToUser'],
+		'customer_assignments_container' => ['default_row_type' => 'grid', 'order' => 35003, 'custom_renderer' => '\Numbers\Users\Users\Form\Users::renderUserToCustomer'],
 	];
 	public $rows = [
 		'top' => [
@@ -253,8 +223,6 @@ class Users extends \Object\Form\Wrapper\Base {
 		'assignment_tabs' => [
 			'assignment_tabs_users' => [
 				'user_assignments' => ['container' => 'assignments_container', 'order' => 100],
-				'user_assignments_label' => ['container' => 'user_assignments_label', 'order' => 150],
-				'assignments_reverse' => ['container' => 'assignments_reverse_container', 'order' => 200],
 			],
 			'assignment_customer_tabs_users' => [
 				'customer_assignments' => ['container' => 'customer_assignments_container', 'order' => 100]
@@ -446,48 +414,6 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrtmmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
-		'assignments_container' => [
-			'row1' => [
-				'um_usrassign_assignusrtype_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'assignment_id', 'readonly' => true, 'percent' => 70, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
-				'um_usrassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
-				'um_usrassign_multiple' => ['order' => 3, 'label_name' => 'Multiple', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
-			],
-			'row2' => [
-				'um_usrassign_child_user_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'User(s)', 'domain' => 'user_id', 'multiple_column' => 'um_usrassign_child_user_id', 'percent' => 100, 'method' => 'multiselect', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive', 'options_depends' => ['selected_roles' => 'um_usrassign_child_role_id']]
-			],
-			self::HIDDEN => [
-				'um_usrassign_parent_role_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Parent Role #', 'domain' => 'role_id'],
-				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id'],
-			]
-		],
-		'user_assignments_label' => [
-			'user_assignments_label' => [
-				self::SEPARATOR_HORIZONTAL => ['order' => 100, 'label_name' => 'Reverse Assignments', 'icon' => 'fas fa-link', 'percent' => 100],
-			]
-		],
-		'assignments_reverse_container' => [
-			'row1' => [
-				'um_usrassign_assignusrtype_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Assignment Type', 'domain' => 'assignment_id', 'readonly' => true, 'percent' => 70, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types'],
-				'um_usrassign_mandatory' => ['order' => 2, 'label_name' => 'Mandatory', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
-				'um_usrassign_multiple' => ['order' => 3, 'label_name' => 'Multiple', 'type' => 'boolean', 'readonly' => true, 'percent' => 15],
-			],
-			'row2' => [
-				'um_usrassign_parent_user_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'User(s)', 'domain' => 'user_id', 'multiple_column' => 'um_usrassign_parent_user_id', 'percent' => 100, 'method' => 'multiselect', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive', 'options_depends' => ['selected_roles' => 'um_usrassign_parent_role_id']]
-			],
-			self::HIDDEN => [
-				'um_usrassign_parent_role_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Parent Role #', 'domain' => 'role_id', 'method' => 'hidden'],
-				'um_usrassign_child_role_id' => ['order' => 2, 'label_name' => 'Child Role #', 'domain' => 'role_id', 'method' => 'hidden'],
-			]
-		],
-		'customer_assignments_container' => [
-			'row1' => [
-				'um_assigncustomer_customer_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Customer', 'domain' => 'customer_id', 'null' => true, 'required' => true, 'percent' => 95, 'method' => 'select', 'tree' => true, 'searchable' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Customers::optionsJson', 'options_options' => ['show_all' => true], 'onchange' => 'this.form.submit();', 'json_contains' => ['organization_id' => 'um_assigncustomer_organization_id', 'customer_id' => 'um_assigncustomer_customer_id']],
-				'um_assigncustomer_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
-			],
-			self::HIDDEN => [
-				'um_assigncustomer_organization_id' => ['order_for_defaults' => -32000, 'label_name' => 'Primary Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'method' => 'hidden'],
-			]
-		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -570,24 +496,6 @@ class Users extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrsecanswer_tenant_id', 'um_user_id' => 'um_usrsecanswer_user_id'],
 			],
-			'\Numbers\Users\Users\Model\User\Assignments' => [
-				'name' => 'User Assignments',
-				'pk' => ['um_usrassign_tenant_id', 'um_usrassign_assignusrtype_id', 'um_usrassign_parent_user_id', 'um_usrassign_child_user_id'],
-				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_parent_user_id']
-			],
-			'\Numbers\Users\Users\Model\User\Assignment\Reverse' => [
-				'name' => 'User Assignments (Reverse)',
-				'pk' => ['um_usrassign_tenant_id', 'um_usrassign_assignusrtype_id', 'um_usrassign_parent_user_id', 'um_usrassign_child_user_id'],
-				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_usrassign_tenant_id', 'um_user_id' => 'um_usrassign_child_user_id']
-			],
-			'\Numbers\Users\Users\Model\User\Assignment\Customer\Customers' => [
-				'name' => 'Customer Assignments',
-				'pk' => ['um_assigncustomer_tenant_id', 'um_assigncustomer_user_id', 'um_assigncustomer_organization_id', 'um_assigncustomer_customer_id'],
-				'type' => '1M',
-				'map' => ['um_user_tenant_id' => 'um_assigncustomer_tenant_id', 'um_user_id' => 'um_assigncustomer_user_id']
-			]
 		]
 	];
 	public $notification = [
@@ -673,19 +581,6 @@ class Users extends \Object\Form\Wrapper\Base {
 		} else {
 			$form->values['um_user_numeric_phone'] = null;
 		}
-		// user to user assignments
-		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'] as $k => $v) {
-			$key = "\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse[$k][um_usrassign_parent_user_id]";
-			if (!empty($v['um_usrassign_mandatory']) && empty($v['um_usrassign_parent_user_id'])) {
-				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, $key);
-			}
-		}
-		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'] as $k => $v) {
-			$key = "\Numbers\Users\Users\Model\User\Assignment\Virtual[$k][um_usrassign_child_user_id]";
-			if (!empty($v['um_usrassign_mandatory']) && empty($v['um_usrassign_child_user_id'])) {
-				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, $key);
-			}
-		}
 	}
 
 	public function post(& $form) {
@@ -705,98 +600,6 @@ class Users extends \Object\Form\Wrapper\Base {
 
 	}
 
-	public function processAllValues(& $form) {
-		if (empty($form->values['\Numbers\Users\Users\Model\User\Roles'])) return;
-		// direct assigments
-		if (empty($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual']) || strpos($form->options['input']['__form_onchange_field_values_key'] ?? '', 'um_usrrol_role_id') !== false) {
-			$virtual = $form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'] ?? [];
-			$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'] = [];
-			$data = \Numbers\Users\Users\Model\User\Assignment\Types::getStatic([
-				'where' => [
-					'um_assignusrtype_parent_role_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Roles'], 'um_usrrol_role_id'),
-				],
-				'pk' => ['um_assignusrtype_id']
-			]);
-			foreach ($data as $k => $v) {
-				$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'][$k] = [
-					'um_usrassign_assignusrtype_id' => $v['um_assignusrtype_id'],
-					'um_usrassign_parent_role_id' => $v['um_assignusrtype_parent_role_id'],
-					'um_usrassign_child_role_id' => $v['um_assignusrtype_child_role_id'],
-					'um_usrassign_mandatory' => $v['um_assignusrtype_mandatory'],
-					'um_usrassign_multiple' => $v['um_assignusrtype_multiple'],
-					'um_usrassign_child_user_id' => $virtual[$k]['um_usrassign_child_user_id'] ?? []
-				];
-				foreach ($form->values['\Numbers\Users\Users\Model\User\Assignments'] ?? [] as $v2) {
-					if ($v['um_assignusrtype_id'] == $v2['um_usrassign_assignusrtype_id'] && $v['um_assignusrtype_parent_role_id'] == $v2['um_usrassign_parent_role_id'] && $v['um_assignusrtype_child_role_id'] == $v2['um_usrassign_child_role_id']) {
-						$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'][$k]['um_usrassign_child_user_id'][$v2['um_usrassign_child_user_id']]['um_usrassign_child_user_id'] = $v2['um_usrassign_child_user_id'];
-					}
-				}
-			}
-		}
-		// create direct assigmnets
-		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual'] ?? [] as $k => $v) {
-			foreach ($v['um_usrassign_child_user_id'] ?? [] as $k2 => $v2) {
-				if (is_array($v2)) {
-					$value = $v2['um_usrassign_child_user_id'];
-				} else {
-					$value = $v2;
-				}
-				$key = \Tenant::id() . '::' . $v['um_usrassign_assignusrtype_id'] . '::' . ($form->values['um_user_id'] ?? '') . '::' . $value;
-				$form->values['\Numbers\Users\Users\Model\User\Assignments'][$key] = [
-					'um_usrassign_assignusrtype_id' => $v['um_usrassign_assignusrtype_id'],
-					'um_usrassign_parent_user_id' => $form->values['um_user_id'],
-					'um_usrassign_child_user_id' => (int) $value,
-					'um_usrassign_parent_role_id' => $v['um_usrassign_parent_role_id'],
-					'um_usrassign_child_role_id' => $v['um_usrassign_child_role_id'],
-				];
-			}
-		}
-		// reverse assigmnents
-		if (empty($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse']) || strpos($form->options['input']['__form_onchange_field_values_key'] ?? '', 'um_usrrol_role_id') !== false) {
-			$virtual = $form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'] ?? [];
-			$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'] = [];
-			$data = \Numbers\Users\Users\Model\User\Assignment\Types::getStatic([
-				'where' => [
-					'um_assignusrtype_child_role_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Roles'], 'um_usrrol_role_id'),
-				],
-				'pk' => ['um_assignusrtype_id']
-			]);
-			foreach ($data as $k => $v) {
-				$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'][$k] = [
-					'um_usrassign_assignusrtype_id' => $v['um_assignusrtype_id'],
-					'um_usrassign_parent_role_id' => $v['um_assignusrtype_parent_role_id'],
-					'um_usrassign_child_role_id' => $v['um_assignusrtype_child_role_id'],
-					'um_usrassign_mandatory' => $v['um_assignusrtype_mandatory'],
-					'um_usrassign_multiple' => $v['um_assignusrtype_multiple'],
-					'um_usrassign_parent_user_id' => $virtual[$k]['um_usrassign_parent_user_id'] ?? []
-				];
-				foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Reverse'] ?? [] as $v2) {
-					if ($v['um_assignusrtype_id'] == $v2['um_usrassign_assignusrtype_id'] && $v['um_assignusrtype_parent_role_id'] == $v2['um_usrassign_parent_role_id'] && $v['um_assignusrtype_child_role_id'] == $v2['um_usrassign_child_role_id']) {
-						$form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'][$k]['um_usrassign_parent_user_id'][$v2['um_usrassign_parent_user_id']]['um_usrassign_parent_user_id'] = $v2['um_usrassign_parent_user_id'];
-					}
-				}
-			}
-		}
-		// create reverse assigmnets
-		foreach ($form->values['\Numbers\Users\Users\Model\User\Assignment\Virtual\Reverse'] ?? [] as $k => $v) {
-			foreach ($v['um_usrassign_parent_user_id'] ?? [] as $k2 => $v2) {
-				if (is_array($v2)) {
-					$value = $v2['um_usrassign_parent_user_id'];
-				} else {
-					$value = $v2;
-				}
-				$key = \Tenant::id() . '::' . $v['um_usrassign_assignusrtype_id'] . '::' . $value . '::' . ($form->values['um_user_id'] ?? '');
-				$form->values['\Numbers\Users\Users\Model\User\Assignment\Reverse'][$key] = [
-					'um_usrassign_assignusrtype_id' => $v['um_usrassign_assignusrtype_id'],
-					'um_usrassign_parent_user_id' => (int) $value,
-					'um_usrassign_child_user_id' => $form->values['um_user_id'],
-					'um_usrassign_parent_role_id' => $v['um_usrassign_parent_role_id'],
-					'um_usrassign_child_role_id' => $v['um_usrassign_child_role_id'],
-				];
-			}
-		}
-	}
-
 	public function overrideFieldValue(& $form, & $options, & $value, & $neighbouring_values) {
 		if ($options['options']['field_name'] == 'um_usrassign_child_user_id' || $options['options']['field_name'] == 'um_usrassign_parent_user_id') {
 			if (empty($neighbouring_values['um_usrassign_multiple'])) {
@@ -809,5 +612,17 @@ class Users extends \Object\Form\Wrapper\Base {
 		return [
 			'organization_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id'),
 		];
+	}
+
+	public function renderUserToUser(& $form) {
+		if (!empty($form->values['um_user_id'])) {
+			return \Numbers\Users\Users\Helper\Assignment\UserToUser::renderList($form->values['um_user_id']);
+		}
+	}
+
+	public function renderUserToCustomer(& $form) {
+		if (!empty($form->values['um_user_id'])) {
+			return \Numbers\Users\Users\Helper\Assignment\UserToCustomer::renderList($form->values['um_user_id']);
+		}
 	}
 }

@@ -1,17 +1,15 @@
 <?php
 
-namespace Numbers\Users\Organizations\Model\Function2\BusinessHours;
+namespace Numbers\Users\Organizations\Model\Function2\BusinessHoursDeduct;
 class PostgreSQL extends \Object\Function2 {
 	public $db_link;
 	public $db_link_flag;
 	public $schema;
-	public $module_code = 'ON';
-	public $title = 'O/N Business Hours Calculator (PostgreSQL)';
-	public $name = 'on_calculate_business_time';
+	public $name = 'on_calculate_business_deduct';
 	public $backend = 'PostgreSQL';
-	public $header = 'on_calculate_business_time(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)';
-	public $sql_version = '1.0.2';
-	public $definition = 'CREATE OR REPLACE FUNCTION public.on_calculate_business_time(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)
+	public $header = 'on_calculate_business_deduct(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)';
+	public $sql_version = '1.0.0';
+	public $definition = 'CREATE OR REPLACE FUNCTION public.on_calculate_business_deduct(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)
 	RETURNS timestamp
 	LANGUAGE plpgsql
 	STRICT
@@ -30,19 +28,19 @@ BEGIN
 		LIMIT 1;
 		/* if we do not have business hours */
 		IF business_hours_rows IS NULL THEN
-			result:= datetime + duration;
+			result:= datetime - duration;
 			RETURN result;
 		END IF;
 		/* calculate business hours */
 		SELECT
-			MAX(outter_sub.time_column) time_column
+			MIN(outter_sub.time_column) time_column
 		INTO result
 		FROM (
 			SELECT
 				sub.time_column time_column,
 				row_number() OVER() rnum
 			FROM (
-				SELECT (datetime + generate_series(0, (extract(epoch FROM duration::interval) / 60)::int * 12 + 10080) * interval \'1 min\') time_column
+				SELECT (datetime - generate_series(0, (extract(epoch FROM duration::interval) / 60)::int * 12 + 10080) * interval \'1 min\') time_column
 			) sub
 			WHERE sub.time_column::date NOT IN (
 					SELECT on_holiday_date
@@ -70,9 +68,9 @@ BEGIN
 						AND sub.time_column::time <= a.on_orgbhour_end_time
 				)
 		) outter_sub
-		WHERE ((outter_sub.rnum - 1) * \'1 min\'::interval <= duration::interval);
+		WHERE (outter_sub.rnum * \'1 min\'::interval <= duration::interval);
 	ELSE
-		result:= datetime + duration;
+		result:= datetime - duration;
 	END IF;
 	RETURN result;
 END;

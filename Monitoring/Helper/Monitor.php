@@ -106,6 +106,7 @@ class Monitor {
 			self::$usage['sm_monusage_resource_name'] = \Application::$controller->title ?? get_class(\Application::$controller);
 			// get sequence last
 			$usages_model = new \Numbers\Users\Monitoring\Model\Usages();
+			$usages_model->db_object->begin();
 			self::$usage['sm_monusage_id'] = $usages_model->sequence('sm_monusage_id');
 			// usage actions
 			$usage_actions = \Application::$controller->getUsageActions();
@@ -132,6 +133,7 @@ class Monitor {
 			// add data to database
 			$collection = new \Numbers\Users\Monitoring\Model\Collection\Usages();
 			$collection->merge(self::$usage);
+			$usages_model->db_object->commit();
 		}
 	}
 
