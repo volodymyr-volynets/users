@@ -13,7 +13,7 @@ class ABAC extends \Object\Import {
 				[
 					'sm_abacattr_id' => '::id::dt_catalog_code',
 					'sm_abacattr_code' => 'dt_catalog_code',
-					'sm_abacattr_name' => 'D/T Catalog Code',
+					'sm_abacattr_name' => 'Catalog Code',
 					'sm_abacattr_module_code' => 'DT',
 					'sm_abacattr_parent_abacattr_id' => null,
 					'sm_abacattr_tenant' => 1,
@@ -32,7 +32,7 @@ class ABAC extends \Object\Import {
 				[
 					'sm_abacattr_id' => '::id::dt_catalog_organization_id',
 					'sm_abacattr_code' => 'dt_catalog_organization_id',
-					'sm_abacattr_name' => 'D/T Catalog Organization #',
+					'sm_abacattr_name' => 'Catalog Organization #',
 					'sm_abacattr_module_code' => 'DT',
 					'sm_abacattr_parent_abacattr_id' => '::id::on_organization_id',
 					'sm_abacattr_tenant' => 1,
