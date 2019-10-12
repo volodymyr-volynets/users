@@ -34,7 +34,7 @@ class Step1 extends \Object\Form\Wrapper\Base {
 			],
 			'on_organization_name' => [
 				'um_regten_organization_name' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Organization Name', 'domain' => 'name', 'percent' => 50, 'required' => true],
-				'um_regten_organization_code' => ['order' => 2, 'label_name' => 'Organization Code', 'domain' => 'group_code', 'percent' => 50, 'required' => true],
+				'um_regten_organization_code' => ['order' => 2, 'label_name' => 'Organization Code', 'domain' => 'group_code', 'default' => 'DEFAULT', 'percent' => 50, 'required' => true, 'readonly' => true],
 			],
 			'separator_2' => [
 				self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 500, 'label_name' => 'Administrator', 'icon' => 'fas fa-user', 'percent' => 100],

@@ -51,7 +51,13 @@ class Roles extends \Object\DataSource {
 					$query->where('AND', ['inner_a.um_rolorg_role_id', '=', 'a.um_role_id', true]);
 					$query->where('AND', ['inner_a.um_rolorg_organization_id', 'IN', $parameters['selected_organizations'], false]);
 				}, true);
-				//$query->where('OR', ['a.um_role_global', '=', 1]);
+			} else {
+				$query->where('OR', function (& $query) use ($parameters) {
+					$query = \Numbers\Users\Users\Model\Role\Organizations::queryBuilderStatic(['alias' => 'inner_a'])->select();
+					$query->columns(1);
+					$query->where('AND', ['inner_a.um_rolorg_role_id', '=', 'a.um_role_id', true]);
+					$query->where('AND', ['inner_a.um_rolorg_organization_id', 'IS NOT', null, false]);
+				}, true);
 			}
 			// super admins can create super admins
 			if (\User::get('super_admin')) {

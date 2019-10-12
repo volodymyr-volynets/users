@@ -39,7 +39,10 @@ class Types extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
+	public $options_map = [
+		'on_orgtype_name' => 'name',
+		'on_orgtype_inactive' => 'inactive'
+	];
 	public $options_active = [
 		'on_orgtype_inactive' => 0
 	];
@@ -63,7 +66,8 @@ class Types extends \Object\Table {
 	public function optionsGrouped($options = []) {
 		$options['options_map'] = [
 			'on_orgtype_name' => 'name',
-			'on_orgtype_parent_type_code' => 'parent'
+			'on_orgtype_parent_type_code' => 'parent',
+			'on_orgtype_inactive' => 'inactive'
 		];
 		$result = $this->optionsActive($options);
 		if (!empty($result)) {

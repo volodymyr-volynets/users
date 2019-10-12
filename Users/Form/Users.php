@@ -429,7 +429,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
 			],
 			'\Numbers\Users\Users\Model\Team\Map' => [
-				'name' => 'Groups',
+				'name' => 'Teams',
 				'pk' => ['um_usrtmmap_tenant_id', 'um_usrtmmap_user_id', 'um_usrtmmap_team_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrtmmap_tenant_id', 'um_user_id' => 'um_usrtmmap_user_id'],
