@@ -99,6 +99,9 @@ class Sender {
 		// email template
 		$attachments = [];
 		$cc = [];
+		if (!empty($options['cc'])) {
+			$cc = $options['cc'];
+		}
 		if (!empty(self::$cached_notifications[$notification_code]['sm_notification_email_model_code'])) {
 			$form = \Factory::model(self::$cached_notifications[$notification_code]['sm_notification_email_model_code'], false, [$options['form']]);
 			$template = \Helper\Ob::require(\Application::get(['application', 'path_full']) . 'Layout' . DIRECTORY_SEPARATOR . \Application::get('application.layout.email') . '.html');
