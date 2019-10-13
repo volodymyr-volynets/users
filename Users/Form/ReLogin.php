@@ -49,4 +49,10 @@ class ReLogin extends \Object\Form\Wrapper\Base {
 			return false;
 		}
 	}
+
+	public function success(& $form) {
+		if (!$form->hasErrors()) {
+			$form->refresh();
+		}
+	}
 }
