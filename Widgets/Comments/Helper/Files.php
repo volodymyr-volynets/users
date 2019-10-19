@@ -65,6 +65,7 @@ class Files {
 				$result[] = [
 					'name' => $v['dt_file_name'],
 					'href' => \Numbers\Users\Documents\Base\Base::generateURL($k, false, $v['dt_file_name']),
+					'extension' => $v['dt_file_extension'],
 				];
 			}
 		}
