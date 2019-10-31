@@ -53,9 +53,9 @@ class ItemMasters extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'on_itemmaster_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Item Master #', 'domain' => 'item_master_id', 'percent' => 10, 'url_edit' => true],
-				'on_itemmaster_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
-				'on_itemmaster_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 25],
+				'on_itemmaster_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Item Master #', 'domain' => 'item_master_id', 'percent' => 15, 'url_edit' => true],
+				'on_itemmaster_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 50],
+				'on_itemmaster_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 30],
 				'on_itemmaster_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			]
 		]

@@ -42,8 +42,13 @@ class Districts extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'on_district_name' => 'name',
+		'on_district_inactive' => 'inactive'
+	];
+	public $options_active = [
+		'on_district_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];
