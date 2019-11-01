@@ -36,8 +36,8 @@ class Zones extends \Object\Form\Wrapper\List2 {
 		],
 		'filter' => [
 			'on_loczone_id' => [
-				'on_loczone_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Zone / Slot #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_loczone_id;>='],
-				'on_loczone_id2' => ['order' => 2, 'label_name' => 'Zone / Slot #', 'domain' => 'group_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_loczone_id;<='],
+				'on_loczone_id1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Zone / Slot #', 'domain' => 'zone_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_loczone_id;>='],
+				'on_loczone_id2' => ['order' => 2, 'label_name' => 'Zone / Slot #', 'domain' => 'zone_id', 'percent' => 25, 'null' => true, 'query_builder' => 'a.on_loczone_id;<='],
 				'on_loczone_inactive1' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.on_loczone_inactive;=']
 			],
 			'full_text_search' => [
@@ -53,7 +53,7 @@ class Zones extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'on_loczone_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Zone / Slot #', 'domain' => 'group_id', 'percent' => 10, 'url_edit' => true],
+				'on_loczone_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Zone / Slot #', 'domain' => 'zone_id', 'percent' => 10, 'url_edit' => true],
 				'on_loczone_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 85],
 				'on_loczone_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],

@@ -27,7 +27,7 @@ class Zones extends \Object\Form\Wrapper\Base {
 	public $elements = [
 		'top' => [
 			'on_loczone_id' => [
-				'on_loczone_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Zone / Slot #', 'domain' => 'group_id_sequence', 'percent' => 95, 'navigation' => true],
+				'on_loczone_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Zone / Slot #', 'domain' => 'zone_id_sequence', 'percent' => 95, 'navigation' => true],
 				'on_loczone_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			'on_loczone_name' => [

@@ -15,7 +15,7 @@ class Zones extends \Object\Table {
 	public $column_prefix = 'on_loczone_';
 	public $columns = [
 		'on_loczone_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'on_loczone_id' => ['name' => 'Zone / Slot #', 'domain' => 'group_id_sequence'],
+		'on_loczone_id' => ['name' => 'Zone / Slot #', 'domain' => 'zone_id_sequence'],
 		'on_loczone_name' => ['name' => 'Name', 'domain' => 'name', 'null' => true],
 		'on_loczone_location_id' => ['name' => 'Location #', 'domain' => 'location_id'],
 		'on_loczone_zone_code' => ['name' => 'Zone Code', 'domain' => 'type_code'],
@@ -47,8 +47,13 @@ class Zones extends \Object\Table {
 		]
 	];
 	public $optimistic_lock = true;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'on_loczone_name' => 'name',
+		'on_loczone_inactive' => 'inactive'
+	];
+	public $options_active = [
+		'on_loczone_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];
