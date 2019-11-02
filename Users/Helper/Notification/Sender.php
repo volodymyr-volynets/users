@@ -125,6 +125,7 @@ class Sender {
 					$email,
 					$options['calendar_invite']['original_date'],
 					i18n(null, $options['calendar_invite']['title']['text'], ['replace' => $options['calendar_invite']['title']['replace'] ?? []]),
+					i18n(null, $options['calendar_invite']['location']['text'], ['replace' => $options['calendar_invite']['location']['replace'] ?? []]),
 					i18n(null, $options['calendar_invite']['summary']['text'], ['replace' => $options['calendar_invite']['summary']['replace'] ?? []]),
 					$options['calendar_invite']['id'],
 					true,
@@ -135,6 +136,7 @@ class Sender {
 				$email,
 				$options['calendar_invite']['date'],
 				i18n(null, $options['calendar_invite']['title']['text'], ['replace' => $options['calendar_invite']['title']['replace'] ?? []]),
+				i18n(null, $options['calendar_invite']['location']['text'], ['replace' => $options['calendar_invite']['location']['replace'] ?? []]),
 				i18n(null, $options['calendar_invite']['summary']['text'], ['replace' => $options['calendar_invite']['summary']['replace'] ?? []]),
 				$options['calendar_invite']['id'],
 				false,
@@ -394,12 +396,13 @@ success:
 	 * @param string $email
 	 * @param string $date
 	 * @param string $title
+	 * @param string $location
 	 * @param string $summary
 	 * @param string $id
 	 * @param bool $delete
 	 * @return string
 	 */
-	public static function generateCalendarInvite(string $email, string $date, string $title, string $summary, string $id, bool $delete = false, string $from = '') : string {
+	public static function generateCalendarInvite(string $email, string $date, string $title, string $location, string $summary, string $id, bool $delete = false, string $from = '') : string {
 		$date = gmdate("Ymd\THis\Z", strtotime($date));
 		$host = \Request::host(['name_only' => true]);
 		$uid =  $id . '@' . $host;
@@ -420,7 +423,7 @@ success:
 		} else {
 			$result.= "STATUS:CANCELLED\r\n";
 		}
-		$result.= "LOCATION: System\r\n";
+		$result.= "LOCATION: {$location}\r\n";
 		$result.= "SEQUENCE:" . ($_SERVER['REQUEST_TIME']) . "\r\n";
 		$result.= "SUMMARY:" . wordwrap(addcslashes($title, "\n\\,;"), 75, "\r\n ", 1) . "\r\n";
 		$result.= "URL:" . \Request::host() . "\r\n";
