@@ -29,12 +29,14 @@ class Users extends \Object\DataSource {
 	public $parameters = [
 		'selected_organizations' => ['name' => 'Selected Organizations', 'domain' => 'organization_id', 'multiple_column' => true],
 		'selected_roles' => ['name' => 'Selected Roles', 'domain' => 'role_id', 'multiple_column' => true],
+		'selected_role_codes' => ['name' => 'Selected Role Codes', 'domain' => 'group_code', 'multiple_column' => true],
 		'existing_values' => ['name' => 'Existing Values', 'type' => 'mixed'],
 		'skip_acl' => ['name' => 'Skip ACL', 'type' => 'boolean'],
 		'include_all_columns' => ['name' => 'Include All Columns', 'type' => 'boolean'],
 		'only_id_column' => ['name' => 'Only ID Column', 'type' => 'boolean'],
 		'include_himself' => ['name' => 'Include Himself', 'type' => 'boolean'],
 		'skip_himself' => ['name' => 'Skip Himself', 'type' => 'boolean'],
+		'inactive' => ['name' => 'Inactive', 'type' => 'boolean'],
 	];
 
 	public function query($parameters, $options = []) {
@@ -73,6 +75,24 @@ class Users extends \Object\DataSource {
 				}, true);
 			});
 		}
+		// selected roles
+		if (!empty($parameters['selected_role_codes'])) {
+			$this->query->where('AND', function (& $query) use ($parameters) {
+				// allow existing values
+				if (!empty($parameters['existing_values'])) {
+					$query->where('OR', ['a.um_user_id', '=', $parameters['existing_values']]);
+				}
+				$query->where('OR', function (& $query) use ($parameters) {
+					$query = \Numbers\Users\Users\Model\User\Roles::queryBuilderStatic(['alias' => 'inner_rc'])->select();
+					$query->join('INNER', new \Numbers\Users\Users\Model\Roles(), 'inner_rc2', 'ON', [
+						['AND', ['inner_rc.um_usrrol_role_id', '=', 'inner_rc2.um_role_id', true], false]
+					]);
+					$query->columns(1);
+					$query->where('AND', ['inner_rc.um_usrrol_user_id', '=', 'a.um_user_id', true]);
+					$query->where('AND', ['inner_rc2.um_role_code', '=', $parameters['selected_role_codes']]);
+				}, true);
+			});
+		}
 		// selected organizations
 		if (!empty($parameters['selected_organizations'])) {
 			$this->query->where('AND', function (& $query) use ($parameters) {
@@ -87,6 +107,10 @@ class Users extends \Object\DataSource {
 					$query->where('AND', ['inner_o.um_usrorg_organization_id', '=', $parameters['selected_organizations']]);
 				}, true);
 			});
+		}
+		// inactive
+		if (isset($parameters['inactive'])) {
+			$this->query->where('AND', ['a.um_user_inactive', '=', $parameters['inactive'], false]);
 		}
 	}
 }

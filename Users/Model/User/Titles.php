@@ -29,8 +29,13 @@ class Titles extends \Object\Table {
 	public $history = false;
 	public $audit = false;
 	public $optimistic_lock = true;
-	public $options_map = [];
-	public $options_active = [];
+	public $options_map = [
+		'um_usrtitle_name' => 'name',
+		'um_usrtitle_inactive' => 'inactive'
+	];
+	public $options_active = [
+		'um_usrtitle_inactive' => 0
+	];
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];

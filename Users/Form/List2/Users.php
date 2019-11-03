@@ -62,8 +62,8 @@ class Users extends \Object\Form\Wrapper\List2 {
 		self::LIST_CONTAINER => [
 			'row1' => [
 				'um_user_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'User #', 'domain' => 'user_id', 'percent' => 10, 'url_edit' => true],
-				'um_user_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
-				'um_user_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 15],
+				'um_user_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 45],
+				'um_user_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 30],
 				'um_user_type_id' => ['order' => 4, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 10, 'options_model' => '\Numbers\Users\Users\Model\User\Types'],
 				'um_user_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
 			],
