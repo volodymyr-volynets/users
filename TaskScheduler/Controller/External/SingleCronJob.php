@@ -46,6 +46,10 @@ class SingleCronJob extends \Object\Controller {
 				$result['error'][] = 'Job?';
 				break;
 			}
+			// set module #
+			if (!empty($job['rows'][0]['ts_execjb_module_id'])) {
+				\Application::$controller->module_id = $job['rows'][0]['ts_execjb_module_id'];
+			}
 			// update status on the job
 			$execute_job_model = \Numbers\Users\TaskScheduler\Model\Executed\Jobs::collectionStatic();
 			$execute_job_model->merge([

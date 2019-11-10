@@ -25,6 +25,7 @@ class Jobs extends \Object\Table {
 		'ts_execjb_cron_expression' => ['name' => 'Cron (Minutes)', 'domain' => 'code'],
 		'ts_execjb_timezone_code' => ['name' => 'Timezone', 'domain' => 'timezone_code', 'null' => true],
 		'ts_execjb_parameters' => ['name' => 'Parameters', 'type' => 'json', 'null' => true],
+		'ts_execjb_module_id' => ['name' => 'Module #', 'domain' => 'module_id', 'null' => true],
 		'ts_execjb_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
@@ -58,7 +59,13 @@ class Jobs extends \Object\Table {
 			'columns' => ['ts_execjb_tenant_id', 'ts_execjb_timezone_code'],
 			'foreign_model' => '\Numbers\Internalization\Internalization\Model\Timezones',
 			'foreign_columns' => ['in_timezone_tenant_id', 'in_timezone_code']
-		]
+		],
+		'ts_execjb_module_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['ts_execjb_tenant_id', 'ts_execjb_module_id'],
+			'foreign_model' => '\Numbers\Tenants\Tenants\Model\Modules',
+			'foreign_columns' => ['tm_module_tenant_id', 'tm_module_id']
+		],
 	];
 	public $indexes = [];
 	public $history = false;

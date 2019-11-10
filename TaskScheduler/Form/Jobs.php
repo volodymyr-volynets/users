@@ -52,6 +52,7 @@ class Jobs extends \Object\Form\Wrapper\Base {
 			],
 			'timezone' => [
 				'ts_job_timezone_code' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Timezone', 'domain' => 'timezone_code', 'percent' => 50, 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Timezones'],
+				'ts_job_module_id' => ['order' => 2, 'label_name' => 'Module', 'domain' => 'module_id', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Modules'],
 			]
 		],
 		'parameters_container' => [
