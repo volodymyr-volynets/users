@@ -28,6 +28,7 @@ class Jobs extends \Object\Table {
 		'ts_job_cron_year' => ['name' => 'Cron (Years)', 'domain' => 'code'],
 		// other
 		'ts_job_timezone_code' => ['name' => 'Timezone', 'domain' => 'timezone_code', 'null' => true],
+		'ts_job_module_id' => ['name' => 'Module #', 'domain' => 'module_id', 'null' => true],
 		'ts_job_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
@@ -37,6 +38,12 @@ class Jobs extends \Object\Table {
 			'columns' => ['ts_job_daemon_code'],
 			'foreign_model' => '\Numbers\Users\TaskScheduler\Model\Daemons',
 			'foreign_columns' => ['ts_daemon_code']
+		],
+		'ts_job_module_id_fk' => [
+			'type' => 'fk',
+			'columns' => ['ts_job_tenant_id', 'ts_job_module_id'],
+			'foreign_model' => '\Numbers\Tenants\Tenants\Model\Modules',
+			'foreign_columns' => ['tm_module_tenant_id', 'tm_module_id']
 		],
 		'ts_job_task_code_fk' => [
 			'type' => 'fk',

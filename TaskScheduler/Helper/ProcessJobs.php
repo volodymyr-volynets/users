@@ -64,6 +64,7 @@ class ProcessJobs {
 					'ts_execjb_cron_expression' => $cron_expression,
 					'ts_execjb_timezone_code' => $v['ts_job_timezone_code'],
 					'ts_execjb_parameters' => [],
+					'ts_execjb_module_id' => $v['ts_job_module_id'],
 					'ts_execjb_inactive' => 0,
 				];
 				// load parameteres

@@ -13,6 +13,7 @@ class CreateJob {
 		$params = [
 			'ts_job_task_code' => $task_code,
 			'ts_job_name' => $form->title,
+			'ts_job_module_id' => \Application::$controller->module_id,
 			'\Numbers\Users\TaskScheduler\Model\JobParameters' => []
 		];
 		foreach ($form->values as $k => $v) {
