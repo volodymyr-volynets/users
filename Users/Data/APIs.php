@@ -11,8 +11,8 @@ class APIs extends \Object\Import {
 			],
 			'data' => [
 				[
-					'sm_resource_id' => '::id::\Numbers\Users\Users\APIs\Login',
-					'sm_resource_code' => '\Numbers\Users\Users\APIs\Login',
+					'sm_resource_id' => '::id::\Numbers\Users\Users\Controller\APIs\Login',
+					'sm_resource_code' => '\Numbers\Users\Users\Controller\APIs\Login',
 					'sm_resource_type' => 150,
 					'sm_resource_classification' => 'APIs',
 					'sm_resource_name' => 'U/M Login API',
@@ -29,7 +29,7 @@ class APIs extends \Object\Import {
 					'sm_resource_group8_name' => null,
 					'sm_resource_group9_name' => null,
 					'sm_resource_acl_public' => 1,
-					'sm_resource_acl_authorized' => 0,
+					'sm_resource_acl_authorized' => 1,
 					'sm_resource_acl_permission' => 0,
 					'sm_resource_menu_acl_resource_id' => null,
 					'sm_resource_menu_acl_method_code' => null,
@@ -41,8 +41,8 @@ class APIs extends \Object\Import {
 					'\Numbers\Backend\System\Modules\Model\Resource\Map' => []
 				],
 				[
-					'sm_resource_id' => '::id::\Numbers\Users\Users\APIs\User\Groups',
-					'sm_resource_code' => '\Numbers\Users\Users\APIs\User\Groups',
+					'sm_resource_id' => '::id::\Numbers\Users\Users\Controller\APIs\Groups',
+					'sm_resource_code' => '\Numbers\Users\Users\Controller\APIs\Groups',
 					'sm_resource_type' => 150,
 					'sm_resource_classification' => 'APIs',
 					'sm_resource_name' => 'U/M User Groups API',

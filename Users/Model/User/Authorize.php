@@ -13,7 +13,8 @@ class Authorize {
 	public static function authorizeWithCredentials($username, $password) : array {
 		$result = [
 			'success' => false,
-			'error' => []
+			'error' => [],
+			'session_id' => null,
 		];
 		do {
 			$datasource = new \Numbers\Users\Users\DataSource\Login();
@@ -41,6 +42,7 @@ class Authorize {
 			// authorize entity if we got here
 			unset($user['login_password'], $_SESSION['numbers']['flag_monitoring_steps']);
 			\User::userAuthorize($user);
+			$result['session_id'] = session_id();
 			// success
 			$result['success'] = true;
 		} while(0);

@@ -115,6 +115,14 @@ class Users extends \Object\Form\Wrapper\Base {
 			'required' => false,
 			'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
 		],
+		'apis_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\APIs',
+			'details_pk' => ['um_usrapi_module_id', 'um_usrapi_resource_id'],
+			'order' => 35000
+		],
 		'teams_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -155,6 +163,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'roles' => ['order' => 200, 'label_name' => 'Roles', 'acl_subresource_hide' => ['UM::USER_ROLES']],
 			'teams' => ['order' => 300, 'label_name' => 'Teams', 'acl_subresource_hide' => ['UM::USER_TEAMS']],
 			'permissions' => ['order' => 400, 'label_name' => 'Permissions', 'acl_subresource_hide' => ['UM::USER_PERMISSIONS']],
+			'apis' => ['order' => 450, 'label_name' => 'API(s)', 'acl_subresource_hide' => ['UM::USER_APIS']],
 			'notifications' => ['order' => 500, 'label_name' => 'Notifications', 'acl_subresource_hide' => ['UM::USER_NOTIFICATIONS']],
 			'features' => ['order' => 600, 'label_name' => 'Features', 'acl_subresource_hide' => ['UM::USER_FEATURES']],
 			'flags' => ['order' => 700, 'label_name' => 'Flags', 'acl_subresource_hide' => ['UM::USER_FLAGS']],
@@ -209,6 +218,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'permissions' => [
 				'permissions' => ['container' => 'permissions_container', 'order' => 100],
+			],
+			'apis' => [
+				'apis' => ['container' => 'apis_container', 'order' => 100],
 			],
 			'flags' => [
 				'flags' => ['container' => 'flags_container', 'order' => 100],
@@ -408,6 +420,16 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
 		],
+		'apis_container' => [
+			'row1' => [
+				'um_usrapi_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'sm_resource_type' => 150], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrapi_module_id', 'resource_id' => 'um_usrapi_resource_id']],
+				'um_usrapi_readonly' => ['order' => 3, 'label_name' => 'Readonly', 'type' => 'boolean', 'percent' => 15],
+				'um_usrapi_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_usrapi_module_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
 		'teams_container' => [
 			'row1' => [
 				'um_usrtmmap_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team', 'domain' => 'team_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\Model\Teams::optionsActive', 'onchange' => 'this.form.submit();'],
@@ -496,6 +518,12 @@ class Users extends \Object\Form\Wrapper\Base {
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrsecanswer_tenant_id', 'um_user_id' => 'um_usrsecanswer_user_id'],
 			],
+			'\Numbers\Users\Users\Model\User\APIs' => [
+				'name' => 'APIs',
+				'pk' => ['um_usrapi_tenant_id', 'um_usrapi_user_id', 'um_usrapi_module_id', 'um_usrapi_resource_id'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrapi_tenant_id', 'um_user_id' => 'um_usrapi_user_id'],
+			],
 		]
 	];
 	public $notification = [
@@ -510,6 +538,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			if (empty($form->values['um_user_last_name'])) $form->error('danger', \Object\Content\Messages::REQUIRED_FIELD, 'um_user_last_name');
 			$name = concat_ws(' ', $form->values['um_user_title'], $form->values['um_user_first_name'], $form->values['um_user_last_name']);
 		} else if ($form->values['um_user_type_id'] == 20) { // business
+			if (empty($form->values['um_user_company'])) $form->error('danger', \Object\Content\Messages::REQUIRED_FIELD, 'um_user_company');
+			$name = $form->values['um_user_company'];
+		} else if ($form->values['um_user_type_id'] == 30) { // API
 			if (empty($form->values['um_user_company'])) $form->error('danger', \Object\Content\Messages::REQUIRED_FIELD, 'um_user_company');
 			$name = $form->values['um_user_company'];
 		}

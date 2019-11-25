@@ -289,6 +289,48 @@ class System2 extends \Object\Import {
 					]
 				],
 				[
+					'sm_rsrsubres_id' => '::id::UM::USER_APIS',
+					'sm_rsrsubres_resource_id' => '::id::\Numbers\Users\Users\Controller\Users',
+					'sm_rsrsubres_parent_rsrsubres_id' => null,
+					'sm_rsrsubres_code' => 'UM::USER_APIS',
+					'sm_rsrsubres_name' => 'U/M User APIs',
+					'sm_rsrsubres_icon' => 'fab fa-react',
+					'sm_rsrsubres_module_code' => 'UM',
+					'sm_rsrsubres_inactive' => 0,
+					'\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
+						[
+							'sm_rsrsubftr_feature_code' => 'UM::USERS',
+							'sm_rsrsubftr_inactive' => 0
+						]
+					],
+					'\Numbers\Backend\System\Modules\Model\Resource\Subresource\Map' => [
+						[
+							'sm_rsrsubmap_action_id' => '::id::All_Actions',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_View',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_New',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_Edit',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_Inactivate',
+							'sm_rsrsubmap_inactive' => 0
+						],
+						[
+							'sm_rsrsubmap_action_id' => '::id::Record_Delete',
+							'sm_rsrsubmap_inactive' => 0
+						],
+					]
+				],
+				[
 					'sm_rsrsubres_id' => '::id::UM::USER_NOTIFICATIONS',
 					'sm_rsrsubres_resource_id' => '::id::\Numbers\Users\Users\Controller\Users',
 					'sm_rsrsubres_parent_rsrsubres_id' => null,

@@ -21,6 +21,7 @@ class Controllers extends \Object\DataSource {
 	public $primary_params = ['skip_acl' => true];
 	public $parameters = [
 		'sm_resource_acl_permission' => ['name' => 'Acl Permission', 'type' => 'boolean'],
+		'sm_resource_type' => ['name' => 'Type', 'domain' => 'type_id'],
 	];
 
 	public function query($parameters, $options = []) {
@@ -74,7 +75,9 @@ class Controllers extends \Object\DataSource {
 			['AND', ['a.sm_resource_id', '=', 'd.resource_id', true], false]
 		]);
 		// where
-		$this->query->where('AND', ['a.sm_resource_type', '=', 100]);
+		if (empty($parameters['sm_resource_type'])) {
+			$parameters['sm_resource_type'] = [100, 150];
+		}
 		$this->query->where('AND', ['a.sm_resource_inactive', '=', 0]);
 		if (!empty($parameters)) {
 			foreach ($parameters as $k => $v) {

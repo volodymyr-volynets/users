@@ -58,6 +58,14 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'order' => 2000,
 			'required' => false
 		],
+		'apis_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\Role\APIs',
+			'details_pk' => ['um_rolapi_module_id', 'um_rolapi_resource_id'],
+			'order' => 35000
+		],
 		'parents_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -102,6 +110,7 @@ class Roles extends \Object\Form\Wrapper\Base {
 			'organizations' => ['order' => 150, 'label_name' => 'Organizations'],
 			'parents' => ['order' => 200, 'label_name' => 'Inherit'],
 			'permissions' => ['order' => 300, 'label_name' => 'Permisions'],
+			'apis' => ['order' => 350, 'label_name' => 'API(s)'],
 			'notifications' => ['order' => 400, 'label_name' => 'Notifications'],
 			'features' => ['order' => 450, 'label_name' => 'Features'],
 			'flags' => ['order' => 500, 'label_name' => 'Flags'],
@@ -129,6 +138,9 @@ class Roles extends \Object\Form\Wrapper\Base {
 			],
 			'permissions' => [
 				'permissions' => ['container' => 'permissions_container', 'order' => 100],
+			],
+			'apis' => [
+				'apis' => ['container' => 'apis_container', 'order' => 100],
 			],
 			'notifications' => [
 				'notifications' => ['container' => 'notifications_container', 'order' => 100],
@@ -192,6 +204,16 @@ class Roles extends \Object\Form\Wrapper\Base {
 				'um_rolsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
 		],
+		'apis_container' => [
+			'row1' => [
+				'um_rolapi_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'sm_resource_type' => 150], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolapi_module_id', 'resource_id' => 'um_rolapi_resource_id']],
+				'um_rolapi_readonly' => ['order' => 3, 'label_name' => 'Readonly', 'type' => 'boolean', 'percent' => 15],
+				'um_rolapi_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_rolapi_module_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
 		'notifications_container' => [
 			'row1' => [
 				'um_rolnoti_module_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Notification', 'domain' => 'module_id', 'required' => true, 'details_unique_select' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\DataSource\Module\Features::optionsJson', 'options_params' => ['sm_feature_type' => 20], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolnoti_module_id', 'feature_code' => 'um_rolnoti_feature_code']],
@@ -253,6 +275,12 @@ class Roles extends \Object\Form\Wrapper\Base {
 						'map' => ['um_rolperm_tenant_id' => 'um_rolsubres_tenant_id', 'um_rolperm_role_id' => 'um_rolsubres_role_id', 'um_rolperm_module_id' => 'um_rolsubres_module_id', 'um_rolperm_resource_id' => 'um_rolsubres_resource_id'],
 					]
 				]
+			],
+			'\Numbers\Users\Users\Model\Role\APIs' => [
+				'name' => 'APIs',
+				'pk' => ['um_rolapi_tenant_id', 'um_rolapi_role_id', 'um_rolapi_module_id', 'um_rolapi_resource_id'],
+				'type' => '1M',
+				'map' => ['um_role_tenant_id' => 'um_rolapi_tenant_id', 'um_role_id' => 'um_rolapi_role_id'],
 			],
 			'\Numbers\Users\Users\Model\Role\Notifications' => [
 				'name' => 'Notifications',

@@ -41,6 +41,11 @@ class Import extends \Object\Import {
 					'um_usrtype_id' => 20,
 					'um_usrtype_name' => 'Business',
 					'um_usrtype_inactive' => 0
+				],
+				[
+					'um_usrtype_id' => 30,
+					'um_usrtype_name' => 'API User',
+					'um_usrtype_inactive' => 0
 				]
 			]
 		],
@@ -69,6 +74,11 @@ class Import extends \Object\Import {
 				[
 					'um_roltype_id' => 40,
 					'um_roltype_name' => 'Data Role',
+					'um_roltype_inactive' => 0
+				],
+				[
+					'um_roltype_id' => 50,
+					'um_roltype_name' => 'API Role',
 					'um_roltype_inactive' => 0
 				]
 			]
