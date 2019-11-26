@@ -30,7 +30,8 @@ class Teams extends \Object\DataSource {
 			'j.features',
 			'm.notifications',
 			'k.subresources',
-			'l.flags'
+			'l.flags',
+			'n.apis'
 		]);
 		// join
 		$this->query->join('LEFT', function (& $query) {
@@ -94,6 +95,21 @@ class Teams extends \Object\DataSource {
 		}, 'm', 'ON', [
 			['AND', ['a.um_team_id', '=', 'm.um_temnoti_team_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\Team\API\Methods::queryBuilderStatic(['alias' => 'inner_n', 'skip_acl' => true])->select();
+			$query->columns([
+				'inner_n.um_temapmethod_team_id',
+				'apis' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_n.um_temapmethod_resource_id, inner_n.um_temapmethod_method_code, (inner_n.um_temapmethod_inactive + inner_n2.um_temapi_inactive), inner_n.um_temapmethod_module_id)", 'delimiter' => ';;'])
+			]);
+			$query->join('INNER', new \Numbers\Users\Users\Model\Team\APIs(), 'inner_n2', 'ON', [
+				['AND', ['inner_n.um_temapmethod_team_id', '=', 'inner_n2.um_temapi_team_id', true], false],
+				['AND', ['inner_n.um_temapmethod_module_id', '=', 'inner_n2.um_temapi_module_id', true], false],
+				['AND', ['inner_n.um_temapmethod_resource_id', '=', 'inner_n2.um_temapi_resource_id', true], false]
+			]);
+			$query->groupby(['inner_n.um_temapmethod_team_id']);
+		}, 'n', 'ON', [
+			['AND', ['a.um_team_id', '=', 'n.um_temapmethod_team_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_team_inactive', '=', 0]);
 	}
@@ -110,6 +126,17 @@ class Teams extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['permissions'] = [];
+			}
+			// apis
+			if (!empty($v['apis'])) {
+				$data[$k]['apis'] = [];
+				$temp = explode(';;', $v['apis']);
+				foreach ($temp as $v2) {
+					$v2 = explode('::', $v2);
+					$data[$k]['apis'][(int) $v2[0]][$v2[1]][(int) $v2[3]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['apis'] = [];
 			}
 			// features
 			if (!empty($v['features'])) {

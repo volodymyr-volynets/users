@@ -36,6 +36,7 @@ class Teams extends \Object\Table {
 	public $options_map = [
 		'um_team_name' => 'name',
 		'um_team_icon' => 'icon_class',
+		'um_team_inactive' => 'inactive',
 	];
 	public $options_active = [
 		'um_team_inactive' => 0

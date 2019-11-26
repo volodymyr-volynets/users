@@ -62,6 +62,7 @@ class Login extends \Object\DataSource {
 			'notifications' => 'm.notifications',
 			'subresources' => 'k.subresources',
 			'flags' => 'l.flags',
+			'apis' => 'n.apis',
 			// internalization
 			'i18n_group_id' => 'd.um_usri18n_group_id',
 			'i18n_language_code' => 'd.um_usri18n_language_code',
@@ -210,6 +211,21 @@ class Login extends \Object\DataSource {
 		}, 'l', 'ON', [
 			['AND', ['a.um_user_id', '=', 'l.um_usrsysflag_user_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\User\API\Methods::queryBuilderStatic(['alias' => 'inner_n', 'skip_acl' => true])->select();
+			$query->columns([
+				'inner_n.um_usrapmethod_user_id',
+				'apis' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_n.um_usrapmethod_resource_id, inner_n.um_usrapmethod_method_code, (inner_n.um_usrapmethod_inactive + inner_n2.um_usrapi_inactive), inner_n.um_usrapmethod_module_id)", 'delimiter' => ';;'])
+			]);
+			$query->join('INNER', new \Numbers\Users\Users\Model\User\APIs(), 'inner_n2', 'ON', [
+				['AND', ['inner_n.um_usrapmethod_user_id', '=', 'inner_n2.um_usrapi_user_id', true], false],
+				['AND', ['inner_n.um_usrapmethod_module_id', '=', 'inner_n2.um_usrapi_module_id', true], false],
+				['AND', ['inner_n.um_usrapmethod_resource_id', '=', 'inner_n2.um_usrapi_resource_id', true], false]
+			]);
+			$query->groupby(['inner_n.um_usrapmethod_user_id']);
+		}, 'n', 'ON', [
+			['AND', ['a.um_user_id', '=', 'n.um_usrapmethod_user_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
@@ -293,6 +309,17 @@ class Login extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['permissions'] = [];
+			}
+			// apis
+			if (!empty($v['apis'])) {
+				$data[$k]['apis'] = [];
+				$temp = explode(';;', $v['apis']);
+				foreach ($temp as $v2) {
+					$v2 = explode('::', $v2);
+					$data[$k]['apis'][(int) $v2[0]][$v2[1]][(int) $v2[3]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['apis'] = [];
 			}
 			// subresources
 			if (!empty($v['subresources'])) {

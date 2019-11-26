@@ -20,7 +20,6 @@ class APIs extends \Object\Table {
 		'um_rolapi_role_id' => ['name' => 'Role #', 'domain' => 'role_id'],
 		'um_rolapi_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
 		'um_rolapi_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],
-		'um_rolapi_readonly' => ['name' => 'Read Only', 'type' => 'boolean'],
 		'um_rolapi_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

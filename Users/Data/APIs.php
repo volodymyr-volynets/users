@@ -38,7 +38,18 @@ class APIs extends \Object\Import {
 					'sm_resource_menu_options_generator' => null,
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [],
-					'\Numbers\Backend\System\Modules\Model\Resource\Map' => []
+					'\Numbers\Backend\System\Modules\Model\Resource\APIMethods' => [
+						[
+							'sm_rsrcapimeth_method_code' => 'Login',
+							'sm_rsrcapimeth_method_name' => 'Login',
+							'sm_rsrcapimeth_inactive' => 0,
+						],
+						[
+							'sm_rsrcapimeth_method_code' => 'Logout',
+							'sm_rsrcapimeth_method_name' => 'Logout',
+							'sm_rsrcapimeth_inactive' => 0,
+						]
+					]
 				],
 				[
 					'sm_resource_id' => '::id::\Numbers\Users\Users\Controller\APIs\Groups',
@@ -68,7 +79,28 @@ class APIs extends \Object\Import {
 					'sm_resource_menu_options_generator' => null,
 					'sm_resource_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Resource\Features' => [],
-					'\Numbers\Backend\System\Modules\Model\Resource\Map' => []
+					'\Numbers\Backend\System\Modules\Model\Resource\APIMethods' => [
+						[
+							'sm_rsrcapimeth_method_code' => 'AllActions',
+							'sm_rsrcapimeth_method_name' => 'All Actions',
+							'sm_rsrcapimeth_inactive' => 0,
+						],
+						[
+							'sm_rsrcapimeth_method_code' => 'Get',
+							'sm_rsrcapimeth_method_name' => 'Get',
+							'sm_rsrcapimeth_inactive' => 0,
+						],
+						[
+							'sm_rsrcapimeth_method_code' => 'Save',
+							'sm_rsrcapimeth_method_name' => 'Save',
+							'sm_rsrcapimeth_inactive' => 0,
+						],
+						[
+							'sm_rsrcapimeth_method_code' => 'Delete',
+							'sm_rsrcapimeth_method_name' => 'Delete',
+							'sm_rsrcapimeth_inactive' => 0,
+						],
+					]
 				],
 			]
 		]

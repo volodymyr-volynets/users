@@ -56,6 +56,25 @@ class Teams extends \Object\Form\Wrapper\Base {
 			'order' => 2000,
 			'required' => false
 		],
+		'apis_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\Team\APIs',
+			'details_pk' => ['um_temapi_module_id', 'um_temapi_resource_id'],
+			'order' => 35000
+		],
+		'api_methods_container' => [
+			'type' => 'subdetails',
+			'label_name' => 'Methods',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Users\Model\Team\APIs',
+			'details_key' => '\Numbers\Users\Users\Model\Team\API\Methods',
+			'details_pk' => ['um_temapmethod_method_code'],
+			'order' => 1000,
+			'required' => true,
+		],
 		'notifications_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -85,6 +104,7 @@ class Teams extends \Object\Form\Wrapper\Base {
 		'tabs' => [
 			'organizations' => ['order' => 150, 'label_name' => 'Organizations'],
 			'permissions' => ['order' => 300, 'label_name' => 'Permisions'],
+			'apis' => ['order' => 350, 'label_name' => 'API(s)'],
 			'notifications' => ['order' => 400, 'label_name' => 'Notifications'],
 			'features' => ['order' => 450, 'label_name' => 'Features'],
 			'flags' => ['order' => 500, 'label_name' => 'Flags'],
@@ -114,6 +134,9 @@ class Teams extends \Object\Form\Wrapper\Base {
 			'notifications' => [
 				'notifications' => ['container' => 'notifications_container', 'order' => 100],
 			],
+			'apis' => [
+				'apis' => ['container' => 'apis_container', 'order' => 100],
+			],
 			'features' => [
 				'features' => ['container' => 'features_container', 'order' => 100],
 			],
@@ -129,7 +152,7 @@ class Teams extends \Object\Form\Wrapper\Base {
 		],
 		'permissions_container' => [
 			'row1' => [
-				'um_temperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_temperm_module_id', 'resource_id' => 'um_temperm_resource_id']],
+				'um_temperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'sm_resource_type' => 100], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_temperm_module_id', 'resource_id' => 'um_temperm_resource_id']],
 				'um_temperm_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			self::HIDDEN => [
@@ -151,6 +174,21 @@ class Teams extends \Object\Form\Wrapper\Base {
 				'um_temsubres_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\DataSource\Subresource\Actions::optionsGrouped', 'options_depends' => ['rsrsubres_id' => 'um_temsubres_rsrsubres_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
 				'um_temsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
 			],
+		],
+		'apis_container' => [
+			'row1' => [
+				'um_temapi_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'sm_resource_type' => 150], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_temapi_module_id', 'resource_id' => 'um_temapi_resource_id']],
+				'um_temapi_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			self::HIDDEN => [
+				'um_temapi_module_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
+		'api_methods_container' => [
+			'row1' => [
+				'um_temapmethod_method_code' => ['order' => 1, 'label_name' => 'Method', 'domain' => 'code', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\Model\Resource\APIMethods::optionsActive', 'options_depends' => ['sm_rsrcapimeth_resource_id' => 'detail::um_temapi_resource_id'], 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_temapmethod_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 10]
+			]
 		],
 		'notifications_container' => [
 			'row1' => [
@@ -211,6 +249,20 @@ class Teams extends \Object\Form\Wrapper\Base {
 						'pk' => ['um_temsubres_tenant_id', 'um_temsubres_team_id', 'um_temsubres_module_id', 'um_temsubres_resource_id', 'um_temsubres_rsrsubres_id', 'um_temsubres_action_id'],
 						'type' => '1M',
 						'map' => ['um_temperm_tenant_id' => 'um_temsubres_tenant_id', 'um_temperm_team_id' => 'um_temsubres_team_id', 'um_temperm_module_id' => 'um_temsubres_module_id', 'um_temperm_resource_id' => 'um_temsubres_resource_id'],
+					]
+				]
+			],
+			'\Numbers\Users\Users\Model\Team\APIs' => [
+				'name' => 'APIs',
+				'pk' => ['um_temapi_tenant_id', 'um_temapi_team_id', 'um_temapi_module_id', 'um_temapi_resource_id'],
+				'type' => '1M',
+				'map' => ['um_team_tenant_id' => 'um_temapi_tenant_id', 'um_team_id' => 'um_temapi_team_id'],
+				'details' => [
+					'\Numbers\Users\Users\Model\Team\API\Methods' => [
+						'name' => 'API Methods',
+						'pk' => ['um_temapmethod_tenant_id', 'um_temapmethod_team_id', 'um_temapmethod_module_id', 'um_temapmethod_resource_id', 'um_temapmethod_method_code'],
+						'type' => '1M',
+						'map' => ['um_temapi_tenant_id' => 'um_temapmethod_tenant_id', 'um_temapi_team_id' => 'um_temapmethod_team_id', 'um_temapi_module_id' => 'um_temapmethod_module_id', 'um_temapi_resource_id' => 'um_temapmethod_resource_id'],
 					]
 				]
 			],

@@ -123,6 +123,17 @@ class Users extends \Object\Form\Wrapper\Base {
 			'details_pk' => ['um_usrapi_module_id', 'um_usrapi_resource_id'],
 			'order' => 35000
 		],
+		'api_methods_container' => [
+			'type' => 'subdetails',
+			'label_name' => 'Methods',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_parent_key' => '\Numbers\Users\Users\Model\User\APIs',
+			'details_key' => '\Numbers\Users\Users\Model\User\API\Methods',
+			'details_pk' => ['um_usrapmethod_method_code'],
+			'order' => 1000,
+			'required' => true,
+		],
 		'teams_container' => [
 			'type' => 'details',
 			'details_rendering_type' => 'table',
@@ -397,7 +408,7 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'permissions_container' => [
 			'row1' => [
-				'um_usrperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'acl_handle_exceptions' => true], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrperm_module_id', 'resource_id' => 'um_usrperm_resource_id']],
+				'um_usrperm_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'acl_handle_exceptions' => true, 'sm_resource_type' => 100], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrperm_module_id', 'resource_id' => 'um_usrperm_resource_id']],
 				'um_usrperm_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			self::HIDDEN => [
@@ -422,12 +433,17 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'apis_container' => [
 			'row1' => [
-				'um_usrapi_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'sm_resource_type' => 150], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrapi_module_id', 'resource_id' => 'um_usrapi_resource_id']],
-				'um_usrapi_readonly' => ['order' => 3, 'label_name' => 'Readonly', 'type' => 'boolean', 'percent' => 15],
+				'um_usrapi_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'sm_resource_type' => 150], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrapi_module_id', 'resource_id' => 'um_usrapi_resource_id']],
 				'um_usrapi_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			],
 			self::HIDDEN => [
 				'um_usrapi_module_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+			]
+		],
+		'api_methods_container' => [
+			'row1' => [
+				'um_usrapmethod_method_code' => ['order' => 1, 'label_name' => 'Method', 'domain' => 'code', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 90, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\Model\Resource\APIMethods::optionsActive', 'options_depends' => ['sm_rsrcapimeth_resource_id' => 'detail::um_usrapi_resource_id'], 'searchable' => true, 'onchange' => 'this.form.submit();'],
+				'um_usrapmethod_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 10]
 			]
 		],
 		'teams_container' => [
@@ -523,6 +539,14 @@ class Users extends \Object\Form\Wrapper\Base {
 				'pk' => ['um_usrapi_tenant_id', 'um_usrapi_user_id', 'um_usrapi_module_id', 'um_usrapi_resource_id'],
 				'type' => '1M',
 				'map' => ['um_user_tenant_id' => 'um_usrapi_tenant_id', 'um_user_id' => 'um_usrapi_user_id'],
+				'details' => [
+					'\Numbers\Users\Users\Model\User\API\Methods' => [
+						'name' => 'API Methods',
+						'pk' => ['um_usrapmethod_tenant_id', 'um_usrapmethod_user_id', 'um_usrapmethod_module_id', 'um_usrapmethod_resource_id', 'um_usrapmethod_method_code'],
+						'type' => '1M',
+						'map' => ['um_usrapi_tenant_id' => 'um_usrapmethod_tenant_id', 'um_usrapi_user_id' => 'um_usrapmethod_user_id', 'um_usrapi_module_id' => 'um_usrapmethod_module_id', 'um_usrapi_resource_id' => 'um_usrapmethod_resource_id'],
+					]
+				]
 			],
 		]
 	];

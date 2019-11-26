@@ -19,7 +19,6 @@ class APIs extends \Object\Table {
 		'um_usrapi_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'um_usrapi_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
 		'um_usrapi_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],
-		'um_usrapi_readonly' => ['name' => 'Read Only', 'type' => 'boolean'],
 		'um_usrapi_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

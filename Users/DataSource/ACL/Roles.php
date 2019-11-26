@@ -35,7 +35,8 @@ class Roles extends \Object\DataSource {
 			'j.features',
 			'm.notifications',
 			'k.subresources',
-			'l.flags'
+			'l.flags',
+			'n.apis',
 		]);
 		// join
 		$this->query->join('LEFT', function (& $query) {
@@ -114,6 +115,21 @@ class Roles extends \Object\DataSource {
 		}, 'l', 'ON', [
 			['AND', ['a.um_role_id', '=', 'l.um_rolsysflag_role_id', true], false]
 		]);
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Users\Users\Model\Role\API\Methods::queryBuilderStatic(['alias' => 'inner_n', 'skip_acl' => true])->select();
+			$query->columns([
+				'inner_n.um_rolapmethod_role_id',
+				'apis' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_n.um_rolapmethod_resource_id, inner_n.um_rolapmethod_method_code, (inner_n.um_rolapmethod_inactive + inner_n2.um_rolapi_inactive), inner_n.um_rolapmethod_module_id)", 'delimiter' => ';;'])
+			]);
+			$query->join('INNER', new \Numbers\Users\Users\Model\Role\APIs(), 'inner_n2', 'ON', [
+				['AND', ['inner_n.um_rolapmethod_role_id', '=', 'inner_n2.um_rolapi_role_id', true], false],
+				['AND', ['inner_n.um_rolapmethod_module_id', '=', 'inner_n2.um_rolapi_module_id', true], false],
+				['AND', ['inner_n.um_rolapmethod_resource_id', '=', 'inner_n2.um_rolapi_resource_id', true], false]
+			]);
+			$query->groupby(['inner_n.um_rolapmethod_role_id']);
+		}, 'n', 'ON', [
+			['AND', ['a.um_role_id', '=', 'n.um_rolapmethod_role_id', true], false]
+		]);
 		// where
 		$this->query->where('AND', ['a.um_role_inactive', '=', 0]);
 	}
@@ -141,6 +157,17 @@ class Roles extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['permissions'] = [];
+			}
+			// apis
+			if (!empty($v['apis'])) {
+				$data[$k]['apis'] = [];
+				$temp = explode(';;', $v['apis']);
+				foreach ($temp as $v2) {
+					$v2 = explode('::', $v2);
+					$data[$k]['apis'][(int) $v2[0]][$v2[1]][(int) $v2[3]] = (int) $v2[2];
+				}
+			} else {
+				$data[$k]['apis'] = [];
 			}
 			// features
 			if (!empty($v['features'])) {

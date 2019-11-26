@@ -3,7 +3,7 @@
 namespace Numbers\Users\Users\Controller\APIs;
 class Login extends \Object\Controller\API {
 	public function actionLogin() {
-		$result = \Numbers\Users\Users\Form\APIs\Login::API()->save($this->api_input, ['simple' => true]);
+		$result = \Numbers\Users\Users\Form\APIs\Login::API()->save($this->api_input, ['simple' => 2]);
 		$this->handleOutput($result);
 	}
 	public function actionLogout() {
