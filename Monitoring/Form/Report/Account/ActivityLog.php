@@ -75,7 +75,7 @@ class ActivityLog extends \Object\Form\Wrapper\Report {
 		$report->addHeader(DEF, 'row2', [
 			'_blank' => ['label_name' => '', 'percent' => 20],
 			'sm_monusage_user_id' => ['label_name' => 'User #', 'percent' => 20],
-			'sm_monusage_user_ip' => ['label_name' => 'User IP', 'percent' => 20],
+			'sm_monusage_user_ip' => ['label_name' => 'User IP / Country', 'percent' => 20],
 			'um_user_name' => ['label_name' => 'User Name', 'percent' => 40],
 		]);
 		$report->addHeader(DEF, 'row3', [
@@ -128,7 +128,9 @@ class ActivityLog extends \Object\Form\Wrapper\Report {
 		foreach ($data['rows'] as $k => $v) {
 			// replaces
 			$v['sm_monusage_timestamp'] = \Format::datetime($v['sm_monusage_timestamp']);
-			$v['sm_monusage_user_id'] = ['value' => \Format::id($v['sm_monusage_user_id']), 'url' => \Request::buildURL('/Numbers/Users/Users/Controller/Users/_Edit', ['um_user_id' => $v['sm_monusage_user_id']])];
+			if (!empty($v['sm_monusage_country_code'])) {
+				$v['sm_monusage_user_ip'].= ' / ' . $v['sm_monusage_country_code'];
+			}
 			// add main rows
 			$even = $counter % 2 ? ODD : EVEN;
 			$report->addData(DEF, 'row1', $even, $v);

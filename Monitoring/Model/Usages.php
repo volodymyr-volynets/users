@@ -23,6 +23,7 @@ class Usages extends \Object\Table {
 		'sm_monusage_resource_name' => ['name' => 'Resource Name', 'type' => 'text', 'null' => true],
 		'sm_monusage_method' => ['name' => 'Method', 'domain' => 'code'],
 		'sm_monusage_duration' => ['name' => 'Duration (Seconds)', 'domain' => 'quantity'],
+		'sm_monusage_country_code' => ['name' => 'Country Code', 'domain' => 'country_code', 'null' => true],
 	];
 	public $constraints = [
 		'sm_monitoring_usages_pk' => ['type' => 'pk', 'columns' => ['sm_monusage_tenant_id', 'sm_monusage_id']],

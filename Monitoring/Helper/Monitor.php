@@ -43,6 +43,7 @@ class Monitor {
 			'sm_monusage_timestamp' => \Format::now('timestamp'),
 			'sm_monusage_user_id' => \User::id(),
 			'sm_monusage_user_ip' => \Request::ip(),
+			'sm_monusage_country_code' => $_SESSION['numbers']['ip']['country_code'] ?? null,
 			'sm_monusage_resource_id' => null,
 			'sm_monusage_duration' => microtime(true),
 			'sm_monusage_method' => \Request::method(),
