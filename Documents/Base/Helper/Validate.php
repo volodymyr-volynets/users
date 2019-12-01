@@ -15,8 +15,9 @@ class Validate {
 	 */
 	public static $validation_extensions = [
 		'images' => ['bmp', 'gif', 'jpg', 'jpeg', 'tif', 'tiff', 'png'],
-		'documents' => ['pdf', 'xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx'],
-		'audio' => ['mp3', 'wav']
+		'documents' => ['pdf', 'xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx', 'xml'],
+		'audio' => ['mp3', 'wav'],
+		'archives' => ['zip', 'gz'],
 	];
 
 	/**
@@ -55,6 +56,7 @@ class Validate {
 				$all_extensions = array_merge($all_extensions, self::$validation_extensions[$v]);
 			}
 			$file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+			$file_extension = trim(strtolower($file_extension));
 			if (!in_array($file_extension, $all_extensions)) {
 				$result['error'][] = 'You can not upload files with this extension!';
 				return $result;

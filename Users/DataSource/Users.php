@@ -37,6 +37,10 @@ class Users extends \Object\DataSource {
 		'include_himself' => ['name' => 'Include Himself', 'type' => 'boolean'],
 		'skip_himself' => ['name' => 'Skip Himself', 'type' => 'boolean'],
 		'inactive' => ['name' => 'Inactive', 'type' => 'boolean'],
+		// other
+		'user_id1' => ['name' => 'User # 1', 'domain' => 'user_id'],
+		'user_id2' => ['name' => 'User # 2', 'domain' => 'user_id'],
+		'user_type' => ['name' => 'User Type', 'domain' => 'type_id', 'multiple_column' => true],
 	];
 
 	public function query($parameters, $options = []) {
@@ -111,6 +115,16 @@ class Users extends \Object\DataSource {
 		// inactive
 		if (isset($parameters['inactive'])) {
 			$this->query->where('AND', ['a.um_user_inactive', '=', $parameters['inactive'], false]);
+		}
+		// ids
+		if (!empty($parameters['user_id1'])) {
+			$this->query->where('AND', ['a.um_user_id', '>=', $parameters['user_id1']]);
+		}
+		if (!empty($parameters['user_id2'])) {
+			$this->query->where('AND', ['a.um_user_id', '<=', $parameters['user_id2']]);
+		}
+		if (!empty($parameters['user_type'])) {
+			$this->query->where('AND', ['a.um_user_type_id', '=', $parameters['user_type']]);
 		}
 	}
 }

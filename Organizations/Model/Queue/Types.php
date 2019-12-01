@@ -38,7 +38,8 @@ class Types extends \Object\Table {
 	public $optimistic_lock = true;
 	public $options_map = [
 		'on_quetype_name' => 'name',
-		'on_quetype_icon' => 'icon_class'
+		'on_quetype_icon' => 'icon_class',
+		'on_quetype_inactive' => 'inactive'
 	];
 	public $options_active = [
 		'on_quetype_inactive' => 0

@@ -192,7 +192,7 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_user_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => true]
 			],
 			'um_user_name' => [
-				'um_user_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => 'c'],
+				'um_user_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => 'c', 'autocomplete' => 'off'],
 			]
 		],
 		'tabs' => [
@@ -300,7 +300,8 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'login_container' => [
 			'um_user_login_enabled' => [
-				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 50, 'skip_during_export' => true],
+				'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 25, 'skip_during_export' => true],
+				'um_user_login_become' => ['order' => 2, 'label_name' => 'Become', 'percent' => 25, 'skip_during_export' => true, 'custom_renderer' => 'self::renderBecome'],
 				'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c', 'skip_during_export' => true]
 			],
 			'um_user_login_last_set' => [
@@ -678,6 +679,18 @@ class Users extends \Object\Form\Wrapper\Base {
 	public function renderUserToCustomer(& $form) {
 		if (!empty($form->values['um_user_id'])) {
 			return \Numbers\Users\Users\Helper\Assignment\UserToCustomer::renderList($form->values['um_user_id']);
+		}
+	}
+
+	public function renderBecome(& $form, & $options, & $value, & $neighbouring_values) {
+		// check if we have permissions
+		if (!empty($form->values['um_user_id']) && \User::id() != $form->values['um_user_id'] && !empty($form->values['um_user_login_enabled']) && \Can::userFeatureExists('UM::USER_BECOME')) {
+			return \HTML::a([
+				'href' => \Numbers\Users\Users\Helper\LoginWithToken::URL($form->values['um_user_id']),
+				'value' => i18n(null, 'Become'),
+			]);
+		} else {
+			return '';
 		}
 	}
 }
