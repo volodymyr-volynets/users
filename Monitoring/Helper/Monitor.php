@@ -110,7 +110,6 @@ class Monitor {
 			self::$usage['sm_monusage_id'] = $usages_model->sequence('sm_monusage_id');
 			// usage actions
 			$usage_actions = \Application::$controller->getUsageActions();
-			$history_added = false;
 			if (!empty($usage_actions)) {
 				foreach ($usage_actions as $k => $v) {
 					self::$usage['\Numbers\Users\Monitoring\Model\Usage\Actions'][] = [
@@ -123,10 +122,12 @@ class Monitor {
 						'sm_monusgact_url' => $v['url'],
 						'sm_monusgact_history' => $v['history']
 					];
-					// update history
-					if (!empty($v['history']) && !$history_added) {
+				}
+				// update history in reverse order
+				foreach (array_reverse($usage_actions) as $k => $v) {
+					if (!empty($v['history']) && !empty($v['url'])) {
 						$this->updateHistory($v['url'] . '', \Application::$controller->title ?? '');
-						$history_added = true;
+						break;
 					}
 				}
 			}
@@ -146,20 +147,21 @@ class Monitor {
 	private function updateHistory(string $url, string $title) {
 		// we do not add history if we preview history link
 		if (isset(self::$__history_id)) return;
-		$_SESSION['numbers']['flag_monitoring_steps'][] = [
+		end($_SESSION['numbers']['flag_monitoring_steps']);
+		$key = key($_SESSION['numbers']['flag_monitoring_steps']);
+		$key+= 1;
+		$_SESSION['numbers']['flag_monitoring_steps'][$key] = [
 			'url' => $url,
 			'title' => $title,
 		];
-		end($_SESSION['numbers']['flag_monitoring_steps']);
-		$key = key($_SESSION['numbers']['flag_monitoring_steps']);
 		$_SESSION['numbers']['flag_monitoring_steps'][$key]['url'].= '&__history_id=' . $key;
 		// we only keep 5 items in history
-		$counter = count($_SESSION['numbers']['flag_monitoring_steps']) - 5;
-		foreach ($_SESSION['numbers']['flag_monitoring_steps'] as $k => $v) {
-			if ($counter <= 0) break;
-			if ($k == $key) break;
-			array_shift($_SESSION['numbers']['flag_monitoring_steps']);
-			$counter--;
+		$counter = 0;
+		foreach (array_reverse($_SESSION['numbers']['flag_monitoring_steps'], true) as $k => $v) {
+			if ($counter >= 10) {
+				unset($_SESSION['numbers']['flag_monitoring_steps'][$k]);
+			}
+			$counter++;
 		}
 	}
 }

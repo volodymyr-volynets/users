@@ -19,7 +19,7 @@ class Login extends \Object\DataSource {
 
 	public $primary_model;
 	public $parameters = [
-		'username' => ['name' => 'Username', 'domain' => 'login'],
+		'username' => ['name' => 'Username', 'type' => 'text'],
 		'user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'user_ids' => ['name' => 'User(s) #', 'domain' => 'user_id', 'multiple_column' => true],
 	];

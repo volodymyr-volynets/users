@@ -27,7 +27,7 @@ class NewComment extends \Object\Form\Wrapper\Base {
 			'wg_comment_important' => [
 				'wg_comment_important' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Important', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
 				'wg_comment_public' => ['order' => 2, 'label_name' => 'Public', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
-				'wg_comment_file_1_new' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'null' => true, 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents']], 'description' => 'Extensions: Images, Audio, Documents'],
+				'wg_comment_file_1_new' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'null' => true, 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents', 'archives']], 'description' => 'Extensions: Images, Audio, Documents, Archives'],
 			],
 		],
 		'buttons' => [
@@ -68,12 +68,22 @@ class NewComment extends \Object\Form\Wrapper\Base {
 				'single_row' => true
 			]);
 			$form->values['wg_comment_template_id'] = null;
-			$form->values['wg_comment_value'] = nl2br($template['um_notetemplate_template']);
+			if (!empty($form->options['plain_text_note'])) {
+				$form->values['wg_comment_value'] = str_replace("\n", '', $template['um_notetemplate_template']);
+			} else {
+				$form->values['wg_comment_value'] = nl2br($template['um_notetemplate_template']);
+			}
 		}
 		// public
 		if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_Public')) {
-			$form->element('top', 'wg_comment_important', 'wg_comment_public', ['readonly' => true]);
-			$form->values['wg_comment_public'] = 1;
+			if (empty(\Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'All_Actions'))) {
+				$form->element('top', 'wg_comment_important', 'wg_comment_public', ['readonly' => true]);
+				$form->values['wg_comment_public'] = 1;
+			}
+		}
+		// plain text
+		if (!empty($form->options['plain_text_note'])) {
+			$form->element('top', 'wg_comment_value', 'wg_comment_value', ['method' => 'textarea', 'rows' => 10, 'wrap' => 'on']);
 		}
 	}
 
@@ -100,7 +110,7 @@ class NewComment extends \Object\Form\Wrapper\Base {
 	}
 
 	public function post(& $form) {
-		if (!empty($form->options['notification']['new']) && $form->values['wg_comment_public']) {
+		if (!empty($form->options['notification']['new']) && !empty($form->values['wg_comment_public'])) {
 			$method = \Factory::method($form->options['notification']['new']);
 			call_user_func_array($method, [$this->notification_id, \Application::$controller->module_id]);
 		}

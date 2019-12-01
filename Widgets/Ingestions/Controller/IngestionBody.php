@@ -23,6 +23,10 @@ class IngestionBody extends \Object\Controller {
 			'single_row' => true
 		]);
 		// render
-		\Layout::renderAs($crypt->uncompress($data['wg_emailingbody_message']), 'text/html', ['extension' => 'plain']);
+		if (!empty($data['wg_emailingbody_text'])) {
+			\Layout::renderAs($data['wg_emailingbody_text'], 'text/html', ['extension' => 'plain']);
+		} else {
+			\Layout::renderAs($crypt->uncompress($data['wg_emailingbody_message']), 'text/html', ['extension' => 'plain']);
+		}
 	}
 }

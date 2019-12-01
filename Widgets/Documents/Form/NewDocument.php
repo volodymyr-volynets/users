@@ -24,7 +24,7 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 			'wg_document_important' => [
 				'wg_document_important' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Important', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
 				'wg_document_public' => ['order' => 2, 'label_name' => 'Public', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
-				'wg_document_file_id_1_new' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'null' => true, 'required' => true, 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents']], 'description' => 'Extensions: Images, Audio, Documents'],
+				'wg_document_file_id_1_new' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'null' => true, 'required' => true, 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents', 'archives']], 'description' => 'Extensions: Images, Audio, Documents, Archive'],
 			],
 			self::HIDDEN => [
 				'wg_document_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Document #', 'domain' => 'big_id_sequence', 'null' => true, 'method' => 'hidden'],
@@ -60,8 +60,26 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 		}
 		// public
 		if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_Public')) {
-			$form->element('top', 'wg_document_important', 'wg_document_public', ['readonly' => true]);
-			$form->values['wg_document_public'] = 1;
+			if (empty(\Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'All_Actions'))) {
+				$form->element('top', 'wg_document_important', 'wg_document_public', ['readonly' => true]);
+				$form->values['wg_document_public'] = 1;
+			}
+		}
+		// plain text
+		if (!empty($form->options['plain_text_note'])) {
+			$form->element('top', 'wg_document_comment', 'wg_document_comment', ['method' => 'textarea', 'rows' => 10, 'wrap' => 'on']);
+		}
+		// preset default file catalog
+		if (empty($form->values['wg_document_catalog_code'])) {
+			$default = \Numbers\Users\Documents\Base\Model\Catalogs::getStatic([
+				'where' => [
+					'dt_catalog_organization_id' => \User::get('organization_id'),
+					'dt_catalog_primary' => 1
+				],
+				'pk' => null,
+				'single_row' => true
+			]);
+			$form->values['wg_document_catalog_code'] = $default['dt_catalog_code'];
 		}
 	}
 

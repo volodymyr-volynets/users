@@ -16,7 +16,8 @@ class EmailBodies extends \Object\Table {
 	public $columns = [
 		'wg_emailingbody_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'wg_emailingbody_id' => ['name' => 'Body #', 'domain' => 'big_id_sequence'],
-		'wg_emailingbody_message' => ['name' => 'Message', 'type' => 'bytea'],
+		'wg_emailingbody_message' => ['name' => 'Message', 'type' => 'bytea', 'null' => true],
+		'wg_emailingbody_text' => ['name' => 'Text', 'type' => 'text', 'null' => true],
 	];
 	public $constraints = [
 		'wg_email_ingestion_bodies_pk' => ['type' => 'pk', 'columns' => ['wg_emailingbody_tenant_id', 'wg_emailingbody_id']],

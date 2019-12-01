@@ -195,7 +195,10 @@ class Users extends \Object\Table {
 			return self::$cached_users[$user_id];
 		} else {
 			$user = \Numbers\Users\Users\Model\Users::loadById($user_id);
-			$result = $user['um_user_name'];
+			$result = $user[$options['column'] ?? 'um_user_name'];
+			if (empty($result)) {
+				$result = $user['um_user_name'];
+			}
 			self::$cached_users[$user_id] = $result;
 			// if we need to include id
 			if (!empty($options['include_id'])) {

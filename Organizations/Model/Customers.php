@@ -186,7 +186,9 @@ class Customers extends \Object\Table {
 			}
 			$result[$k] = $v;
 			$result[$k]['parent'] = $parent;
-			$result[$k]['__selected_name'] = i18n(null, $organizations[(int) $v['organization_id']]['name']) . ': ' . i18n(null, $v['name']);
+			if (isset($organizations[(int) $v['organization_id']])) {
+				$result[$k]['__selected_name'] = i18n(null, $organizations[(int) $v['organization_id']]['name']) . ': ' . i18n(null, $v['name']);
+			}
 		}
 		if (!empty($result)) {
 			$converted = \Helper\Tree::convertByParent($result, 'parent');
