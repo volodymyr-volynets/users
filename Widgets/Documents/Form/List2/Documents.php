@@ -219,7 +219,11 @@ class Documents extends \Object\Form\Wrapper\List2 {
 		// notes
 		if (!empty($neighbouring_values['wg_document_comment'])) {
 			$result.= '<hr/>';
-			$result.= nl2br($neighbouring_values['wg_document_comment']);
+			if (is_html($neighbouring_values['wg_document_comment']) && has_tags($neighbouring_values['wg_document_comment'], \HTML::HTML_WHITE_SPACE_TAGS_ARRAY + ['<p>'])) {
+				$result.= str_replace(["\n", "\r"], '', $neighbouring_values['wg_document_comment']);;
+			} else {
+				$result.= str_replace(["\n", "\r"], '', nl2br($neighbouring_values['wg_document_comment']));
+			}
 		}
 		return $result;
 	}

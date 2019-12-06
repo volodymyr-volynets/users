@@ -150,7 +150,16 @@ class Comments extends \Object\Form\Wrapper\List2 {
 	}
 
 	public function renderCommentValue(& $form, & $options, & $value, & $neighbouring_values) {
-		return nl2br($value);
+		$result = '';
+		if (!empty($neighbouring_values['wg_comment_followup_datetime'])) {
+			$result.= '<b>' . i18n(null, 'Follow Up: ') . \Format::datetime($neighbouring_values['wg_comment_followup_datetime']) . '</b><hr/>';
+		}
+		if (is_html($value) && has_tags($value, \HTML::HTML_WHITE_SPACE_TAGS_ARRAY + ['<p>'])) {
+			$result.= str_replace(["\n", "\r"], '', $value);
+		} else {
+			$result.= str_replace(["\n", "\r"], '', nl2br($value));
+		}
+		return $result;
 	}
 
 	public function renderCommentUser(& $form, & $options, & $value, & $neighbouring_values) {

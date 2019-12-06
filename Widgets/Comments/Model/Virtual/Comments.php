@@ -54,6 +54,7 @@ class Comments extends \Object\Table {
 		$this->columns['wg_comment_file_8'] = ['name' => 'File 8', 'domain' => 'file_id', 'null' => true];
 		$this->columns['wg_comment_file_9'] = ['name' => 'File 9', 'domain' => 'file_id', 'null' => true];
 		$this->columns['wg_comment_file_10'] = ['name' => 'File 10', 'domain' => 'file_id', 'null' => true];
+		$this->columns['wg_comment_followup_datetime'] = ['name' => 'Followup Datetime', 'type' => 'datetime', 'null' => true];
 		// add constraints
 		$this->constraints[$this->name . '_pk'] = [
 			'type' => 'pk',

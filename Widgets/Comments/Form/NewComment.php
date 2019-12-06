@@ -19,7 +19,8 @@ class NewComment extends \Object\Form\Wrapper\Base {
 				'wg_comment_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Comment #', 'domain' => 'big_id_sequence', 'null' => true, 'readonly' => true],
 			],
 			'wg_comment_template_id' => [
-				'wg_comment_template_id' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Template', 'domain' => 'group_id', 'null' => true, 'percent' => 100, 'placeholder' => \Object\Content\Messages::PLEASE_CHOOSE, 'method' => 'select', 'options_model' => '\Numbers\Users\Widgets\Comments\Model\Templates::optionsActive', 'options_params' => ['um_notetemplate_type_id' => 100], 'onchange' => 'this.form.submit();'],
+				'wg_comment_template_id' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Template', 'domain' => 'group_id', 'null' => true, 'percent' => 50, 'placeholder' => \Object\Content\Messages::PLEASE_CHOOSE, 'method' => 'select', 'options_model' => '\Numbers\Users\Widgets\Comments\Model\Templates::optionsActive', 'options_params' => ['um_notetemplate_type_id' => 100], 'onchange' => 'this.form.submit();'],
+				'wg_comment_followup_datetime' => ['order' => 2, 'label_name' => 'Follow Up Datetime', 'type' => 'datetime', 'null' => true, 'percent' => 50, 'method' => 'calendar', 'calendar_icon' => 'right'],
 			],
 			'wg_comment_value' => [
 				'wg_comment_value' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Comment', 'domain' => 'comment', 'null' => true, 'percent' => 100, 'required' => true, 'method' => 'wysiwyg', 'wysiwyg_height' => 250]
@@ -113,14 +114,6 @@ class NewComment extends \Object\Form\Wrapper\Base {
 		if (!empty($form->options['notification']['new']) && !empty($form->values['wg_comment_public'])) {
 			$method = \Factory::method($form->options['notification']['new']);
 			call_user_func_array($method, [$this->notification_id, \Application::$controller->module_id]);
-		}
-	}
-
-	public function overrideFieldValue(& $form, & $options, & $value, & $neighbouring_values) {
-		if ($options['options']['field_name'] == 'wg_comment_value') {
-			if (strpos($value, "\n") !== false) {
-				$value = nl2br($value);
-			}
 		}
 	}
 }

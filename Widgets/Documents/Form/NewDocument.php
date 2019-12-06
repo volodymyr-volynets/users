@@ -133,17 +133,9 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 				}
 			}
 		}
-		if (!empty($form->options['notification']['new']) && $form->values['wg_document_public']) {
+		if (!empty($form->options['notification']['new']) && !empty($form->values['wg_document_public'])) {
 			$method = \Factory::method($form->options['notification']['new']);
 			call_user_func_array($method, [$this->notification_id, \Application::$controller->module_id]);
-		}
-	}
-
-	public function overrideFieldValue(& $form, & $options, & $value, & $neighbouring_values) {
-		if ($options['options']['field_name'] == 'wg_document_comment') {
-			if (strpos($value, "\n") !== false) {
-				$value = nl2br($value);
-			}
 		}
 	}
 }
