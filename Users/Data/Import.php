@@ -45,7 +45,8 @@ class Import extends \Object\Import {
 				[
 					'um_usrtype_id' => 30,
 					'um_usrtype_name' => 'API User',
-					'um_usrtype_inactive' => 0
+					'um_usrtype_inactive' => 0,
+					'um_usrtype_api' => 1,
 				]
 			]
 		],

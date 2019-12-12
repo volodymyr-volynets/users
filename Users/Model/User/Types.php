@@ -14,6 +14,7 @@ class Types extends \Object\Table {
 	public $columns = [
 		'um_usrtype_id' => ['name' => 'Type #', 'domain' => 'type_id'],
 		'um_usrtype_name' => ['name' => 'Name', 'domain' => 'name'],
+		'um_usrtype_api' => ['name' => 'API', 'type' => 'boolean'],
 		'um_usrtype_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
