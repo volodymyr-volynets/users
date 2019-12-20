@@ -15,7 +15,7 @@ class Values extends \Object\Table {
 	public $column_prefix = 'um_passwval_';
 	public $columns = [
 		'um_passwval_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_passwval_password_code' => ['name' => 'User Number', 'domain' => 'group_code'],
+		'um_passwval_password_code' => ['name' => 'Password Code', 'domain' => 'group_code'],
 		'um_passwval_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
 		'um_passwval_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_passwval_encrypted_password' => ['name' => 'Password (Encrypted)', 'domain' => 'encrypted_password'],

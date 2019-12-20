@@ -11,5 +11,13 @@ class Resources {
 				'method' => '\Numbers\Users\Documents\Base\Base::generateIconURL'
 			]
 		],
+		'save_documents' => [
+			'save_document_mass' => [
+				'method' => '\Numbers\Users\Documents\Base\Helper\MassUpload::uploadFewFilesInForm'
+			],
+			'generate_document_links' => [
+				'method' => '\Numbers\Users\Documents\Base\Helper\Preview::renderAttachmentList'
+			]
+		]
 	];
 }

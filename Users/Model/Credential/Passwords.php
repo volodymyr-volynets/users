@@ -18,10 +18,17 @@ class Passwords extends \Object\Table {
 		'um_password_code' => ['name' => 'Password Code', 'domain' => 'group_code'],
 		'um_password_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_password_value_counter' => ['name' => 'Value Counter', 'domain' => 'counter'],
+		'um_password_passtype_code' => ['name' => 'Type Code', 'domain' => 'group_code', 'null' => true],
 		'um_password_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [
 		'um_passwords_pk' => ['type' => 'pk', 'columns' => ['um_password_tenant_id', 'um_password_code']],
+		'um_password_passtype_code_fk' => [
+			'type' => 'fk',
+			'columns' => ['um_password_tenant_id', 'um_password_passtype_code'],
+			'foreign_model' => '\Numbers\Users\Users\Model\Credential\Types',
+			'foreign_columns' => ['um_passtype_tenant_id', 'um_passtype_code']
+		],
 	];
 	public $indexes = [
 		'um_passwords_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['um_password_code', 'um_password_name']],
