@@ -42,7 +42,15 @@ class Validate {
 			7 => 'Failed to write file to disk.',
 			8 => 'A PHP extension stopped the file upload.',
 		);
-		if (!is_uploaded_file($file['tmp_name']) || $file['size'] == 0) {
+		/*
+		if (!is_uploaded_file($file['tmp_name'])) {
+			if (!\Application::get('flag.global.__ajax')) {
+				$result['error'][] = 'Error occured when uploading file!';
+				return $result;
+			}
+		}
+		*/
+		if ($file['size'] == 0) {
 			$result['error'][] = 'Error occured when uploading file!';
 			return $result;
 		}
