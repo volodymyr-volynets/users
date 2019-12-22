@@ -51,13 +51,6 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 	}
 
 	public function refresh(& $form) {
-		if (isset($_POST['wg_document_comment'])) {
-			$form->values['wg_document_comment'] = \Request::input('wg_document_comment', true, false, [
-				'skip_xss_on_keys' => ['wg_document_comment'],
-				'trim_empty_html_input' => true,
-				'remove_script_tag' => true
-			]);
-		}
 		// public
 		if (!empty($form->options['acl_subresource_edit']) && \Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'Record_Public')) {
 			if (empty(\Application::$controller->canSubresourceMultiple($form->options['acl_subresource_edit'], 'All_Actions'))) {

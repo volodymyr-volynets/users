@@ -211,7 +211,7 @@ class Documents extends \Object\Form\Wrapper\List2 {
 				if (!empty($neighbouring_values['wg_document_needs_transfer'])) {
 					$result.= \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name'];
 				} else {
-					$result.= \HTML::a(['href' => \Numbers\Users\Documents\Base\Base::generateURL($k, false, $v['dt_file_name']), 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name']]);
+					$result.= \HTML::a(['href' => \Numbers\Users\Documents\Base\Base::generateURL($k, false, $v['dt_file_name']), 'target' => '_blank', 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name']]);
 				}
 				$result.= '<br/>';
 			}

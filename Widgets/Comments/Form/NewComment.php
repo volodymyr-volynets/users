@@ -52,13 +52,6 @@ class NewComment extends \Object\Form\Wrapper\Base {
 	}
 
 	public function refresh(& $form) {
-		if (isset($_POST['wg_comment_value'])) {
-			$form->values['wg_comment_value'] = \Request::input('wg_comment_value', true, false, [
-				'skip_xss_on_keys' => ['wg_comment_value'],
-				'trim_empty_html_input' => true,
-				'remove_script_tag' => true
-			]);
-		}
 		// load template
 		if (($form->misc_settings['__form_onchange_field_values_key'][0] ?? '') == 'wg_comment_template_id') {
 			$template = \Numbers\Users\Widgets\Comments\Model\Templates::getStatic([
