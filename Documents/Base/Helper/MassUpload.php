@@ -47,14 +47,22 @@ class MassUpload {
 				$form->error(DANGER, $result['error']);
 				return false;
 			}
-			if (empty($options['return_files'])) {
-				$form->values[$prefix . $counter] = $result['file_id'];
+			if ($max_files == 1) {
+				if (empty($options['return_files'])) {
+					$form->values[$prefix] = $result['file_id'];
+				} else {
+					$final_result[$prefix] = $result['file_id'];
+				}
 			} else {
-				$final_result[$prefix . $counter] = $result['file_id'];
+				if (empty($options['return_files'])) {
+					$form->values[$prefix . $counter] = $result['file_id'];
+				} else {
+					$final_result[$prefix . $counter] = $result['file_id'];
+				}
 			}
 			$counter++;
 		}
-		if ($counter <= $max_files) {
+		if ($counter <= $max_files && $max_files > 1) {
 			for ($i = $counter - 1; $i <= $max_files; $i++) {
 				if (empty($options['return_files'])) {
 					$form->values[$prefix . $counter] = null;

@@ -41,6 +41,19 @@ class Base {
 		$storage = $storages[$catalog['dt_catalog_storage_id']];
 		$class = $storage['submodule'];
 		$file_upload_model = new $class($storage);
+		// if we need to rescale
+		if (!empty($file['__image_properties']['image_rescale'])) {
+			$newdim = explode('x', $file['__image_properties']['image_rescale']);
+			$image = imagecreatefromstring(file_get_contents($file['tmp_name']));
+			$newimage = imagecreatetruecolor($newdim[0], $newdim[1]);
+			imagecopyresampled($newimage, $image, 0, 0, 0, 0, $newdim[0], $newdim[1], imagesx($image), imagesy($image));
+			imagepng($newimage, $file['tmp_name']);
+			imagedestroy($newimage);
+			// now we need to update
+			$file['type'] = 'image/png';
+			$file['size'] = filesize($file['tmp_name']);
+			$file['name'] = pathinfo($file['name'], PATHINFO_FILENAME) . '.png';
+		}
 		$file_upload_result = $file_upload_model->upload($file, $catalog);
 		if (!$file_upload_result['success']) {
 			$result['error'] = array_merge($result['error'], $file_upload_result['error']);
