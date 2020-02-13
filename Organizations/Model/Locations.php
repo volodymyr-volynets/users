@@ -126,6 +126,9 @@ class Locations extends \Object\Table {
 		'map' => [
 			'on_location_tenant_id' => 'wg_address_tenant_id',
 			'on_location_id' => 'wg_address_location_id'
+		],
+		'options' => [
+			'show_instructions' => true
 		]
 	];
 
