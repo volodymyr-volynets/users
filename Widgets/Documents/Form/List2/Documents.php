@@ -45,11 +45,11 @@ class Documents extends \Object\Form\Wrapper\List2 {
 			'row2' => [
 				'__about2' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 10],
 				'wg_document_public' => ['order' => 2, 'label_name' => 'Public', 'type' => 'boolean', 'percent' => 10],
-				'wg_document_inserted_timestamp' => ['order' => 3, 'label_name' => 'Datetime', 'type' => 'timestamp', 'percent' => 25, 'format' => '\Format::niceTimestamp'],
+				'wg_document_inserted_timestamp' => ['order' => 3, 'label_name' => 'Datetime', 'type' => 'timestamp', 'percent' => 25, 'format' => '\Format::datetime'],
 				'wg_document_file_1' => ['order' => 4, 'label_name' => 'File(s) / Notes', 'domain' => 'name', 'percent' => 65, 'custom_renderer' => '\Numbers\Users\Widgets\Documents\Form\List2\Documents::renderDocumentFiles', 'skip_fts' => true],
 			],
 			'row3' => [
-				'__about3' => ['order' => 1, 'row_order' => 300, 'label_name' => '', 'percent' => 10],
+				'__about3' => ['order' => 1, 'row_order' => 300, 'label_name' => '', 'percent' => 10, 'custom_renderer' => 'self::renderISAPI'],
 				'wg_document_approval_status_id' => ['order' => 2, 'label_name' => 'Approval', 'domain' => 'type_id', 'percent' => 10, 'options_model' => '\Numbers\Users\Widgets\Documents\Model\Statuses'],
 				'wg_document_approved_user_id' => ['order' => 3, 'label_name' => 'Approved User', 'domain' => 'name', 'percent' => 25, 'custom_renderer' => '\Numbers\Users\Widgets\Documents\Form\List2\Documents::renderApprovalUser', 'skip_fts' => true],
 				'__actions' => ['order' => 4, 'label_name' => 'Actions', 'percent' => 65, 'custom_renderer' => '\Numbers\Users\Widgets\Documents\Form\List2\Documents::renderActions', 'skip_fts' => true],
@@ -210,8 +210,10 @@ class Documents extends \Object\Form\Wrapper\List2 {
 			foreach ($files as $k => $v) {
 				if (!empty($neighbouring_values['wg_document_needs_transfer'])) {
 					$result.= \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name'];
+				} else if ($v['dt_file_url']) {
+					$result.= \HTML::a(['href' => $v['dt_file_url'], 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name'], 'target' => '_blank']);
 				} else {
-					$result.= \HTML::a(['href' => \Numbers\Users\Documents\Base\Base::generateURL($k, false, $v['dt_file_name']), 'target' => '_blank', 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name']]);
+					$result.= \HTML::a(['href' => \Numbers\Users\Documents\Base\Base::generateURL($k, false, $v['dt_file_name']), 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name'], 'target' => '_blank']);
 				}
 				$result.= '<br/>';
 			}
@@ -226,5 +228,11 @@ class Documents extends \Object\Form\Wrapper\List2 {
 			}
 		}
 		return $result;
+	}
+
+	public function renderISAPI(& $form, & $options, & $value, & $neighbouring_values) {
+		if (!empty($neighbouring_values['wg_document_external_integtype_code'])) {
+			return '<b style="color: red;">' . i18n(null, 'API') . '</b>';
+		}
 	}
 }

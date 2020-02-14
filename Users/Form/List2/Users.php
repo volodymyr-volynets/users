@@ -102,7 +102,7 @@ class Users extends \Object\Form\Wrapper\List2 {
 
 	public function renderBecome(& $form, & $options, & $value, & $neighbouring_values) {
 		// check if we have permissions
-		if (\User::id() != $neighbouring_values['um_user_id'] && !empty($neighbouring_values['um_user_login_enabled']) && \Can::userFeatureExists('UM::USER_BECOME')) {
+		if (\User::id() != $neighbouring_values['um_user_id'] && \User::roleExists('SA') && !empty($neighbouring_values['um_user_login_enabled']) && \Can::userFeatureExists('UM::USER_BECOME')) {
 			$user_id = is_array($neighbouring_values['um_user_id']) ? $neighbouring_values['um_user_id']['value'] : $neighbouring_values['um_user_id'];
 			return \HTML::a([
 				'href' => \Numbers\Users\Users\Helper\LoginWithToken::URL($user_id),

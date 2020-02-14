@@ -32,6 +32,14 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			'order' => 35000,
 			'acl_subresource_edit' => ['ON::ORG_BUSINESS_HOURS']
 		],
+		'integration_mappings_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Organizations\Model\Organization\IntegrationMappings',
+			'details_pk' => ['on_orgintegmap_integtype_code', 'on_orgintegmap_code'],
+			'order' => 35001,
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -43,6 +51,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			'logo' => ['order' => 300, 'label_name' => 'About'],
 			'operating' => ['order' => 350, 'label_name' => 'Operations', 'acl_subresource_hide' => ['ON::ORG_OPERATING']],
 			'business_hours' => ['order' => 400, 'label_name' => 'Business Hours', 'acl_subresource_hide' => ['ON::ORG_BUSINESS_HOURS']],
+			'integration' => ['order' => 500, 'label_name' => 'Integration'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA  + ['acl_subresource_hide' => ['ON::ORG_ADDRESSES']],
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA  + ['acl_subresource_hide' => ['ON::ORG_ATTRIBUTES']],
 		]
@@ -70,6 +79,9 @@ class Organizations extends \Object\Form\Wrapper\Base {
 			],
 			'business_hours' => [
 				'business_hours' => ['container' => 'business_hours_container', 'order' => 100]
+			],
+			'integration' => [
+				'integration' => ['container' => 'integration_mappings_container', 'order' => 100],
 			]
 		],
 		'general_container' => [
@@ -139,6 +151,17 @@ class Organizations extends \Object\Form\Wrapper\Base {
 				'on_orgbhour_timezone_code' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Timezone', 'domain' => 'timezone_code', 'null' => true, 'required' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Timezones::optionsActive'],
 			]
 		],
+		'integration_mappings_container' => [
+			'row1' => [
+				'on_orgintegmap_integtype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Integration Type', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Integration\Types::optionsActive', 'onchange' => 'this.form.submit();'],
+				'on_orgintegmap_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'code', 'null' => true, 'required' => true, 'percent' => 45],
+				'on_orgintegmap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'on_orgintegmap_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'percent' => 95],
+				'on_orgintegmap_default' => ['order' => 2, 'label_name' => 'Default', 'type' => 'boolean', 'percent' => 5],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -158,7 +181,13 @@ class Organizations extends \Object\Form\Wrapper\Base {
 				'pk' => ['on_orgbhour_tenant_id', 'on_orgbhour_organization_id', 'on_orgbhour_day_id'],
 				'type' => '1M',
 				'map' => ['on_organization_tenant_id' => 'on_orgbhour_tenant_id', 'on_organization_id' => 'on_orgbhour_organization_id'],
-			]
+			],
+			'\Numbers\Users\Organizations\Model\Organization\IntegrationMappings' => [
+				'name' => 'Integration Mappings',
+				'pk' => ['on_orgintegmap_tenant_id', 'on_orgintegmap_organization_id', 'on_orgintegmap_integtype_code', 'on_orgintegmap_code'],
+				'type' => '1M',
+				'map' => ['on_organization_tenant_id' => 'on_orgintegmap_tenant_id', 'on_organization_id' => 'on_orgintegmap_organization_id']
+			],
 		]
 	];
 

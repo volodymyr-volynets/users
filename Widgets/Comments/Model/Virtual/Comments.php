@@ -55,6 +55,11 @@ class Comments extends \Object\Table {
 		$this->columns['wg_comment_file_9'] = ['name' => 'File 9', 'domain' => 'file_id', 'null' => true];
 		$this->columns['wg_comment_file_10'] = ['name' => 'File 10', 'domain' => 'file_id', 'null' => true];
 		$this->columns['wg_comment_followup_datetime'] = ['name' => 'Followup Datetime', 'type' => 'datetime', 'null' => true];
+		// api fields
+		$this->columns['wg_comment_inserted_user_name'] = ['name' => 'Inserted User Name', 'type' => 'text', 'null' => true];
+		$this->columns['wg_comment_external_integtype_code'] = ['name' => 'External Integration Type Code', 'domain' => 'group_code', 'null' => true];
+		$this->columns['wg_comment_external_id'] = ['name' => 'External #', 'domain' => 'big_id', 'default' => null, 'null' => true];
+		$this->columns['wg_comment_action_required'] = ['name' => 'Action Required', 'type' => 'boolean'];
 		// add constraints
 		$this->constraints[$this->name . '_pk'] = [
 			'type' => 'pk',

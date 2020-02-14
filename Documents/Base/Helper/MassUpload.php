@@ -97,4 +97,74 @@ class MassUpload {
 		}
 		$form->values[$field] = $result['file_id'];
 	}
+
+	/**
+	 * Upload external urls
+	 *
+	 * @param string $class
+	 * @param array $where
+	 * @param string $catalog_code
+	 * @param array $urls
+	 * @return array
+	 */
+	public static function uploadExternalURLs(string $class, array $where, string $catalog_code, array $urls) : array {
+		$result = [
+			'success' => false,
+			'error' => []
+		];
+		// get next sequence number
+		$file_save_model = new \Numbers\Users\Documents\Base\Model\Files();
+		$file_save_model->db_object->begin();
+		// fetch catalog
+		$catalog = \Numbers\Users\Documents\Base\Model\Catalogs::getStatic([
+			'where' => [
+				'dt_catalog_code' => $catalog_code,
+			],
+			'pk' => null,
+			'single_row' => true,
+		]);
+		// create database record
+		$counter = 1;
+		$ids = $where;
+		$ids['wg_document_catalog_code'] = $catalog_code;
+		foreach ($urls as $k => $v) {
+			$id = $file_save_model->sequence('dt_file_id', 'nextval', \Tenant::id());
+			$save = [
+				'dt_file_id' => $id,
+				'dt_file_storage_id' => $catalog['dt_catalog_storage_id'],
+				'dt_file_catalog_code' => $catalog['dt_catalog_code'],
+				'dt_file_organization_id' => $catalog['dt_catalog_organization_id'],
+				'dt_file_name' => $k,
+				'dt_file_extension' => pathinfo($k, PATHINFO_EXTENSION),
+				'dt_file_mime' => null,
+				'dt_file_size' => 0,
+				'dt_file_path' => '',
+				'dt_file_thumbnail_path' => '',
+				'dt_file_language_code' => \I18n::$options['language_code'] ?? null,
+				'dt_file_readonly' => $catalog['dt_catalog_readonly'],
+				'dt_file_temporary' => $catalog['dt_catalog_temporary'],
+				'dt_file_url' => $v,
+				'dt_file_inactive' => 0
+			];
+			$save_result = $file_save_model->collection()->merge($save);
+			if (!$save_result['success']) {
+				$result['error'] = array_merge($result['error'], $save_result['error']);
+				$file_save_model->db_object->rollback();
+				return $result;
+			}
+			$ids['wg_document_file_id_' . $counter] = $id;
+			$counter++;
+		}
+		// update model
+		$documents_model = \Factory::model($class);
+		$documents_result = $documents_model->collection()->merge($ids);
+		if (!$documents_result['success']) {
+			$result['error'] = array_merge($result['error'], $documents_result['error']);
+			$file_save_model->db_object->rollback();
+			return $result;
+		}
+		$file_save_model->db_object->commit();
+		$result['success'] = true;
+		return $result;
+	}
 }

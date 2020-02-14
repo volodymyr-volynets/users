@@ -71,5 +71,10 @@ TTT;
 		// checkin timestamp
 		$form->values['wg_checkin_checkout_timestamp'] = \Format::now('timestamp');
 		$form->values['wg_checkin_duration'] = \Helper\Date::diff($form->values['wg_checkin_checkin_timestamp'], $form->values['wg_checkin_checkout_timestamp'], 'abs seconds', true);
+		// custom method
+		if (!empty($form->options['custom_handler_method'])) {
+			$method = \Factory::method($form->options['custom_handler_method']);
+			call_user_func_array($method, [& $form]);
+		}
 	}
 }

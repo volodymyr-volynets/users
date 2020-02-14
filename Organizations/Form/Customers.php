@@ -23,6 +23,14 @@ class Customers extends \Object\Form\Wrapper\Base {
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'logo_container' => ['default_row_type' => 'grid', 'order' => 32200],
 		'operating_container' => ['default_row_type' => 'grid', 'order' => 32201, 'acl_subresource_edit' => ['ON::CUS_OPERATING']],
+		'integration_mappings_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Organizations\Model\Customer\IntegrationMappings',
+			'details_pk' => ['on_custintegmap_integtype_code', 'on_custintegmap_code'],
+			'order' => 35001,
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -33,6 +41,7 @@ class Customers extends \Object\Form\Wrapper\Base {
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'logo' => ['order' => 300, 'label_name' => 'About'],
 			'operating' => ['order' => 350, 'label_name' => 'Operations', 'acl_subresource_hide' => ['ON::CUS_OPERATING']],
+			'integration' => ['order' => 400, 'label_name' => 'Integration'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA  + ['acl_subresource_hide' => ['ON::CUS_ADDRESSES']],
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA  + ['acl_subresource_hide' => ['ON::CUS_ATTRIBUTES']],
 		]
@@ -58,6 +67,9 @@ class Customers extends \Object\Form\Wrapper\Base {
 			'operating' => [
 				'operating' => ['container' => 'operating_container', 'order' => 100]
 			],
+			'integration' => [
+				'integration' => ['container' => 'integration_mappings_container', 'order' => 100],
+			]
 		],
 		'general_container' => [
 			'on_customer_organization_id' => [
@@ -112,6 +124,17 @@ class Customers extends \Object\Form\Wrapper\Base {
 				'on_customer_logo_file_id' => ['label_name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
 			]
 		],
+		'integration_mappings_container' => [
+			'row1' => [
+				'on_custintegmap_integtype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Integration Type', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Integration\Types::optionsActive', 'onchange' => 'this.form.submit();'],
+				'on_custintegmap_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'code', 'null' => true, 'required' => true, 'percent' => 45],
+				'on_custintegmap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'on_custintegmap_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'percent' => 95],
+				'on_custintegmap_default' => ['order' => 2, 'label_name' => 'Default', 'type' => 'boolean', 'percent' => 5],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -119,6 +142,14 @@ class Customers extends \Object\Form\Wrapper\Base {
 	public $collection = [
 		'name' => 'Customers',
 		'model' => '\Numbers\Users\Organizations\Model\Customers',
+		'details' => [
+			'\Numbers\Users\Organizations\Model\Customer\IntegrationMappings' => [
+				'name' => 'Integration Mappings',
+				'pk' => ['on_custintegmap_tenant_id', 'on_custintegmap_customer_id', 'on_custintegmap_integtype_code', 'on_custintegmap_code'],
+				'type' => '1M',
+				'map' => ['on_customer_tenant_id' => 'on_custintegmap_tenant_id', 'on_customer_id' => 'on_custintegmap_customer_id']
+			],
+		]
 	];
 
 	public function validate(& $form) {

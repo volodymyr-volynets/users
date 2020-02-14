@@ -34,6 +34,9 @@ class Comments extends \Object\Form\Wrapper\List2 {
 			]
 		],
 		'filter' => [
+			'apis' => [
+				'comment_types' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Comment Type', 'domain' => 'type_id', 'null' => true, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Widgets\Comments\Model\CommentTypes'],
+			],
 			'full_text_search' => [
 				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.wg_comment_value'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
 			]
@@ -55,7 +58,13 @@ class Comments extends \Object\Form\Wrapper\List2 {
 			'row2' => [
 				'__about' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 10],
 				'wg_comment_public' => ['order' => 2, 'label_name' => 'Public', 'type' => 'boolean', 'percent' => 10],
-				'wg_comment_inserted_timestamp' => ['order' => 3, 'label_name' => 'Datetime', 'type' => 'timestamp', 'percent' => 25, 'format' => '\Format::niceTimestamp'],
+				'wg_comment_inserted_timestamp' => ['order' => 3, 'label_name' => 'Datetime', 'type' => 'timestamp', 'percent' => 25, 'format' => '\Format::datetime'],
+				'__blank' => ['order' => 4, 'label_name' => '', 'percent' => 65],
+			],
+			'row3' => [
+				'__about2' => ['order' => 1, 'row_order' => 300, 'label_name' => '', 'percent' => 10, 'custom_renderer' => '\Numbers\Users\Widgets\Comments\Form\List2\Comments::renderISAPI'],
+				'wg_comment_action_required' => ['order' => 2, 'label_name' => 'Action Req.', 'type' => 'boolean', 'percent' => 10],
+				'wg_comment_followup_datetime' => ['order' => 3, 'label_name' => 'Follow Up Datetime', 'type' => 'datetime', 'null' => true, 'percent' => 25, 'format' => '\Format::datetime'],
 				'wg_comment_file_1' => ['order' => 4, 'label_name' => 'Files', 'domain' => 'name', 'percent' => 65, 'custom_renderer' => '\Numbers\Users\Widgets\Comments\Form\List2\Comments::renderCommentFiles', 'skip_fts' => true],
 			]
 		]
@@ -126,6 +135,17 @@ class Comments extends \Object\Form\Wrapper\List2 {
 				$form->query->where('AND', ['a.wg_comment_public', '=', 1]);
 			}
 		}
+		// type - API or not API
+		if (!empty($form->values['comment_types'])) {
+			$form->query->where('AND', function (& $query) use ($form) {
+				if (in_array(10, $form->values['comment_types'])) {
+					$query->where('OR', ['a.wg_comment_external_integtype_code', 'IS NOT', null]);
+				}
+				if (in_array(20, $form->values['comment_types'])) {
+					$query->where('OR', ['a.wg_comment_external_integtype_code', 'IS', null]);
+				}
+			});
+		}
 		// query #1 get counter
 		$counter_query = clone $form->query;
 		$counter_query->columns(['counter' => 'COUNT(*)'], ['empty_existing' => true]);
@@ -151,9 +171,6 @@ class Comments extends \Object\Form\Wrapper\List2 {
 
 	public function renderCommentValue(& $form, & $options, & $value, & $neighbouring_values) {
 		$result = '';
-		if (!empty($neighbouring_values['wg_comment_followup_datetime'])) {
-			$result.= '<b>' . i18n(null, 'Follow Up: ') . \Format::datetime($neighbouring_values['wg_comment_followup_datetime']) . '</b><hr/>';
-		}
 		if (is_html($value) && has_tags($value, \HTML::HTML_WHITE_SPACE_TAGS_ARRAY + ['<p>'])) {
 			$result.= str_replace(["\n", "\r"], '', $value);
 		} else {
@@ -163,7 +180,17 @@ class Comments extends \Object\Form\Wrapper\List2 {
 	}
 
 	public function renderCommentUser(& $form, & $options, & $value, & $neighbouring_values) {
-		return \Numbers\Users\Users\Model\Users::getUsernameWithAvatar($neighbouring_values['wg_comment_inserted_user_id']);
+		if (!empty($neighbouring_values['wg_comment_inserted_user_name'])) {
+			return $neighbouring_values['wg_comment_inserted_user_name'];
+		} else {
+			return \Numbers\Users\Users\Model\Users::getUsernameWithAvatar($neighbouring_values['wg_comment_inserted_user_id']);
+		}
+	}
+
+	public function renderISAPI(& $form, & $options, & $value, & $neighbouring_values) {
+		if (!empty($neighbouring_values['wg_comment_external_integtype_code'])) {
+			return '<b style="color: red;">' . i18n(null, 'API') . '</b>';
+		}
 	}
 
 	public function renderCommentFiles(& $form, & $options, & $value, & $neighbouring_values) {
