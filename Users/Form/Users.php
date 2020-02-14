@@ -154,6 +154,14 @@ class Users extends \Object\Form\Wrapper\Base {
 		],
 		'assignments_container' => ['default_row_type' => 'grid', 'order' => 35003, 'custom_renderer' => '\Numbers\Users\Users\Form\Users::renderUserToUser'],
 		'customer_assignments_container' => ['default_row_type' => 'grid', 'order' => 35003, 'custom_renderer' => '\Numbers\Users\Users\Form\Users::renderUserToCustomer'],
+		'integration_mappings_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Users\Model\User\IntegrationMappings',
+			'details_pk' => ['um_usrintegmap_integtype_code', 'um_usrintegmap_code'],
+			'order' => 35001,
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -166,6 +174,7 @@ class Users extends \Object\Form\Wrapper\Base {
 			'photo' => ['order' => 300, 'label_name' => 'About'],
 			'operating' => ['order' => 350, 'label_name' => 'Operations', 'acl_subresource_hide' => ['UM::USER_OPERATING']],
 			'internalization' => ['order' => 400, 'label_name' => 'Internalization'],
+			'integration' => ['order' => 500, 'label_name' => 'Integration'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA + ['acl_subresource_hide' => ['UM::USER_ADDRESSES']],
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA + ['acl_subresource_hide' => ['UM::USER_ATTRIBUTES']],
 		],
@@ -212,6 +221,9 @@ class Users extends \Object\Form\Wrapper\Base {
 			],
 			'operating' => [
 				'operating' => ['container' => 'operating_container', 'order' => 100],
+			],
+			'integration' => [
+				'integration' => ['container' => 'integration_mappings_container', 'order' => 100],
 			]
 		],
 		'tabs2' => [
@@ -453,6 +465,17 @@ class Users extends \Object\Form\Wrapper\Base {
 				'um_usrtmmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		],
+		'integration_mappings_container' => [
+			'row1' => [
+				'um_usrintegmap_integtype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Integration Type', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Integration\Types::optionsActive', 'onchange' => 'this.form.submit();'],
+				'um_usrintegmap_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'code', 'null' => true, 'required' => true, 'percent' => 45],
+				'um_usrintegmap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'um_usrintegmap_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'percent' => 95],
+				'um_usrintegmap_default' => ['order' => 2, 'label_name' => 'Default', 'type' => 'boolean', 'percent' => 5],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -549,6 +572,12 @@ class Users extends \Object\Form\Wrapper\Base {
 					]
 				]
 			],
+			'\Numbers\Users\Users\Model\User\IntegrationMappings' => [
+				'name' => 'Integration Mappings',
+				'pk' => ['um_usrintegmap_tenant_id', 'um_usrintegmap_user_id', 'um_usrintegmap_integtype_code', 'um_usrintegmap_code'],
+				'type' => '1M',
+				'map' => ['um_user_tenant_id' => 'um_usrintegmap_tenant_id', 'um_user_id' => 'um_usrintegmap_user_id']
+			],
 		]
 	];
 	public $notification = [
@@ -590,8 +619,12 @@ class Users extends \Object\Form\Wrapper\Base {
 		);
 		// password
 		if (!empty($form->values['um_user_login_password_new'])) {
-			$crypt = new \Crypt();
-			$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
+			if (\User::roleExists('SA')) {
+				$crypt = new \Crypt();
+				$form->values['um_user_login_password'] = $crypt->passwordHash($form->values['um_user_login_password_new']);
+			} else {
+				$form->error(DANGER, 'Only super admin can reset password!', 'um_user_login_password_new');
+			}
 		}
 		// primary address
 		if (!$form->hasErrors()) {
@@ -684,7 +717,7 @@ class Users extends \Object\Form\Wrapper\Base {
 
 	public function renderBecome(& $form, & $options, & $value, & $neighbouring_values) {
 		// check if we have permissions
-		if (!empty($form->values['um_user_id']) && \User::id() != $form->values['um_user_id'] && !empty($form->values['um_user_login_enabled']) && \Can::userFeatureExists('UM::USER_BECOME')) {
+		if (!empty($form->values['um_user_id']) && \User::roleExists('SA') && \User::id() != $form->values['um_user_id'] && !empty($form->values['um_user_login_enabled']) && \Can::userFeatureExists('UM::USER_BECOME')) {
 			return \HTML::a([
 				'href' => \Numbers\Users\Users\Helper\LoginWithToken::URL($form->values['um_user_id']),
 				'value' => i18n(null, 'Become'),

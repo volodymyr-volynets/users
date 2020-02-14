@@ -370,9 +370,11 @@ success:
 			$all_users = \Numbers\Users\Users\DataSource\Login::getStatic([
 				'where' => [
 					'user_ids' => array_keys($users_ids),
+					'skip_login_enabled' => true,
 				],
 				'pk' => ['id'],
 				'single_row' => false,
+				'cache' => false,
 			]);
 			if (!empty($all_users)) {
 				\User::$cached_users = array_merge_hard(\User::$cached_users, $all_users);

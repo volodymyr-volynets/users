@@ -15,7 +15,7 @@ class Passwords extends \Object\Table {
 	public $column_prefix = 'um_password_';
 	public $columns = [
 		'um_password_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
-		'um_password_code' => ['name' => 'User Number', 'domain' => 'group_code'],
+		'um_password_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'um_password_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_password_value_counter' => ['name' => 'Value Counter', 'domain' => 'counter'],
 		'um_password_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

@@ -42,15 +42,15 @@ class CheckIn extends \Object\Form\Wrapper\List2 {
 				'wg_checkin_duration' => ['order' => 3, 'label_name' => 'Duration', 'type' => 'numeric', 'null' => true, 'percent' => 20, 'format' => '\Format::niceDuration'],
 			],
 			'row2' => [
-				'__blank' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 15],
-				'wg_checkin_checkin_timestamp' => ['order' => 2, 'label_name' => 'Check In Timestamp', 'type' => 'timestamp', 'percent' => 25, 'format' => '\Format::niceTimestamp'],
+				'__blank' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 15, 'custom_renderer' => 'self::renderISAPI'],
+				'wg_checkin_checkin_timestamp' => ['order' => 2, 'label_name' => 'Check In Timestamp', 'type' => 'timestamp', 'percent' => 25, 'format' => '\Format::datetime'],
 				'wg_checkin_checkin_latitude' => ['order' => 3, 'label_name' => 'Check In Latitude', 'domain' => 'geo_coordinate', 'percent' => 20],
 				'wg_checkin_checkin_longitude' => ['order' => 4, 'label_name' => 'Check In Longitude', 'domain' => 'geo_coordinate', 'percent' => 20],
 				'wg_checkin_checkin_map' => ['order' => 5, 'label_name' => 'Check In Map', 'domain' => 'geo_coordinate', 'percent' => 20, 'custom_renderer' => '\Numbers\Users\Widgets\CheckIn\Form\List2\CheckIn::renderMapCheckIn', 'skip_fts' => true],
 			],
 			'row3' => [
 				'__blank2' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Check Out', 'percent' => 15, 'url_edit' => true, 'custom_renderer' => '\Numbers\Users\Widgets\CheckIn\Form\List2\CheckIn::renderCheckout', 'skip_fts' => true],
-				'wg_checkin_checkout_timestamp' => ['order' => 2, 'label_name' => 'Check Out Timestamp', 'type' => 'timestamp', 'percent' => 25, 'format' => '\Format::niceTimestamp'],
+				'wg_checkin_checkout_timestamp' => ['order' => 2, 'label_name' => 'Check Out Timestamp', 'type' => 'timestamp', 'percent' => 25, 'format' => '\Format::datetime'],
 				'wg_checkin_checkout_latitude' => ['order' => 3, 'label_name' => 'Check Out Latitude', 'domain' => 'geo_coordinate', 'percent' => 20],
 				'wg_checkin_checkout_longitude' => ['order' => 4, 'label_name' => 'Check Out Longitude', 'domain' => 'geo_coordinate', 'percent' => 20],
 				'wg_checkin_checkout_map' => ['order' => 5, 'label_name' => 'Check Out Map', 'domain' => 'geo_coordinate', 'percent' => 20, 'custom_renderer' => '\Numbers\Users\Widgets\CheckIn\Form\List2\CheckIn::renderMapCheckOut', 'skip_fts' => true],
@@ -149,7 +149,11 @@ class CheckIn extends \Object\Form\Wrapper\List2 {
 	}
 
 	public function renderTagUser(& $form, & $options, & $value, & $neighbouring_values) {
-		return \Numbers\Users\Users\Model\Users::getUsernameWithAvatar($neighbouring_values['wg_checkin_inserted_user_id']);
+		if (!empty($neighbouring_values['wg_checkin_inserted_user_name'])) {
+			return $neighbouring_values['wg_checkin_inserted_user_name'];
+		} else {
+			return \Numbers\Users\Users\Model\Users::getUsernameWithAvatar($neighbouring_values['wg_checkin_inserted_user_id']);
+		}
 	}
 
 	public function renderMapCheckIn(& $form, & $options, & $value, & $neighbouring_values) {
@@ -167,6 +171,12 @@ class CheckIn extends \Object\Form\Wrapper\List2 {
 	public function renderCheckout(& $form, & $options, & $value, & $neighbouring_values) {
 		if (empty($neighbouring_values['wg_checkin_checkout_timestamp'])) {
 			return i18n(null, 'Check Out');
+		}
+	}
+
+	public function renderISAPI(& $form, & $options, & $value, & $neighbouring_values) {
+		if (!empty($neighbouring_values['wg_checkin_external_integtype_code'])) {
+			return '<b style="color: red;">' . i18n(null, 'API') . '</b>';
 		}
 	}
 }

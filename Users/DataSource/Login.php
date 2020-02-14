@@ -22,6 +22,7 @@ class Login extends \Object\DataSource {
 		'username' => ['name' => 'Username', 'type' => 'text'],
 		'user_id' => ['name' => 'User #', 'domain' => 'user_id'],
 		'user_ids' => ['name' => 'User(s) #', 'domain' => 'user_id', 'multiple_column' => true],
+		'skip_login_enabled' => ['name' => 'Skip Login Enalbed', 'type' => 'boolean'],
 	];
 
 	public function query($parameters, $options = []) {
@@ -227,7 +228,9 @@ class Login extends \Object\DataSource {
 			['AND', ['a.um_user_id', '=', 'n.um_usrapmethod_user_id', true], false]
 		]);
 		// where
-		$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
+		if (empty($parameters['skip_login_enabled'])) {
+			$this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
+		}
 		$this->query->where('AND', ['a.um_user_inactive', '=', 0]);
 		$this->query->orderby([
 			'um_user_id' => SORT_DESC

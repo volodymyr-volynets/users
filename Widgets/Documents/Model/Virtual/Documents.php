@@ -112,6 +112,10 @@ class Documents extends \Object\Table {
 		$this->columns['wg_document_filetype_id_29'] = ['name' => 'Type 29', 'domain' => 'type_id', 'null' => true];
 		$this->columns['wg_document_filetype_id_30'] = ['name' => 'Type 30', 'domain' => 'type_id', 'null' => true];
 		$this->columns['wg_document_comment'] = ['name' => 'Comment', 'domain' => 'comment', 'null' => true];
+		// api fields
+		$this->columns['wg_document_inserted_user_name'] = ['name' => 'Inserted User Name', 'type' => 'text', 'null' => true];
+		$this->columns['wg_document_external_integtype_code'] = ['name' => 'External Integration Type Code', 'domain' => 'group_code', 'null' => true];
+		$this->columns['wg_document_external_id'] = ['name' => 'External #', 'domain' => 'big_id', 'default' => null, 'null' => true];
 		// add constraints
 		$this->constraints[$this->name . '_pk'] = [
 			'type' => 'pk',

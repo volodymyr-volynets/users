@@ -20,13 +20,14 @@ class Files extends \Object\Table {
 		'dt_file_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'dt_file_name' => ['name' => 'File Name', 'domain' => 'file_name'],
 		'dt_file_extension' => ['name' => 'File Extension', 'domain' => 'file_extension'],
-		'dt_file_mime' => ['name' => 'File Mime', 'domain' => 'name'],
+		'dt_file_mime' => ['name' => 'File Mime', 'domain' => 'name', 'null' => true],
 		'dt_file_size' => ['name' => 'File Size', 'domain' => 'file_size'],
 		'dt_file_path' => ['name' => 'File Path', 'domain' => 'file_path'],
 		'dt_file_thumbnail_path' => ['name' => 'Thumbnail Path', 'domain' => 'file_path', 'null' => true],
 		'dt_file_language_code' => ['name' => 'Language Code', 'domain' => 'language_code', 'null' => true],
 		'dt_file_readonly' => ['name' => 'Readonly', 'type' => 'boolean'],
 		'dt_file_temporary' => ['name' => 'Temporary', 'type' => 'boolean'],
+		'dt_file_url' => ['name' => 'URL', 'type' => 'text', 'null' => true],
 		'dt_file_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

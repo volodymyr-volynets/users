@@ -22,6 +22,14 @@ class Locations extends \Object\Form\Wrapper\Base {
 		'general_container' => ['default_row_type' => 'grid', 'order' => 32000],
 		'contact_container' => ['default_row_type' => 'grid', 'order' => 32100],
 		'logo_container' => ['default_row_type' => 'grid', 'order' => 32200],
+		'integration_mappings_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'table',
+			'details_new_rows' => 1,
+			'details_key' => '\Numbers\Users\Organizations\Model\Location\IntegrationMappings',
+			'details_pk' => ['on_locintegmap_integtype_code', 'on_locintegmap_code'],
+			'order' => 35001,
+		],
 	];
 	public $rows = [
 		'top' => [
@@ -31,6 +39,7 @@ class Locations extends \Object\Form\Wrapper\Base {
 		'tabs' => [
 			'general' => ['order' => 100, 'label_name' => 'General'],
 			'logo' => ['order' => 200, 'label_name' => 'About'],
+			'integration' => ['order' => 300, 'label_name' => 'Integration'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA + ['acl_subresource_hide' => ['ON::LOC_ADDRESSES']],
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA + ['acl_subresource_hide' => ['ON::LOC_ATTRIBUTES']],
 		]
@@ -51,6 +60,9 @@ class Locations extends \Object\Form\Wrapper\Base {
 			],
 			'logo' => [
 				'logo' => ['container' => 'logo_container', 'order' => 100]
+			],
+			'integration' => [
+				'integration' => ['container' => 'integration_mappings_container', 'order' => 100],
 			]
 		],
 		'general_container' => [
@@ -115,6 +127,17 @@ class Locations extends \Object\Form\Wrapper\Base {
 				'on_location_logo_file_id' => ['label_name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
 			]
 		],
+		'integration_mappings_container' => [
+			'row1' => [
+				'on_locintegmap_integtype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Integration Type', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Integration\Types::optionsActive', 'onchange' => 'this.form.submit();'],
+				'on_locintegmap_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'code', 'null' => true, 'required' => true, 'percent' => 45],
+				'on_locintegmap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'on_locintegmap_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'percent' => 95],
+				'on_locintegmap_default' => ['order' => 2, 'label_name' => 'Default', 'type' => 'boolean', 'percent' => 5],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
@@ -128,6 +151,12 @@ class Locations extends \Object\Form\Wrapper\Base {
 				'pk' => ['on_loctpmap_tenant_id', 'on_loctpmap_location_id', 'on_loctpmap_type_code'],
 				'type' => '1M',
 				'map' => ['on_location_tenant_id' => 'on_loctpmap_tenant_id', 'on_location_id' => 'on_loctpmap_location_id']
+			],
+			'\Numbers\Users\Organizations\Model\Location\IntegrationMappings' => [
+				'name' => 'Integration Mappings',
+				'pk' => ['on_locintegmap_tenant_id', 'on_locintegmap_location_id', 'on_locintegmap_integtype_code', 'on_locintegmap_code'],
+				'type' => '1M',
+				'map' => ['on_location_tenant_id' => 'on_locintegmap_tenant_id', 'on_location_id' => 'on_locintegmap_location_id']
 			],
 		]
 	];

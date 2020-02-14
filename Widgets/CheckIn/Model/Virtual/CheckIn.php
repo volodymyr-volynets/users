@@ -42,14 +42,18 @@ class CheckIn extends \Object\Table {
 		$this->columns['wg_checkin_id'] = ['name' => 'Check In #', 'domain' => 'big_id_sequence'];
 		$this->determineModelMap($class, 'checkins', $virtual_class_name, $options);
 		$this->columns['wg_checkin_checkin_timestamp'] = ['name' => 'Check In Timestamp', 'type' => 'timestamp'];
-		$this->columns['wg_checkin_checkin_latitude'] = ['name' => 'Check In Latitude', 'domain' => 'geo_coordinate'];
-		$this->columns['wg_checkin_checkin_longitude'] = ['name' => 'Check In Longitude', 'domain' => 'geo_coordinate'];
+		$this->columns['wg_checkin_checkin_latitude'] = ['name' => 'Check In Latitude', 'domain' => 'geo_coordinate', 'null' => true];
+		$this->columns['wg_checkin_checkin_longitude'] = ['name' => 'Check In Longitude', 'domain' => 'geo_coordinate', 'null' => true];
 		$this->columns['wg_checkin_checkout_timestamp'] = ['name' => 'Check Out Timestamp', 'type' => 'timestamp', 'null' => true];
 		$this->columns['wg_checkin_checkout_latitude'] = ['name' => 'Check Out Latitude', 'domain' => 'geo_coordinate', 'null' => true];
 		$this->columns['wg_checkin_checkout_longitude'] = ['name' => 'Check Out Longitude', 'domain' => 'geo_coordinate', 'null' => true];
 		$this->columns['wg_checkin_signature'] = ['name' => 'Signature', 'domain' => 'signature', 'null' => true];
 		$this->columns['wg_checkin_legacy_signature'] = ['name' => 'Signature (Legacy)', 'domain' => 'signature', 'null' => true];
 		$this->columns['wg_checkin_duration'] = ['name' => 'Duration', 'type' => 'numeric', 'null' => true];
+		// api fields
+		$this->columns['wg_checkin_inserted_user_name'] = ['name' => 'Inserted User Name', 'type' => 'text', 'null' => true];
+		$this->columns['wg_checkin_external_integtype_code'] = ['name' => 'External Integration Type Code', 'domain' => 'group_code', 'null' => true];
+		$this->columns['wg_checkin_external_id'] = ['name' => 'External #', 'domain' => 'big_id', 'default' => null, 'null' => true];
 		// add constraints
 		$this->constraints[$this->name . '_pk'] = [
 			'type' => 'pk',

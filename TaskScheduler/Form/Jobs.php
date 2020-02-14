@@ -40,7 +40,7 @@ class Jobs extends \Object\Form\Wrapper\Base {
 			],
 			'ts_job_task_code' => [
 				'ts_job_task_code' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Task', 'domain' => 'group_code', 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\TaskScheduler\Model\Tasks', 'onchange' => 'this.form.submit();'],
-				'ts_job_user_id' => ['order' => 2, 'label_name' => 'User', 'domain' => 'user_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Users'],
+				'ts_job_user_id' => ['order' => 2, 'label_name' => 'User', 'domain' => 'user_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Aliases\Users'],
 			],
 			'cron' => [
 				'ts_job_cron_minute' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Minutes', 'domain' => 'code', 'default' => '*', 'required' => true, 'percent' => 15],
