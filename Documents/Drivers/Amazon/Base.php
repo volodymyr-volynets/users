@@ -137,6 +137,8 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base {
 	 *
 	 * @param array $file
 	 * @param array $options
+	 *	boolean return
+	 *	boolean thumbnail
 	 * @return mixed
 	 */
 	public function download(array $file, array $options = []) {
@@ -150,6 +152,10 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base {
 				'Bucket' => $this->options['bucket'],
 				'Key'    => $path
 			]);
+			// return
+			if (!empty($options['return'])) {
+				return $result['Body'];
+			}
 			\Layout::renderAs($result['Body'], $result['ContentType']);
 		} catch (\Exception $e) {
 			echo $e->getMessage() . PHP_EOL;

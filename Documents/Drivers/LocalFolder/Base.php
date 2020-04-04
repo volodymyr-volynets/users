@@ -107,13 +107,22 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base {
 	 *
 	 * @param array $file
 	 * @param array $options
+	 *	boolean return
+	 *	boolean thumbnail
 	 * @return mixed
 	 */
 	public function download(array $file, array $options = []) {
 		if (empty($options['thumbnail'])) {
-			\Layout::renderAs(file_get_contents($this->options['dir'] . $file['dt_file_path']), $file['dt_file_mime']);
+			$body = file_get_contents($this->options['dir'] . $file['dt_file_path']);
+			$mime = $file['dt_file_mime'];
 		} else {
-			\Layout::renderAs(file_get_contents($this->options['dir'] . $file['dt_file_thumbnail_path']), 'image/png');
+			$body = file_get_contents($this->options['dir'] . $file['dt_file_thumbnail_path']);
+			$mime = 'image/png';
 		}
+		// return
+		if (!empty($options['return'])) {
+			return $body;
+		}
+		\Layout::renderAs($body, $mime);
 	}
 }

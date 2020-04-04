@@ -78,4 +78,38 @@ class Preview {
 		}
 		return $result;
 	}
+
+	/**
+	 * Download one file
+	 *
+	 * @param int $file_id
+	 * @param array $options
+	 *	boolean save_in_temp
+	 * @return array
+	 */
+	public static function downloadOneFile(int $file_id, array $options = []) : array {
+		$result = [
+			'success' => false,
+			'error' => [],
+			'data' => null,
+			'tmp_path' => null,
+		];
+		$model = new \Numbers\Users\Documents\Base\Base();
+		if (!empty($options['save_in_temp'])) {
+			$model = new \Numbers\Users\Documents\Base\Model\Files();
+			$file_data = $model->get([
+				'where' => [
+					'dt_file_id' => $file_id,
+				],
+				'pk' => null,
+				'cache_memory' => true,
+			]);
+			$result['tmp_path'] = tempnam(sys_get_temp_dir(), 'NAIMG') . '.' . $file_data[0]['dt_file_extension'];
+			file_put_contents($result['tmp_path'], $result['data']);
+		} else {
+			$result['data'] = $model->download($file_id, ['return' => true, 'include_metadata' => true]);
+		}
+		$result['success'] = true;
+		return $result;
+	}
 }

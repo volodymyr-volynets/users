@@ -9,6 +9,9 @@ class Resources {
 			],
 			'generate_icon' => [
 				'method' => '\Numbers\Users\Documents\Base\Base::generateIconURL'
+			],
+			'get_file' => [
+				'method' => '\Numbers\Users\Documents\Base\Helper\Preview::downloadOneFile'
 			]
 		],
 		'save_documents' => [

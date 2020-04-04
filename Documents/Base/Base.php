@@ -140,7 +140,8 @@ class Base {
 			'where' => [
 				'dt_file_id' => $file_id,
 			],
-			'pk' => null
+			'pk' => null,
+			'cache_memory' => true,
 		]);
 		if (empty($file_data[0])) return '';
 		// delete in driver
