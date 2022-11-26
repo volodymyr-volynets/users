@@ -15,6 +15,9 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 	public $rows = [];
 	public $elements = [
 		'top' => [
+			'wg_document_id' => [
+				'wg_document_id' => ['order' => 1, 'row_order' => 50, 'label_name' => 'Document #', 'domain' => 'big_id_sequence', 'null' => true, 'readonly' => true],
+			],
 			'wg_document_catalog_code' => [
 				'wg_document_catalog_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Catalog', 'domain' => 'group_code', 'null' => true, 'percent' => 100, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Documents\Base\Model\Catalogs::optionsActive'],
 			],
@@ -24,11 +27,12 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 			'wg_document_important' => [
 				'wg_document_important' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Important', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
 				'wg_document_public' => ['order' => 2, 'label_name' => 'Public', 'type' => 'boolean', 'method' => 'checkbox', 'percent' => 25],
-				'wg_document_file_id_1_new' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'null' => true, 'required' => true, 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents', 'archives']], 'description' => 'Extensions: Images, Audio, Documents, Archive'],
+				'wg_document_file_id_1_new' => ['order' => 3, 'label_name' => 'File(s)', 'type' => 'mixed', 'percent' => 50, 'method' => 'file', 'null' => true, 'required' => 'c', 'multiple' => true, 'validator_method' => '\Numbers\Users\Documents\Base\Validator\Files::validate', 'validator_params' => ['types' => ['images', 'audio', 'documents', 'archives']], 'description' => 'Extensions: Images, Audio, Documents, Archive'],
 			],
 			self::HIDDEN => [
-				'wg_document_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Document #', 'domain' => 'big_id_sequence', 'null' => true, 'method' => 'hidden'],
-			],
+				'wg_document_external_integtype_code' => ['label_name' => 'External Integration Type Code', 'domain' => 'group_code', 'null' => true, 'method' => 'hidden'],
+				'wg_document_external_id' => ['label_name' => 'External #', 'domain' => 'big_id', 'default' => null, 'null' => true, 'method' => 'hidden'],
+			]
 		],
 		'buttons' => [
 			self::BUTTONS => [
@@ -62,6 +66,12 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 		if (!empty($form->options['plain_text_note'])) {
 			$form->element('top', 'wg_document_comment', 'wg_document_comment', ['method' => 'textarea', 'rows' => 10, 'wrap' => 'on']);
 		}
+		// external API we cannot reupload
+		if (!empty($form->values['wg_document_external_integtype_code'])) {
+			if (!empty($form->values['wg_document_id'])) {
+				$form->element('top', 'wg_document_important', 'wg_document_file_id_1_new', ['method' => 'hidden']);
+			}
+		}
 		// preset default file catalog
 		if (empty($form->values['wg_document_catalog_code'])) {
 			$default = \Numbers\Users\Documents\Base\Model\Catalogs::getStatic([
@@ -77,6 +87,11 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 	}
 
 	public function validate(& $form) {
+		if (empty($form->values['wg_document_id'])) {
+			if (empty($form->values['wg_document_file_id_1_new'])) {
+				$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, 'wg_document_file_id_1_new');
+			}
+		}
 		if ($form->hasErrors()) return;
 		$model = new $form->options['model_table']();
 		foreach ($model->documents['map'] as $k => $v) {

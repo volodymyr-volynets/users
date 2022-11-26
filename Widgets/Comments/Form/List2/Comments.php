@@ -53,7 +53,7 @@ class Comments extends \Object\Form\Wrapper\List2 {
 				'wg_comment_id' => ['order' => 1, 'row_order' => 100, 'label_name' => '#', 'domain' => 'big_id', 'percent' => 10, 'url_edit' => true],
 				'wg_comment_important' => ['order' => 2, 'label_name' => 'Important', 'type' => 'boolean', 'percent' => 10],
 				'wg_comment_inserted_user_id' => ['order' => 3, 'label_name' => 'User', 'domain' => 'name', 'percent' => 25, 'custom_renderer' => '\Numbers\Users\Widgets\Comments\Form\List2\Comments::renderCommentUser', 'skip_fts' => true],
-				'wg_comment_value' => ['order' => 4, 'label_name' => 'Comment', 'domain' => 'name', 'percent' => 65, 'custom_renderer' => '\Numbers\Users\Widgets\Comments\Form\List2\Comments::renderCommentValue'],
+				'wg_comment_value' => ['order' => 4, 'label_name' => 'Comment', 'domain' => 'name', 'percent' => 65, 'custom_renderer' => 'self::renderCommentValue'],
 			],
 			'row2' => [
 				'__about' => ['order' => 1, 'row_order' => 200, 'label_name' => '', 'percent' => 10],
@@ -171,7 +171,7 @@ class Comments extends \Object\Form\Wrapper\List2 {
 
 	public function renderCommentValue(& $form, & $options, & $value, & $neighbouring_values) {
 		$result = '';
-		if (is_html($value) && has_tags($value, \HTML::HTML_WHITE_SPACE_TAGS_ARRAY + ['<p>'])) {
+		if (is_html($value) && has_tags($value, array_merge(\HTML::HTML_WHITE_SPACE_TAGS_ARRAY, ['<p>']))) {
 			$result.= str_replace(["\n", "\r"], '', $value);
 		} else {
 			$result.= str_replace(["\n", "\r"], '', nl2br($value));

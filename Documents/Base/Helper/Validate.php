@@ -18,6 +18,7 @@ class Validate {
 		'documents' => ['pdf', 'xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx', 'xml'],
 		'audio' => ['mp3', 'wav'],
 		'archives' => ['zip', 'gz'],
+		'csv' => ['csv'],
 	];
 
 	/**
