@@ -37,7 +37,7 @@ class Documents extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'wg_document_id' => ['order' => 1, 'row_order' => 100, 'label_name' => '#', 'domain' => 'big_id', 'percent' => 10],
+				'wg_document_id' => ['order' => 1, 'row_order' => 100, 'label_name' => '#', 'domain' => 'big_id', 'percent' => 10, 'url_edit' => true],
 				'wg_document_important' => ['order' => 2, 'label_name' => 'Important', 'type' => 'boolean', 'percent' => 10],
 				'wg_document_inserted_user_id' => ['order' => 3, 'label_name' => 'Upload User', 'domain' => 'name', 'percent' => 25, 'custom_renderer' => '\Numbers\Users\Widgets\Documents\Form\List2\Documents::renderDocumentUser', 'skip_fts' => true],
 				'wg_document_catalog_code' => ['order' => 4, 'label_name' => 'Catalog', 'domain' => 'group_code', 'null' => true, 'percent' => 55, 'options_model' => '\Numbers\Users\Documents\Base\Model\Catalogs']
@@ -74,6 +74,7 @@ class Documents extends \Object\Form\Wrapper\List2 {
 			'label_name' => 'New Document',
 			'actions' => [
 				'new' => ['name' => 'New'],
+				'edit' => ['name' => 'Edit', 'url_edit' => true],
 				'delete' => ['name' => 'Delete', 'url_delete' => true],
 			]
 		],
@@ -208,6 +209,15 @@ class Documents extends \Object\Form\Wrapper\List2 {
 				'pk' => ['dt_file_id']
 			]);
 			foreach ($files as $k => $v) {
+				// extenal url processor
+				if (!empty($neighbouring_values['wg_document_external_integtype_code'])) {
+					if (!empty($form->options['custom_tags']['custom_external_api_method'])) {
+						$method = \Factory::method($form->options['custom_tags']['custom_external_api_method']);
+						$result.= call_user_func_array($method, [$neighbouring_values, $v]);
+						$result.= '<br/>';
+						continue;
+					}
+				}
 				if (!empty($neighbouring_values['wg_document_needs_transfer'])) {
 					$result.= \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name'];
 				} else if ($v['dt_file_url']) {
@@ -221,8 +231,10 @@ class Documents extends \Object\Form\Wrapper\List2 {
 		// notes
 		if (!empty($neighbouring_values['wg_document_comment'])) {
 			$result.= '<hr/>';
-			if (is_html($neighbouring_values['wg_document_comment']) && has_tags($neighbouring_values['wg_document_comment'], \HTML::HTML_WHITE_SPACE_TAGS_ARRAY + ['<p>'])) {
-				$result.= str_replace(["\n", "\r"], '', $neighbouring_values['wg_document_comment']);;
+			if (is_html($neighbouring_values['wg_document_comment']) && has_tags($neighbouring_values['wg_document_comment'], array_merge(\HTML::HTML_WHITE_SPACE_TAGS_ARRAY, ['<p>']))) {
+				$result.= '<div class="numbers_frontend_form_list_comment">';
+					$result.= str_replace(["\n", "\r"], '', $neighbouring_values['wg_document_comment']);;
+				$result.= '</div>';
 			} else {
 				$result.= str_replace(["\n", "\r"], '', nl2br($neighbouring_values['wg_document_comment']));
 			}

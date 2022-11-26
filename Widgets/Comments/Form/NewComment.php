@@ -83,7 +83,8 @@ class NewComment extends \Object\Form\Wrapper\Base {
 		if (!empty($form->options['plain_text_note'])) {
 			$form->element('top', 'wg_comment_value', 'wg_comment_value', ['method' => 'textarea', 'rows' => 10, 'wrap' => 'on']);
 		}
-		if (!empty($form->values['wg_comment_external_integtype_code'])) {
+		$allow_editing_api_comments = \Application::get('app.submodule.Numbers.Users.Widgets.Comments.allow_editing_api_comments');
+		if (empty($allow_editing_api_comments) && !empty($form->values['wg_comment_external_integtype_code'])) {
 			$form->error(DANGER, 'This comment was added via API, you cannot edit it!');
 			$form->misc_settings['global']['readonly'] = true;
 			$form->element('buttons', self::BUTTONS, self::BUTTON_SUBMIT_SAVE, ['method' => 'hidden']);
