@@ -11,6 +11,11 @@ class Dashboard extends \Object\Controller\Authorized {
 			unset($data['Operations']);
 			$data = array_merge_hard($data, $temp);
 		}
+		if (!empty($data['Accounting'])) {
+			$temp = $data['Accounting']['options'];
+			unset($data['Accounting']);
+			$data = array_merge_hard($data, $temp);
+		}
 		// translate
 		\I18n::translateArray($data, true);
 		// render

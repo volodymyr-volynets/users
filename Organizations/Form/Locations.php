@@ -73,18 +73,18 @@ class Locations extends \Object\Form\Wrapper\Base {
 			],
 			'on_location_organization_id' => [
 				'on_location_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'onchange' => 'this.form.submit();'],
-				'on_location_number' => ['order' => 2, 'label_name' => 'Location Number', 'domain' => 'location_number', 'null' => true, 'required' => true, 'percent' => 50],
+				'on_location_number' => ['order' => 2, 'label_name' => 'Location Number', 'domain' => 'location_number', 'null' => true, 'required' => false, 'percent' => 50],
 			],
 			'on_location_customer_id' => [
 				'on_location_customer_id' => ['order' => 1, 'row_order' => 150, 'label_name' => 'Customer', 'domain' => 'customer_id', 'null' => true, 'percent' => 100, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Customers::optionsActive', 'options_depends' => ['on_customer_organization_id' => 'on_location_organization_id']],
 			],
 			'on_location_brand_id' => [
-				'on_location_brand_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive'],
-				'on_location_district_id' => ['order' => 2, 'label_name' => 'District', 'domain' => 'district_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Districts::optionsActive', 'options_depends' => ['on_district_organization_id' => 'on_location_organization_id']],
+				'on_location_brand_id' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Brand', 'domain' => 'brand_id', 'null' => true, 'percent' => 50, 'required' => false, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Brands::optionsActive'],
+				'on_location_district_id' => ['order' => 2, 'label_name' => 'District', 'domain' => 'district_id', 'null' => true, 'percent' => 50, 'required' => false, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Districts::optionsActive', 'options_depends' => ['on_district_organization_id' => 'on_location_organization_id']],
 			],
 			'on_location_market_id' => [
-				'on_location_market_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Market', 'domain' => 'market_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Markets::optionsActive', 'options_depends' => ['on_market_organization_id' => 'on_location_organization_id']],
-				'on_location_region_id' => ['order' => 2, 'label_name' => 'Region', 'domain' => 'region_id', 'null' => true, 'percent' => 50, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Regions::optionsActive', 'options_depends' => ['on_region_organization_id' => 'on_location_organization_id']],
+				'on_location_market_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Market', 'domain' => 'market_id', 'null' => true, 'percent' => 50, 'required' => false, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Markets::optionsActive', 'options_depends' => ['on_market_organization_id' => 'on_location_organization_id']],
+				'on_location_region_id' => ['order' => 2, 'label_name' => 'Region', 'domain' => 'region_id', 'null' => true, 'percent' => 50, 'required' => false, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Regions::optionsActive', 'options_depends' => ['on_region_organization_id' => 'on_location_organization_id']],
 			],
 			'on_location_item_master_id' => [
 				'on_location_item_master_id' => ['order' => 1, 'row_order' => 350, 'label_name' => 'Item Master', 'domain' => 'item_master_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\ItemMasters::optionsActive'],

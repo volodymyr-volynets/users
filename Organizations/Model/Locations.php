@@ -34,11 +34,11 @@ class Locations extends \Object\Table {
 		// organization
 		'on_location_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'on_location_customer_id' => ['name' => 'Customer #', 'domain' => 'customer_id', 'null' => true],
-		'on_location_number' => ['name' => 'Location Number', 'domain' => 'location_number'],
-		'on_location_brand_id' => ['name' => 'Brand #', 'domain' => 'brand_id'],
-		'on_location_district_id' => ['name' => 'District #', 'domain' => 'district_id'],
-		'on_location_market_id' => ['name' => 'Market #', 'domain' => 'market_id'],
-		'on_location_region_id' => ['name' => 'Region #', 'domain' => 'region_id'],
+		'on_location_number' => ['name' => 'Location Number', 'domain' => 'location_number', 'null' => true],
+		'on_location_brand_id' => ['name' => 'Brand #', 'domain' => 'brand_id', 'null' => true],
+		'on_location_district_id' => ['name' => 'District #', 'domain' => 'district_id', 'null' => true],
+		'on_location_market_id' => ['name' => 'Market #', 'domain' => 'market_id', 'null' => true],
+		'on_location_region_id' => ['name' => 'Region #', 'domain' => 'region_id', 'null' => true],
 		'on_location_item_master_id' => ['name' => 'Item Master #', 'domain' => 'item_master_id', 'null' => true],
 		'on_location_construction_date' => ['name' => 'Construction Date', 'type' => 'date', 'null' => true],
 		// inactive & hold
