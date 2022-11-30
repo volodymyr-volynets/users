@@ -17,7 +17,7 @@ class MassUpload {
 	 *	string file_upload_field_name
 	 * @return array|false
 	 */
-	public static function uploadFewFilesInForm(& $form, int $max_files = 10, array $files, string $prefix, array $validator_params = [], string $catalog_code = '', array $options = []) {
+	public static function uploadFewFilesInForm(& $form, int $max_files = 10, array $files = [], string $prefix = '', array $validator_params = [], string $catalog_code = '', array $options = []) {
 		if (count($files) > $max_files) {
 			$form->error(DANGER, \Numbers\Users\Documents\Base\Helper\Messages::MAX_FILES, $options['file_upload_field_name'] ?? null, ['replace' => ['[number]' => \Format::id($max_files)]]);
 			return false;
