@@ -190,7 +190,10 @@ class Users extends \Object\Table {
 	 *	boolean include_id
 	 * @return string
 	 */
-	public static function getUsername(int $user_id, array $options = []) : string {
+	public static function getUsername(?int $user_id, array $options = []) : string {
+		if ($user_id === null) {
+			return 'Anonymous';
+		}
 		if (isset(self::$cached_users[$user_id])) {
 			return self::$cached_users[$user_id];
 		} else {
@@ -199,11 +202,11 @@ class Users extends \Object\Table {
 			if (empty($result)) {
 				$result = $user['um_user_name'];
 			}
-			self::$cached_users[$user_id] = $result;
 			// if we need to include id
 			if (!empty($options['include_id'])) {
 				$result.= ' (' . $user_id . ')';
 			}
+			self::$cached_users[$user_id] = $result;
 			return $result;
 		}
 	}

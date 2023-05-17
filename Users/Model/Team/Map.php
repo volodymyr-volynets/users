@@ -8,6 +8,7 @@ class Map extends \Object\Table {
 	public $title = 'U/M Team Map';
 	public $name = 'um_user_team_map';
 	public $pk = ['um_usrtmmap_tenant_id', 'um_usrtmmap_user_id', 'um_usrtmmap_team_id'];
+	public $tenant = true;
 	public $orderby = [
 		'um_usrtmmap_timestamp' => SORT_ASC
 	];

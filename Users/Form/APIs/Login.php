@@ -25,7 +25,7 @@ class Login extends \Object\Form\Wrapper\Base {
 	public function validate(& $form) {
 		$authorize = \Numbers\Users\Users\Model\User\Authorize::authorizeWithCredentials($form->values['username'], $form->values['password']);
 		if ($authorize['success']) {
-			$form->api_values['session_id'] = $authorize['session_id'];
+			$form->api_values = $authorize;
 		} else {
 			$form->error('danger', 'Provided credentials do not match our records!');
 			$form->error('danger', null, 'username');

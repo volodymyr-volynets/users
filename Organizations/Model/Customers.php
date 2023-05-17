@@ -67,6 +67,7 @@ class Customers extends \Object\Table {
 		'on_customer_icon' => 'icon_class',
 		'on_customer_logo_file_id' => 'photo_id',
 		'on_customer_organization_id' => 'organization_id',
+		'on_customer_operating_country_code' => 'country_code',
 		'on_customer_inactive' => 'inactive'
 	];
 	public $options_active = [
@@ -130,14 +131,25 @@ class Customers extends \Object\Table {
 	 * @see $this->options()
 	 */
 	public function optionsJson($options = []) {
-		if (!empty($options['show_all'])) {
-			$data = $this->options($options);
-		} else {
-			$data = $this->optionsActive($options);
+		$enforce_the_same_country = !empty($options['where']['enforce_the_same_country']) && !\User::get('super_admin');
+		if (\User::get('super_admin')) {
+			$enforce_the_same_country = false;
 		}
-		$organizations = \Numbers\Users\Organizations\Model\Organizations::optionsStatic();
+		unset($options['where']['enforce_the_same_country']);
+		if (!empty($options['show_all'])) {
+			$data = $this->options($options + ['skip_acl' => true]);
+		} else {
+			$data = $this->optionsActive($options + ['skip_acl' => true]);
+		}
+		$organizations = \Numbers\Users\Organizations\Model\Organizations::optionsStatic(['skip_acl' => true]);
+		$countries = \User::get('organization_countries');
 		$result = [];
 		foreach ($data as $k => $v) {
+			if ($enforce_the_same_country && \Can::userIsOwner('JM_PM')) {
+				if (!in_array($v['country_code'], $countries)) {
+					continue;
+				}
+			}
 			$parent = \Object\Table\Options::optionJsonFormatKey(['organization_id' => (int) $v['organization_id'], 'customer_id' => null]);
 			$this->optionsJsonReccursive($result, $organizations, $v['organization_id'], $parent);
 			// actual customer
