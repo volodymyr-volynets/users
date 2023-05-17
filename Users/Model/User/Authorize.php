@@ -14,6 +14,7 @@ class Authorize {
 		$result = [
 			'success' => false,
 			'error' => [],
+			'data' => [],
 			'session_id' => null,
 		];
 		do {
@@ -43,6 +44,7 @@ class Authorize {
 			unset($user['login_password'], $_SESSION['numbers']['flag_monitoring_steps']);
 			\User::userAuthorize($user);
 			$result['session_id'] = session_id();
+			$result['data'] = $user;
 			// success
 			$result['success'] = true;
 		} while(0);

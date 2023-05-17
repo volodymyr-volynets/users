@@ -82,7 +82,7 @@ class NewDocument extends \Object\Form\Wrapper\Base {
 				'pk' => null,
 				'single_row' => true
 			]);
-			$form->values['wg_document_catalog_code'] = $default['dt_catalog_code'];
+			$form->values['wg_document_catalog_code'] = $default['dt_catalog_code'] ?? null;
 		}
 	}
 

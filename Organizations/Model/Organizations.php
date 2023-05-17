@@ -67,6 +67,7 @@ class Organizations extends \Object\Table {
 		'on_organization_icon' => 'icon_class',
 		'on_organization_logo_file_id' => 'photo_id',
 		'on_organization_parent_organization_id' => 'parent_id',
+		'on_organization_operating_country_code' => 'country_code',
 		'on_organization_inactive' => 'inactive'
 	];
 	public $options_active = [

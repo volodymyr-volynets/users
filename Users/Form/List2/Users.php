@@ -100,6 +100,18 @@ class Users extends \Object\Form\Wrapper\List2 {
 		'um_user_company' => ['name' => 'Company']
 	];
 
+	public function listQuery(& $form) {
+		if(!\User::roleExists('SA')) {
+			$form->query->where('AND NOT', function (& $query) {
+				$assignment = new \Numbers\Users\Users\Model\User\Roles();
+				$query = $assignment->queryBuilder(['alias' => 'inner_role_assignment'])->select();
+				$query->columns(1);
+				$query->where('AND', ['inner_role_assignment.um_usrrol_user_id', '=', 'a.um_user_id', true]);
+				$query->where('AND', ['inner_role_assignment.um_usrrol_role_id', '=', 1]);
+			}, 'EXISTS');
+		}
+	}
+
 	public function renderBecome(& $form, & $options, & $value, & $neighbouring_values) {
 		// check if we have permissions
 		if (\User::id() != $neighbouring_values['um_user_id'] && \User::roleExists('SA') && !empty($neighbouring_values['um_user_login_enabled']) && \Can::userFeatureExists('UM::USER_BECOME')) {

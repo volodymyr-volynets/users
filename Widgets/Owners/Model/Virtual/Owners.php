@@ -219,6 +219,7 @@ class Owners extends \Object\Table {
 	 * @param mixed $values
 	 */
 	public function convertMultipleColumns(& $form, & $values) {
+		$this->preloadModelsAndFields();
 		$result = [];
 		foreach ($values as $k => $v) {
 			if (!isset($result[$v['wg_owner_ownertype_id']])) {

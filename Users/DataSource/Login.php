@@ -55,6 +55,7 @@ class Login extends \Object\DataSource {
 			'role_ids' => 'b.role_ids',
 			'permissions' => 'f.permissions',
 			'organizations' => 'c.organizations',
+			'organization_countries' => 'c.organization_countries',
 			'super_admin' => 'b.super_admin',
 			'maximum_role_weight' => 'b.maximum_role_weight',
 			'linked_accounts' => 'g.linked_accounts',
@@ -109,7 +110,8 @@ class Login extends \Object\DataSource {
 			$query = \Numbers\Users\Users\Model\User\Organizations::queryBuilderStatic(['alias' => 'inner_a'])->select();
 			$query->columns([
 				'inner_a.um_usrorg_user_id',
-				'organizations' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_usrorg_organization_id)", 'delimiter' => ';;'])
+				'organizations' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_a.um_usrorg_organization_id)", 'delimiter' => ';;']),
+				'organization_countries' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_b.on_organization_operating_country_code)", 'delimiter' => ';;'])
 			]);
 			// join
 			$query->join('INNER', new \Numbers\Users\Organizations\Model\Organizations(), 'inner_b', 'ON', [
@@ -293,6 +295,12 @@ class Login extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['organizations'] = [];
+			}
+			// organization countries
+			if (!empty($v['organization_countries'])) {
+				$data[$k]['organization_countries'] = array_unique(explode(';;', $v['organization_countries']));
+			} else {
+				$data[$k]['organization_countries'] = [];
 			}
 			// process i18n
 			$data[$k]['internalization'] = [];

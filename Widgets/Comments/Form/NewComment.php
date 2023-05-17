@@ -67,9 +67,9 @@ class NewComment extends \Object\Form\Wrapper\Base {
 			]);
 			$form->values['wg_comment_template_id'] = null;
 			if (!empty($form->options['plain_text_note'])) {
-				$form->values['wg_comment_value'] = str_replace("\n", '', $template['um_notetemplate_template']);
+				$form->values['wg_comment_value'] = str_replace("\n", '', $template['um_notetemplate_template'] . '');
 			} else {
-				$form->values['wg_comment_value'] = nl2br($template['um_notetemplate_template']);
+				$form->values['wg_comment_value'] = nl2br($template['um_notetemplate_template'] ?? '');
 			}
 		}
 		// public
