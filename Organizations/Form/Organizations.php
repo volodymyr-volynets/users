@@ -192,7 +192,7 @@ class Organizations extends \Object\Form\Wrapper\Base {
 	];
 
 	public function refresh(& $form) {
-		if ($form->values['on_organization_code'] == 'DEFAULT') {
+		if (($form->values['on_organization_code'] ?? '') == 'DEFAULT') {
 			$form->element('top', 'on_organization_id', 'on_organization_code', [
 				'readonly' => true
 			]);

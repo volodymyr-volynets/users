@@ -17,12 +17,16 @@ class Dashboard extends \Object\Controller\Authorized {
 			$data = array_merge_hard($data, $temp);
 		}
 		// translate
-		\I18n::translateArray($data, true);
+		//\I18n::translateArray($data, true);
 		// render
 		$groupped = [0 => [], 1 => [], 2 => [], 3 => []];
 		$index = 0;
 		foreach ($data as $k => $v) {
-			$name = \HTML::a(['href' => $v['url'] ?? 'javascript:void(0);', 'value' => (!empty($v['icon']) ? (\HTML::icon(['type' => $v['icon']]) . ' ') : null) . $v['name']]);
+			$url = 'javascript:void(0);';
+			if (!empty($v['url'])) {
+				$url = \Request::fixUrl($v['url'], $v['template']);
+			}
+			$name = \HTML::a(['href' => $url, 'value' => (!empty($v['icon']) ? (\HTML::icon(['type' => $v['icon']]) . ' ') : null) . $v['name']]);
 			if (!empty($v['options'])) {
 				\I18n::translateArray($v['options'], true);
 				$name.= '<div class="numbers_postlogin_dashboard_content_inner">';

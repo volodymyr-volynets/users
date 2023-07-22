@@ -43,6 +43,7 @@ class Types extends \Object\Table {
 	public $options_active = [
 		'um_ownertype_inactive' => 0
 	];
+	public const selectOptionsActive = '\Numbers\Users\Users\Model\User\Owner\Types::optionsActive';
 	public $engine = [
 		'MySQLi' => 'InnoDB'
 	];

@@ -56,7 +56,7 @@ class Templates extends \Object\Form\Wrapper\List2 {
 		self::LIST_BUTTONS => self::LIST_BUTTONS_DATA,
 		self::LIST_CONTAINER => [
 			'row1' => [
-				'p8_template_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Template. #', 'domain' => 'service_script_id', 'percent' => 10, 'url_edit' => true],
+				'p8_template_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Template #', 'domain' => 'template_id', 'percent' => 10, 'url_edit' => true],
 				'p8_template_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 50],
 				'p8_template_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 25],
 				'p8_template_versioned' => ['order' => 4, 'label_name' => 'Versioned', 'type' => 'boolean', 'percent' => 10],
