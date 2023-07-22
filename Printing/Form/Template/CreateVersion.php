@@ -45,6 +45,14 @@ class CreateVersion extends \Object\Form\Wrapper\Base {
 		$result['values']['p8_template_version_name'] = $form->values['p8_template_version_name'];
 		$result['values']['p8_template_code'] = concat_ws(' - ', $result['values']['p8_template_code'], strtoupper($result['values']['p8_template_version_code']));
 		unset($result['values']['p8_template_id'], $result['values']['p8_template_optimistic_lock']);
+		// process headers
+		$headers = \Numbers\Users\Printing\Model\Collection\Headers::getStatic([
+			'where' => [
+				'p8_header_template_id' => $form->values['p8_template_id']
+			],
+			'pk' => ['p8_header_id']
+		]);
+		$result['values']['p8_template_version_headers'] = json_encode($headers['data']);
 		$result = $model->save($result['values']);
 		if ($result['success']) {
 			$form->error(SUCCESS, \Object\Content\Messages::OPERATION_EXECUTED);

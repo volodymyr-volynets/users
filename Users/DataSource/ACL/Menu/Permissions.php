@@ -73,6 +73,7 @@ class Permissions {
 							'options' => [],
 							'menu_id' => $menu_id,
 							'class' => $v['class'] ?? null,
+							'template' => $v['template'] ?? null,
 						];
 						$menu_id++;
 					}
@@ -81,6 +82,12 @@ class Permissions {
 				$key[] = 'options';
 			}
 			$key[] = $v['name'];
+			// badge has type and value
+			$badge = null;
+			if (!empty($v['badge'])) {
+				$v['badge'] = explode(';', $v['badge']);
+				$badge = ['type' => $v['badge'][0], 'value' => $v['badge'][1]];
+			}
 			$item = [
 				'name' => $v['name'],
 				'title' => $v['description'],
@@ -93,6 +100,8 @@ class Permissions {
 				'menu_id' => $menu_id,
 				'__menu_id' => $v['id'],
 				'class' => $v['class'] ?? null,
+				'template' => $v['template'] ?? null,
+				'badge' => $badge
 			];
 			$menu_id++;
 			$existing = array_key_get($result, $key);

@@ -38,7 +38,8 @@ class Controllers extends \Object\DataSource {
 			'acl_public' => 'a.sm_resource_acl_public',
 			'acl_authorized' => 'a.sm_resource_acl_authorized',
 			'acl_permission' => 'a.sm_resource_acl_permission',
-			'missing_features' => 'COALESCE(d.missing_features, 0)'
+			'missing_features' => 'COALESCE(d.missing_features, 0)',
+			'template' => 'a.sm_resource_template_name'
 		]);
 		// join
 		$this->query->join('LEFT', new \Numbers\Backend\System\Modules\Model\Modules(), 'b', 'ON', [

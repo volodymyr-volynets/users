@@ -27,7 +27,7 @@ class Templates extends \Object\Form\Wrapper\Base {
 			'p8_template_name' => ['order' => 200],
 		],
 		'tabs' => [
-			'questions' => ['order' => 200, 'label_name' => 'Questions'],
+			'general' => ['order' => 100, 'label_name' => 'General'],
 		]
 	];
 	public $elements = [
@@ -46,6 +46,20 @@ class Templates extends \Object\Form\Wrapper\Base {
 				'p8_template_version_p8_template_id' => ['label_name' => 'Version Template #', 'domain' => 'template_id', 'null' => true, 'method' => 'hidden'],
 				'p8_template_version_code' => ['label_name' => 'Version Code', 'domain' => 'version_code', 'null' => true, 'method' => 'hidden'],
 				'p8_template_version_name' => ['label_name' => 'Version Name', 'domain' => 'name', 'null' => true, 'method' => 'hidden'],
+				'p8_template_version_headers' => ['label_name' => 'Version Headers', 'type' => 'json', 'null' => true, 'method' => 'hidden'],
+			]
+		],
+		'tabs' => [
+			'general' => [
+				'general' => ['container' => 'general_container', 'order' => 100],
+			]
+		],
+		'general_container' => [
+			'p8_template_print_format' => [
+				'p8_template_print_format' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Print Format', 'domain' => 'code', 'null' => true, 'required' => true, 'percent' => 20, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Formats::options'],
+				'p8_template_print_orientation' => ['order' => 2, 'label_name' => 'Print Orientation', 'domain' => 'print_orientation', 'null' => true, 'required' => true, 'percent' => 20, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Orientations::options'],
+				'p8_template_font_family' => ['order' => 3, 'label_name' => 'Print Font', 'domain' => 'code', 'null' => true, 'required' => true, 'percent' => 40, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Fonts::options'],
+				'p8_template_font_size' => ['order' => 4, 'label_name' => 'Font Size', 'domain' => 'font_size', 'null' => true, 'required' => true, 'percent' => 20],
 			]
 		],
 		'buttons' => [

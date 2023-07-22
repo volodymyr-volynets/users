@@ -49,12 +49,16 @@ class Menu extends \Object\DataSource {
 			'order' => 'a.sm_resource_menu_order',
 			'separator' => 'a.sm_resource_menu_separator',
 			'name_generator' => 'a.sm_resource_menu_name_generator',
-			'class' => 'a.sm_resource_menu_class'
+			'class' => 'a.sm_resource_menu_class',
+			'template' => 'a.sm_resource_template_name',
+			'badge' => 'a.sm_resource_badge'
 		]);
 		// where
 		$this->query->where('AND', ['a.sm_resource_type', '>=', 200]);
 		$this->query->where('AND', ['a.sm_resource_type', '<', 300]);
 		$this->query->where('AND', ['a.sm_resource_inactive', '=', 0]);
+		// template
+		$this->query->where('AND', ['a.sm_resource_template_name', '=', \Application::get('application.template.name') ?? 'default']);
 		// orderby
 		$this->query->orderby(['a.sm_resource_type' => SORT_DESC, 'a.sm_resource_menu_order' => SORT_ASC]);
 	}

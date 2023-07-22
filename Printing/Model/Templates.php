@@ -19,11 +19,16 @@ class Templates extends \Object\Table {
 		'p8_template_code' => ['name' => 'Code', 'domain' => 'group_code'],
 		'p8_template_templtype_id' => ['name' => 'Type', 'domain' => 'type_id'],
 		'p8_template_name' => ['name' => 'Name', 'domain' => 'name'],
+		'p8_template_print_orientation' => ['name' => 'Orientation', 'domain' => 'print_orientation', 'null' => true],
+		'p8_template_print_format' => ['name' => 'Format', 'domain' => 'print_format', 'null' => true],
+		'p8_template_font_family' => ['name' => 'Font Family', 'domain' => 'font_family', 'null' => true],
+		'p8_template_font_size' => ['name' => 'Font Size', 'domain' => 'font_size'],
 		// version
 		'p8_template_versioned' => ['name' => 'Versioned', 'type' => 'boolean'],
 		'p8_template_version_p8_template_id' => ['name' => 'Version Template #', 'domain' => 'template_id', 'null' => true],
 		'p8_template_version_code' => ['name' => 'Version Code', 'domain' => 'version_code', 'null' => true],
 		'p8_template_version_name' => ['name' => 'Version Name', 'domain' => 'name', 'null' => true],
+		'p8_template_version_headers' => ['name' => 'Version Headers', 'type' => 'json', 'null' => true],
 		// other fields
 		'p8_template_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];

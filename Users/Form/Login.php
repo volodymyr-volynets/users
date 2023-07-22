@@ -49,7 +49,8 @@ class Login extends \Object\Form\Wrapper\Base {
 				\Request::redirect($url);
 			}
 			// redirect to dashboard
-			\Request::redirect('/Numbers/Users/Users/Controller/Helper/Dashboard');
+			$url = \Request::buildFromName('U/M Welcome Dashboard', 'Index');
+			\Request::redirect($url);
 			$form->error('success', 'You have successfully signed in!');
 			return true;
 		} else {

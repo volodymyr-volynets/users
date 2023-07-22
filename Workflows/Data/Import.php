@@ -1,6 +1,6 @@
 <?php
 
-namespace Numbers\Users\Printing\Data;
+namespace Numbers\Users\Workflows\Data;
 class Import extends \Object\Import {
 	public $data = [
 		'modules' => [
@@ -11,11 +11,11 @@ class Import extends \Object\Import {
 			],
 			'data' => [
 				[
-					'sm_module_code' => 'P8',
+					'sm_module_code' => 'W9',
 					'sm_module_type' => 20,
-					'sm_module_name' => 'P/8 Printing',
-					'sm_module_abbreviation' => 'P/8',
-					'sm_module_icon' => 'fas fa-print',
+					'sm_module_name' => 'W/9 Workflows',
+					'sm_module_abbreviation' => 'W/9',
+					'sm_module_icon' => 'far fa-square',
 					'sm_module_transactions' => 1,
 					'sm_module_multiple' => 0,
 					'sm_module_activation_model' => null,
@@ -33,11 +33,11 @@ class Import extends \Object\Import {
 			],
 			'data' => [
 				[
-					'sm_feature_module_code' => 'P8',
-					'sm_feature_code' => 'P8::PRINTING',
+					'sm_feature_module_code' => 'W9',
+					'sm_feature_code' => 'W9::WORKFLOWS',
 					'sm_feature_type' => 10,
-					'sm_feature_name' => 'P/8 Printing',
-					'sm_feature_icon' => 'fas fa-print',
+					'sm_feature_name' => 'W/9 Workflows',
+					'sm_feature_icon' => 'far fa-square',
 					'sm_feature_activation_model' => null,
 					'sm_feature_activated_by_default' => 1,
 					'sm_feature_inactive' => 0,

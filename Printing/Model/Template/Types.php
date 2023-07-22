@@ -16,6 +16,7 @@ class Types extends \Object\Table {
 		'p8_templtype_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'p8_templtype_id' => ['name' => 'Type #', 'domain' => 'type_id'],
 		'p8_templtype_name' => ['name' => 'Name', 'domain' => 'name'],
+		'p8_templtype_collection_model' => ['name' => 'Collection Model', 'domain' => 'code', 'null' => true],
 		'p8_templtype_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
 	];
 	public $constraints = [

@@ -3,6 +3,11 @@
 namespace Numbers\Users\Users\Controller;
 class Login extends \Object\Controller\Public2 {
 	public function actionIndex() {
+		if (\User::authorized()) {
+			$url = \Request::buildFromName('U/M Welcome Dashboard', 'Index');
+			\Request::redirect($url);
+		}
+		// login
 		$input = \Request::input();
 		if (!empty($input['email_token'])) {
 			$crypt = new \Crypt();
