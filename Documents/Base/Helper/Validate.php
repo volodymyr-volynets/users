@@ -19,6 +19,7 @@ class Validate {
 		'audio' => ['mp3', 'wav'],
 		'archives' => ['zip', 'gz'],
 		'csv' => ['csv'],
+		'pdf' => ['pdf'],
 	];
 
 	/**

@@ -70,9 +70,18 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base {
 		// move uploaded file
 		$extension = pathinfo($file['name'], PATHINFO_EXTENSION);
 		$destination = $dir . $file['file_id'] . '.' . $extension;
-		if (!move_uploaded_file($file['tmp_name'], $this->options['dir'] . $destination)) {
-			$result['error'][] = 'Could not move uploaded file!';
-			return $result;
+		// uploaded file we move
+		if (empty($file['flag_system_generated'])) {
+			if (!move_uploaded_file($file['tmp_name'], $this->options['dir'] . $destination)) {
+				$result['error'][] = 'Could not move uploaded file!';
+				return $result;
+			}
+		} else {
+			// system generated file we copy
+			if (!rename($file['tmp_name'], $this->options['dir'] . $destination)) {
+				$result['error'][] = 'Could not rename uploaded file!';
+				return $result;
+			}
 		}
 		$result['success'] = true;
 		$result['path'] = $destination;

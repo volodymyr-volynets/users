@@ -114,10 +114,10 @@ class Sender {
 			], $template);
 			$bytea = true;
 			if (method_exists($form, 'attachments')) {
-				$attachments = $form->attachments();
+				$attachments = $form->attachments($form->form_object);
 			}
 			if (method_exists($form, 'cc')) {
-				$cc = $form->cc();
+				$cc = $form->cc($form->form_object);
 			}
 		} else if (!empty($options['calendar_invite'])) {
 			if (!empty($options['calendar_invite']['original_date'])) {
