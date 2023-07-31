@@ -27,8 +27,17 @@ class Customers extends \Object\Form\Wrapper\Base {
 			'type' => 'details',
 			'details_rendering_type' => 'table',
 			'details_new_rows' => 1,
-			'details_key' => '\Numbers\Users\Organizations\Model\Customer\IntegrationMappings',
+			'details_key' => \Numbers\Users\Organizations\Model\Customer\IntegrationMappings::class,
 			'details_pk' => ['on_custintegmap_integtype_code', 'on_custintegmap_code'],
+			'order' => 35001,
+		],
+		'signing_officers_container' => [
+			'type' => 'details',
+			'details_rendering_type' => 'grid_with_label',
+			'details_new_rows' => 1,
+			'details_key' => \Numbers\Users\Organizations\Model\Customer\SigningOfficers::class,
+			'details_pk' => ['on_custsignofficer_id'],
+			'details_autoincrement' => ['on_custsignofficer_id'],
 			'order' => 35001,
 		],
 	];
@@ -42,6 +51,7 @@ class Customers extends \Object\Form\Wrapper\Base {
 			'logo' => ['order' => 300, 'label_name' => 'About'],
 			'operating' => ['order' => 350, 'label_name' => 'Operations', 'acl_subresource_hide' => ['ON::CUS_OPERATING']],
 			'integration' => ['order' => 400, 'label_name' => 'Integration'],
+			'signing_officers' => ['order' => 500, 'label_name' => 'Officers'],
 			\Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA  + ['acl_subresource_hide' => ['ON::CUS_ADDRESSES']],
 			\Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA  + ['acl_subresource_hide' => ['ON::CUS_ATTRIBUTES']],
 		]
@@ -69,6 +79,9 @@ class Customers extends \Object\Form\Wrapper\Base {
 			],
 			'integration' => [
 				'integration' => ['container' => 'integration_mappings_container', 'order' => 100],
+			],
+			'signing_officers' => [
+				'signing_officers' => ['container' => 'signing_officers_container', 'order' => 100],
 			]
 		],
 		'general_container' => [
@@ -135,24 +148,75 @@ class Customers extends \Object\Form\Wrapper\Base {
 				'on_custintegmap_default' => ['order' => 2, 'label_name' => 'Default', 'type' => 'boolean', 'percent' => 5],
 			]
 		],
+		'signing_officers_container' => [
+			'row1' => [
+				'on_custsignofficer_custsigntype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'type_code', 'null' => true, 'required' => true, 'percent' => 15, 'method' => 'select', 'options_model' => \Numbers\Users\Organizations\Model\Customer\SigningTypes::class, 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+				'on_custsignofficer_um_user_id' => ['order' => 2, 'label_name' => 'User', 'domain' => 'user_id', 'null' => true, 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\UsersWithPhoto::optionsActive', 'options_depends' => ['selected_organizations' => 'parent::on_customer_organization_id'], 'onchange' => 'this.form.submit();'],
+				'on_custsignofficer_name' => ['order' => 3, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'required' => true, 'percent' => 45],
+				'on_custsignofficer_primary' => ['order' => 4, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 10],
+				'on_custsignofficer_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+			],
+			'row2' => [
+				'on_custsignofficer_title' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Title', 'domain' => 'name', 'null' => true, 'required' => true, 'percent' => 40],
+				'on_custsignofficer_email' => ['order' => 2, 'label_name' => 'Email', 'domain' => 'email', 'null' => true, 'required' => true, 'percent' => 30],
+				'on_custsignofficer_cell' => ['order' => 3, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'required' => true, 'percent' => 30],
+			],
+			self::HIDDEN => [
+				'on_custsignofficer_id' => ['label_name' => 'Detail #', 'domain' => 'detail_id', 'null' => true, 'method' => 'hidden'],
+			]
+		],
 		'buttons' => [
 			self::BUTTONS => self::BUTTONS_DATA_GROUP
 		]
 	];
 	public $collection = [
-		'name' => 'Customers',
+		'name' => 'ON Customers',
 		'model' => '\Numbers\Users\Organizations\Model\Customers',
 		'details' => [
-			'\Numbers\Users\Organizations\Model\Customer\IntegrationMappings' => [
-				'name' => 'Integration Mappings',
+			\Numbers\Users\Organizations\Model\Customer\IntegrationMappings::class => [
+				'name' => 'ON Customer Integration Mappings',
 				'pk' => ['on_custintegmap_tenant_id', 'on_custintegmap_customer_id', 'on_custintegmap_integtype_code', 'on_custintegmap_code'],
 				'type' => '1M',
 				'map' => ['on_customer_tenant_id' => 'on_custintegmap_tenant_id', 'on_customer_id' => 'on_custintegmap_customer_id']
 			],
+			\Numbers\Users\Organizations\Model\Customer\SigningOfficers::class => [
+				'name' => 'ON Customer Signing Officers',
+				'pk' => ['on_custsignofficer_tenant_id', 'on_custsignofficer_customer_id', 'on_custsignofficer_id'],
+				'type' => '1M',
+				'map' => ['on_customer_tenant_id' => 'on_custsignofficer_tenant_id', 'on_customer_id' => 'on_custsignofficer_customer_id']
+			]
 		]
 	];
 
-	public function validate(& $form) {
+	public function refresh(\Object\Form\Base & $form) {
+		// if we preset user in officers.
+		if ($form->changed_field === 'on_custsignofficer_um_user_id') {
+			$form->setDetailValues($form->changed_detail, [], function($values) use ($form) {
+				if (!empty($values['on_custsignofficer_um_user_id'])) {
+					$user = \Numbers\Users\Users\Model\Users::getStatic([
+						'where' => [
+							'um_user_id' => $values['on_custsignofficer_um_user_id']
+						],
+						'pk' => null,
+						'single_row' => true,
+					]);
+					return [
+						'on_custsignofficer_name' => $user['um_user_name'],
+						'on_custsignofficer_email' => $user['um_user_email'],
+						'on_custsignofficer_cell' => $user['um_user_cell']
+					];
+				} else {
+					return [
+						'on_custsignofficer_name' => null,
+						'on_custsignofficer_email' => null,
+						'on_custsignofficer_cell' => null
+					];
+				}
+			});
+		}
+	}
+
+	public function validate(\Object\Form\Base & $form) {
 		// primary address
 		if (!$form->hasErrors()) {
 			if (empty($form->values['\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses'])) {
@@ -167,6 +231,21 @@ class Customers extends \Object\Form\Wrapper\Base {
 					'wg_address_type_code',
 					$primary_first_key
 				);
+			}
+			// primary officer
+			if (count($form->values[\Numbers\Users\Organizations\Model\Customer\SigningOfficers::class]) > 0) {
+				$primary_first_key = null;
+				$primary_officer_id = $form->validateDetailsPrimaryColumn(
+					\Numbers\Users\Organizations\Model\Customer\SigningOfficers::class,
+					'on_custsignofficer_primary',
+					'on_custsignofficer_inactive',
+					'on_custsignofficer_id',
+					$primary_first_key
+				);
+				if ($primary_first_key && $form->values[\Numbers\Users\Organizations\Model\Customer\SigningOfficers::class][$primary_first_key]['on_custsignofficer_custsigntype_code'] == 'WITNESS') {
+					$form->error(DANGER, \Object\Content\Messages::INVALID_VALUES, \Numbers\Users\Organizations\Model\Customer\SigningOfficers::class . "[" . $primary_first_key . "][on_custsignofficer_custsigntype_code]");
+					$form->error(DANGER, \Object\Content\Messages::INVALID_VALUES, \Numbers\Users\Organizations\Model\Customer\SigningOfficers::class . "[" . $primary_first_key . "][on_custsignofficer_primary]");
+				}
 			}
 		}
 		// logo

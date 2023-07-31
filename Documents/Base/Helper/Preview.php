@@ -96,8 +96,8 @@ class Preview {
 		];
 		$model = new \Numbers\Users\Documents\Base\Base();
 		if (!empty($options['save_in_temp'])) {
-			$model = new \Numbers\Users\Documents\Base\Model\Files();
-			$file_data = $model->get([
+			$model_files = new \Numbers\Users\Documents\Base\Model\Files();
+			$file_data = $model_files->get([
 				'where' => [
 					'dt_file_id' => $file_id,
 				],
@@ -105,7 +105,9 @@ class Preview {
 				'cache_memory' => true,
 			]);
 			$result['tmp_path'] = tempnam(sys_get_temp_dir(), 'NAIMG') . '.' . $file_data[0]['dt_file_extension'];
+			$result['data'] = $model->download($file_id, ['return' => true, 'include_metadata' => true]);
 			file_put_contents($result['tmp_path'], $result['data']);
+			\Helper\File::chmod($result['tmp_path'], 0777);
 		} else {
 			$result['data'] = $model->download($file_id, ['return' => true, 'include_metadata' => true]);
 		}

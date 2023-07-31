@@ -14,9 +14,11 @@ class Files extends \Object\Validator\Base {
 		}
 		$model = new \Numbers\Users\Documents\Base\Helper\Validate();
 		// if we have multiple files
-		if (!isset($value['tmp_name'])) {
+		if (!array_key_exists('tmp_name', $value)) {
 			foreach ($value as $v) {
-				if (empty($v['tmp_name'])) continue;
+				if (!array_key_exists('tmp_name', $v)) {
+					continue;
+				}
 				$upload_result = $model->validateUploadedFile($v, $options['types'] ?? []);
 				if (!$upload_result['success']) {
 					$result['error'][] = $upload_result['error'];
