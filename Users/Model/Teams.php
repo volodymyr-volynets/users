@@ -15,6 +15,7 @@ class Teams extends \Object\Table {
 	public $columns = [
 		'um_team_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_team_id' => ['name' => 'Team #', 'domain' => 'team_id_sequence'],
+		'um_team_code' => ['name' => 'Code', 'domain' => 'group_code', 'null' => true],
 		'um_team_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_team_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
 		'um_team_weight' => ['name' => 'Weight', 'domain' => 'weight', 'null' => true], // based on this field priorities would be set
@@ -22,6 +23,7 @@ class Teams extends \Object\Table {
 	];
 	public $constraints = [
 		'um_user_teams_pk' => ['type' => 'pk', 'columns' => ['um_team_tenant_id', 'um_team_id']],
+		'um_team_code_un' => ['type' => 'unique', 'columns' => ['um_team_tenant_id', 'um_team_code']],
 	];
 	public $indexes = [
 		'um_user_teams_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['um_team_name']]

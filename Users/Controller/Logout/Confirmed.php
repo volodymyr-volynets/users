@@ -1,7 +1,7 @@
 <?php
 
 namespace Numbers\Users\Users\Controller\Logout;
-class Confirmed extends \Object\Controller {
+class Confirmed extends \Object\Controller\Public2 {
 	public $title = 'Sign Out';
 	public $icon = 'fas fa-sign-out-alt';
 	public function actionIndex() {

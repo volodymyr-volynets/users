@@ -45,7 +45,8 @@ class Locations extends \Object\Form\Wrapper\List2 {
 				'on_location_customer_id1' => ['order' => 2] + \Numbers\Users\Organizations\Helper\Filter::F_CUSTOMER_ID + ['query_builder' => 'a.on_location_customer_id;='],
 			],
 			'full_text_search' => [
-				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_location_name', 'a.on_location_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+				'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.on_location_name', 'a.on_location_code', 'a.on_location_number'], 'placeholder' => true, 'domain' => 'name', 'percent' => 50, 'null' => true],
+				'full_text_search2' => ['order' => 2, 'label_name' => 'Address Search', 'placeholder' => 'Address Search', 'domain' => 'name', 'percent' => 50, 'null' => true],
 			]
 		],
 		'sort' => [
@@ -67,6 +68,12 @@ class Locations extends \Object\Form\Wrapper\List2 {
 				'on_location_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations'],
 				'on_location_brand_id' => ['order' => 3, 'label_name' => 'Brand', 'domain' => 'brand_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Organizations\Model\Brands'],
 				'on_location_item_master_id' => ['order' => 4, 'label_name' => 'Item Master', 'domain' => 'item_master_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Organizations\Model\ItemMasters'],
+			],
+			'row3' => [
+				'__blank2' => ['order' => 1, 'row_order' => 300, 'label_name' => '', 'percent' => 10],
+				'on_location_customer_id' => ['order' => 2, 'label_name' => 'Customer', 'domain' => 'customer_id', 'percent' => 30, 'options_model' => '\Numbers\Users\Organizations\Model\Customers'],
+				'on_location_number' => ['order' => 3, 'label_name' => 'Location Number', 'domain' => 'location_number', 'percent' => 30],
+				'on_location_address' => ['order' => 4, 'label_name' => 'Location Address', 'type' => 'string', 'percent' => 30],
 			]
 		]
 	];
@@ -84,4 +91,23 @@ class Locations extends \Object\Form\Wrapper\List2 {
 		'on_location_code' => ['name' => 'Code'],
 		'on_location_name' => ['name' => 'Name']
 	];
+
+	public function listQuery(& $form) {
+		/* @var $form->query \Object\Query\Builder */
+		$model = new \Numbers\Users\Organizations\Model\Locations();
+		$form->query->join('LEFT', \Factory::model($model->addresses_model), 'addresses_b', 'ON', [
+			['AND', ['a.on_location_id', '=', 'addresses_b.wg_address_location_id', true], false],
+			['AND', ['addresses_b.wg_address_primary', '=', 1]]
+		]);
+		$form->query->columns([
+			'a.*',
+			'on_location_address' => "concat_ws(', ', addresses_b.wg_address_address1, addresses_b.wg_address_address2, addresses_b.wg_address_city, addresses_b.wg_address_province_code, addresses_b.wg_address_country_code, addresses_b.wg_address_postal_code)"
+		]);
+		if (!empty($form->values['full_text_search2'])) {
+			$form->query->where('AND', $form->query->db_object->prepareCondition(['address_search;FTS' => [
+				'fields' => ['wg_address_address1', 'wg_address_address2', 'wg_address_city', 'wg_address_province_code', 'wg_address_country_code', 'wg_address_postal_code'],
+				'str' => $form->values['full_text_search2']
+			]]));
+		}
+	}
 }

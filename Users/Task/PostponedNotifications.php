@@ -30,8 +30,10 @@ class PostponedNotifications extends \Numbers\Users\TaskScheduler\Abstract2\Task
 		$same_messages = [];
 		foreach ($message_result as $k => $v) {
 			$hash = sha1($v['um_notpostmess_method'] . serialize($v['um_notpostmess_params']));
-			if(empty($same_messages[$hash])) {
+			if (empty($same_messages[$hash])) {
+				\Log::setOriginatedId($v['um_notpostmess_sm_log_originated_id']);
 				call_user_func_array(explode('::', $v['um_notpostmess_method']), json_decode($v['um_notpostmess_params'], true));
+				\Log::setOriginatedId(null);
 				$update_result = \Numbers\Users\Users\Model\Notification\PostponedMessages::collectionStatic(['skip_acl' => true])->merge([
 					'um_notpostmess_id' => $v['um_notpostmess_id'],
 					'um_notpostmess_completed_timestamp' => \Format::now('timestamp'),

@@ -681,7 +681,7 @@ class Users extends \Object\Form\Wrapper\Base {
 
 	public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where, $neighbouring_values, $details_value) {
 		if ($field_name == 'um_usrrol_role_id') {
-			$where['selected_organizations'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id', ['unique' => true]);
+			$where['selected_organizations'] = array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'] ?? [], 'um_usrorg_organization_id', ['unique' => true]);
 		}
 	}
 
@@ -699,7 +699,7 @@ class Users extends \Object\Form\Wrapper\Base {
 
 	public function owners(& $form) {
 		return [
-			'organization_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'], 'um_usrorg_organization_id'),
+			'organization_id' => array_extract_values_by_key($form->values['\Numbers\Users\Users\Model\User\Organizations'] ?? [], 'um_usrorg_organization_id'),
 		];
 	}
 

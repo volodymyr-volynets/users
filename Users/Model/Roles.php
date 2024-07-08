@@ -74,4 +74,35 @@ class Roles extends \Object\Table {
 		'protection' => 2,
 		'scope' => 'enterprise'
 	];
+
+	/**
+	 * Owner Types relation
+	 *
+	 * @param array $data
+	 * @param array $options
+	 */
+	public function relationOwnerTypes(array & $data, array & $options) {
+		$query = \Numbers\Users\Users\Model\User\Owner\Types::queryBuilderStatic(['alias' => 'owner_types'])->select();
+		$query->columns([
+			'owner_types.*',
+			'owner_type_map.*',
+		]);
+		$query->join('INNER', new \Numbers\Users\Users\Model\User\Owner\Type\Roles(), 'owner_type_map', 'ON', [
+			['AND', ['owner_type_map.um_ownertprole_tenant_id', '=', 'owner_types.um_ownertype_tenant_id', true], false],
+			['AND', ['owner_type_map.um_ownertprole_ownertype_id', '=', 'owner_types.um_ownertype_id', true], false],
+		]);
+		$query->where('AND', ['owner_type_map.um_ownertprole_role_id', 'IN', array_column_unique($data, 'um_role_id')]);
+		$result = $query->query();
+		// pk and map
+		pk(['um_ownertprole_role_id', 'um_ownertprole_ownertype_id'], $result['rows']);
+		foreach ($data as $k => $v) {
+			foreach ($result['rows'] as $k2 => $v2) {
+				if ($k2 == $v['um_role_id']) {
+					foreach ($v2 as $k3 => $v3) {
+						$data[$k][$options['relation_key']][$k3] = $v3;
+					}
+				}
+			}
+		}
+	}
 }

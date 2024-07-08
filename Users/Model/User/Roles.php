@@ -60,4 +60,20 @@ class Roles extends \Object\Table {
 		'protection' => 2,
 		'scope' => 'enterprise'
 	];
+
+	/**
+	 * Join user roles
+	 */
+	public function pivotUsersRoles(\Object\Query\Builder & $query, string $name, array $columns, array $options = [], array $values = []) {
+		$alias = strtolower($name);
+		$query->pivot('INNER', new static(), $alias, 'ON', [
+			['AND', [$alias . '.um_usrrol_tenant_id', '=', $options['alias'] . '.um_role_tenant_id', true], false],
+			['AND', [$alias . '.um_usrrol_role_id', '=', $options['alias'] . '.um_role_id', true], false],
+		], $name, $columns);
+		if ($values !== null) {
+			foreach ($values as $k => $v) {
+				$query->where('AND', [$alias . '.' . $k, 'IN', $v]);
+			}
+		}
+	}
 }

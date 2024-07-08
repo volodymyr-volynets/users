@@ -1,0 +1,31 @@
+.numbers_a3_api_rows {
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .19);
+    margin: 0 0 5px;
+}
+.numbers_a3_api_row_get {
+    background: rgba(97, 175, 254, .1);
+    border-color: #61affe;
+}
+.numbers_a3_api_row_post {
+    background: rgba(73, 204, 144, .1);
+    border-color: #49cc90;
+}
+.numbers_a3_api_methods {
+    background: black;
+    border-radius: 3px;
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 80px;
+    margin: 6px 0;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+}
+.numbers_a3_api_method_get {
+    background: blue;
+}
+.numbers_a3_api_method_post {
+    background: #49cc90;
+}
