@@ -38,7 +38,8 @@ class Controllers extends \Object\DataSource {
 			'acl_public' => 'a.sm_resource_acl_public',
 			'acl_authorized' => 'a.sm_resource_acl_authorized',
 			'acl_permission' => 'a.sm_resource_acl_permission',
-			'missing_features' => 'COALESCE(d.missing_features, 0)'
+			'missing_features' => 'COALESCE(d.missing_features, 0)',
+			'api_methods' => 'e.api_methods',
 		]);
 		// join
 		$this->query->join('LEFT', new \Numbers\Backend\System\Modules\Model\Modules(), 'b', 'ON', [
@@ -74,6 +75,18 @@ class Controllers extends \Object\DataSource {
 		}, 'd', 'ON', [
 			['AND', ['a.sm_resource_id', '=', 'd.resource_id', true], false]
 		]);
+		// api methods
+		$this->query->join('LEFT', function (& $query) {
+			$query = \Numbers\Backend\System\Modules\Model\Resource\APIMethods::queryBuilderStatic(['alias' => 'inner_api'])->select();
+			$query->columns([
+				'resource_id' => 'inner_api.sm_rsrcapimeth_resource_id',
+				'api_methods' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_api.sm_rsrcapimeth_method_code, inner_api.sm_rsrcapimeth_method_name)", 'delimiter' => ';;'])
+			]);
+			$query->where('AND', ['inner_api.sm_rsrcapimeth_inactive', '=', 0]);
+			$query->groupby(['resource_id']);
+		}, 'e', 'ON', [
+			['AND', ['a.sm_resource_id', '=', 'e.resource_id', true], false]
+		]);
 		// where
 		if (empty($parameters['sm_resource_type'])) {
 			$parameters['sm_resource_type'] = [100, 150];
@@ -104,6 +117,14 @@ class Controllers extends \Object\DataSource {
 				foreach ($actions as $v2) {
 					$temp = explode('::', $v2);
 					$data[$k]['actions'][$temp[0]][(int) $temp[1]] = $temp[2];
+				}
+			}
+			$data[$k]['api_methods'] = [];
+			if (!empty($v['api_methods'])) {
+				$api_methods = explode(';;', $v['api_methods']);
+				foreach ($api_methods as $v2) {
+					$temp = explode('::', $v2);
+					$data[$k]['api_methods'][$temp[0]] = $temp[1];
 				}
 			}
 			// unset codes

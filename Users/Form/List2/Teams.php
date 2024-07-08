@@ -54,8 +54,9 @@ class Teams extends \Object\Form\Wrapper\List2 {
 		self::LIST_CONTAINER => [
 			'row1' => [
 				'um_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team #', 'domain' => 'team_id', 'percent' => 10, 'url_edit' => true],
-				'um_team_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 85],
-				'um_team_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+				'um_team_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 65],
+				'um_team_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 20],
+				'um_team_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
 			]
 		]
 	];

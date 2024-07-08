@@ -21,7 +21,8 @@ class PostponedMessages extends \Object\Table {
 		'um_notpostmess_params' => ['name' => 'Params', 'type' => 'json', 'null' => true],
 		'um_notpostmess_completed_timestamp' => ['name' => 'Timestamp Completed', 'type' => 'timestamp', 'null' => true],
 		'um_notpostmess_last_timestamp' => ['name' => 'Last Timestamp', 'type' => 'timestamp', 'null' => true],
-		'um_notpostmess_last_message' => ['name' => 'Last Message', 'type' => 'text', 'null' => true]
+		'um_notpostmess_last_message' => ['name' => 'Last Message', 'type' => 'text', 'null' => true],
+		'um_notpostmess_sm_log_originated_id' => ['name' => 'Log Originated #', 'domain' => 'uuid', 'null' => true],
 	];
 	public $constraints = [
 		'um_notification_postponed_messages_pk' => ['type' => 'pk', 'columns' => ['um_notpostmess_tenant_id', 'um_notpostmess_id']],

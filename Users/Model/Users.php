@@ -17,7 +17,7 @@ class Users extends \Object\Table {
 		'um_user_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'um_user_id' => ['name' => 'User #', 'domain' => 'user_id_sequence'],
 		'um_user_code' => ['name' => 'User Number', 'domain' => 'group_code', 'null' => true],
-		'um_user_type_id' => ['name' => 'Type', 'domain' => 'type_id'],
+		'um_user_type_id' => ['name' => 'Type', 'domain' => 'type_id', 'options_model' => \Numbers\Users\Users\Model\User\Types::class],
 		'um_user_name' => ['name' => 'Name', 'domain' => 'name'],
 		'um_user_company' => ['name' => 'Company', 'domain' => 'name', 'null' => true],
 		// personal information
@@ -50,6 +50,17 @@ class Users extends \Object\Table {
 		// inactive & hold
 		'um_user_hold' => ['name' => 'Hold', 'type' => 'boolean'],
 		'um_user_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
+	];
+	public $column_settings = [
+		'um_user_login_password' => [PASSWORDABLE],
+		'um_user_name_assembled' => [GENERABLE, 'concat' => [' ', 'um_user_title', 'um_user_first_name', 'um_user_last_name'], READ_ONLY],
+		'um_user_login_username' => [READ_IF_SET],
+		'um_user_email' => [GENERABLE, 'method' => 'generatableUmUserEmail'],
+		'um_user_hold' => [CASTABLE, 'php_type' => 'bool'],
+		'um_user_inactive' => [CASTABLE, 'php_type' => 'bool'],
+		'um_user_login_enabled' => [CASTABLE, 'php_type' => 'bool'],
+		'um_user_login_last_set' => [FORMATABLE, 'format' => 'date', 'options' => ['format' => 'm/d/Y']],
+		'um_user_phone' => [FORMATABLE, 'format' => '\Object\Validator\Phone::format', 'options' => ['locale' => 'm/d/Y']],
 	];
 	public $constraints = [
 		'um_users_pk' => ['type' => 'pk', 'columns' => ['um_user_tenant_id', 'um_user_id']],
@@ -172,22 +183,28 @@ class Users extends \Object\Table {
 			return self::$cached_users_with_avatar[$user_id];
 		} else {
 			$result = '';
-			$user = \Numbers\Users\Users\Model\Users::loadById($user_id);
+			$user = \Numbers\Users\Users\Model\Users::loadByIdStatic($user_id);
+			if (empty($user)) {
+				return 'Unkown (Not Found)';
+			}
 			if (!empty($user['um_user_photo_file_id'])) {
 				$result.= \HTML::img(['src' => \Numbers\Users\Documents\Base\Base::generateURL($user['um_user_photo_file_id'], true, ''), 'class' => 'navbar-menu-item-avatar-img', 'alt' => 'Avatar', 'width' => 25, 'height' => 25]) . ' ';
 			}
 			$result.= $user['um_user_name'];
+			if ($user['um_user_inactive'] == 1) {
+				$result.= ' ' . \Object\Content\Messages::INFO_INACTIVE;
+			}
 			self::$cached_users_with_avatar[$user_id] = $result;
 			return $result;
 		}
 	}
 
 	/**
-	 * Get username with avatar
+	 * Get username
 	 *
 	 * @param int $user_id
 	 * @param array $options
-	 *	boolean include_id
+	 *		boolean include_id
 	 * @return string
 	 */
 	public static function getUsername(?int $user_id, array $options = []) : string {
@@ -197,10 +214,16 @@ class Users extends \Object\Table {
 		if (isset(self::$cached_users[$user_id])) {
 			return self::$cached_users[$user_id];
 		} else {
-			$user = \Numbers\Users\Users\Model\Users::loadById($user_id);
+			$user = \Numbers\Users\Users\Model\Users::loadByIdStatic($user_id);
+			if (empty($user)) {
+				return 'Unkown (Not Found)';
+			}
 			$result = $user[$options['column'] ?? 'um_user_name'];
 			if (empty($result)) {
 				$result = $user['um_user_name'];
+			}
+			if ($user['um_user_inactive'] == 1) {
+				$result.= ' ' . \Object\Content\Messages::INFO_INACTIVE;
 			}
 			// if we need to include id
 			if (!empty($options['include_id'])) {
@@ -208,6 +231,86 @@ class Users extends \Object\Table {
 			}
 			self::$cached_users[$user_id] = $result;
 			return $result;
+		}
+	}
+
+	/**
+	 * Roles relation
+	 *
+	 * @param array $data
+	 * @param array $options
+	 */
+	public function relationUsersRoles(array & $data, array $options) {
+		\Numbers\Users\Users\Model\Roles::queryAssemblerStatic($data, $options)
+			->pivot([new \Numbers\Users\Users\Model\User\Roles(), 'pivotUsersRolesMap'], 'PivotUsersRolesMap', null, $options, [
+				'um_usrrol_user_id' => array_column_unique($data, 'um_user_id'),
+			])
+			->query()
+			->pk(['um_usrrol_user_id', 'um_usrrol_role_id'])
+			->assign();
+			//->assign(function($v, $k) use ($data, $options) {
+			//	$data[$k][$options['relation_key']] = $v;
+			//});
+	}
+
+	/**
+	 * Teams relation
+	 *
+	 * @param array $data
+	 * @param array $options
+	 */
+	public function relationTeams(array & $data, array & $options) {
+		
+	}
+
+	/**
+	 * Groups relation
+	 *
+	 * @param array $data
+	 * @param array $options
+	 */
+	public function relationGroups(array & $data, array & $options) {
+		
+	}
+
+	/**
+	 * Organizations relation
+	 *
+	 * @param array $data
+	 * @param array $options
+	 */
+	public function relationOrganizations(array & $data, array & $options) {
+
+	}
+
+	/**
+	 * Scope active
+	 *
+	 * @param \Object\Query\Builder & $query
+	 * @param array $options
+	 */
+	public function scopeActiveGlobal(\Object\Query\Builder & $query, array $options = []) {
+		$query->where('AND', ['um_user_inactive', '=', 0]);
+	}
+
+	/**
+	 * Scope inactive
+	 *
+	 * @param \Object\Query\Builder & $query
+	 * @param array $options
+	 */
+	public function scopeInactive(\Object\Query\Builder & $query, array $options = []) {
+		$query->where('AND', ['um_user_inactive', '=', 1]);
+	}
+
+	/**
+	 * @param UsersAR $object
+	 */
+	public function generatableUmUserEmail(UsersAR & $object) {
+		if (str_starts_with($object->um_user_email ?? '', 'duplicate_')) {
+			$temp = explode('_', $object->um_user_email);
+			unset($temp[0], $temp[1]);
+			$object->um_user_email = implode('_', $temp);
 		}
 	}
 }

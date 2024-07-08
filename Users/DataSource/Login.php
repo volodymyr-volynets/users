@@ -53,13 +53,17 @@ class Login extends \Object\DataSource {
 			// roles
 			'roles' => 'b.roles',
 			'role_ids' => 'b.role_ids',
+			'role_names' => 'b.role_names',
 			'permissions' => 'f.permissions',
 			'organizations' => 'c.organizations',
 			'organization_countries' => 'c.organization_countries',
 			'super_admin' => 'b.super_admin',
 			'maximum_role_weight' => 'b.maximum_role_weight',
 			'linked_accounts' => 'g.linked_accounts',
+			// teams
 			'teams' => 'h.teams',
+			'team_codes' => 'h.team_codes',
+			'team_names' => 'h.team_names',
 			'features' => 'j.features',
 			'notifications' => 'm.notifications',
 			'subresources' => 'k.subresources',
@@ -93,6 +97,7 @@ class Login extends \Object\DataSource {
 				'inner_a.um_usrrol_user_id',
 				'roles' => $query->db_object->sqlHelper('string_agg', ['expression' => "inner_b.um_role_code", 'delimiter' => ';;']),
 				'role_ids' => $query->db_object->sqlHelper('string_agg', ['expression' => $query->db_object->cast('inner_b.um_role_id', 'varchar'), 'delimiter' => ';;']),
+				'role_names' => $query->db_object->sqlHelper('string_agg', ['expression' => "inner_b.um_role_name", 'delimiter' => ';;']),
 				'super_admin' => 'SUM(inner_b.um_role_super_admin)',
 				'maximum_role_weight' => 'MAX(inner_b.um_role_weight)'
 			]);
@@ -161,7 +166,13 @@ class Login extends \Object\DataSource {
 			$query = \Numbers\Users\Users\Model\Team\Map::queryBuilderStatic(['alias' => 'inner_h'])->select();
 			$query->columns([
 				'inner_h.um_usrtmmap_user_id',
-				'teams' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_h.um_usrtmmap_team_id)", 'delimiter' => ';;'])
+				'teams' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_h.um_usrtmmap_team_id)", 'delimiter' => ';;']),
+				'team_codes' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_h_team.um_team_code)", 'delimiter' => ';;']),
+				'team_names' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_h_team.um_team_name)", 'delimiter' => ';;']),
+			]);
+			// join
+			$query->join('INNER', new \Numbers\Users\Users\Model\Teams(), 'inner_h_team', 'ON', [
+				['AND', ['inner_h.um_usrtmmap_team_id', '=', 'inner_h_team.um_team_id', true], false]
 			]);
 			$query->where('AND', ['inner_h.um_usrtmmap_inactive', '=', 0]);
 			$query->groupby(['inner_h.um_usrtmmap_user_id']);
@@ -278,6 +289,11 @@ class Login extends \Object\DataSource {
 			} else {
 				$data[$k]['role_ids'] = [];
 			}
+			if (!empty($v['role_names'])) {
+				$data[$k]['role_names'] = explode(';;', $v['role_names']);
+			} else {
+				$data[$k]['role_names'] = [];
+			}
 			// teams
 			if (!empty($v['teams'])) {
 				$data[$k]['teams'] = explode(';;', $v['teams']);
@@ -286,6 +302,16 @@ class Login extends \Object\DataSource {
 				}
 			} else {
 				$data[$k]['teams'] = [];
+			}
+			if (!empty($v['team_names'])) {
+				$data[$k]['team_names'] = explode(';;', $v['team_names']);
+			} else {
+				$data[$k]['team_names'] = [];
+			}
+			if (!empty($v['team_codes'])) {
+				$data[$k]['team_codes'] = explode(';;', $v['team_codes']);
+			} else {
+				$data[$k]['team_codes'] = [];
 			}
 			// organizations
 			if (!empty($v['organizations'])) {

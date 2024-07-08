@@ -88,7 +88,7 @@ class Locations extends \Object\Table {
 		]
 	];
 	public $indexes = [
-		'on_locations_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['on_location_code', 'on_location_name', 'on_location_phone', 'on_location_email']],
+		'on_locations_fulltext_idx' => ['type' => 'fulltext', 'columns' => ['on_location_code', 'on_location_name', 'on_location_number', 'on_location_phone', 'on_location_email']],
 	];
 	public $history = false;
 	public $audit = [

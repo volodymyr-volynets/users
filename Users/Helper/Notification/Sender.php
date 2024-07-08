@@ -51,6 +51,7 @@ class Sender {
 	 */
 	public static function notifySingleUser(string $notification_code, int $user_id, string $email = '', array $options = []) : array {
 		// cache notification
+		$notification_name = 'Direct Notification';
 		if (!empty($options['subject'])) {
 			self::$cached_notifications[$notification_code]['sm_notification_subject'] = $options['subject'];
 			self::$cached_notifications[$notification_code]['sm_notification_body'] = $options['body'] ?? '';
@@ -66,6 +67,7 @@ class Sender {
 			$query->where('AND', ['a.sm_feature_code', '=', $notification_code]);
 			$data = $query->query();
 			self::$cached_notifications[$notification_code] = $data['rows'][0] ?? false;
+			$notification_name = $data['rows'][0]['sm_feature_name'] ?? '';
 		}
 		// return if no notification found
 		if (empty(self::$cached_notifications[$notification_code])) return ['success' => false, 'error' => ['Notification not found!']];
@@ -73,7 +75,7 @@ class Sender {
 		if (empty($user_id) && empty($email)) return ['success' => false, 'error' => ['You must provide email or user #!']];
 		// preload email from user
 		if (!empty($user_id)) {
-			$user = \Numbers\Users\Users\Model\Users::loadById($user_id);
+			$user = \Numbers\Users\Users\Model\Users::loadByIdStatic($user_id);
 			if (empty($email)) {
 				$email = $user['um_user_email'];
 			}
@@ -150,7 +152,7 @@ class Sender {
 			$bytea = false;
 		}
 		// log notification
-		self::$notification_log[] = [
+		$notificatio_data = [
 			'notification_code' => $notification_code,
 			'user_id' => $user_id,
 			'email' => $email,
@@ -161,15 +163,22 @@ class Sender {
 			'from_name' => $options['from_name'] ?? $from['data']['name'] ?? null,
 			'important' => self::$cached_notifications[$notification_code]['sm_notification_important']
 		];
+		self::$notification_log[] = $notificatio_data;
+		$notificatio_data['body'] = substr(trim(strip_tags($notificatio_data['body'])), 0, 250);
 		if (!empty($email)) {
 			$send_options = [
 				'to' => $email,
 				'subject' => $subject,
 				'message' => $body,
-				'important' => self::$cached_notifications[$notification_code]['sm_notification_important'],
+				'important' => self::$cached_notifications[$notification_code]['sm_notification_important'] ?? false,
 				'calendar_invite' => !empty($calendar_invite),
 				'calendar_message' => $body,
 				'attachments' => $attachments,
+				// other fields
+				'user_id' => $user_id,
+				'notification_code' => $notification_code,
+				'notification_name' => $notification_name,
+				'notification_data' => $notificatio_data
 			];
 			if (!empty($cc)) {
 				$send_options['cc'] = $cc;
