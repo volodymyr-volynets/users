@@ -39,7 +39,7 @@ class Controllers extends \Object\DataSource {
 			'acl_authorized' => 'a.sm_resource_acl_authorized',
 			'acl_permission' => 'a.sm_resource_acl_permission',
 			'missing_features' => 'COALESCE(d.missing_features, 0)',
-			'template' => 'a.sm_resource_template_name'
+			'template' => 'a.sm_resource_template_name',
 			'api_methods' => 'e.api_methods',
 		]);
 		// join
@@ -88,6 +88,13 @@ class Controllers extends \Object\DataSource {
 		}, 'e', 'ON', [
 			['AND', ['a.sm_resource_id', '=', 'e.resource_id', true], false]
 		]);
+		// tenant
+		$tenant_code = strtoupper(\Application::get('application.structure.settings.tenant.code') ?? 'DEFAULT');
+		$this->query->join('LEFT', new \Numbers\Backend\System\Modules\Model\Resource\Tenants(), 'e', 'ON', [
+			['AND', ['a.sm_resource_id', '=', 'e.sm_rsrctenant_resource_id', true], false],
+			['AND', ['e.sm_rsrctenant_tenant_code', '=', $tenant_code], false],
+			['AND', ['e.sm_rsrctenant_inactive', '=', 0], false],
+		]);
 		// where
 		if (empty($parameters['sm_resource_type'])) {
 			$parameters['sm_resource_type'] = [100, 150];
@@ -98,6 +105,11 @@ class Controllers extends \Object\DataSource {
 				$this->query->where('AND', ["a.{$k}", '=', $v]);
 			}
 		}
+		// requires tenants
+		$this->query->where('AND', function (& $query) {
+			$query->where('OR', ['a.sm_resource_requires_tenants', '=', 0]);
+			$query->where('OR', ['e.sm_rsrctenant_tenant_code', 'IS NOT', null]);
+		});
 		// limit by activated modules
 		$this->query->where('AND', function (& $query) {
 			$query->where('OR', ['a.sm_resource_module_code', 'IN', ['SM', 'TM']]);

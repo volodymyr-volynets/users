@@ -31,7 +31,7 @@ class CronDaemon extends \Object\Controller {
 			}
 		} else {
 			$model = new \Numbers\Users\TaskScheduler\Helper\ProcessJobs();
-			$result = $model->process($form->form_object->values);
+			$result = $model->process($form->form_object->values + ['__preserve_tenant_host' => $input['__preserve_tenant_host'] ?? false]);
 			if ($is_cli) {
 				\Layout::renderAs($result, 'application/json');
 			} else {

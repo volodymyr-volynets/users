@@ -29,7 +29,7 @@ class Catalogs extends \Object\Form\Wrapper\Base {
 				'dt_catalog_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
 			],
 			'dt_catalog_storage_id' => [
-				'dt_catalog_storage_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Storage', 'domain' => 'type_id', 'persistent' => 'if_set', 'required' => true, 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Documents\Base\Model\Storages'],
+				'dt_catalog_dt_amzprofile_id' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Amazon Profile', 'domain' => 'profile_id', 'null' => true, 'persistent' => 'if_set', 'required' => true, 'method' => 'select', 'options_model' => \Numbers\Users\Documents\Drivers\Amazon\Model\Profiles::class],
 				'dt_catalog_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'persistent' => 'if_set', 'required' => true, 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],
 			],
 			'dt_catalog_readonly' => [
@@ -44,7 +44,7 @@ class Catalogs extends \Object\Form\Wrapper\Base {
 		]
 	];
 	public $collection = [
-		'name' => 'Catalogs',
+		'name' => 'DT Catalogs',
 		'model' => '\Numbers\Users\Documents\Base\Model\Catalogs'
 	];
 

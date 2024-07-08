@@ -20,6 +20,7 @@ class Validate {
 		'archives' => ['zip', 'gz'],
 		'csv' => ['csv'],
 		'pdf' => ['pdf'],
+		'txt' => ['txt'],
 	];
 
 	/**

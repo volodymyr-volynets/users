@@ -32,7 +32,7 @@ class MassUpload {
 				'single_row' => true
 			]);
 		} else {
-			$catalog = $upload_model->fetchPrimaryCatalog(\User::get('organization_id'));
+			$catalog = $upload_model->fetchPrimaryCatalog(\User::get('organization_id') ?? \Registry::get('websites.OpenAccess.on_organization_id'));
 		}
 		if (empty($catalog)) {
 			$form->error(DANGER, \Numbers\Users\Documents\Base\Helper\Messages::NO_PRIMARY_CATALOG);
@@ -75,7 +75,7 @@ class MassUpload {
 	}
 
 	/**
-	 * Upload one file
+	 * Upload one file in form
 	 *
 	 * @param object $form
 	 * @param array $file
@@ -96,6 +96,26 @@ class MassUpload {
 			return;
 		}
 		$form->values[$field] = $result['file_id'];
+	}
+
+	/**
+	 * Upload one file
+	 *
+	 * @param array $file
+	 * @param array $validator_params
+	 * @return array
+	 *	success
+	 *	error
+	 *	file_id
+	 */
+	public static function uploadOneFile($file, array $validator_params = []) : array {
+		$upload_model = new \Numbers\Users\Documents\Base\Base();
+		$catalog = $upload_model->fetchPrimaryCatalog(\User::get('organization_id'));
+		if (empty($catalog)) {
+			return ['success' => false, 'error' => [\Numbers\Users\Documents\Base\Helper\Messages::NO_PRIMARY_CATALOG]];
+		}
+		$file['__image_properties'] = $validator_params;
+		return $upload_model->upload($file, $catalog);
 	}
 
 	/**

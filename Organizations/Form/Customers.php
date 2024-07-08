@@ -219,19 +219,6 @@ class Customers extends \Object\Form\Wrapper\Base {
 	public function validate(\Object\Form\Base & $form) {
 		// primary address
 		if (!$form->hasErrors()) {
-			if (empty($form->values['\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses'])) {
-				//$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, '\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses[1][wg_address_type_code]');
-			} else {
-				// primary address
-				$primary_first_key = null;
-				$primary_address_type = $form->validateDetailsPrimaryColumn(
-					'\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses',
-					'wg_address_primary',
-					'wg_address_inactive',
-					'wg_address_type_code',
-					$primary_first_key
-				);
-			}
 			// primary officer
 			if (count($form->values[\Numbers\Users\Organizations\Model\Customer\SigningOfficers::class]) > 0) {
 				$primary_first_key = null;
@@ -246,6 +233,23 @@ class Customers extends \Object\Form\Wrapper\Base {
 					$form->error(DANGER, \Object\Content\Messages::INVALID_VALUES, \Numbers\Users\Organizations\Model\Customer\SigningOfficers::class . "[" . $primary_first_key . "][on_custsignofficer_custsigntype_code]");
 					$form->error(DANGER, \Object\Content\Messages::INVALID_VALUES, \Numbers\Users\Organizations\Model\Customer\SigningOfficers::class . "[" . $primary_first_key . "][on_custsignofficer_primary]");
 				}
+				if (empty($form->values['\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses'])) {
+					$form->error(DANGER, \Object\Content\Messages::REQUIRED_FIELD, '\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses[1][wg_address_type_code]');
+				}
+				// phone and email are mandatory fields
+				$form->validateQuikRequired('on_customer_phone');
+				$form->validateQuikRequired('on_customer_email');
+			}
+			if (!empty($form->values['\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses'])) {
+				// primary address
+				$primary_first_key = null;
+				$primary_address_type = $form->validateDetailsPrimaryColumn(
+					'\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses',
+					'wg_address_primary',
+					'wg_address_inactive',
+					'wg_address_type_code',
+					$primary_first_key
+				);
 			}
 		}
 		// logo

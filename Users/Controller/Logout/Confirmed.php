@@ -10,7 +10,7 @@ class Confirmed extends \Object\Controller\Public2 {
 				i18n(null, 'Congratulations! You have successfully signed out.'),
 				i18n(null, 'You can now sign in into your account. [signin].', [
 					'replace' => [
-						'[signin]' => \HTML::a(['href' => \Request::host(['mvc' => '/Numbers/Users/Users/Controller/Login']), 'value' => i18n(null, 'Sign In')])
+						'[signin]' => \HTML::a(['href' => \Request::host(['mvc' => '/Default/Numbers/Users/Users/Controller/Login']), 'value' => i18n(null, 'Sign In')])
 					]
 				])
 			]

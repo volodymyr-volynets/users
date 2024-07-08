@@ -38,9 +38,23 @@ class Base {
 		$file['file_id'] = $file_save_model->sequence('dt_file_id', 'nextval', \Tenant::id());
 		// load storage
 		$storages = \Numbers\Users\Documents\Base\Model\Storages::getStatic();
-		$storage = $storages[$catalog['dt_catalog_storage_id']];
-		$class = $storage['submodule'];
-		$file_upload_model = new $class($storage);
+		$storage_id = 100;
+		if (!empty($catalog['dt_catalog_dt_amzprofile_id'])) {
+			$storage_id = 200;
+			$storage = $storages[$storage_id];
+			$class = $storage['submodule'];
+			$profile = \Numbers\Users\Documents\Drivers\Amazon\Model\Profiles::getSingleStatic([
+				'where' => [
+					'dt_amzprofile_id' => $catalog['dt_catalog_dt_amzprofile_id']
+				]
+			]);
+			array_key_prefix_and_suffix($profile, 'dt_amzprofile_', '', true);
+			$file_upload_model = new $class($profile);
+		} else {
+			$storage = $storages[$storage_id];
+			$class = $storage['submodule'];
+			$file_upload_model = new $class($storage);
+		}
 		// if we need to rescale
 		if (!empty($file['__image_properties']['image_rescale'])) {
 			$newdim = explode('x', $file['__image_properties']['image_rescale']);
@@ -62,7 +76,8 @@ class Base {
 		// create database record
 		$save = [
 			'dt_file_id' => $file['file_id'],
-			'dt_file_storage_id' => $catalog['dt_catalog_storage_id'],
+			'dt_file_storage_id' => $storage_id,
+			'dt_file_dt_amzprofile_id' => $catalog['dt_catalog_dt_amzprofile_id'] ?? null,
 			'dt_file_catalog_code' => $catalog['dt_catalog_code'],
 			'dt_file_organization_id' => $catalog['dt_catalog_organization_id'],
 			'dt_file_name' => $file['name'],
@@ -108,8 +123,21 @@ class Base {
 		// delete in driver
 		$storages = \Numbers\Users\Documents\Base\Model\Storages::getStatic();
 		$storage = $storages[$file_data['dt_file_storage_id']];
-		$class = $storage['submodule'];
-		$file_upload_model = new $class($storage);
+		if (!empty($file_data['dt_file_dt_amzprofile_id'])) {
+			$storage = $storages[$storage_id];
+			$class = $storage['submodule'];
+			$profile = \Numbers\Users\Documents\Drivers\Amazon\Model\Profiles::getSingleStatic([
+				'where' => [
+					'dt_amzprofile_id' => $file_data['dt_file_dt_amzprofile_id']
+				]
+			]);
+			array_key_prefix_and_suffix($profile, 'dt_amzprofile_', '', true);
+			$file_upload_model = new $class($profile);
+		} else {
+			$storage = $storages[$storage_id];
+			$class = $storage['submodule'];
+			$file_upload_model = new $class($storage);
+		}
 		$file_upload_result = $file_upload_model->delete($file_data);
 		if (!$file_upload_result['success']) {
 			$result['error'] = array_merge($result['error'], $file_upload_result['error']);
@@ -147,8 +175,22 @@ class Base {
 		// delete in driver
 		$storages = \Numbers\Users\Documents\Base\Model\Storages::getStatic();
 		$storage = $storages[$file_data[0]['dt_file_storage_id']];
-		$class = $storage['submodule'];
-		$file_upload_model = new $class($storage);
+		$storage_id = $file_data[0]['dt_file_storage_id'];
+		if (!empty($file_data[0]['dt_file_dt_amzprofile_id'])) {
+			$storage = $storages[$storage_id];
+			$class = $storage['submodule'];
+			$profile = \Numbers\Users\Documents\Drivers\Amazon\Model\Profiles::getSingleStatic([
+				'where' => [
+					'dt_amzprofile_id' => $file_data[0]['dt_file_dt_amzprofile_id']
+				]
+			]);
+			array_key_prefix_and_suffix($profile, 'dt_amzprofile_', '', true);
+			$file_upload_model = new $class($profile);
+		} else {
+			$storage = $storages[$storage_id];
+			$class = $storage['submodule'];
+			$file_upload_model = new $class($storage);
+		}
 		return $file_upload_model->download($file_data[0], $options);
 	}
 
