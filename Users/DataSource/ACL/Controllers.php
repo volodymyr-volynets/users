@@ -75,6 +75,12 @@ class Controllers extends \Object\DataSource {
 		}, 'd', 'ON', [
 			['AND', ['a.sm_resource_id', '=', 'd.resource_id', true], false]
 		]);
+		$tenant_code = strtoupper(\Application::get('application.structure.settings.tenant.code') ?? 'DEFAULT');
+		$this->query->join('LEFT', new \Numbers\Backend\System\Modules\Model\Resource\Tenants(), 'e', 'ON', [
+			['AND', ['a.sm_resource_id', '=', 'e.sm_rsrctenant_resource_id', true], false],
+			['AND', ['e.sm_rsrctenant_tenant_code', '=', $tenant_code], false],
+			['AND', ['e.sm_rsrctenant_inactive', '=', 0], false]
+		]);
 		// where
 		if (empty($parameters['sm_resource_type'])) {
 			$parameters['sm_resource_type'] = [100, 150];
@@ -85,6 +91,11 @@ class Controllers extends \Object\DataSource {
 				$this->query->where('AND', ["a.{$k}", '=', $v]);
 			}
 		}
+		// requires tenants
+		$this->query->where('AND', function (& $query) {
+			$query->where('OR', ['a.sm_resource_requires_tenants', '=', 0]);
+			$query->where('OR', ['e.sm_rsrctenant_tenant_code', 'IS NOT', null]);
+		});
 		// limit by activated modules
 		$this->query->where('AND', function (& $query) {
 			$query->where('OR', ['a.sm_resource_module_code', 'IN', ['SM', 'TM']]);

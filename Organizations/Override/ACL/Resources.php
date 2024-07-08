@@ -6,6 +6,9 @@ class Resources {
 		'layout' => [
 			'logo' => [
 				'method' => '\Numbers\Users\Organizations\Helper\Logo::getURL'
+			],
+			'name' => [
+				'method' => '\Numbers\Users\Organizations\Helper\Logo::getName'
 			]
 		],
 		'postlogin_dashboard' => [

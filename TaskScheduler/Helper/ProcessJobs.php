@@ -82,7 +82,12 @@ class ProcessJobs {
 				// if we inserted
 				if ($executed_jobs_result['success']) {
 					$crypt_model = new \Crypt();
-					$url = \Request::tenantHost('system') . 'Numbers/Users/TaskScheduler/Controller/External/SingleCronJob?__token=' . $crypt_model->tokenCreate($executed_jobs_result['new_pk']['ts_execjb_tenant_id'], $v['ts_job_user_id'], $executed_jobs_result['new_pk']['ts_execjb_id']);
+					if ($parameters['__preserve_tenant_host']) {
+						$host = \Request::host();
+					} else {
+						$host = \Request::tenantHost('system');
+					}
+					$url = $host . 'Numbers/Users/TaskScheduler/Controller/External/SingleCronJob?__token=' . $crypt_model->tokenCreate($executed_jobs_result['new_pk']['ts_execjb_tenant_id'], $v['ts_job_user_id'], $executed_jobs_result['new_pk']['ts_execjb_id']);
 					$executed_jobs_threads[] = [
 						'tenant_id' => $executed_jobs_result['new_pk']['ts_execjb_tenant_id'],
 						'executed_job_id' => $executed_jobs_result['new_pk']['ts_execjb_id'],

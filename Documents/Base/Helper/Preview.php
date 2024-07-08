@@ -58,8 +58,6 @@ class Preview {
 		for ($i = 1; $i <= $options['options']['documents_render_links']['max_files']; $i++) {
 			if (!empty($neighbouring_values[$options['options']['documents_render_links']['prefix'] . $i])) {
 				$files[]= $neighbouring_values[$options['options']['documents_render_links']['prefix'] . $i];
-			} else {
-				break;
 			}
 		}
 		if (!empty($files)) {

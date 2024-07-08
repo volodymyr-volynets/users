@@ -18,7 +18,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'List_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Users'
+				'url' => '/Default/Numbers/Users/Users/Controller/Users'
 			],
 			2 => [
 				'icon' => 'fas fa-arrow-right'
@@ -31,7 +31,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Edit',
 					'action_id' => 'Record_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Users/_Edit?__submit_blank=1'
+				'url' => '/Default/Numbers/Users/Users/Controller/Users/_Edit?__submit_blank=1'
 			],
 			4 => [
 				'name' => '&nbsp;'
@@ -50,7 +50,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'List_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Groups'
+				'url' => '/Default/Numbers/Users/Users/Controller/Groups'
 			],
 			8 => [
 				'name' => 'Roles',
@@ -60,7 +60,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'List_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Roles'
+				'url' => '/Default/Numbers/Users/Users/Controller/Roles'
 			],
 			9 => [
 				'name' => 'Titles',
@@ -70,7 +70,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'List_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Titles'
+				'url' => '/Default/Numbers/Users/Users/Controller/Titles'
 			],
 			10 => [
 				'name' => 'Teams',
@@ -80,7 +80,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'List_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Teams'
+				'url' => '/Default/Numbers/Users/Users/Controller/Teams'
 			],
 			11 => [
 				'name' => 'Assignment Types',
@@ -90,7 +90,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'List_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Assignment/Types'
+				'url' => '/Default/Numbers/Users/Users/Controller/Assignment/Types'
 			],
 			12 => [
 				'name' => 'Owner Types',
@@ -100,7 +100,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'List_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Owner/Types'
+				'url' => '/Default/Numbers/Users/Users/Controller/Owner/Types'
 			],
 		],
 		2 => [
@@ -120,7 +120,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'Report_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Report/Security/OrganizationAccessReport'
+				'url' => '/Default/Numbers/Users/Users/Controller/Report/Security/OrganizationAccessReport'
 			],
 			3 => [
 				'name' => 'Resource Setup Report',
@@ -130,7 +130,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'Report_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Report/Security/ResourceSetupReport'
+				'url' => '/Default/Numbers/Users/Users/Controller/Report/Security/ResourceSetupReport'
 			],
 			4 => [
 				'name' => 'Role Setup Report',
@@ -140,7 +140,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'Report_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Report/Security/RoleSetupReport'
+				'url' => '/Default/Numbers/Users/Users/Controller/Report/Security/RoleSetupReport'
 			],
 			5 => [
 				'name' => 'Team Setup Report',
@@ -150,7 +150,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'Report_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Report/Security/TeamSetupReport'
+				'url' => '/Default/Numbers/Users/Users/Controller/Report/Security/TeamSetupReport'
 			],
 			6 => [
 				'name' => 'User Setup Report',
@@ -160,7 +160,7 @@ class Dashboard extends \Numbers\Users\Users\Helper\Dashboard\Builder {
 					'method_code' => 'Index',
 					'action_id' => 'Report_View'
 				],
-				'url' => '/Numbers/Users/Users/Controller/Report/Security/UserSetupReport'
+				'url' => '/Default/Numbers/Users/Users/Controller/Report/Security/UserSetupReport'
 			],
 		]
 	];

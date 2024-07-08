@@ -32,7 +32,7 @@ class Authorize {
 			$days = \Application::get('crypt.default.password_valid_days');
 			if ($diff > (int) $days) {
 				$_SESSION['numbers']['force']['password_reset'] = [
-					'controller' => '/Numbers/Users/Users/Controller/Account/Profile/_ChangePassword',
+					'controller' => '/Default/Numbers/Users/Users/Controller/Account/Profile/_ChangePassword',
 					'message' => i18n(null, 'You must change your password every [number_of_days] days!', [
 						'replace' => [
 							'[number_of_days]' => \Format::id($days)

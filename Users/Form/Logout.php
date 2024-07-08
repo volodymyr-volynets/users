@@ -32,7 +32,7 @@ class Logout extends \Object\Form\Wrapper\Base {
 
 	public function save(& $form) {
 		\Numbers\Users\Users\Model\User\Authorize::signOut();
-		\Request::redirect('/Numbers/Users/Users/Controller/Logout/Confirmed');
+		\Request::redirect('/Default/Numbers/Users/Users/Controller/Logout/Confirmed');
 		return true;
 	}
 }

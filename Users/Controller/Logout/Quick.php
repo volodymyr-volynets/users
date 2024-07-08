@@ -6,6 +6,6 @@ class Quick extends \Object\Controller {
 	public $icon = 'fas fa-sign-out-alt';
 	public function actionIndex() {
 		\Numbers\Users\Users\Model\User\Authorize::signOut();
-		\Request::redirect('/Numbers/Users/Users/Controller/Logout/Confirmed');
+		\Request::redirect('/Default/Numbers/Users/Users/Controller/Logout/Confirmed');
 	}
 }

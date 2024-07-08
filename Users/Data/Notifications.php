@@ -32,6 +32,16 @@ class Notifications extends \Object\Import {
 				],
 				[
 					'sm_feature_module_code' => 'UM',
+					'sm_feature_code' => 'UM::EMAIL_TENANT_CONFIRMATION2',
+					'sm_feature_type' => 21,
+					'sm_feature_name' => 'U/M Email Tenant Confirmation (Email)',
+					'sm_feature_icon' => 'far fa-envelope',
+					'sm_feature_activated_by_default' => 1,
+					'sm_feature_activation_model' => null,
+					'sm_feature_inactive' => 0
+				],
+				[
+					'sm_feature_module_code' => 'UM',
 					'sm_feature_code' => 'UM::EMAIL_RESET_PASSWORD',
 					'sm_feature_type' => 21,
 					'sm_feature_name' => 'U/M Email Reset Password',
@@ -84,6 +94,15 @@ Please do not reply to this email.
 
 Thank you!',
 					'sm_notification_important' => 1,
+					'sm_notification_inactive' => 0
+				],
+				[
+					'sm_notification_code' => 'UM::EMAIL_TENANT_CONFIRMATION2',
+					'sm_notification_name' => 'U/M Email Tenant Confirmation (Emails)',
+					'sm_notification_subject' => 'Tenant Registration Confirmation',
+					'sm_notification_body' => '',
+					'sm_notification_important' => 1,
+					'sm_notification_email_model_code' => '\Numbers\Users\Users\Email\TenantConfirmEmail',
 					'sm_notification_inactive' => 0
 				],
 				[

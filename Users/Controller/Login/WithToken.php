@@ -15,7 +15,7 @@ class WithToken extends \Object\Controller {
 		if (\User::authorized()) {
 			\Numbers\Users\Users\Model\User\Authorize::signOut();
 		}
-		\Request::redirect(\Request::host() . 'Numbers/Users/Users/Controller/Login/WithToken/_Login?token=' . $token);
+		\Request::redirect(\Request::host() . 'Default/Numbers/Users/Users/Controller/Login/WithToken/_Login?token=' . $token);
 	}
 	public function actionLogin() {
 		if (\User::authorized()) {

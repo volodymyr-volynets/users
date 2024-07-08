@@ -35,8 +35,8 @@ class Sender {
 	 * Notify single user
 	 *
 	 * @param string $notification_code
-	 * @param int $user_id
-	 *		0 - no user
+	 * @param int|null $user_id
+	 *		0|null - no user
 	 * @param string $email
 	 * @param array $options
 	 *		replace
@@ -49,7 +49,7 @@ class Sender {
 	 *		from_name
 	 * @return array
 	 */
-	public static function notifySingleUser(string $notification_code, int $user_id, string $email = '', array $options = []) : array {
+	public static function notifySingleUser(string $notification_code, ?int $user_id, string $email = '', array $options = []) : array {
 		// cache notification
 		if (!empty($options['subject'])) {
 			self::$cached_notifications[$notification_code]['sm_notification_subject'] = $options['subject'];

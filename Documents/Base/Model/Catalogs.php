@@ -15,7 +15,7 @@ class Catalogs extends \Object\Table {
 	public $columns = [
 		'dt_catalog_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'dt_catalog_code' => ['name' => 'Code', 'domain' => 'group_code'],
-		'dt_catalog_storage_id' => ['name' => 'Storage #', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Documents\Base\Model\Storages'],
+		'dt_catalog_dt_amzprofile_id' => ['name' => 'Amazon Profile #', 'domain' => 'profile_id', 'null' => true],
 		'dt_catalog_name' => ['name' => 'Name', 'domain' => 'name'],
 		'dt_catalog_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'dt_catalog_readonly' => ['name' => 'Readonly', 'type' => 'boolean'], // cannot delete after upload

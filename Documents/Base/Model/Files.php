@@ -16,6 +16,7 @@ class Files extends \Object\Table {
 		'dt_file_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
 		'dt_file_id' => ['name' => 'File #', 'domain' => 'file_id_sequence'],
 		'dt_file_storage_id' => ['name' => 'Storage #', 'domain' => 'type_id', 'options_model' => \Numbers\Users\Documents\Base\Model\Storages::class],
+		'dt_file_dt_amzprofile_id' => ['name' => 'Amazon Profile #', 'domain' => 'profile_id', 'null' => true],
 		'dt_file_catalog_code' => ['name' => 'Catalog Code', 'domain' => 'group_code'],
 		'dt_file_organization_id' => ['name' => 'Organization #', 'domain' => 'organization_id'],
 		'dt_file_name' => ['name' => 'File Name', 'domain' => 'file_name'],

@@ -15,5 +15,6 @@ class Types extends \Object\Data {
 		'SERVICE_LOC' => ['on_loctype_name' => 'Service Location'],
 		'CONSTRUCTION' => ['on_loctype_name' => 'Construction Site'],
 		'MAINTENANCE' => ['on_loctype_name' => 'Maintenance'],
+		'OPERATING' => ['on_loctype_name' => 'Operating Location'],
 	];
 }

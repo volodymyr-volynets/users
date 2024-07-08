@@ -50,7 +50,7 @@ class Import extends \Object\Import {
 					'sm_feature_name' => 'O/N Locations',
 					'sm_feature_icon' => 'fas fa-warehouse',
 					'sm_feature_activation_model' => null,
-					'sm_feature_activated_by_default' => 0,
+					'sm_feature_activated_by_default' => 1,
 					'sm_feature_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Module\Dependencies' => []
 				],
@@ -61,7 +61,7 @@ class Import extends \Object\Import {
 					'sm_feature_name' => 'O/N Territories',
 					'sm_feature_icon' => 'fas fa-home',
 					'sm_feature_activation_model' => null,
-					'sm_feature_activated_by_default' => 0,
+					'sm_feature_activated_by_default' => 1,
 					'sm_feature_inactive' => 0,
 					'\Numbers\Backend\System\Modules\Model\Module\Dependencies' => []
 				],
