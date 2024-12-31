@@ -1,0 +1,11 @@
+{
+    "BodyID": "Body #",
+    "Link": "Link",
+    "Message": "Message",
+    "TenantID": "Tenant #",
+    "Text": "Text",
+    "Timestamp": "Timestamp",
+    "UID": "UID",
+    "WGEmailIngestionBodies": "W/G Email Ingestion Bodies",
+    "WGEmailIngestionLocks": "W/G Email Ingestion Locks"
+}

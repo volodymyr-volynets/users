@@ -1,10 +1,25 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Controller\Helper;
-class Miniboard extends \Object\Controller\Authorized {
-	public function actionIndex() {
-		$model = new \Numbers\Users\Users\Helper\Dashboard\Dashboard();
-		$model->acl();
-		echo $model->render();
-	}
+
+use Numbers\Users\Users\Helper\Dashboard\Dashboard;
+use Object\Controller\Authorized;
+
+class Miniboard extends Authorized
+{
+    public function actionIndex()
+    {
+        $model = new Dashboard();
+        $model->acl();
+        echo $model->render();
+    }
 }

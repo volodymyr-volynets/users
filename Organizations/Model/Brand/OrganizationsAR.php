@@ -2,86 +2,117 @@
 
 namespace Numbers\Users\Organizations\Model\Brand;
 class OrganizationsAR extends \Object\ActiveRecord {
-	/**
-	 * @var string
-	 */
-	public string $object_table_class = \Numbers\Users\Organizations\Model\Brand\Organizations::class;
 
-	/**
-	 * Constructing object
-	 *
-	 * @param array $options
-	 *		skip_db_object
-	 *		skip_table_object
-	 */
-	public function __construct($options = []) {
-		if (empty($options['skip_table_object'])) {
-			$this->object_table_object = new $this->object_table_class($options);
-		}
-	}
-	/**
-	 * Tenant #
-	 *
-	 *
-	 *
-	 * {domain{tenant_id}}
-	 *
-	 * @var int Domain: tenant_id Type: integer
-	 */
-	public ?int $on_brndorg_tenant_id = NULL;
 
-	/**
-	 * Timestamp
-	 *
-	 *
-	 *
-	 * {domain{timestamp_now}}
-	 *
-	 * @var string Domain: timestamp_now Type: timestamp
-	 */
-	public ?string $on_brndorg_timestamp = 'now()';
 
-	/**
-	 * Brand #
-	 *
-	 *
-	 *
-	 * {domain{brand_id}}
-	 *
-	 * @var int Domain: brand_id Type: integer
-	 */
-	public ?int $on_brndorg_brand_id = NULL;
+    /**
+     * @var string
+     */
+    public string $object_table_class = \Numbers\Users\Organizations\Model\Brand\Organizations::class;
 
-	/**
-	 * Organization #
-	 *
-	 *
-	 *
-	 * {domain{organization_id}}
-	 *
-	 * @var int Domain: organization_id Type: integer
-	 */
-	public ?int $on_brndorg_organization_id = NULL;
+    /**
+     * @var array
+     */
+    public array $object_table_pk = ['on_brndorg_tenant_id','on_brndorg_brand_id','on_brndorg_organization_id'];
+    /**
+     * Tenant #
+     *
+     *
+     *
+     * {domain{tenant_id}}
+     *
+     * @var int|null Domain: tenant_id Type: integer
+     */
+    public int|null $on_brndorg_tenant_id = NULL {
+                        get => $this->on_brndorg_tenant_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_brndorg_tenant_id', $value);
+                            $this->on_brndorg_tenant_id = $value;
+                        }
+                    }
 
-	/**
-	 * Primary
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var int Type: boolean
-	 */
-	public ?int $on_brndorg_primary = 0;
+    /**
+     * Timestamp
+     *
+     *
+     *
+     * {domain{timestamp_now}}
+     *
+     * @var string|null Domain: timestamp_now Type: timestamp
+     */
+    public string|null $on_brndorg_timestamp = 'now()' {
+                        get => $this->on_brndorg_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_brndorg_timestamp', $value);
+                            $this->on_brndorg_timestamp = $value;
+                        }
+                    }
 
-	/**
-	 * Inactive
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var int Type: boolean
-	 */
-	public ?int $on_brndorg_inactive = 0;
+    /**
+     * Brand #
+     *
+     *
+     *
+     * {domain{brand_id}}
+     *
+     * @var int|null Domain: brand_id Type: integer
+     */
+    public int|null $on_brndorg_brand_id = NULL {
+                        get => $this->on_brndorg_brand_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_brndorg_brand_id', $value);
+                            $this->on_brndorg_brand_id = $value;
+                        }
+                    }
+
+    /**
+     * Organization #
+     *
+     *
+     *
+     * {domain{organization_id}}
+     *
+     * @var int|null Domain: organization_id Type: integer
+     */
+    public int|null $on_brndorg_organization_id = NULL {
+                        get => $this->on_brndorg_organization_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_brndorg_organization_id', $value);
+                            $this->on_brndorg_organization_id = $value;
+                        }
+                    }
+
+    /**
+     * Primary
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $on_brndorg_primary = 0 {
+                        get => $this->on_brndorg_primary;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_brndorg_primary', $value);
+                            $this->on_brndorg_primary = $value;
+                        }
+                    }
+
+    /**
+     * Inactive
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $on_brndorg_inactive = 0 {
+                        get => $this->on_brndorg_inactive;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_brndorg_inactive', $value);
+                            $this->on_brndorg_inactive = $value;
+                        }
+                    }
 }

@@ -2,196 +2,287 @@
 
 namespace Numbers\Users\TaskScheduler\Model\Executed;
 class JobsAR extends \Object\ActiveRecord {
-	/**
-	 * @var string
-	 */
-	public string $object_table_class = \Numbers\Users\TaskScheduler\Model\Executed\Jobs::class;
 
-	/**
-	 * Constructing object
-	 *
-	 * @param array $options
-	 *		skip_db_object
-	 *		skip_table_object
-	 */
-	public function __construct($options = []) {
-		if (empty($options['skip_table_object'])) {
-			$this->object_table_object = new $this->object_table_class($options);
-		}
-	}
-	/**
-	 * Tenant #
-	 *
-	 *
-	 *
-	 * {domain{tenant_id}}
-	 *
-	 * @var int Domain: tenant_id Type: integer
-	 */
-	public ?int $ts_execjb_tenant_id = NULL;
 
-	/**
-	 * Executed Job #
-	 *
-	 *
-	 *
-	 * {domain{big_id_sequence}}
-	 *
-	 * @var int Domain: big_id_sequence Type: bigserial
-	 */
-	public ?int $ts_execjb_id = null;
 
-	/**
-	 * Job #
-	 *
-	 *
-	 *
-	 * {domain{group_id}}
-	 *
-	 * @var int Domain: group_id Type: integer
-	 */
-	public ?int $ts_execjb_job_id = NULL;
+    /**
+     * @var string
+     */
+    public string $object_table_class = \Numbers\Users\TaskScheduler\Model\Executed\Jobs::class;
 
-	/**
-	 * Status
-	 *
-	 *
-	 * {options_model{\Numbers\Users\TaskScheduler\Model\Executed\Statuses}}
-	 * {domain{type_id}}
-	 *
-	 * @var int Domain: type_id Type: smallint
-	 */
-	public ?int $ts_execjb_status = NULL;
+    /**
+     * @var array
+     */
+    public array $object_table_pk = ['ts_execjb_tenant_id','ts_execjb_id'];
+    /**
+     * Tenant #
+     *
+     *
+     *
+     * {domain{tenant_id}}
+     *
+     * @var int|null Domain: tenant_id Type: integer
+     */
+    public int|null $ts_execjb_tenant_id = NULL {
+                        get => $this->ts_execjb_tenant_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_tenant_id', $value);
+                            $this->ts_execjb_tenant_id = $value;
+                        }
+                    }
 
-	/**
-	 * Daemon Code
-	 *
-	 *
-	 *
-	 * {domain{type_code}}
-	 *
-	 * @var string Domain: type_code Type: varchar
-	 */
-	public ?string $ts_execjb_daemon_code = null;
+    /**
+     * Executed Job #
+     *
+     *
+     *
+     * {domain{big_id_sequence}}
+     *
+     * @var int|null Domain: big_id_sequence Type: bigserial
+     */
+    public int|null $ts_execjb_id = null {
+                        get => $this->ts_execjb_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_id', $value);
+                            $this->ts_execjb_id = $value;
+                        }
+                    }
 
-	/**
-	 * Task Code
-	 *
-	 *
-	 *
-	 * {domain{group_code}}
-	 *
-	 * @var string Domain: group_code Type: varchar
-	 */
-	public ?string $ts_execjb_task_code = null;
+    /**
+     * Job #
+     *
+     *
+     *
+     * {domain{group_id}}
+     *
+     * @var int|null Domain: group_id Type: integer
+     */
+    public int|null $ts_execjb_job_id = NULL {
+                        get => $this->ts_execjb_job_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_job_id', $value);
+                            $this->ts_execjb_job_id = $value;
+                        }
+                    }
 
-	/**
-	 * Name
-	 *
-	 *
-	 *
-	 * {domain{name}}
-	 *
-	 * @var string Domain: name Type: varchar
-	 */
-	public ?string $ts_execjb_name = null;
+    /**
+     * Status
+     *
+     *
+     * {options_model{\Numbers\Users\TaskScheduler\Model\Executed\Statuses}}
+     * {domain{type_id}}
+     *
+     * @var int|null Domain: type_id Type: smallint
+     */
+    public int|null $ts_execjb_status = NULL {
+                        get => $this->ts_execjb_status;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_status', $value);
+                            $this->ts_execjb_status = $value;
+                        }
+                    }
 
-	/**
-	 * Execution Datetime
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: timestamp
-	 */
-	public ?string $ts_execjb_datetime = null;
+    /**
+     * Daemon Code
+     *
+     *
+     *
+     * {domain{type_code}}
+     *
+     * @var string|null Domain: type_code Type: varchar
+     */
+    public string|null $ts_execjb_daemon_code = null {
+                        get => $this->ts_execjb_daemon_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_daemon_code', $value);
+                            $this->ts_execjb_daemon_code = $value;
+                        }
+                    }
 
-	/**
-	 * User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $ts_execjb_user_id = NULL;
+    /**
+     * Task Code
+     *
+     *
+     *
+     * {domain{group_code}}
+     *
+     * @var string|null Domain: group_code Type: varchar
+     */
+    public string|null $ts_execjb_task_code = null {
+                        get => $this->ts_execjb_task_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_task_code', $value);
+                            $this->ts_execjb_task_code = $value;
+                        }
+                    }
 
-	/**
-	 * Cron (Minutes)
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $ts_execjb_cron_expression = null;
+    /**
+     * Name
+     *
+     *
+     *
+     * {domain{name}}
+     *
+     * @var string|null Domain: name Type: varchar
+     */
+    public string|null $ts_execjb_name = null {
+                        get => $this->ts_execjb_name;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_name', $value);
+                            $this->ts_execjb_name = $value;
+                        }
+                    }
 
-	/**
-	 * Timezone
-	 *
-	 *
-	 *
-	 * {domain{timezone_code}}
-	 *
-	 * @var string Domain: timezone_code Type: varchar
-	 */
-	public ?string $ts_execjb_timezone_code = null;
+    /**
+     * Execution Datetime
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: timestamp
+     */
+    public string|null $ts_execjb_datetime = null {
+                        get => $this->ts_execjb_datetime;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_datetime', $value);
+                            $this->ts_execjb_datetime = $value;
+                        }
+                    }
 
-	/**
-	 * Parameters
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var mixed Type: json
-	 */
-	public ?mixed $ts_execjb_parameters = null;
+    /**
+     * User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $ts_execjb_user_id = NULL {
+                        get => $this->ts_execjb_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_user_id', $value);
+                            $this->ts_execjb_user_id = $value;
+                        }
+                    }
 
-	/**
-	 * Module #
-	 *
-	 *
-	 *
-	 * {domain{module_id}}
-	 *
-	 * @var int Domain: module_id Type: integer
-	 */
-	public ?int $ts_execjb_module_id = NULL;
+    /**
+     * Cron (Minutes)
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $ts_execjb_cron_expression = null {
+                        get => $this->ts_execjb_cron_expression;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_cron_expression', $value);
+                            $this->ts_execjb_cron_expression = $value;
+                        }
+                    }
 
-	/**
-	 * Inactive
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var int Type: boolean
-	 */
-	public ?int $ts_execjb_inactive = 0;
+    /**
+     * Timezone
+     *
+     *
+     *
+     * {domain{timezone_code}}
+     *
+     * @var string|null Domain: timezone_code Type: varchar
+     */
+    public string|null $ts_execjb_timezone_code = null {
+                        get => $this->ts_execjb_timezone_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_timezone_code', $value);
+                            $this->ts_execjb_timezone_code = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted Datetime
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: timestamp
-	 */
-	public ?string $ts_execjb_inserted_timestamp = null;
+    /**
+     * Parameters
+     *
+     *
+     *
+     *
+     *
+     * @var mixed Type: json
+     */
+    public mixed $ts_execjb_parameters = null {
+                        get => $this->ts_execjb_parameters;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_parameters', $value);
+                            $this->ts_execjb_parameters = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $ts_execjb_inserted_user_id = NULL;
+    /**
+     * Module #
+     *
+     *
+     *
+     * {domain{module_id}}
+     *
+     * @var int|null Domain: module_id Type: integer
+     */
+    public int|null $ts_execjb_module_id = NULL {
+                        get => $this->ts_execjb_module_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_module_id', $value);
+                            $this->ts_execjb_module_id = $value;
+                        }
+                    }
+
+    /**
+     * Inactive
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $ts_execjb_inactive = 0 {
+                        get => $this->ts_execjb_inactive;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_inactive', $value);
+                            $this->ts_execjb_inactive = $value;
+                        }
+                    }
+
+    /**
+     * Inserted Datetime
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: timestamp
+     */
+    public string|null $ts_execjb_inserted_timestamp = null {
+                        get => $this->ts_execjb_inserted_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_inserted_timestamp', $value);
+                            $this->ts_execjb_inserted_timestamp = $value;
+                        }
+                    }
+
+    /**
+     * Inserted User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $ts_execjb_inserted_user_id = NULL {
+                        get => $this->ts_execjb_inserted_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_execjb_inserted_user_id', $value);
+                            $this->ts_execjb_inserted_user_id = $value;
+                        }
+                    }
 }

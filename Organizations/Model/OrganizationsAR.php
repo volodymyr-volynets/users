@@ -2,317 +2,474 @@
 
 namespace Numbers\Users\Organizations\Model;
 class OrganizationsAR extends \Object\ActiveRecord {
-	/**
-	 * @var string
-	 */
-	public string $object_table_class = \Numbers\Users\Organizations\Model\Organizations::class;
 
-	/**
-	 * Constructing object
-	 *
-	 * @param array $options
-	 *		skip_db_object
-	 *		skip_table_object
-	 */
-	public function __construct($options = []) {
-		if (empty($options['skip_table_object'])) {
-			$this->object_table_object = new $this->object_table_class($options);
-		}
-	}
-	/**
-	 * Tenant #
-	 *
-	 *
-	 *
-	 * {domain{tenant_id}}
-	 *
-	 * @var int Domain: tenant_id Type: integer
-	 */
-	public ?int $on_organization_tenant_id = NULL;
 
-	/**
-	 * Organization #
-	 *
-	 *
-	 *
-	 * {domain{organization_id_sequence}}
-	 *
-	 * @var int Domain: organization_id_sequence Type: serial
-	 */
-	public ?int $on_organization_id = null;
 
-	/**
-	 * Code
-	 *
-	 *
-	 *
-	 * {domain{group_code}}
-	 *
-	 * @var string Domain: group_code Type: varchar
-	 */
-	public ?string $on_organization_code = null;
+    /**
+     * @var string
+     */
+    public string $object_table_class = \Numbers\Users\Organizations\Model\Organizations::class;
 
-	/**
-	 * Name
-	 *
-	 *
-	 *
-	 * {domain{name}}
-	 *
-	 * @var string Domain: name Type: varchar
-	 */
-	public ?string $on_organization_name = null;
+    /**
+     * @var array
+     */
+    public array $object_table_pk = ['on_organization_tenant_id','on_organization_id'];
+    /**
+     * Tenant #
+     *
+     *
+     *
+     * {domain{tenant_id}}
+     *
+     * @var int|null Domain: tenant_id Type: integer
+     */
+    public int|null $on_organization_tenant_id = NULL {
+                        get => $this->on_organization_tenant_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_tenant_id', $value);
+                            $this->on_organization_tenant_id = $value;
+                        }
+                    }
 
-	/**
-	 * Icon
-	 *
-	 *
-	 *
-	 * {domain{icon}}
-	 *
-	 * @var string Domain: icon Type: varchar
-	 */
-	public ?string $on_organization_icon = null;
+    /**
+     * Organization #
+     *
+     *
+     *
+     * {domain{organization_id_sequence}}
+     *
+     * @var int|null Domain: organization_id_sequence Type: serial
+     */
+    public int|null $on_organization_id = null {
+                        get => $this->on_organization_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_id', $value);
+                            $this->on_organization_id = $value;
+                        }
+                    }
 
-	/**
-	 * Parent Organization #
-	 *
-	 *
-	 *
-	 * {domain{organization_id}}
-	 *
-	 * @var int Domain: organization_id Type: integer
-	 */
-	public ?int $on_organization_parent_organization_id = NULL;
+    /**
+     * Code
+     *
+     *
+     *
+     * {domain{group_code}}
+     *
+     * @var string|null Domain: group_code Type: varchar
+     */
+    public string|null $on_organization_code = null {
+                        get => $this->on_organization_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_code', $value);
+                            $this->on_organization_code = $value;
+                        }
+                    }
 
-	/**
-	 * Primary Email
-	 *
-	 *
-	 *
-	 * {domain{email}}
-	 *
-	 * @var string Domain: email Type: varchar
-	 */
-	public ?string $on_organization_email = null;
+    /**
+     * Name
+     *
+     *
+     *
+     * {domain{name}}
+     *
+     * @var string|null Domain: name Type: varchar
+     */
+    public string|null $on_organization_name = null {
+                        get => $this->on_organization_name;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_name', $value);
+                            $this->on_organization_name = $value;
+                        }
+                    }
 
-	/**
-	 * Secondary Email
-	 *
-	 *
-	 *
-	 * {domain{email}}
-	 *
-	 * @var string Domain: email Type: varchar
-	 */
-	public ?string $on_organization_email2 = null;
+    /**
+     * Icon
+     *
+     *
+     *
+     * {domain{icon}}
+     *
+     * @var string|null Domain: icon Type: varchar
+     */
+    public string|null $on_organization_icon = null {
+                        get => $this->on_organization_icon;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_icon', $value);
+                            $this->on_organization_icon = $value;
+                        }
+                    }
 
-	/**
-	 * Primary Phone
-	 *
-	 *
-	 *
-	 * {domain{phone}}
-	 *
-	 * @var string Domain: phone Type: varchar
-	 */
-	public ?string $on_organization_phone = null;
+    /**
+     * Parent Organization #
+     *
+     *
+     *
+     * {domain{organization_id}}
+     *
+     * @var int|null Domain: organization_id Type: integer
+     */
+    public int|null $on_organization_parent_organization_id = NULL {
+                        get => $this->on_organization_parent_organization_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_parent_organization_id', $value);
+                            $this->on_organization_parent_organization_id = $value;
+                        }
+                    }
 
-	/**
-	 * Secondary Phone
-	 *
-	 *
-	 *
-	 * {domain{phone}}
-	 *
-	 * @var string Domain: phone Type: varchar
-	 */
-	public ?string $on_organization_phone2 = null;
+    /**
+     * Primary Email
+     *
+     *
+     *
+     * {domain{email}}
+     *
+     * @var string|null Domain: email Type: varchar
+     */
+    public string|null $on_organization_email = null {
+                        get => $this->on_organization_email;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_email', $value);
+                            $this->on_organization_email = $value;
+                        }
+                    }
 
-	/**
-	 * Cell Phone
-	 *
-	 *
-	 *
-	 * {domain{phone}}
-	 *
-	 * @var string Domain: phone Type: varchar
-	 */
-	public ?string $on_organization_cell = null;
+    /**
+     * Secondary Email
+     *
+     *
+     *
+     * {domain{email}}
+     *
+     * @var string|null Domain: email Type: varchar
+     */
+    public string|null $on_organization_email2 = null {
+                        get => $this->on_organization_email2;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_email2', $value);
+                            $this->on_organization_email2 = $value;
+                        }
+                    }
 
-	/**
-	 * Fax
-	 *
-	 *
-	 *
-	 * {domain{phone}}
-	 *
-	 * @var string Domain: phone Type: varchar
-	 */
-	public ?string $on_organization_fax = null;
+    /**
+     * Primary Phone
+     *
+     *
+     *
+     * {domain{phone}}
+     *
+     * @var string|null Domain: phone Type: varchar
+     */
+    public string|null $on_organization_phone = null {
+                        get => $this->on_organization_phone;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_phone', $value);
+                            $this->on_organization_phone = $value;
+                        }
+                    }
 
-	/**
-	 * Alternative Contact
-	 *
-	 *
-	 *
-	 * {domain{description}}
-	 *
-	 * @var string Domain: description Type: varchar
-	 */
-	public ?string $on_organization_alternative_contact = null;
+    /**
+     * Secondary Phone
+     *
+     *
+     *
+     * {domain{phone}}
+     *
+     * @var string|null Domain: phone Type: varchar
+     */
+    public string|null $on_organization_phone2 = null {
+                        get => $this->on_organization_phone2;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_phone2', $value);
+                            $this->on_organization_phone2 = $value;
+                        }
+                    }
 
-	/**
-	 * Logo File #
-	 *
-	 *
-	 *
-	 * {domain{file_id}}
-	 *
-	 * @var int Domain: file_id Type: bigint
-	 */
-	public ?int $on_organization_logo_file_id = NULL;
+    /**
+     * Cell Phone
+     *
+     *
+     *
+     * {domain{phone}}
+     *
+     * @var string|null Domain: phone Type: varchar
+     */
+    public string|null $on_organization_cell = null {
+                        get => $this->on_organization_cell;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_cell', $value);
+                            $this->on_organization_cell = $value;
+                        }
+                    }
 
-	/**
-	 * About Nickname
-	 *
-	 *
-	 *
-	 * {domain{name}}
-	 *
-	 * @var string Domain: name Type: varchar
-	 */
-	public ?string $on_organization_about_nickname = null;
+    /**
+     * Fax
+     *
+     *
+     *
+     * {domain{phone}}
+     *
+     * @var string|null Domain: phone Type: varchar
+     */
+    public string|null $on_organization_fax = null {
+                        get => $this->on_organization_fax;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_fax', $value);
+                            $this->on_organization_fax = $value;
+                        }
+                    }
 
-	/**
-	 * About Description
-	 *
-	 *
-	 *
-	 * {domain{description}}
-	 *
-	 * @var string Domain: description Type: varchar
-	 */
-	public ?string $on_organization_about_description = null;
+    /**
+     * Alternative Contact
+     *
+     *
+     *
+     * {domain{description}}
+     *
+     * @var string|null Domain: description Type: varchar
+     */
+    public string|null $on_organization_alternative_contact = null {
+                        get => $this->on_organization_alternative_contact;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_alternative_contact', $value);
+                            $this->on_organization_alternative_contact = $value;
+                        }
+                    }
 
-	/**
-	 * Operating Country Code
-	 *
-	 *
-	 *
-	 * {domain{country_code}}
-	 *
-	 * @var string Domain: country_code Type: char
-	 */
-	public ?string $on_organization_operating_country_code = null;
+    /**
+     * Logo File #
+     *
+     *
+     *
+     * {domain{file_id}}
+     *
+     * @var int|null Domain: file_id Type: bigint
+     */
+    public int|null $on_organization_logo_file_id = NULL {
+                        get => $this->on_organization_logo_file_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_logo_file_id', $value);
+                            $this->on_organization_logo_file_id = $value;
+                        }
+                    }
 
-	/**
-	 * Operating Province Code
-	 *
-	 *
-	 *
-	 * {domain{province_code}}
-	 *
-	 * @var string Domain: province_code Type: varchar
-	 */
-	public ?string $on_organization_operating_province_code = null;
+    /**
+     * About Nickname
+     *
+     *
+     *
+     * {domain{name}}
+     *
+     * @var string|null Domain: name Type: varchar
+     */
+    public string|null $on_organization_about_nickname = null {
+                        get => $this->on_organization_about_nickname;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_about_nickname', $value);
+                            $this->on_organization_about_nickname = $value;
+                        }
+                    }
 
-	/**
-	 * Operating Currency Code
-	 *
-	 *
-	 *
-	 * {domain{currency_code}}
-	 *
-	 * @var string Domain: currency_code Type: char
-	 */
-	public ?string $on_organization_operating_currency_code = null;
+    /**
+     * About Description
+     *
+     *
+     *
+     * {domain{description}}
+     *
+     * @var string|null Domain: description Type: varchar
+     */
+    public string|null $on_organization_about_description = null {
+                        get => $this->on_organization_about_description;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_about_description', $value);
+                            $this->on_organization_about_description = $value;
+                        }
+                    }
 
-	/**
-	 * Operating Currency Type
-	 *
-	 *
-	 *
-	 * {domain{currency_type}}
-	 *
-	 * @var string Domain: currency_type Type: varchar
-	 */
-	public ?string $on_organization_operating_currency_type = null;
+    /**
+     * Operating Country Code
+     *
+     *
+     *
+     * {domain{country_code}}
+     *
+     * @var string|null Domain: country_code Type: char
+     */
+    public string|null $on_organization_operating_country_code = null {
+                        get => $this->on_organization_operating_country_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_operating_country_code', $value);
+                            $this->on_organization_operating_country_code = $value;
+                        }
+                    }
 
-	/**
-	 * Hold
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var int Type: boolean
-	 */
-	public ?int $on_organization_hold = 0;
+    /**
+     * Operating Province Code
+     *
+     *
+     *
+     * {domain{province_code}}
+     *
+     * @var string|null Domain: province_code Type: varchar
+     */
+    public string|null $on_organization_operating_province_code = null {
+                        get => $this->on_organization_operating_province_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_operating_province_code', $value);
+                            $this->on_organization_operating_province_code = $value;
+                        }
+                    }
 
-	/**
-	 * Inactive
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var int Type: boolean
-	 */
-	public ?int $on_organization_inactive = 0;
+    /**
+     * Operating Currency Code
+     *
+     *
+     *
+     * {domain{currency_code}}
+     *
+     * @var string|null Domain: currency_code Type: char
+     */
+    public string|null $on_organization_operating_currency_code = null {
+                        get => $this->on_organization_operating_currency_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_operating_currency_code', $value);
+                            $this->on_organization_operating_currency_code = $value;
+                        }
+                    }
 
-	/**
-	 * Optimistic Lock
-	 *
-	 *
-	 *
-	 * {domain{optimistic_lock}}
-	 *
-	 * @var string Domain: optimistic_lock Type: timestamp
-	 */
-	public ?string $on_organization_optimistic_lock = 'now()';
+    /**
+     * Operating Currency Type
+     *
+     *
+     *
+     * {domain{currency_type}}
+     *
+     * @var string|null Domain: currency_type Type: varchar
+     */
+    public string|null $on_organization_operating_currency_type = null {
+                        get => $this->on_organization_operating_currency_type;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_operating_currency_type', $value);
+                            $this->on_organization_operating_currency_type = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted Datetime
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: timestamp
-	 */
-	public ?string $on_organization_inserted_timestamp = null;
+    /**
+     * Hold
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $on_organization_hold = 0 {
+                        get => $this->on_organization_hold;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_hold', $value);
+                            $this->on_organization_hold = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $on_organization_inserted_user_id = NULL;
+    /**
+     * Inactive
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $on_organization_inactive = 0 {
+                        get => $this->on_organization_inactive;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_inactive', $value);
+                            $this->on_organization_inactive = $value;
+                        }
+                    }
 
-	/**
-	 * Updated Datetime
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: timestamp
-	 */
-	public ?string $on_organization_updated_timestamp = null;
+    /**
+     * Optimistic Lock
+     *
+     *
+     *
+     * {domain{optimistic_lock}}
+     *
+     * @var string|null Domain: optimistic_lock Type: timestamp
+     */
+    public string|null $on_organization_optimistic_lock = 'now()' {
+                        get => $this->on_organization_optimistic_lock;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_optimistic_lock', $value);
+                            $this->on_organization_optimistic_lock = $value;
+                        }
+                    }
 
-	/**
-	 * Updated User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $on_organization_updated_user_id = NULL;
+    /**
+     * Inserted Datetime
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: timestamp
+     */
+    public string|null $on_organization_inserted_timestamp = null {
+                        get => $this->on_organization_inserted_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_inserted_timestamp', $value);
+                            $this->on_organization_inserted_timestamp = $value;
+                        }
+                    }
+
+    /**
+     * Inserted User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $on_organization_inserted_user_id = NULL {
+                        get => $this->on_organization_inserted_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_inserted_user_id', $value);
+                            $this->on_organization_inserted_user_id = $value;
+                        }
+                    }
+
+    /**
+     * Updated Datetime
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: timestamp
+     */
+    public string|null $on_organization_updated_timestamp = null {
+                        get => $this->on_organization_updated_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_updated_timestamp', $value);
+                            $this->on_organization_updated_timestamp = $value;
+                        }
+                    }
+
+    /**
+     * Updated User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $on_organization_updated_user_id = NULL {
+                        get => $this->on_organization_updated_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('on_organization_updated_user_id', $value);
+                            $this->on_organization_updated_user_id = $value;
+                        }
+                    }
 }

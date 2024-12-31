@@ -1,0 +1,11 @@
+{
+    "A3BearerTokens": "A/3 Bearer Tokens",
+    "DatetimeExpires": "Datetime Expires",
+    "DatetimeStarted": "Datetime Started",
+    "Inactive": "Inactive",
+    "SessionID": "Session #",
+    "TenantID": "Tenant #",
+    "TokenID": "Token #",
+    "UserID": "User #",
+    "UserIP": "User IP"
+}

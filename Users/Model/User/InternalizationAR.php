@@ -2,196 +2,287 @@
 
 namespace Numbers\Users\Users\Model\User;
 class InternalizationAR extends \Object\ActiveRecord {
-	/**
-	 * @var string
-	 */
-	public string $object_table_class = \Numbers\Users\Users\Model\User\Internalization::class;
 
-	/**
-	 * Constructing object
-	 *
-	 * @param array $options
-	 *		skip_db_object
-	 *		skip_table_object
-	 */
-	public function __construct($options = []) {
-		if (empty($options['skip_table_object'])) {
-			$this->object_table_object = new $this->object_table_class($options);
-		}
-	}
-	/**
-	 * Tenant #
-	 *
-	 *
-	 *
-	 * {domain{tenant_id}}
-	 *
-	 * @var int Domain: tenant_id Type: integer
-	 */
-	public ?int $um_usri18n_tenant_id = NULL;
 
-	/**
-	 * User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $um_usri18n_user_id = NULL;
 
-	/**
-	 * Group #
-	 *
-	 *
-	 *
-	 * {domain{group_id}}
-	 *
-	 * @var int Domain: group_id Type: integer
-	 */
-	public ?int $um_usri18n_group_id = NULL;
+    /**
+     * @var string
+     */
+    public string $object_table_class = \Numbers\Users\Users\Model\User\Internalization::class;
 
-	/**
-	 * Language Code
-	 *
-	 *
-	 *
-	 * {domain{language_code}}
-	 *
-	 * @var string Domain: language_code Type: char
-	 */
-	public ?string $um_usri18n_language_code = null;
+    /**
+     * @var array
+     */
+    public array $object_table_pk = ['um_usri18n_tenant_id','um_usri18n_user_id'];
+    /**
+     * Tenant #
+     *
+     *
+     *
+     * {domain{tenant_id}}
+     *
+     * @var int|null Domain: tenant_id Type: integer
+     */
+    public int|null $um_usri18n_tenant_id = NULL {
+                        get => $this->um_usri18n_tenant_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_tenant_id', $value);
+                            $this->um_usri18n_tenant_id = $value;
+                        }
+                    }
 
-	/**
-	 * Locale Code
-	 *
-	 *
-	 *
-	 * {domain{locale_code}}
-	 *
-	 * @var string Domain: locale_code Type: varchar
-	 */
-	public ?string $um_usri18n_locale_code = null;
+    /**
+     * User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $um_usri18n_user_id = NULL {
+                        get => $this->um_usri18n_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_user_id', $value);
+                            $this->um_usri18n_user_id = $value;
+                        }
+                    }
 
-	/**
-	 * Timezone Code
-	 *
-	 *
-	 *
-	 * {domain{timezone_code}}
-	 *
-	 * @var string Domain: timezone_code Type: varchar
-	 */
-	public ?string $um_usri18n_timezone_code = null;
+    /**
+     * Group #
+     *
+     *
+     *
+     * {domain{group_id}}
+     *
+     * @var int|null Domain: group_id Type: integer
+     */
+    public int|null $um_usri18n_group_id = NULL {
+                        get => $this->um_usri18n_group_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_group_id', $value);
+                            $this->um_usri18n_group_id = $value;
+                        }
+                    }
 
-	/**
-	 * Organization #
-	 *
-	 *
-	 *
-	 * {domain{organization_id}}
-	 *
-	 * @var int Domain: organization_id Type: integer
-	 */
-	public ?int $um_usri18n_organization_id = NULL;
+    /**
+     * Language Code
+     *
+     *
+     *
+     * {domain{language_code}}
+     *
+     * @var string|null Domain: language_code Type: char
+     */
+    public string|null $um_usri18n_language_code = null {
+                        get => $this->um_usri18n_language_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_language_code', $value);
+                            $this->um_usri18n_language_code = $value;
+                        }
+                    }
 
-	/**
-	 * Date Format
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $um_usri18n_format_date = null;
+    /**
+     * Locale Code
+     *
+     *
+     *
+     * {domain{locale_code}}
+     *
+     * @var string|null Domain: locale_code Type: varchar
+     */
+    public string|null $um_usri18n_locale_code = null {
+                        get => $this->um_usri18n_locale_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_locale_code', $value);
+                            $this->um_usri18n_locale_code = $value;
+                        }
+                    }
 
-	/**
-	 * Time Format
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $um_usri18n_format_time = null;
+    /**
+     * Timezone Code
+     *
+     *
+     *
+     * {domain{timezone_code}}
+     *
+     * @var string|null Domain: timezone_code Type: varchar
+     */
+    public string|null $um_usri18n_timezone_code = null {
+                        get => $this->um_usri18n_timezone_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_timezone_code', $value);
+                            $this->um_usri18n_timezone_code = $value;
+                        }
+                    }
 
-	/**
-	 * Datetime Format
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $um_usri18n_format_datetime = null;
+    /**
+     * Organization #
+     *
+     *
+     *
+     * {domain{organization_id}}
+     *
+     * @var int|null Domain: organization_id Type: integer
+     */
+    public int|null $um_usri18n_organization_id = NULL {
+                        get => $this->um_usri18n_organization_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_organization_id', $value);
+                            $this->um_usri18n_organization_id = $value;
+                        }
+                    }
 
-	/**
-	 * Timestamp Format
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $um_usri18n_format_timestamp = null;
+    /**
+     * Date Format
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $um_usri18n_format_date = null {
+                        get => $this->um_usri18n_format_date;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_format_date', $value);
+                            $this->um_usri18n_format_date = $value;
+                        }
+                    }
 
-	/**
-	 * Amounts In Forms
-	 *
-	 *
-	 * {options_model{\Object\Format\Amounts}}
-	 * {domain{type_id}}
-	 *
-	 * @var int Domain: type_id Type: smallint
-	 */
-	public ?int $um_usri18n_format_amount_frm = NULL;
+    /**
+     * Time Format
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $um_usri18n_format_time = null {
+                        get => $this->um_usri18n_format_time;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_format_time', $value);
+                            $this->um_usri18n_format_time = $value;
+                        }
+                    }
 
-	/**
-	 * Amounts In Financial Statement
-	 *
-	 *
-	 * {options_model{\Object\Format\Amounts}}
-	 * {domain{type_id}}
-	 *
-	 * @var int Domain: type_id Type: smallint
-	 */
-	public ?int $um_usri18n_format_amount_fs = NULL;
+    /**
+     * Datetime Format
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $um_usri18n_format_datetime = null {
+                        get => $this->um_usri18n_format_datetime;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_format_datetime', $value);
+                            $this->um_usri18n_format_datetime = $value;
+                        }
+                    }
 
-	/**
-	 * Unit of Measures
-	 *
-	 *
-	 * {options_model{\Object\Format\UoM}}
-	 * {domain{group_code}}
-	 *
-	 * @var string Domain: group_code Type: varchar
-	 */
-	public ?string $um_usri18n_format_uom = 'METRIC';
+    /**
+     * Timestamp Format
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $um_usri18n_format_timestamp = null {
+                        get => $this->um_usri18n_format_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_format_timestamp', $value);
+                            $this->um_usri18n_format_timestamp = $value;
+                        }
+                    }
 
-	/**
-	 * Print Format
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $um_usri18n_print_format = null;
+    /**
+     * Amounts In Forms
+     *
+     *
+     * {options_model{\Object\Format\Amounts}}
+     * {domain{type_id}}
+     *
+     * @var int|null Domain: type_id Type: smallint
+     */
+    public int|null $um_usri18n_format_amount_frm = NULL {
+                        get => $this->um_usri18n_format_amount_frm;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_format_amount_frm', $value);
+                            $this->um_usri18n_format_amount_frm = $value;
+                        }
+                    }
 
-	/**
-	 * Print Font
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $um_usri18n_print_font = null;
+    /**
+     * Amounts In Financial Statement
+     *
+     *
+     * {options_model{\Object\Format\Amounts}}
+     * {domain{type_id}}
+     *
+     * @var int|null Domain: type_id Type: smallint
+     */
+    public int|null $um_usri18n_format_amount_fs = NULL {
+                        get => $this->um_usri18n_format_amount_fs;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_format_amount_fs', $value);
+                            $this->um_usri18n_format_amount_fs = $value;
+                        }
+                    }
+
+    /**
+     * Unit of Measures
+     *
+     *
+     * {options_model{\Object\Format\UoM}}
+     * {domain{group_code}}
+     *
+     * @var string|null Domain: group_code Type: varchar
+     */
+    public string|null $um_usri18n_format_uom = 'METRIC' {
+                        get => $this->um_usri18n_format_uom;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_format_uom', $value);
+                            $this->um_usri18n_format_uom = $value;
+                        }
+                    }
+
+    /**
+     * Print Format
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $um_usri18n_print_format = null {
+                        get => $this->um_usri18n_print_format;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_print_format', $value);
+                            $this->um_usri18n_print_format = $value;
+                        }
+                    }
+
+    /**
+     * Print Font
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $um_usri18n_print_font = null {
+                        get => $this->um_usri18n_print_font;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_usri18n_print_font', $value);
+                            $this->um_usri18n_print_font = $value;
+                        }
+                    }
 }

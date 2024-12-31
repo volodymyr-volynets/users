@@ -1,17 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model\Function2\BusinessHours;
-class PostgreSQL extends \Object\Function2 {
-	public $db_link;
-	public $db_link_flag;
-	public $schema;
-	public $module_code = 'ON';
-	public $title = 'O/N Business Hours Calculator (PostgreSQL)';
-	public $name = 'on_calculate_business_time';
-	public $backend = 'PostgreSQL';
-	public $header = 'on_calculate_business_time(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)';
-	public $sql_version = '1.0.2';
-	public $definition = 'CREATE OR REPLACE FUNCTION public.on_calculate_business_time(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)
+
+use Object\Function2;
+
+class PostgreSQL extends Function2
+{
+    public $db_link;
+    public $db_link_flag;
+    public $schema;
+    public $module_code = 'ON';
+    public $title = 'O/N Business Hours Calculator (PostgreSQL)';
+    public $name = 'on_calculate_business_time';
+    public $backend = 'PostgreSQL';
+    public $header = 'on_calculate_business_time(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)';
+    public $sql_version = '1.0.2';
+    public $definition = 'CREATE OR REPLACE FUNCTION public.on_calculate_business_time(tenant_id integer, organization_id integer, datetime timestamp, duration interval, business_hours int)
 	RETURNS timestamp
 	LANGUAGE plpgsql
 	STRICT

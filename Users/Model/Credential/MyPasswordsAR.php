@@ -2,141 +2,202 @@
 
 namespace Numbers\Users\Users\Model\Credential;
 class MyPasswordsAR extends \Object\ActiveRecord {
-	/**
-	 * @var string
-	 */
-	public string $object_table_class = \Numbers\Users\Users\Model\Credential\MyPasswords::class;
 
-	/**
-	 * Constructing object
-	 *
-	 * @param array $options
-	 *		skip_db_object
-	 *		skip_table_object
-	 */
-	public function __construct($options = []) {
-		if (empty($options['skip_table_object'])) {
-			$this->object_table_object = new $this->object_table_class($options);
-		}
-	}
-	/**
-	 * Tenant #
-	 *
-	 *
-	 *
-	 * {domain{tenant_id}}
-	 *
-	 * @var int Domain: tenant_id Type: integer
-	 */
-	public ?int $um_mypasswd_tenant_id = NULL;
 
-	/**
-	 * Password #
-	 *
-	 *
-	 *
-	 * {domain{password_id_sequence}}
-	 *
-	 * @var int Domain: password_id_sequence Type: bigserial
-	 */
-	public ?int $um_mypasswd_id = null;
 
-	/**
-	 * Name
-	 *
-	 *
-	 *
-	 * {domain{name}}
-	 *
-	 * @var string Domain: name Type: varchar
-	 */
-	public ?string $um_mypasswd_name = null;
+    /**
+     * @var string
+     */
+    public string $object_table_class = \Numbers\Users\Users\Model\Credential\MyPasswords::class;
 
-	/**
-	 * Value Counter
-	 *
-	 *
-	 *
-	 * {domain{counter}}
-	 *
-	 * @var int Domain: counter Type: integer
-	 */
-	public ?int $um_mypasswd_value_counter = 0;
+    /**
+     * @var array
+     */
+    public array $object_table_pk = ['um_mypasswd_tenant_id','um_mypasswd_id'];
+    /**
+     * Tenant #
+     *
+     *
+     *
+     * {domain{tenant_id}}
+     *
+     * @var int|null Domain: tenant_id Type: integer
+     */
+    public int|null $um_mypasswd_tenant_id = NULL {
+                        get => $this->um_mypasswd_tenant_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_tenant_id', $value);
+                            $this->um_mypasswd_tenant_id = $value;
+                        }
+                    }
 
-	/**
-	 * Type Code
-	 *
-	 *
-	 *
-	 * {domain{group_code}}
-	 *
-	 * @var string Domain: group_code Type: varchar
-	 */
-	public ?string $um_mypasswd_passtype_code = null;
+    /**
+     * Password #
+     *
+     *
+     *
+     * {domain{password_id_sequence}}
+     *
+     * @var int|null Domain: password_id_sequence Type: bigserial
+     */
+    public int|null $um_mypasswd_id = null {
+                        get => $this->um_mypasswd_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_id', $value);
+                            $this->um_mypasswd_id = $value;
+                        }
+                    }
 
-	/**
-	 * Inactive
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var int Type: boolean
-	 */
-	public ?int $um_mypasswd_inactive = 0;
+    /**
+     * Name
+     *
+     *
+     *
+     * {domain{name}}
+     *
+     * @var string|null Domain: name Type: varchar
+     */
+    public string|null $um_mypasswd_name = null {
+                        get => $this->um_mypasswd_name;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_name', $value);
+                            $this->um_mypasswd_name = $value;
+                        }
+                    }
 
-	/**
-	 * Optimistic Lock
-	 *
-	 *
-	 *
-	 * {domain{optimistic_lock}}
-	 *
-	 * @var string Domain: optimistic_lock Type: timestamp
-	 */
-	public ?string $um_mypasswd_optimistic_lock = 'now()';
+    /**
+     * Value Counter
+     *
+     *
+     *
+     * {domain{counter}}
+     *
+     * @var int|null Domain: counter Type: integer
+     */
+    public int|null $um_mypasswd_value_counter = 0 {
+                        get => $this->um_mypasswd_value_counter;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_value_counter', $value);
+                            $this->um_mypasswd_value_counter = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted Datetime
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: timestamp
-	 */
-	public ?string $um_mypasswd_inserted_timestamp = null;
+    /**
+     * Type Code
+     *
+     *
+     *
+     * {domain{group_code}}
+     *
+     * @var string|null Domain: group_code Type: varchar
+     */
+    public string|null $um_mypasswd_passtype_code = null {
+                        get => $this->um_mypasswd_passtype_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_passtype_code', $value);
+                            $this->um_mypasswd_passtype_code = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $um_mypasswd_inserted_user_id = NULL;
+    /**
+     * Inactive
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $um_mypasswd_inactive = 0 {
+                        get => $this->um_mypasswd_inactive;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_inactive', $value);
+                            $this->um_mypasswd_inactive = $value;
+                        }
+                    }
 
-	/**
-	 * Updated Datetime
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: timestamp
-	 */
-	public ?string $um_mypasswd_updated_timestamp = null;
+    /**
+     * Optimistic Lock
+     *
+     *
+     *
+     * {domain{optimistic_lock}}
+     *
+     * @var string|null Domain: optimistic_lock Type: timestamp
+     */
+    public string|null $um_mypasswd_optimistic_lock = 'now()' {
+                        get => $this->um_mypasswd_optimistic_lock;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_optimistic_lock', $value);
+                            $this->um_mypasswd_optimistic_lock = $value;
+                        }
+                    }
 
-	/**
-	 * Updated User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $um_mypasswd_updated_user_id = NULL;
+    /**
+     * Inserted Datetime
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: timestamp
+     */
+    public string|null $um_mypasswd_inserted_timestamp = null {
+                        get => $this->um_mypasswd_inserted_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_inserted_timestamp', $value);
+                            $this->um_mypasswd_inserted_timestamp = $value;
+                        }
+                    }
+
+    /**
+     * Inserted User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $um_mypasswd_inserted_user_id = NULL {
+                        get => $this->um_mypasswd_inserted_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_inserted_user_id', $value);
+                            $this->um_mypasswd_inserted_user_id = $value;
+                        }
+                    }
+
+    /**
+     * Updated Datetime
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: timestamp
+     */
+    public string|null $um_mypasswd_updated_timestamp = null {
+                        get => $this->um_mypasswd_updated_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_updated_timestamp', $value);
+                            $this->um_mypasswd_updated_timestamp = $value;
+                        }
+                    }
+
+    /**
+     * Updated User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $um_mypasswd_updated_user_id = NULL {
+                        get => $this->um_mypasswd_updated_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mypasswd_updated_user_id', $value);
+                            $this->um_mypasswd_updated_user_id = $value;
+                        }
+                    }
 }

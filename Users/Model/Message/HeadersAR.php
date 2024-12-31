@@ -2,174 +2,253 @@
 
 namespace Numbers\Users\Users\Model\Message;
 class HeadersAR extends \Object\ActiveRecord {
-	/**
-	 * @var string
-	 */
-	public string $object_table_class = \Numbers\Users\Users\Model\Message\Headers::class;
 
-	/**
-	 * Constructing object
-	 *
-	 * @param array $options
-	 *		skip_db_object
-	 *		skip_table_object
-	 */
-	public function __construct($options = []) {
-		if (empty($options['skip_table_object'])) {
-			$this->object_table_object = new $this->object_table_class($options);
-		}
-	}
-	/**
-	 * Tenant #
-	 *
-	 *
-	 *
-	 * {domain{tenant_id}}
-	 *
-	 * @var int Domain: tenant_id Type: integer
-	 */
-	public ?int $um_mesheader_tenant_id = NULL;
 
-	/**
-	 * Message #
-	 *
-	 *
-	 *
-	 * {domain{message_id_sequence}}
-	 *
-	 * @var int Domain: message_id_sequence Type: bigserial
-	 */
-	public ?int $um_mesheader_id = null;
 
-	/**
-	 * Type
-	 *
-	 *
-	 * {options_model{\Numbers\Users\Users\Model\Message\HeaderTypes}}
-	 * {domain{type_id}}
-	 *
-	 * @var int Domain: type_id Type: smallint
-	 */
-	public ?int $um_mesheader_type_id = 10;
+    /**
+     * @var string
+     */
+    public string $object_table_class = \Numbers\Users\Users\Model\Message\Headers::class;
 
-	/**
-	 * Notification Code
-	 *
-	 *
-	 *
-	 * {domain{feature_code}}
-	 *
-	 * @var string Domain: feature_code Type: varchar
-	 */
-	public ?string $um_mesheader_notification_code = null;
+    /**
+     * @var array
+     */
+    public array $object_table_pk = ['um_mesheader_tenant_id','um_mesheader_id'];
+    /**
+     * Tenant #
+     *
+     *
+     *
+     * {domain{tenant_id}}
+     *
+     * @var int|null Domain: tenant_id Type: integer
+     */
+    public int|null $um_mesheader_tenant_id = NULL {
+                        get => $this->um_mesheader_tenant_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_tenant_id', $value);
+                            $this->um_mesheader_tenant_id = $value;
+                        }
+                    }
 
-	/**
-	 * Important
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var int Type: boolean
-	 */
-	public ?int $um_mesheader_important = 0;
+    /**
+     * Message #
+     *
+     *
+     *
+     * {domain{message_id_sequence}}
+     *
+     * @var int|null Domain: message_id_sequence Type: bigserial
+     */
+    public int|null $um_mesheader_id = null {
+                        get => $this->um_mesheader_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_id', $value);
+                            $this->um_mesheader_id = $value;
+                        }
+                    }
 
-	/**
-	 * From Email
-	 *
-	 *
-	 *
-	 * {domain{email}}
-	 *
-	 * @var string Domain: email Type: varchar
-	 */
-	public ?string $um_mesheader_from_email = null;
+    /**
+     * Type
+     *
+     *
+     * {options_model{\Numbers\Users\Users\Model\Message\HeaderTypes}}
+     * {domain{type_id}}
+     *
+     * @var int|null Domain: type_id Type: smallint
+     */
+    public int|null $um_mesheader_type_id = 10 {
+                        get => $this->um_mesheader_type_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_type_id', $value);
+                            $this->um_mesheader_type_id = $value;
+                        }
+                    }
 
-	/**
-	 * From Name
-	 *
-	 *
-	 *
-	 * {domain{name}}
-	 *
-	 * @var string Domain: name Type: varchar
-	 */
-	public ?string $um_mesheader_from_name = null;
+    /**
+     * Notification Code
+     *
+     *
+     *
+     * {domain{feature_code}}
+     *
+     * @var string|null Domain: feature_code Type: varchar
+     */
+    public string|null $um_mesheader_notification_code = null {
+                        get => $this->um_mesheader_notification_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_notification_code', $value);
+                            $this->um_mesheader_notification_code = $value;
+                        }
+                    }
 
-	/**
-	 * Subject
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: text
-	 */
-	public ?string $um_mesheader_subject = null;
+    /**
+     * Important
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $um_mesheader_important = 0 {
+                        get => $this->um_mesheader_important;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_important', $value);
+                            $this->um_mesheader_important = $value;
+                        }
+                    }
 
-	/**
-	 * Body #
-	 *
-	 *
-	 *
-	 * {domain{message_id}}
-	 *
-	 * @var int Domain: message_id Type: bigint
-	 */
-	public ?int $um_mesheader_body_id = NULL;
+    /**
+     * From Email
+     *
+     *
+     *
+     * {domain{email}}
+     *
+     * @var string|null Domain: email Type: varchar
+     */
+    public string|null $um_mesheader_from_email = null {
+                        get => $this->um_mesheader_from_email;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_from_email', $value);
+                            $this->um_mesheader_from_email = $value;
+                        }
+                    }
 
-	/**
-	 * Keywords
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: text
-	 */
-	public ?string $um_mesheader_keywords = null;
+    /**
+     * From Name
+     *
+     *
+     *
+     * {domain{name}}
+     *
+     * @var string|null Domain: name Type: varchar
+     */
+    public string|null $um_mesheader_from_name = null {
+                        get => $this->um_mesheader_from_name;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_from_name', $value);
+                            $this->um_mesheader_from_name = $value;
+                        }
+                    }
 
-	/**
-	 * Group #
-	 *
-	 *
-	 *
-	 * {domain{group_id}}
-	 *
-	 * @var int Domain: group_id Type: integer
-	 */
-	public ?int $um_mesheader_chat_group_id = NULL;
+    /**
+     * Subject
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: text
+     */
+    public string|null $um_mesheader_subject = null {
+                        get => $this->um_mesheader_subject;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_subject', $value);
+                            $this->um_mesheader_subject = $value;
+                        }
+                    }
 
-	/**
-	 * Chat User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $um_mesheader_chat_user_id = NULL;
+    /**
+     * Body #
+     *
+     *
+     *
+     * {domain{message_id}}
+     *
+     * @var int|null Domain: message_id Type: bigint
+     */
+    public int|null $um_mesheader_body_id = NULL {
+                        get => $this->um_mesheader_body_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_body_id', $value);
+                            $this->um_mesheader_body_id = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted Datetime
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: timestamp
-	 */
-	public ?string $um_mesheader_inserted_timestamp = null;
+    /**
+     * Keywords
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: text
+     */
+    public string|null $um_mesheader_keywords = null {
+                        get => $this->um_mesheader_keywords;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_keywords', $value);
+                            $this->um_mesheader_keywords = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $um_mesheader_inserted_user_id = NULL;
+    /**
+     * Group #
+     *
+     *
+     *
+     * {domain{group_id}}
+     *
+     * @var int|null Domain: group_id Type: integer
+     */
+    public int|null $um_mesheader_chat_group_id = NULL {
+                        get => $this->um_mesheader_chat_group_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_chat_group_id', $value);
+                            $this->um_mesheader_chat_group_id = $value;
+                        }
+                    }
+
+    /**
+     * Chat User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $um_mesheader_chat_user_id = NULL {
+                        get => $this->um_mesheader_chat_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_chat_user_id', $value);
+                            $this->um_mesheader_chat_user_id = $value;
+                        }
+                    }
+
+    /**
+     * Inserted Datetime
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: timestamp
+     */
+    public string|null $um_mesheader_inserted_timestamp = null {
+                        get => $this->um_mesheader_inserted_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_inserted_timestamp', $value);
+                            $this->um_mesheader_inserted_timestamp = $value;
+                        }
+                    }
+
+    /**
+     * Inserted User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $um_mesheader_inserted_user_id = NULL {
+                        get => $this->um_mesheader_inserted_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('um_mesheader_inserted_user_id', $value);
+                            $this->um_mesheader_inserted_user_id = $value;
+                        }
+                    }
 }

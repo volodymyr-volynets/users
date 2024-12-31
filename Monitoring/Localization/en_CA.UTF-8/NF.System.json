@@ -1,0 +1,10 @@
+{
+    "Account": "Account",
+    "ActivityLog": "Activity Log",
+    "Miscellaneous": "Miscellaneous",
+    "Operations": "Operations",
+    "Reports": "Reports",
+    "SMAccountActivityLog": "S/M Account Activity Log",
+    "SMActivityLog": "S/M Activity Log",
+    "SystemManagement": "System Management"
+}

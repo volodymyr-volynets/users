@@ -1,7 +1,20 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User\Assignment\Virtual;
-class Reverse extends \Numbers\Users\Users\Model\User\Assignments {
-	public $alias_model = true;
-	public $alias_for = '\Numbers\Users\Users\Model\User\Assignments';
+
+use Numbers\Users\Users\Model\User\Assignments;
+
+class Reverse extends Assignments
+{
+    public $alias_model = true;
+    public $alias_for = '\Numbers\Users\Users\Model\User\Assignments';
 }

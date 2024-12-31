@@ -1,0 +1,12 @@
+{
+    "AccessKey": "Access Key",
+    "Bucket": "Bucket",
+    "DTAmazonProfiles": "D/T Amazon Profiles",
+    "Inactive": "Inactive",
+    "Name": "Name",
+    "OptimisticLock": "Optimistic Lock",
+    "ProfileID": "Profile #",
+    "Region": "Region",
+    "SecretAccessKey": "Secret Access Key",
+    "TenantID": "Tenant #"
+}

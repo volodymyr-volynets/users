@@ -2,240 +2,355 @@
 
 namespace Numbers\Users\TaskScheduler\Model;
 class JobsAR extends \Object\ActiveRecord {
-	/**
-	 * @var string
-	 */
-	public string $object_table_class = \Numbers\Users\TaskScheduler\Model\Jobs::class;
 
-	/**
-	 * Constructing object
-	 *
-	 * @param array $options
-	 *		skip_db_object
-	 *		skip_table_object
-	 */
-	public function __construct($options = []) {
-		if (empty($options['skip_table_object'])) {
-			$this->object_table_object = new $this->object_table_class($options);
-		}
-	}
-	/**
-	 * Tenant #
-	 *
-	 *
-	 *
-	 * {domain{tenant_id}}
-	 *
-	 * @var int Domain: tenant_id Type: integer
-	 */
-	public ?int $ts_job_tenant_id = NULL;
 
-	/**
-	 * Job #
-	 *
-	 *
-	 *
-	 * {domain{group_id_sequence}}
-	 *
-	 * @var int Domain: group_id_sequence Type: serial
-	 */
-	public ?int $ts_job_id = null;
 
-	/**
-	 * Daemon Code
-	 *
-	 *
-	 *
-	 * {domain{type_code}}
-	 *
-	 * @var string Domain: type_code Type: varchar
-	 */
-	public ?string $ts_job_daemon_code = null;
+    /**
+     * @var string
+     */
+    public string $object_table_class = \Numbers\Users\TaskScheduler\Model\Jobs::class;
 
-	/**
-	 * Task Code
-	 *
-	 *
-	 *
-	 * {domain{group_code}}
-	 *
-	 * @var string Domain: group_code Type: varchar
-	 */
-	public ?string $ts_job_task_code = null;
+    /**
+     * @var array
+     */
+    public array $object_table_pk = ['ts_job_tenant_id','ts_job_id'];
+    /**
+     * Tenant #
+     *
+     *
+     *
+     * {domain{tenant_id}}
+     *
+     * @var int|null Domain: tenant_id Type: integer
+     */
+    public int|null $ts_job_tenant_id = NULL {
+                        get => $this->ts_job_tenant_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_tenant_id', $value);
+                            $this->ts_job_tenant_id = $value;
+                        }
+                    }
 
-	/**
-	 * Name
-	 *
-	 *
-	 *
-	 * {domain{name}}
-	 *
-	 * @var string Domain: name Type: varchar
-	 */
-	public ?string $ts_job_name = null;
+    /**
+     * Job #
+     *
+     *
+     *
+     * {domain{group_id_sequence}}
+     *
+     * @var int|null Domain: group_id_sequence Type: serial
+     */
+    public int|null $ts_job_id = null {
+                        get => $this->ts_job_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_id', $value);
+                            $this->ts_job_id = $value;
+                        }
+                    }
 
-	/**
-	 * User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $ts_job_user_id = NULL;
+    /**
+     * Daemon Code
+     *
+     *
+     *
+     * {domain{type_code}}
+     *
+     * @var string|null Domain: type_code Type: varchar
+     */
+    public string|null $ts_job_daemon_code = null {
+                        get => $this->ts_job_daemon_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_daemon_code', $value);
+                            $this->ts_job_daemon_code = $value;
+                        }
+                    }
 
-	/**
-	 * Cron (Minutes)
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $ts_job_cron_minute = null;
+    /**
+     * Task Code
+     *
+     *
+     *
+     * {domain{group_code}}
+     *
+     * @var string|null Domain: group_code Type: varchar
+     */
+    public string|null $ts_job_task_code = null {
+                        get => $this->ts_job_task_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_task_code', $value);
+                            $this->ts_job_task_code = $value;
+                        }
+                    }
 
-	/**
-	 * Cron (Hours)
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $ts_job_cron_hour = null;
+    /**
+     * Name
+     *
+     *
+     *
+     * {domain{name}}
+     *
+     * @var string|null Domain: name Type: varchar
+     */
+    public string|null $ts_job_name = null {
+                        get => $this->ts_job_name;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_name', $value);
+                            $this->ts_job_name = $value;
+                        }
+                    }
 
-	/**
-	 * Cron (Day of Month)
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $ts_job_cron_day_of_month = null;
+    /**
+     * User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $ts_job_user_id = NULL {
+                        get => $this->ts_job_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_user_id', $value);
+                            $this->ts_job_user_id = $value;
+                        }
+                    }
 
-	/**
-	 * Cron (Month)
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $ts_job_cron_month = null;
+    /**
+     * Cron (Minutes)
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $ts_job_cron_minute = null {
+                        get => $this->ts_job_cron_minute;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_cron_minute', $value);
+                            $this->ts_job_cron_minute = $value;
+                        }
+                    }
 
-	/**
-	 * Cron (Day of Week)
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $ts_job_cron_day_of_week = null;
+    /**
+     * Cron (Hours)
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $ts_job_cron_hour = null {
+                        get => $this->ts_job_cron_hour;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_cron_hour', $value);
+                            $this->ts_job_cron_hour = $value;
+                        }
+                    }
 
-	/**
-	 * Cron (Years)
-	 *
-	 *
-	 *
-	 * {domain{code}}
-	 *
-	 * @var string Domain: code Type: varchar
-	 */
-	public ?string $ts_job_cron_year = null;
+    /**
+     * Cron (Day of Month)
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $ts_job_cron_day_of_month = null {
+                        get => $this->ts_job_cron_day_of_month;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_cron_day_of_month', $value);
+                            $this->ts_job_cron_day_of_month = $value;
+                        }
+                    }
 
-	/**
-	 * Timezone
-	 *
-	 *
-	 *
-	 * {domain{timezone_code}}
-	 *
-	 * @var string Domain: timezone_code Type: varchar
-	 */
-	public ?string $ts_job_timezone_code = null;
+    /**
+     * Cron (Month)
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $ts_job_cron_month = null {
+                        get => $this->ts_job_cron_month;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_cron_month', $value);
+                            $this->ts_job_cron_month = $value;
+                        }
+                    }
 
-	/**
-	 * Module #
-	 *
-	 *
-	 *
-	 * {domain{module_id}}
-	 *
-	 * @var int Domain: module_id Type: integer
-	 */
-	public ?int $ts_job_module_id = NULL;
+    /**
+     * Cron (Day of Week)
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $ts_job_cron_day_of_week = null {
+                        get => $this->ts_job_cron_day_of_week;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_cron_day_of_week', $value);
+                            $this->ts_job_cron_day_of_week = $value;
+                        }
+                    }
 
-	/**
-	 * Inactive
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var int Type: boolean
-	 */
-	public ?int $ts_job_inactive = 0;
+    /**
+     * Cron (Years)
+     *
+     *
+     *
+     * {domain{code}}
+     *
+     * @var string|null Domain: code Type: varchar
+     */
+    public string|null $ts_job_cron_year = null {
+                        get => $this->ts_job_cron_year;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_cron_year', $value);
+                            $this->ts_job_cron_year = $value;
+                        }
+                    }
 
-	/**
-	 * Optimistic Lock
-	 *
-	 *
-	 *
-	 * {domain{optimistic_lock}}
-	 *
-	 * @var string Domain: optimistic_lock Type: timestamp
-	 */
-	public ?string $ts_job_optimistic_lock = 'now()';
+    /**
+     * Timezone
+     *
+     *
+     *
+     * {domain{timezone_code}}
+     *
+     * @var string|null Domain: timezone_code Type: varchar
+     */
+    public string|null $ts_job_timezone_code = null {
+                        get => $this->ts_job_timezone_code;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_timezone_code', $value);
+                            $this->ts_job_timezone_code = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted Datetime
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: timestamp
-	 */
-	public ?string $ts_job_inserted_timestamp = null;
+    /**
+     * Module #
+     *
+     *
+     *
+     * {domain{module_id}}
+     *
+     * @var int|null Domain: module_id Type: integer
+     */
+    public int|null $ts_job_module_id = NULL {
+                        get => $this->ts_job_module_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_module_id', $value);
+                            $this->ts_job_module_id = $value;
+                        }
+                    }
 
-	/**
-	 * Inserted User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $ts_job_inserted_user_id = NULL;
+    /**
+     * Inactive
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $ts_job_inactive = 0 {
+                        get => $this->ts_job_inactive;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_inactive', $value);
+                            $this->ts_job_inactive = $value;
+                        }
+                    }
 
-	/**
-	 * Updated Datetime
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * @var string Type: timestamp
-	 */
-	public ?string $ts_job_updated_timestamp = null;
+    /**
+     * Optimistic Lock
+     *
+     *
+     *
+     * {domain{optimistic_lock}}
+     *
+     * @var string|null Domain: optimistic_lock Type: timestamp
+     */
+    public string|null $ts_job_optimistic_lock = 'now()' {
+                        get => $this->ts_job_optimistic_lock;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_optimistic_lock', $value);
+                            $this->ts_job_optimistic_lock = $value;
+                        }
+                    }
 
-	/**
-	 * Updated User #
-	 *
-	 *
-	 *
-	 * {domain{user_id}}
-	 *
-	 * @var int Domain: user_id Type: bigint
-	 */
-	public ?int $ts_job_updated_user_id = NULL;
+    /**
+     * Inserted Datetime
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: timestamp
+     */
+    public string|null $ts_job_inserted_timestamp = null {
+                        get => $this->ts_job_inserted_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_inserted_timestamp', $value);
+                            $this->ts_job_inserted_timestamp = $value;
+                        }
+                    }
+
+    /**
+     * Inserted User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $ts_job_inserted_user_id = NULL {
+                        get => $this->ts_job_inserted_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_inserted_user_id', $value);
+                            $this->ts_job_inserted_user_id = $value;
+                        }
+                    }
+
+    /**
+     * Updated Datetime
+     *
+     *
+     *
+     *
+     *
+     * @var string|null Type: timestamp
+     */
+    public string|null $ts_job_updated_timestamp = null {
+                        get => $this->ts_job_updated_timestamp;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_updated_timestamp', $value);
+                            $this->ts_job_updated_timestamp = $value;
+                        }
+                    }
+
+    /**
+     * Updated User #
+     *
+     *
+     *
+     * {domain{user_id}}
+     *
+     * @var int|null Domain: user_id Type: bigint
+     */
+    public int|null $ts_job_updated_user_id = NULL {
+                        get => $this->ts_job_updated_user_id;
+                        set {
+                            $this->setFullPkAndFilledColumn('ts_job_updated_user_id', $value);
+                            $this->ts_job_updated_user_id = $value;
+                        }
+                    }
 }
