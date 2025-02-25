@@ -182,6 +182,13 @@ class Settings extends Base
                 'tm_mdlseq_suffix' => null,
                 'tm_mdlseq_counter' => 0,
             ],
+            [
+                'tm_mdlseq_type_code' => 'IVT',
+                'tm_mdlseq_prefix' => 'IVT',
+                'tm_mdlseq_length' => 12,
+                'tm_mdlseq_suffix' => null,
+                'tm_mdlseq_counter' => 0,
+            ],
         ]);
     }
 

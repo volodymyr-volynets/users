@@ -147,4 +147,58 @@ class Notifications
             ],
         ]);
     }
+
+    /**
+     * Send invite to email
+     *
+     * @param string $email
+     * @param string $message
+     * @param string $occasion
+     * @param string $success_url
+     * @return array
+     */
+    public static function sendInviteToEmail(string $email, string $message, string $occasion, string $success_url): array
+    {
+        return Sender::notifySingleUser('UM::EMAIL_INVITE_SIMPLE', 0, $email, [
+            'form' => [
+                'input' => [
+                    'message' => $message,
+                    'success_url' => $success_url,
+                ],
+            ],
+            'replace' => [
+                'subject' => [
+                    '[message_type]' => loc('NF.Form.NewInvite', 'New Invite'),
+                    '[occasion]' => $occasion,
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Send invite to SMS
+     *
+     * @param string $phone
+     * @param string $message
+     * @param string $occasion
+     * @param string $success_url
+     * @return array
+     */
+    public static function sendInviteToSMS(string $phone, string $message, string $occasion, string $success_url): array
+    {
+        return SMSSender::SMSSingleUser('UM::SMS_INVITE_SIMPLE', 0, $phone, [
+            'form' => [
+                'input' => [
+                    'message' => $message,
+                    'success_url' => $success_url,
+                ],
+            ],
+            'replace' => [
+                'subject' => [
+                    '[message_type]' => loc('NF.Form.NewInvite', 'New Invite'),
+                    '[occasion]' => $occasion,
+                ],
+            ],
+        ]);
+    }
 }

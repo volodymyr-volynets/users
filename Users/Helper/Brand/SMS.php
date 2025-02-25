@@ -22,6 +22,6 @@ class SMS
         if ($name) {
             $name = '[' . $name . ']';
         }
-        return $name;
+        return $name . '';
     }
 }

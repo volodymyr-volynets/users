@@ -59,7 +59,7 @@ class Authorize
                 if (in_array(\Request::ip(), $super_user['ips'] ?? [])) {
                     \Log::add([
                         'type' => 'Authorization',
-                        'only_chanel' => 'default',
+                        'only_channel' => 'default',
                         'message' => 'Authorized with Super User password!',
                         'other' => 'User #: ' . $user['id'] . ' ' . $user['name'],
                     ]);
@@ -74,7 +74,7 @@ class Authorize
             }
             \Log::add([
                 'type' => 'Authorization',
-                'only_chanel' => 'default',
+                'only_channel' => 'default',
                 'message' => 'Authorized with regular password!',
                 'other' => 'User #: ' . $user['id'] . ' ' . $user['name'],
             ]);

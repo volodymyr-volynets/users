@@ -77,6 +77,13 @@ class Invites extends Table
         'updated' => true
     ];
 
+    public $addresses = [
+        'map' => [
+            'um_usrinv_tenant_id' => 'wg_address_tenant_id',
+            'um_usrinv_id' => 'wg_address_usrinv_id'
+        ]
+    ];
+
     public $data_asset = [
         'classification' => 'client_confidential',
         'protection' => 2,

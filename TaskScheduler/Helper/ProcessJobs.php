@@ -128,6 +128,7 @@ class ProcessJobs
             }
             // debug
             //print_r2($executed_jobs_threads);
+            //exit;
             //goto success;
             // call urls
             $curl_result = cURL::multiExecGet($executed_jobs_threads);

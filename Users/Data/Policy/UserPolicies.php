@@ -12,6 +12,7 @@
 namespace Numbers\Users\Users\Data\Policy;
 
 use Object\Import;
+use Numbers\Backend\System\Policies\Model\Types;
 
 class UserPolicies extends Import
 {
@@ -84,7 +85,7 @@ STR,
 
     public function internal(array $input): array
     {
-        $model = new \Numbers\Backend\System\Policies\Model\Types();
+        $model = new Types();
         $inner_model = $model->getByColumn(
             'sm_poltype_code',
             $input['sm_policy_sm_poltype_code'],

@@ -140,7 +140,7 @@ class Base
         ]);
         // delete in driver
         $storages = Storages::getStatic();
-        $storage = $storages[$file_data['dt_file_storage_id']];
+        $storage_id = $file_data['dt_file_storage_id'];
         if (!empty($file_data['dt_file_dt_amzprofile_id'])) {
             $storage = $storages[$storage_id];
             $class = $storage['submodule'];

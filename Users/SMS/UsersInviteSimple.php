@@ -23,7 +23,7 @@ class UsersInviteSimple extends SMS
     ];
     public $containers = [
         self::PANEL_BRAND => ['order' => 100, 'custom_renderer' => '\Numbers\Users\Users\Helper\Brand\SMS::renderTopSMSBrandName'],
-        self::SMS_MESSAGE => ['order' => 150, 'custom_renderer' => 'self::renderMessage'],
+        self::SMS_MESSAGE => ['order' => 200, 'custom_renderer' => 'self::renderMessage'],
     ];
     public $rows = [];
     public $elements = [];

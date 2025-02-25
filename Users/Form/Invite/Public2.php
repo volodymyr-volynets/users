@@ -9,29 +9,25 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Numbers\Users\Users\Form;
+namespace Numbers\Users\Users\Form\Invite;
 
 use Object\Content\Messages;
 use Object\Form\Wrapper\Base;
-use Numbers\Tenants\Tenants\Helper\Sequence;
-use Numbers\Tenants\Tenants\Helper\ShortUrls;
-use Numbers\Users\Users\Helper\User\Notifications;
 use Object\Validator\Phone;
+use Numbers\Users\Users\Helper\User\Notifications;
+use Numbers\Users\Users\Form\Users;
 
-class Invites extends Base
+class Public2 extends Base
 {
-    public $form_link = 'um_usrinv_invites';
+    public $form_link = 'um_usrinv_invite_public2';
     public $module_code = 'UM';
-    public $title = 'U/M User Invites Form';
+    public $title = 'U/M User Invite Public Form';
     public $options = [
         'segment' => self::SEGMENT_FORM,
         'actions' => [
             'refresh' => true,
-            'new' => true,
-            'back' => true,
-            'import' => true
         ],
-        //'no_ajax_form_reload' => true,
+        'no_ajax_form_reload' => true,
     ];
     public $containers = [
         'top' => ['default_row_type' => 'grid', 'order' => 100],
@@ -42,20 +38,22 @@ class Invites extends Base
         'roles_container' => [
             'type' => 'details',
             'details_rendering_type' => 'table',
-            'details_new_rows' => 1,
+            'details_new_rows' => 0,
             'details_key' => '\Numbers\Users\Users\Model\User\Invite\Roles',
             'details_pk' => ['um_usrinrol_role_id'],
             'required' => true,
             'order' => 35000,
+            'details_cannot_delete' => true,
         ],
         'organizations_container' => [
             'type' => 'details',
             'details_rendering_type' => 'table',
-            'details_new_rows' => 1,
+            'details_new_rows' => 0,
             'details_key' => '\Numbers\Users\Users\Model\User\Invite\Organizations',
             'details_pk' => ['um_usrinorg_organization_id'],
             'required' => true,
             'order' => 35001,
+            'details_cannot_delete' => true,
         ],
         'other_container' => ['default_row_type' => 'grid', 'order' => 33000],
     ];
@@ -69,17 +67,21 @@ class Invites extends Base
             'organizations' => ['order' => 100, 'label_name' => 'Organizations'],
             'roles' => ['order' => 200, 'label_name' => 'Roles'],
             \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => ['order' => 300] + \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA,
-            'other' => ['order' => 400, 'label_name' => 'Other']
+            'password' => ['order' => 400, 'label_name' => 'Password'],
+            'other' => ['order' => 500, 'label_name' => 'Other']
         ]
     ];
     public $elements = [
         'top' => [
             'um_usrinv_id' => [
-                'um_usrinv_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Invite #', 'domain' => 'invite_id_sequence', 'percent' => 50, 'navigation' => true],
-                'um_usrinv_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => true]
+                'um_usrinv_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Invite #', 'domain' => 'invite_id_sequence', 'percent' => 50, 'required' => true, 'readonly' => true],
+                'um_usrinv_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => true, 'readonly' => true]
             ],
             'um_usrinv_name' => [
                 'um_usrinv_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => 'c', 'autocomplete' => 'off'],
+            ],
+            self::HIDDEN => [
+                'token' => ['label_name' => 'Token', 'method' => 'hidden', 'preserved' => true]
             ]
         ],
         'tabs' => [
@@ -91,6 +93,9 @@ class Invites extends Base
             ],
             'roles' => [
                 'roles' => ['container' => 'roles_container', 'order' => 100],
+            ],
+            'password' => [
+                'password' => ['container' => 'password_container', 'order' => 100],
             ],
             'other' => [
                 'other' => ['container' => 'other_container', 'order' => 100],
@@ -114,51 +119,58 @@ class Invites extends Base
                 'um_usrinv_email' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
                 'um_usrinv_phone' => ['order' => 2, 'label_name' => 'Primary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false, 'description' => 'Must start with country code like +1'],
             ],
-            'separator_3' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 600, 'label_name' => 'Message To Invitee', 'icon' => 'fas fa-envelope-open-text', 'percent' => 100],
-            ],
-            'um_usrinv_invite_message' => [
-                'um_usrinv_invite_message' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Invite Message', 'domain' => 'message', 'null' => true, 'required' => true, 'method' => 'textarea', 'rows' => 6, 'percent' => 100, 'description' => 'You can append {url} tag to indicate where URL will be.'],
-            ]
         ],
         'roles_container' => [
             'row1' => [
-                'um_usrinrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Roles', 'onchange' => 'this.form.submit();'],
-                'um_usrinrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+                'um_usrinrol_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role', 'domain' => 'role_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\DataSource\Roles', 'readonly' => true],
+                'um_usrinrol_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5, 'readonly' => true]
             ]
         ],
         'organizations_container' => [
             'row1' => [
-                'um_usrinorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'onchange' => 'this.form.submit();'],
-                'um_usrinorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
-                'um_usrinorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+                'um_usrinorg_organization_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Organization', 'domain' => 'organization_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'searchable' => true, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive', 'readonly' => true],
+                'um_usrinorg_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15, 'readonly' => true],
+                'um_usrinorg_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5, 'readonly' => true]
+            ]
+        ],
+        'password_container' => [
+            'row1' => [
+                'new_password1' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Password', 'domain' => 'password', 'required' => true, 'percent' => 50, 'method' => 'password']
+            ],
+            'row2' => [
+                'new_password2' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password (Confirm)', 'domain' => 'password', 'required' => true, 'percent' => 50, 'method' => 'password']
             ]
         ],
         'other_container' => [
             'um_usrinv_require_address' => [
-                'um_usrinv_require_address' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Require Address', 'type' => 'boolean', 'null' => true, 'percent' => 25],
+                'um_usrinv_require_address' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Require Address', 'type' => 'boolean', 'null' => true, 'percent' => 25, 'readonly' => true],
             ],
             'um_usrinv_require_assignment' => [
-                'um_usrinv_require_assignment' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Require Assignment', 'type' => 'boolean', 'null' => true, 'required' => 'c', 'percent' => 25],
-                'um_usrinv_assignusrtype_code' => ['order' => 2, 'label_name' => 'Assignment Type', 'domain' => 'type_code', 'null' => true, 'required' => 'c', 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types::optionsActive'],
-                'um_usrinv_referral_user_id' => ['order' => 3, 'label_name' => 'Assignment User', 'domain' => 'user_id', 'null' => true, 'required' => 'c', 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive'],
+                'um_usrinv_require_assignment' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Require Assignment', 'type' => 'boolean', 'null' => true, 'required' => 'c', 'percent' => 25, 'readonly' => true],
+                'um_usrinv_assignusrtype_code' => ['order' => 2, 'label_name' => 'Assignment Type', 'domain' => 'type_code', 'null' => true, 'required' => 'c', 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\Assignment\Types::optionsActive', 'readonly' => true],
+                'um_usrinv_referral_user_id' => ['order' => 3, 'label_name' => 'Assignment User', 'domain' => 'user_id', 'null' => true, 'required' => 'c', 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Users::optionsActive', 'readonly' => true],
             ]
         ],
         'buttons' => [
-            self::BUTTONS => self::BUTTONS_DATA_GROUP
+            self::BUTTONS => [
+                self::BUTTON_SUBMIT => self::BUTTON_SUBMIT_DATA,
+            ]
         ]
     ];
     public $collection = [
         'name' => 'UM User Invites',
         'model' => '\Numbers\Users\Users\Model\User\Invites',
+        'skip_transaction' => true,
         'details' => [
             '\Numbers\Users\Users\Model\User\Invite\Roles' => [
+                'readonly' => true,
                 'name' => 'UM User Invite Roles',
                 'pk' => ['um_usrinrol_tenant_id', 'um_usrinrol_usrinv_id', 'um_usrinrol_role_id'],
                 'type' => '1M',
                 'map' => ['um_usrinv_tenant_id' => 'um_usrinrol_tenant_id', 'um_usrinv_id' => 'um_usrinrol_usrinv_id'],
             ],
             '\Numbers\Users\Users\Model\User\Invite\Organizations' => [
+                'readonly' => true,
                 'name' => 'UM User Invite Organizations',
                 'pk' => ['um_usrinorg_tenant_id', 'um_usrinorg_usrinv_id', 'um_usrinorg_organization_id'],
                 'type' => '1M',
@@ -202,25 +214,9 @@ class Invites extends Base
             $form->error('danger', 'You must provide email or phone!', 'um_usrinv_email');
             $form->error('danger', 'You must provide email or phone!', 'um_usrinv_phone');
         }
-        // primary organizations
-        $form->validateDetailsPrimaryColumn(
-            '\Numbers\Users\Users\Model\User\Invite\Organizations',
-            'um_usrinorg_primary',
-            'um_usrinorg_inactive',
-            'um_usrinorg_organization_id'
-        );
-        // assignment
-        if (!empty($form->values['um_usrinv_require_assignment'])) {
-            $form->validateQuickRequired('um_usrinv_assignusrtype_code');
-            $form->validateQuickRequired('um_usrinv_referral_user_id');
-        }
-        // message
-        if (strpos($form->values['um_usrinv_invite_message'] ?? '', '{url}') === false) {
-            $form->values['um_usrinv_invite_message'] .= "\n\n" . '{url}';
-        }
-        // generate new sequence
-        if (empty($form->values['um_usrinv_code'])) {
-            $form->values['um_usrinv_code'] = Sequence::nextval('DEFAULT', 'IVT', 'UM', \Tenant::id(), true);
+        // password
+        if ($form->values['new_password1'] != $form->values['new_password2']) {
+            $form->error('danger', 'Confirm password and password must match!', 'new_password2');
         }
         // primary address
         if (!empty($form->values['\Numbers\Users\Users\Model\User\Invites\0Virtual0\Widgets\Addresses'])) {
@@ -238,20 +234,87 @@ class Invites extends Base
 
     public function post(& $form)
     {
-        if (!empty($form->values['um_usrinv_email']) || !empty($form->values['um_usrinv_phone'])) {
-            $crypt = new \Crypt();
-            $url = \Request::host() . 'Numbers/Users/Users/Controller/Invite/Public2/_Edit?token=' . $crypt->tokenCreate($form->values['um_usrinv_id'], 'invite.token');
-            $success_url = ShortUrls::createShortUrl('Invite User (Form)', $url)['short_url_with_host'];
-            $occasion = loc('NF.Form.OccasionInviteFromSystem', 'You were invited to join the system');
-        }
-        // send email
-        if (!empty($form->values['um_usrinv_email'])) {
-            Notifications::sendInviteToEmail($form->values['um_usrinv_email'], $form->values['um_usrinv_invite_message'], $occasion, $success_url);
-        }
-        // send SMS
+        // create user
+        $numeric_phone = null;
         if (!empty($form->values['um_usrinv_phone'])) {
-            $phone = Phone::plainNumber($form->values['um_usrinv_phone']);
-            Notifications::sendInviteToSMS($phone, $form->values['um_usrinv_invite_message'], $occasion, $success_url);
+            $numeric_phone = Phone::plainNumber($form->values['um_usrinv_phone']);
+        }
+        $crypt = new \Crypt();
+        // prepare data
+        $data = [
+            'um_user_code' => $form->values['um_usrinv_code'],
+            'um_user_type_id' => $form->values['um_usrinv_type_id'],
+            'um_user_name' => $form->values['um_usrinv_name'],
+            'um_user_company' => $form->values['um_usrinv_company'],
+            // personal information
+            'um_user_title' => $form->values['um_usrinv_title'],
+            'um_user_first_name' => $form->values['um_usrinv_first_name'],
+            'um_user_last_name' => $form->values['um_usrinv_last_name'],
+            // contact
+            'um_user_email' => $form->values['um_usrinv_email'],
+            'um_user_phone' => $form->values['um_usrinv_phone'],
+            'um_user_numeric_phone' => $numeric_phone,
+            // login
+            'um_user_login_enabled' => 1,
+            'um_user_login_username' => null,
+            //'um_user_login_password_new' => $crypt->passwordHash($form->values['new_password1']),
+            'um_user_login_last_set' => \Format::now('date'),
+            // inactive & hold
+            'um_user_hold' => 0,
+            'um_user_inactive' => 0,
+        ];
+        // add roles
+        $data['\Numbers\Users\Users\Model\User\Roles'] = [];
+        foreach ($form->values['\Numbers\Users\Users\Model\User\Invite\Roles'] as $v) {
+            $data['\Numbers\Users\Users\Model\User\Roles'][] = [
+                'um_usrrol_role_id' => $v['um_usrinrol_role_id'],
+                'um_usrrol_inactive' => $v['um_usrinrol_inactive'],
+            ];
+        }
+        // add organizations
+        $data['\Numbers\Users\Users\Model\User\Organizations'] = [];
+        foreach ($form->values['\Numbers\Users\Users\Model\User\Invite\Organizations'] as $v) {
+            $data['\Numbers\Users\Users\Model\User\Organizations'][] = [
+                'um_usrorg_organization_id' => $v['um_usrinorg_organization_id'],
+                'um_usrorg_primary' => $v['um_usrinorg_primary'],
+                'um_usrorg_inactive' => $v['um_usrinorg_inactive'],
+            ];
+        }
+        // copy addresses
+        $data['\Numbers\Users\Users\Model\Users\0Virtual0\Widgets\Addresses'] = [];
+        foreach ($form->values['\Numbers\Users\Users\Model\User\Invites\0Virtual0\Widgets\Addresses'] as $v) {
+            $data['\Numbers\Users\Users\Model\Users\0Virtual0\Widgets\Addresses'][] = $v;
+        }
+        // finaly save
+        $model = Users::API();
+        $result = $model->save($data);
+        if (!$result['success']) {
+            $form->error('danger', $result['error']);
+        } else {
+            // sep password
+            $um_user_id = $result['new_serials']['um_user_id'];
+            $result = \Numbers\Users\Users\Model\Users::collectionStatic()->merge(
+                [
+                    'um_user_id' => $um_user_id,
+                    'um_user_login_enabled' => 1,
+                    'um_user_login_password' => $crypt->passwordHash($form->values['new_password1']),
+                    'um_user_login_last_set' => \Format::now('date')
+                ],
+                [
+                    'skip_optimistic_lock' => true
+                ]
+            );
+            if (!$result['success']) {
+                $form->error('danger', $result['error']);
+                return;
+            }
+            // send notification
+            Notifications::sendRegistrationSimpleEmail($um_user_id, $form->values['new_password1']);
+            // redirect
+            $url = \Application::get('flag.global.default_login_page');
+            $form_action_params = [];
+            $form_action_params['__message'] = 'Successfully created user account, please login with provided information.';
+            \Request::redirect($url . '?' . http_build_query2($form_action_params));
         }
     }
 

@@ -23,7 +23,7 @@ class Logo
             return '';
         }
         // pack the image by base64 encoding
-        if (isset($logo['local_filename'])) {
+        if (!empty($logo['local_filename'])) {
             $logo['src'] = 'data: ' . mime_content_type($logo['local_filename']) . ';base64,' . base64_encode(file_get_contents($logo['local_filename']));
         }
         // render

@@ -75,7 +75,8 @@ class Invites extends List2
         self::LIST_CONTAINER => [
             'row1' => [
                 'um_usrinv_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Invite #', 'domain' => 'invite_id', 'percent' => 10, 'url_edit' => true],
-                'um_usrinv_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 75],
+                'um_usrinv_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 45],
+                'um_usrinv_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 30],
                 'um_usrinv_type_id' => ['order' => 4, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 10, 'options_model' => '\Numbers\Users\Users\Model\User\Types'],
                 'um_usrinv_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
             ],

@@ -156,8 +156,8 @@ class Headers extends Base
             // multiple columns
             if (str_contains($v['p8_hdrfield_column_name'], '__multiple')) {
                 if (empty($v['\Numbers\Users\Printing\Model\Header\Field\MultipleColumns'])) {
-                    $form->validateQuikRequired(['\Numbers\Users\Printing\Model\Header\Fields', $k, '\Numbers\Users\Printing\Model\Header\Field\MultipleColumns', 1, 'p8_hdrfldmult_column_name']);
-                    $form->validateQuikRequired(['\Numbers\Users\Printing\Model\Header\Fields', $k, '\Numbers\Users\Printing\Model\Header\Field\MultipleColumns', 1, 'p8_hdrfldmult_model_code']);
+                    $form->validateQuickRequired(['\Numbers\Users\Printing\Model\Header\Fields', $k, '\Numbers\Users\Printing\Model\Header\Field\MultipleColumns', 1, 'p8_hdrfldmult_column_name']);
+                    $form->validateQuickRequired(['\Numbers\Users\Printing\Model\Header\Fields', $k, '\Numbers\Users\Printing\Model\Header\Field\MultipleColumns', 1, 'p8_hdrfldmult_model_code']);
                 }
             }
             // otheer options

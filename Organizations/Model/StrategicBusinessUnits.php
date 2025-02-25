@@ -71,8 +71,13 @@ class StrategicBusinessUnits extends Table
         ]
     ];
     public $optimistic_lock = true;
-    public $options_map = [];
-    public $options_active = [];
+    public $options_map = [
+        'on_sbu_name' => 'name',
+        'on_sbu_inactive' => 'inactive',
+    ];
+    public $options_active = [
+        'on_sbu_inactive' => 0,
+    ];
     public $engine = [
         'MySQLi' => 'InnoDB'
     ];

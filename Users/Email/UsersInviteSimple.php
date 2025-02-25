@@ -52,6 +52,7 @@ class UsersInviteSimple extends Email
 
     public function renderMessage(& $form, & $options, & $value, & $neighbouring_values)
     {
-        return str_replace('{url}', $form->values['success_url'], $form->values['message']);
+        $result = str_replace('{url}', $form->values['success_url'], $form->values['message']);
+        return nl2br2($result);
     }
 }

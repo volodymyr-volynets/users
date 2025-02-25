@@ -259,8 +259,8 @@ class Customers extends \Object\Form\Wrapper\Base
                     $form->error(DANGER, Messages::REQUIRED_FIELD, '\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses[1][wg_address_type_code]');
                 }
                 // phone and email are mandatory fields
-                $form->validateQuikRequired('on_customer_phone');
-                $form->validateQuikRequired('on_customer_email');
+                $form->validateQuickRequired('on_customer_phone');
+                $form->validateQuickRequired('on_customer_email');
             }
             if (!empty($form->values['\Numbers\Users\Organizations\Model\Customers\0Virtual0\Widgets\Addresses'])) {
                 // primary address

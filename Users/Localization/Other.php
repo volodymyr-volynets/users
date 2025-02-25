@@ -40,5 +40,9 @@ class Other
         'NF.Message.DoNotWantToReceiveEmails' => 'If you would no longer like to receive emails like this one from Monster please click here to {unsubscribe}.',
         'NF.Message.Unsubscribe' => 'unsubscribe',
         'NF.Message.Unauthorized' => 'Unauthorized!',
+        'NF.Form.Range' => 'Range',
+        'NF.Form.Range1What' => 'Minimum {what}',
+        'NF.Form.Range2What' => 'Maximum {what}',
+        'NF.Form.OccasionInviteFromSystem' => 'You were invited to join the system',
     ];
 }
