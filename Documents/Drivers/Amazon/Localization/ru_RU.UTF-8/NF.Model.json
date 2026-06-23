@@ -1,0 +1,15 @@
+{
+    "": "",
+    "AccessKey": "Ключ доступа",
+    "Bucket": "Ведро",
+    "DTAmazonProfiles": "Профили D/T Amazon",
+    "Inactive": "Неактивный",
+    "Name": "Имя",
+    "OptimisticLock": "Оптимистический замок",
+    "ProfileID": "Номер профиля",
+    "Region": "Область",
+    "SecretAccessKey": "Секретный ключ доступа",
+    "Sequence": "Последовательность",
+    "TenantID": "Жилец #",
+    "YesNo": "Да / Нет"
+}

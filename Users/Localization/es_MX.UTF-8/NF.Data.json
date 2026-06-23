@@ -1,0 +1,7 @@
+{
+    "ChatChannel": "Canal de chat",
+    "ChatMessage": "Mensaje de chat",
+    "ChatThread": "Hilo de chat",
+    "EmailNotification": "Notificación por correo electrónico",
+    "SMSNotification": "Notificación por SMS"
+}

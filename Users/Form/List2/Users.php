@@ -25,7 +25,7 @@ class Users extends List2
         'actions' => [
             'refresh' => true,
             'new' => true,
-            'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
+            'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fa-solid fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
         ]
     ];
     public $containers = [
@@ -60,8 +60,9 @@ class Users extends List2
                 'um_usrorg_organization_id1' => ['order' => 2, 'label_name' => 'Organizations', 'domain' => 'organization_id', 'percent' => 50, 'method' => 'multiselect', 'searchable' => true, 'multiple_column' => 1, 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGrouped', 'subquery_builder' => ['model' => '\Numbers\Users\Users\Model\User\Organizations', 'alias' => 'inner_a2', 'column' => 'inner_a2.um_usrorg_organization_id', 'on' => [['a.um_user_id', '=', 'inner_a2.um_usrorg_user_id']]]],
             ],
             'um_user_hold1' => [
-                'um_user_hold1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_hold;='],
-                'um_user_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;=']
+                'um_user_hold1' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Hold', 'type' => 'boolean', 'percent' => 25, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_hold;='],
+                'um_user_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 25, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_user_inactive;='],
+                'um_usrgrmap_group_id1' => ['order' => 3, 'label_name' => 'Groups', 'domain' => 'group_id', 'percent' => 50, 'method' => 'multiselect', 'searchable' => true, 'multiple_column' => 1, 'options_model' => '\Numbers\Users\Users\Model\User\Groups::options', 'subquery_builder' => ['model' => '\Numbers\Users\Users\Model\User\Group\Map', 'alias' => 'inner_g2', 'column' => 'inner_g2.um_usrgrmap_group_id', 'on' => [['a.um_user_id', '=', 'inner_g2.um_usrgrmap_user_id']]]],
             ],
             'full_text_search' => [
                 'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_user_name', 'a.um_user_code', 'a.um_user_phone', 'a.um_user_email', 'a.um_user_company', 'a.um_user_login_username'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],

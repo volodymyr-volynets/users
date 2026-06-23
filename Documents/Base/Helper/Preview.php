@@ -14,6 +14,7 @@ namespace Numbers\Users\Documents\Base\Helper;
 use Helper\File;
 use Numbers\Users\Documents\Base\Base;
 use Numbers\Users\Documents\Base\Model\Files;
+use Numbers\Users\Documents\Base\Helper\Validate;
 
 class Preview
 {
@@ -29,7 +30,18 @@ class Preview
     public function renderPreview(& $form, & $options, & $value, & $neighbouring_values)
     {
         if (!empty($neighbouring_values[$options['options']['preview_file_id']])) {
-            return '<div>' . \HTML::img(['src' => Base::generateURL($neighbouring_values[$options['options']['preview_file_id']])]) . '</div>';
+            $file = Files::getSingleStatic([
+                'where' => [
+                    'dt_file_tenant_id' => \Tenant::id(),
+                    'dt_file_id' => $neighbouring_values[$options['options']['preview_file_id']],
+                ]
+            ]);
+            $url = Base::generateURL($neighbouring_values[$options['options']['preview_file_id']]);
+            if (in_array($file['dt_file_extension'], Validate::$validation_extensions['images'])) {
+                return '<div>' . \HTML::img(['src' => $url]) . '</div>';
+            } else {
+                return '<div>' . \HTML::a(['href' => $url, 'value' => loc('NF.Form.Download', 'Download')]) . '</div>';
+            }
         } else {
             return '';
         }
@@ -89,7 +101,7 @@ class Preview
                 if (!empty($result)) {
                     $result .= '<br/>';
                 }
-                $result .= \HTML::a(['href' => Base::generateURL($k, false, $v['dt_file_name']), 'target' => '_blank', 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name']]);
+                $result .= \HTML::a(['href' => Base::generateURL($k, false, $v['dt_file_name']), 'target' => '_blank', 'value' => \HTML::icon(['type' => 'fa-solid fa-link']) . ' ' . $v['dt_file_name']]);
             }
         }
         return $result;

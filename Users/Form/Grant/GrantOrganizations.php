@@ -25,7 +25,7 @@ class GrantOrganizations extends Base
         'segment' => [
             'type' => 'primary',
             'header' => [
-                'icon' => ['type' => 'fas fa-pen-square'],
+                'icon' => ['type' => 'fa-solid fa-pen-square'],
                 'title' => 'Grant Organizations:'
             ]
         ],

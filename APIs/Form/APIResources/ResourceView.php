@@ -30,7 +30,7 @@ class ResourceView extends Base
     public $elements = [
         'separator' => [
             'separator' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 100, 'label_name' => 'API Content', 'icon' => 'far fa-newspaper', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 100, 'label_name' => 'API Content', 'icon' => 'fa-regular fa-newspaper', 'percent' => 100],
             ],
         ],
         'top' => [

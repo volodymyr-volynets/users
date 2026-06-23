@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\Channel\Group;
-class ChannelsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class ChannelsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Channel\Group\Channels::class;
+    public string $object_table_class = Channels::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_changrpchan_tenant_id','um_changrpchan_um_changroup_id','um_changrpchan_um_channel_code'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class ChannelsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_changrpchan_tenant_id = NULL {
-                        get => $this->um_changrpchan_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_changrpchan_tenant_id', $value);
-                            $this->um_changrpchan_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_changrpchan_tenant_id = null {
+        get => $this->um_changrpchan_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_changrpchan_tenant_id', $value);
+            $this->um_changrpchan_tenant_id = $value;
+        }
+    }
 
     /**
      * Group #
@@ -40,13 +51,13 @@ class ChannelsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: group_id Type: integer
      */
-    public int|null $um_changrpchan_um_changroup_id = NULL {
-                        get => $this->um_changrpchan_um_changroup_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_changrpchan_um_changroup_id', $value);
-                            $this->um_changrpchan_um_changroup_id = $value;
-                        }
-                    }
+    public int|null $um_changrpchan_um_changroup_id = null {
+        get => $this->um_changrpchan_um_changroup_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_changrpchan_um_changroup_id', $value);
+            $this->um_changrpchan_um_changroup_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -58,12 +69,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_changrpchan_um_channel_code = null {
-                        get => $this->um_changrpchan_um_channel_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_changrpchan_um_channel_code', $value);
-                            $this->um_changrpchan_um_channel_code = $value;
-                        }
-                    }
+        get => $this->um_changrpchan_um_channel_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_changrpchan_um_channel_code', $value);
+            $this->um_changrpchan_um_channel_code = $value;
+        }
+    }
 
     /**
      * Type Code
@@ -75,12 +86,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_changrpchan_type_code = null {
-                        get => $this->um_changrpchan_type_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_changrpchan_type_code', $value);
-                            $this->um_changrpchan_type_code = $value;
-                        }
-                    }
+        get => $this->um_changrpchan_type_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_changrpchan_type_code', $value);
+            $this->um_changrpchan_type_code = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -92,12 +103,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_changrpchan_inactive = 0 {
-                        get => $this->um_changrpchan_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_changrpchan_inactive', $value);
-                            $this->um_changrpchan_inactive = $value;
-                        }
-                    }
+        get => $this->um_changrpchan_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_changrpchan_inactive', $value);
+            $this->um_changrpchan_inactive = $value;
+        }
+    }
 
     /**
      * Inserted Datetime
@@ -109,12 +120,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $um_changrpchan_inserted_timestamp = null {
-                        get => $this->um_changrpchan_inserted_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_changrpchan_inserted_timestamp', $value);
-                            $this->um_changrpchan_inserted_timestamp = $value;
-                        }
-                    }
+        get => $this->um_changrpchan_inserted_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_changrpchan_inserted_timestamp', $value);
+            $this->um_changrpchan_inserted_timestamp = $value;
+        }
+    }
 
     /**
      * Inserted User #
@@ -125,13 +136,13 @@ class ChannelsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_changrpchan_inserted_user_id = NULL {
-                        get => $this->um_changrpchan_inserted_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_changrpchan_inserted_user_id', $value);
-                            $this->um_changrpchan_inserted_user_id = $value;
-                        }
-                    }
+    public int|null $um_changrpchan_inserted_user_id = null {
+        get => $this->um_changrpchan_inserted_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_changrpchan_inserted_user_id', $value);
+            $this->um_changrpchan_inserted_user_id = $value;
+        }
+    }
 
     /**
      * Updated Datetime
@@ -143,12 +154,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $um_changrpchan_updated_timestamp = null {
-                        get => $this->um_changrpchan_updated_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_changrpchan_updated_timestamp', $value);
-                            $this->um_changrpchan_updated_timestamp = $value;
-                        }
-                    }
+        get => $this->um_changrpchan_updated_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_changrpchan_updated_timestamp', $value);
+            $this->um_changrpchan_updated_timestamp = $value;
+        }
+    }
 
     /**
      * Updated User #
@@ -159,11 +170,11 @@ class ChannelsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_changrpchan_updated_user_id = NULL {
-                        get => $this->um_changrpchan_updated_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_changrpchan_updated_user_id', $value);
-                            $this->um_changrpchan_updated_user_id = $value;
-                        }
-                    }
+    public int|null $um_changrpchan_updated_user_id = null {
+        get => $this->um_changrpchan_updated_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_changrpchan_updated_user_id', $value);
+            $this->um_changrpchan_updated_user_id = $value;
+        }
+    }
 }

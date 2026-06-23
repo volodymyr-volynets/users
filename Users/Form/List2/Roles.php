@@ -23,7 +23,7 @@ class Roles extends List2
         'actions' => [
             'refresh' => true,
             'new' => true,
-            'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
+            'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fa-solid fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
         ]
     ];
     public $containers = [
@@ -72,12 +72,13 @@ class Roles extends List2
         self::LIST_CONTAINER => [
             'row1' => [
                 'um_role_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Role #', 'domain' => 'role_id', 'percent' => 10, 'url_edit' => true],
-                'um_role_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 45],
+                'um_role_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 40],
                 'um_role_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 20],
                 'um_role_type_id' => ['order' => 4, 'label_name' => 'Type', 'domain' => 'type_id', 'percent' => 10, 'options_model' => '\Numbers\Users\Users\Model\Role\Types'],
                 'um_role_global' => ['order' => 5, 'label_name' => 'Global', 'type' => 'boolean', 'percent' => 5],
                 'um_role_super_admin' => ['order' => 6, 'label_name' => 'Super Admin', 'type' => 'boolean', 'percent' => 5],
-                'um_role_inactive' => ['order' => 7, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+                'um_role_weight' => ['order' => 7, 'label_name' => 'Weight', 'domain' => 'weight', 'percent' => 5],
+                'um_role_inactive' => ['order' => 8, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
             ]
         ]
     ];

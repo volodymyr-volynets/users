@@ -42,7 +42,7 @@ class Files
                 'pk' => ['dt_file_id']
             ]);
             foreach ($files as $k => $v) {
-                $result .= \HTML::a(['href' => Base::generateURL($k, false, $v['dt_file_name']), 'target' => '_blank', 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name']]);
+                $result .= \HTML::a(['href' => Base::generateURL($k, false, $v['dt_file_name']), 'target' => '_blank', 'value' => \HTML::icon(['type' => 'fa-solid fa-link']) . ' ' . $v['dt_file_name']]);
                 $result .= '<br/>';
             }
         }

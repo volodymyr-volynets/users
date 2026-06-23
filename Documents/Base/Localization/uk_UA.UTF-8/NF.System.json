@@ -1,0 +1,14 @@
+{
+    "CatalogCode": "Код каталогу",
+    "CatalogOrganizationID": "Номер організації каталогу",
+    "Catalogs": "Каталоги",
+    "DTCatalogs": "Каталоги D/T",
+    "DTDocumentManagement": "Управління документами D/T",
+    "DTDocuments": "Документи D/T",
+    "DTFileTypes": "Типи D/T-файлів",
+    "DocumentManagement": "Управління документами",
+    "FileTypes": "Типи файлів",
+    "Global": "Глобальний",
+    "Operations": "Операції",
+    "SystemManagement": "Управління системою"
+}

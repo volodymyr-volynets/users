@@ -23,7 +23,7 @@ class Logout extends Base
         'segment' => [
             'type' => 'danger',
             'header' => [
-                'icon' => ['type' => 'fas fa-sign-out-alt'],
+                'icon' => ['type' => 'fa-solid fa-sign-out-alt'],
                 'title' => 'Sign Out:'
             ]
         ],

@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User;
-class InternalizationAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class InternalizationAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Internalization::class;
+    public string $object_table_class = Internalization::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_usri18n_tenant_id','um_usri18n_user_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class InternalizationAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usri18n_tenant_id = NULL {
-                        get => $this->um_usri18n_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_tenant_id', $value);
-                            $this->um_usri18n_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usri18n_tenant_id = null {
+        get => $this->um_usri18n_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_tenant_id', $value);
+            $this->um_usri18n_tenant_id = $value;
+        }
+    }
 
     /**
      * User #
@@ -40,13 +51,13 @@ class InternalizationAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_usri18n_user_id = NULL {
-                        get => $this->um_usri18n_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_user_id', $value);
-                            $this->um_usri18n_user_id = $value;
-                        }
-                    }
+    public int|null $um_usri18n_user_id = null {
+        get => $this->um_usri18n_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_user_id', $value);
+            $this->um_usri18n_user_id = $value;
+        }
+    }
 
     /**
      * Group #
@@ -57,13 +68,13 @@ class InternalizationAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: group_id Type: integer
      */
-    public int|null $um_usri18n_group_id = NULL {
-                        get => $this->um_usri18n_group_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_group_id', $value);
-                            $this->um_usri18n_group_id = $value;
-                        }
-                    }
+    public int|null $um_usri18n_group_id = null {
+        get => $this->um_usri18n_group_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_group_id', $value);
+            $this->um_usri18n_group_id = $value;
+        }
+    }
 
     /**
      * Language Code
@@ -75,12 +86,12 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: language_code Type: char
      */
     public string|null $um_usri18n_language_code = null {
-                        get => $this->um_usri18n_language_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_language_code', $value);
-                            $this->um_usri18n_language_code = $value;
-                        }
-                    }
+        get => $this->um_usri18n_language_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_language_code', $value);
+            $this->um_usri18n_language_code = $value;
+        }
+    }
 
     /**
      * Locale Code
@@ -92,12 +103,12 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: locale_code Type: varchar
      */
     public string|null $um_usri18n_locale_code = null {
-                        get => $this->um_usri18n_locale_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_locale_code', $value);
-                            $this->um_usri18n_locale_code = $value;
-                        }
-                    }
+        get => $this->um_usri18n_locale_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_locale_code', $value);
+            $this->um_usri18n_locale_code = $value;
+        }
+    }
 
     /**
      * Timezone Code
@@ -109,12 +120,12 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: timezone_code Type: varchar
      */
     public string|null $um_usri18n_timezone_code = null {
-                        get => $this->um_usri18n_timezone_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_timezone_code', $value);
-                            $this->um_usri18n_timezone_code = $value;
-                        }
-                    }
+        get => $this->um_usri18n_timezone_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_timezone_code', $value);
+            $this->um_usri18n_timezone_code = $value;
+        }
+    }
 
     /**
      * Organization #
@@ -125,13 +136,13 @@ class InternalizationAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: organization_id Type: integer
      */
-    public int|null $um_usri18n_organization_id = NULL {
-                        get => $this->um_usri18n_organization_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_organization_id', $value);
-                            $this->um_usri18n_organization_id = $value;
-                        }
-                    }
+    public int|null $um_usri18n_organization_id = null {
+        get => $this->um_usri18n_organization_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_organization_id', $value);
+            $this->um_usri18n_organization_id = $value;
+        }
+    }
 
     /**
      * Date Format
@@ -143,12 +154,12 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_usri18n_format_date = null {
-                        get => $this->um_usri18n_format_date;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_format_date', $value);
-                            $this->um_usri18n_format_date = $value;
-                        }
-                    }
+        get => $this->um_usri18n_format_date;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_format_date', $value);
+            $this->um_usri18n_format_date = $value;
+        }
+    }
 
     /**
      * Time Format
@@ -160,12 +171,12 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_usri18n_format_time = null {
-                        get => $this->um_usri18n_format_time;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_format_time', $value);
-                            $this->um_usri18n_format_time = $value;
-                        }
-                    }
+        get => $this->um_usri18n_format_time;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_format_time', $value);
+            $this->um_usri18n_format_time = $value;
+        }
+    }
 
     /**
      * Datetime Format
@@ -177,12 +188,12 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_usri18n_format_datetime = null {
-                        get => $this->um_usri18n_format_datetime;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_format_datetime', $value);
-                            $this->um_usri18n_format_datetime = $value;
-                        }
-                    }
+        get => $this->um_usri18n_format_datetime;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_format_datetime', $value);
+            $this->um_usri18n_format_datetime = $value;
+        }
+    }
 
     /**
      * Timestamp Format
@@ -194,12 +205,12 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_usri18n_format_timestamp = null {
-                        get => $this->um_usri18n_format_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_format_timestamp', $value);
-                            $this->um_usri18n_format_timestamp = $value;
-                        }
-                    }
+        get => $this->um_usri18n_format_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_format_timestamp', $value);
+            $this->um_usri18n_format_timestamp = $value;
+        }
+    }
 
     /**
      * Amounts In Forms
@@ -210,13 +221,13 @@ class InternalizationAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $um_usri18n_format_amount_frm = NULL {
-                        get => $this->um_usri18n_format_amount_frm;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_format_amount_frm', $value);
-                            $this->um_usri18n_format_amount_frm = $value;
-                        }
-                    }
+    public int|null $um_usri18n_format_amount_frm = null {
+        get => $this->um_usri18n_format_amount_frm;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_format_amount_frm', $value);
+            $this->um_usri18n_format_amount_frm = $value;
+        }
+    }
 
     /**
      * Amounts In Financial Statement
@@ -227,13 +238,13 @@ class InternalizationAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $um_usri18n_format_amount_fs = NULL {
-                        get => $this->um_usri18n_format_amount_fs;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_format_amount_fs', $value);
-                            $this->um_usri18n_format_amount_fs = $value;
-                        }
-                    }
+    public int|null $um_usri18n_format_amount_fs = null {
+        get => $this->um_usri18n_format_amount_fs;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_format_amount_fs', $value);
+            $this->um_usri18n_format_amount_fs = $value;
+        }
+    }
 
     /**
      * Unit of Measures
@@ -245,12 +256,12 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_usri18n_format_uom = 'METRIC' {
-                        get => $this->um_usri18n_format_uom;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_format_uom', $value);
-                            $this->um_usri18n_format_uom = $value;
-                        }
-                    }
+        get => $this->um_usri18n_format_uom;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_format_uom', $value);
+            $this->um_usri18n_format_uom = $value;
+        }
+    }
 
     /**
      * Print Format
@@ -262,12 +273,12 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_usri18n_print_format = null {
-                        get => $this->um_usri18n_print_format;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_print_format', $value);
-                            $this->um_usri18n_print_format = $value;
-                        }
-                    }
+        get => $this->um_usri18n_print_format;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_print_format', $value);
+            $this->um_usri18n_print_format = $value;
+        }
+    }
 
     /**
      * Print Font
@@ -279,10 +290,10 @@ class InternalizationAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_usri18n_print_font = null {
-                        get => $this->um_usri18n_print_font;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usri18n_print_font', $value);
-                            $this->um_usri18n_print_font = $value;
-                        }
-                    }
+        get => $this->um_usri18n_print_font;
+        set {
+            $this->setFullPkAndFilledColumn('um_usri18n_print_font', $value);
+            $this->um_usri18n_print_font = $value;
+        }
+    }
 }

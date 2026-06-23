@@ -1,0 +1,4 @@
+{
+    "SlugMustStartWithExternal": "Slug must start with \"external-\" and must continue to have value!",
+    "SlugMustStartWithParentSlug": "Slug must start with parent slug!"
+}

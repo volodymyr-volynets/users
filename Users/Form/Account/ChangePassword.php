@@ -25,7 +25,7 @@ class ChangePassword extends Base
         'segment' => [
             'type' => 'primary',
             'header' => [
-                'icon' => ['type' => 'fas fa-asterisk'],
+                'icon' => ['type' => 'fa-solid fa-asterisk'],
                 'title' => 'Change Password:'
             ]
         ],
@@ -38,13 +38,13 @@ class ChangePassword extends Base
     public $elements = [
         'login' => [
             'old_password' => [
-                'old_password' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Old Password', 'type' => 'text', 'percent' => 50, 'method' => 'password', 'required' => true, 'autofocus' => true]
+                'old_password' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Old Password', 'type' => 'text', 'percent' => 50, 'method' => 'password', 'required' => true, 'autofocus' => true, 'method_renderer' => 'self::renderNewPasswordMethodRenderer']
             ],
             'new_password' => [
-                'new_password' => ['order' => 1, 'row_order' => 200, 'label_name' => 'New Password', 'domain' => 'password', 'percent' => 50, 'method' => 'password', 'required' => true]
+                'new_password' => ['order' => 1, 'row_order' => 200, 'label_name' => 'New Password', 'domain' => 'password', 'percent' => 50, 'method' => 'password', 'required' => true, 'method_renderer' => 'self::renderNewPasswordMethodRenderer']
             ],
             'new_password2' => [
-                'new_password2' => ['order' => 1, 'row_order' => 300, 'label_name' => 'New Password (Repeat)', 'domain' => 'password', 'percent' => 50, 'method' => 'password', 'required' => true]
+                'new_password2' => ['order' => 1, 'row_order' => 300, 'label_name' => 'New Password (Repeat)', 'domain' => 'password', 'percent' => 50, 'method' => 'password', 'required' => true, 'method_renderer' => 'self::renderNewPasswordMethodRenderer']
             ],
             self::BUTTONS => [
                 self::BUTTON_SUBMIT => self::BUTTON_SUBMIT_DATA
@@ -102,5 +102,18 @@ class ChangePassword extends Base
             $form->error(DANGER, 'Could not update password!');
         }
         return true;
+    }
+
+    public function renderNewPasswordMethodRenderer(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        $id = $options['options']['id'];
+        $result = [
+            'left' => '',
+            'value' => $value,
+            'right' => [],
+        ];
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.View', 'View'), 'onclick' => "$('#" . $id . "').attr('type', 'input');"]);
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.Paste', 'Paste'), 'onclick' => "Numbers.Form.pasteFromClipboard('#" . $id . "');"]);
+        return \HTML::inputGroup($result);
     }
 }

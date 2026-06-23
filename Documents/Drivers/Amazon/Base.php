@@ -12,6 +12,7 @@
 namespace Numbers\Users\Documents\Drivers\Amazon;
 
 use Aws\S3\S3Client;
+use Helper\File;
 
 class Base implements \Numbers\Users\Documents\Base\Interface2\Base
 {
@@ -52,15 +53,20 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
      * Upload
      *
      * @param array $file
+     * @param array $catalog
+     * @param array $options
+     *      boolean encrypt
+     *      string encryption_key
      * @return array
      */
-    public function upload(array $file, array $catalog): array
+    public function upload(array $file, array $catalog, array $options = []): array
     {
         $result = [
             'success' => false,
             'error' => [],
             'path' => null,
-            'thumbnail_path' => null
+            'thumbnail_path' => null,
+            'hash' => null,
         ];
         $dir = '';
         $application_structure = \Application::get('application.structure');
@@ -70,7 +76,18 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
         $dir .= \Tenant::id() . '/' . strtolower($catalog['dt_catalog_code']) . '/';
         // upload file to S3
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $destination = $dir . $file['file_id'] . '.' . $extension;
+        $salt = \Application::get('crypt.default.salt') ?? random_int(1000, 9999);
+        $filename = $file['file_id'] . '_' . sha1($dir . $file['file_id'] . '.' . $extension . '_' . $salt);
+        $result['hash'] = $filename;
+        $destination = $dir . $filename . '.' . $extension;
+        // encrypt
+        if (!empty($options['encrypt'])) {
+            $crypt = new \Crypt();
+            $crypt_destination_filename = File::generateTempName();
+            $crypt->encryptFile($file['tmp_name'], $crypt_destination_filename, $options['encryption_key'] ?? null);
+            $file['tmp_name'] = $crypt_destination_filename;
+        }
+        // save to bucket
         try {
             $s3_result = $this->s3->putObject([
                 'Bucket' => $this->options['bucket'],
@@ -94,11 +111,8 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
                 imagepng($new_image);
                 $image_data = ob_get_contents();
                 ob_end_clean();
-                // destroy images
-                imagedestroy($thumbnail_image);
-                imagedestroy($new_image);
                 // upload
-                $thumbnail_destination = $dir . $file['file_id'] . '.thumbnail.png';
+                $thumbnail_destination = $dir . $filename . '.thumbnail.png';
                 $s3_result = $this->s3->putObject([
                     'Bucket' => $this->options['bucket'],
                     'Key' => $thumbnail_destination,
@@ -154,6 +168,7 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
      * @param array $options
      *	boolean return
      *	boolean thumbnail
+     *. boolean return_aws_url_only
      * @return mixed
      */
     public function download(array $file, array $options = [])
@@ -164,15 +179,40 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
             } else {
                 $path = $file['dt_file_thumbnail_path'];
             }
+            // if we a looking for url only
+            if (!empty($options['return_aws_url_only'])) {
+                return $this->s3->getObjectUrl($this->options['bucket'], $path);
+            }
             $result = $this->s3->getObject([
                 'Bucket' => $this->options['bucket'],
                 'Key'    => $path
             ]);
+            // if we need to decrypt
+            if (!empty($options['key_id'])) {
+                $crypt_source_filename = File::generateTempName();
+                file_put_contents($crypt_source_filename, $result['Body']);
+                $crypt_destination_filename = File::generateTempName();
+                $crypt = new \Crypt();
+                $encryption_key = \Session::get('numbers.c0.encryption.' . $options['key_id'] . '.encrypted');
+                if (!isset($encryption_key)) {
+                    throw new \Exception('Wrong key_id.');
+                }
+                $encryption_key = $crypt->decrypt(base64_decode($encryption_key));
+                $crypt->decryptFile($crypt_source_filename, $crypt_destination_filename, $encryption_key);
+                $result['Body'] = file_get_contents($crypt_destination_filename);
+                File::delete($crypt_source_filename);
+                File::delete($crypt_destination_filename);
+            }
             // return
             if (!empty($options['return'])) {
                 return $result['Body'];
             }
-            \Layout::renderAs($result['Body'], $result['ContentType']);
+            // saved_content_type
+            if (!empty($options['saved_content_type'])) {
+                \Layout::renderAs($result['Body'], $file['dt_file_mime']);
+            } else {
+                \Layout::renderAs($result['Body'], $result['ContentType']);
+            }
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
         }

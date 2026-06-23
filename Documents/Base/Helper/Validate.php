@@ -15,8 +15,17 @@ class Validate
 {
     /**
      * Image extensions
+     *
+     * @var string
      */
     public const IMAGE_EXTENSIONS = 'bmp, gif, jpg, jpeg, tif, tiff, png';
+
+    /**
+     * Document extensions
+     *
+     * @var string
+     */
+    public const DOCUMENT_EXTENSIONS = 'pdf, xls, xlsx, doc, docx, ppt, pptx, xml';
 
     /**
      * Validation extensions
@@ -31,13 +40,23 @@ class Validate
         'csv' => ['csv'],
         'pdf' => ['pdf'],
         'txt' => ['txt'],
+        'css' => ['css'],
+        'web' => ['css', 'html', 'js'],
+        '__all' => [
+            'bmp', 'gif', 'jpg', 'jpeg', 'tif', 'tiff', 'png',
+            'pdf', 'xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx', 'xml',
+            'mp3', 'wav',
+            'zip', 'gz',
+            'csv', 'txt',
+            'css', 'html', 'js'
+        ],
     ];
 
     /**
      * Validate uploaded file
      *
      * @param array $file
-     * @param type $types
+     * @param array $types
      * @param array $options
      * @return array
      */

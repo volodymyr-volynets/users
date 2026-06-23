@@ -24,7 +24,7 @@ class Reset extends Base
         'segment' => [
             'type' => 'primary',
             'header' => [
-                'icon' => ['type' => 'fas fa-asterisk'],
+                'icon' => ['type' => 'fa-solid fa-asterisk'],
                 'title' => 'Password Reset:',
                 'loc' => 'NF.Form.PasswordReset'
             ]
@@ -58,7 +58,7 @@ class Reset extends Base
             // send email
             Notifications::sendPasswordResetEmail($user['id']);
         }
-        $form->error(SUCCESS, 'NF.Message.PleaseCheckYourEmailForLink|->Please check your email and click the link provided to reset your password.');
+        $form->error(SUCCESS, ['NF.Message.PleaseCheckYourEmailForLink', 'Please check your email and click the link provided to reset your password.']);
         return true;
     }
 }

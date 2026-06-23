@@ -1,0 +1,10 @@
+{
+    "Account": "Cuenta",
+    "ActivityLog": "Registro de actividad",
+    "Miscellaneous": "Misceláneas",
+    "Operations": "Operaciones",
+    "Reports": "Informes",
+    "SMAccountActivityLog": "Registro de actividad de la cuenta S/M",
+    "SMActivityLog": "Registro de actividad S/M",
+    "SystemManagement": "Gestión del sistema"
+}

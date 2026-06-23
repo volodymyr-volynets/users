@@ -48,7 +48,8 @@ class Unsubscribe extends Base
             'um_user_send_emails' => [
                 'um_user_send_emails' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Send Emails', 'loc' => 'NF.Form.SendEmails', 'type' => 'boolean', 'percent' => 25],
                 'um_user_send_sms' => ['order' => 2, 'label_name' => 'Send SMS', 'loc' => 'NF.Form.SendSMS', 'type' => 'boolean', 'percent' => 25],
-                'um_user_send_postal' => ['order' => 3, 'label_name' => 'Send Postal Mail', 'loc' => 'NF.Form.SendPostalMail', 'type' => 'boolean', 'percent' => 25],
+                'um_user_send_whatsapp' => ['order' => 3, 'label_name' => 'Send WhatsApp', 'loc' => 'NF.Form.SendWhatsApp', 'type' => 'boolean', 'percent' => 25],
+                'um_user_send_postal' => ['order' => 4, 'label_name' => 'Send Postal Mail', 'loc' => 'NF.Form.SendPostalMail', 'type' => 'boolean', 'percent' => 25],
             ],
         ],
         'buttons' => [
@@ -58,13 +59,15 @@ class Unsubscribe extends Base
         ],
     ];
     public $collection = [
-        'name' => 'Users',
+        'name' => 'UM Users',
         'model' => '\Numbers\Users\Users\Model\Users',
     ];
     public $loc = [];
 
-    public function post(& $form)
+    public function post(\Object\Form\Base & $form)
     {
-        $form->values['token'] = \Crypt::nanoCreateStatic($form->values['um_user_id']);
+        $form->redirect('/Numbers/Users/Users/Controller/Unsubscribe/_Index', [
+            'token' => \Crypt::nanoCreateStatic($form->values['um_user_id']),
+        ]);
     }
 }

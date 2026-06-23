@@ -24,7 +24,7 @@ class Comments extends List2
         'segment' => null,
         'actions' => [
             'refresh' => true,
-            'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
+            'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fa-solid fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
         ]
     ];
     public $containers = [

@@ -1,0 +1,16 @@
+{
+    "": "",
+    "Comment": "Коментар",
+    "Inactive": "Неактивний",
+    "Name": "Ім&#39;я",
+    "OptimisticLock": "Оптимістичний замок",
+    "Organization": "Організація",
+    "OrganizationID": "№ організації",
+    "Sequence": "Послідовність",
+    "Template": "Шаблон",
+    "TemplateID": "Шаблон №",
+    "TenantID": "№ орендаря",
+    "Type": "Тип",
+    "UMNoteTemplates": "Шаблони нотаток U/M",
+    "YesNo": "Так / Ні"
+}

@@ -26,7 +26,8 @@ class Profile extends Base
         'actions' => [
             'refresh' => true,
             'back' => ['href' => '/Numbers/Users/Users/Controller/Account/Profile']
-        ]
+        ],
+        'skip_shared_access' => true,
     ];
     public $containers = [
         'top' => ['default_row_type' => 'grid', 'order' => 100],
@@ -43,6 +44,14 @@ class Profile extends Base
             'details_rendering_type' => 'grid_with_label',
             'details_key' => '\Numbers\Users\Users\Model\User\Internalization',
             'details_pk' => ['um_usri18n_user_id'],
+        ],
+        'preferences_container' => [
+            'type' => 'details',
+            'details_11' => true,
+            'details_rendering_type' => 'grid_with_label',
+            'details_key' => '\Numbers\Users\Users\Model\User\Preferences',
+            'details_pk' => ['um_usrpreference_user_id'],
+            'order' => 35002
         ],
         'roles_container' => [
             'type' => 'details',
@@ -61,7 +70,15 @@ class Profile extends Base
             'details_pk' => ['um_usrorg_organization_id'],
             'details_cannot_delete' => true,
             'order' => 35001
-        ]
+        ],
+        'mentions_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_key' => '\Numbers\Users\Users\Model\User\Mentions',
+            'details_pk' => ['um_usrmention_id'],
+            'order' => 35000,
+        ],
     ];
     public $rows = [
         'top' => [
@@ -74,6 +91,7 @@ class Profile extends Base
             'roles' => ['order' => 400, 'label_name' => 'Roles'],
             'photo' => ['order' => 500, 'label_name' => 'Photo'],
             'internalization' => ['order' => 600, 'label_name' => 'Internalization'],
+            'preferences' => ['order' => 700, 'label_name' => 'Preferences'],
             \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA
         ]
     ];
@@ -103,7 +121,12 @@ class Profile extends Base
             ],
             'internalization' => [
                 'internalization' => ['container' => 'internalization_container', 'order' => 100],
-            ]
+            ],
+            'preferences' => [
+                'preferences' => ['container' => 'preferences_container', 'order' => 100],
+                'separator_3_pol' => ['container' => 'separator_3_pol', 'order' => 150],
+                'mentions' => ['container' => 'mentions_container', 'order' => 200],
+            ],
         ],
         'general_container' => [
             self::HIDDEN => [
@@ -119,7 +142,7 @@ class Profile extends Base
                 'um_user_company' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Company', 'domain' => 'name', 'null' => true, 'percent' => 100, 'required' => 'c'],
             ],
             'separator_1' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'far fa-envelope', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'fa-regular fa-envelope', 'percent' => 100],
             ],
             'um_user_email' => [
                 'um_user_email' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
@@ -147,7 +170,7 @@ class Profile extends Base
                 'um_usri18n_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsActive'],
             ],
             'format' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 500, 'label_name' => 'Format', 'icon' => 'far fa-hourglass', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 500, 'label_name' => 'Format', 'icon' => 'fa-regular fa-hourglass', 'percent' => 100],
             ],
             'um_usri18n_format_date' => [
                 'um_usri18n_format_date' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Date Format', 'domain' => 'code', 'null' => true, 'percent' => 25, 'placeholder' => 'Y-m-d', 'description' => 'Y - year, m - month, d - day, H - hour, i - minute, s = second, g - short hour, a - am/pm, u - miliseconds'],
@@ -160,11 +183,16 @@ class Profile extends Base
                 'um_usri18n_format_amount_fs' => ['order' => 2, 'label_name' => 'Amounts In Financial Statement', 'domain' => 'type_id', 'null' => true, 'method' => 'select', 'options_model' => '\Object\Format\Amounts']
             ],
             'print' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'Print', 'icon' => 'fas fa-print', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'Print', 'icon' => 'fa-solid fa-print', 'percent' => 100],
             ],
             'um_usri18n_print_format' => [
                 'um_usri18n_print_format' => ['order' => 1, 'row_order' => 900, 'label_name' => 'Print Format', 'domain' => 'code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Formats::options'],
                 'um_usri18n_print_font' => ['order' => 2, 'label_name' => 'Print Font', 'domain' => 'code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Fonts::options'],
+            ]
+        ],
+        'preferences_container' => [
+            'um_usrpreference_dynamic_menu' => [
+                'um_usrpreference_dynamic_menu' => ['order' => 4, 'label_name' => 'Dynamic Menu', 'type' => 'boolean', 'percent' => 25]
             ]
         ],
         'roles_container' => [
@@ -191,6 +219,21 @@ class Profile extends Base
                 'um_user_photo_file_id' => ['name' => 'Logo File #', 'domain' => 'file_id', 'null' => true, 'method' => 'hidden'],
             ]
         ],
+        'separator_3_pol' => [
+            'separator_3_pol' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Mentions', 'icon' => 'fa-brands fa-twitch', 'percent' => 100],
+            ],
+        ],
+        'mentions_container' => [
+            'row1' => [
+                'um_usrmention_mention' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Mention', 'domain' => 'mention', 'null' => true, 'required' => true, 'percent' => 50],
+                'um_usrmention_language_code' => ['order' => 2, 'label_name' => 'Language Code', 'domain' => 'language_code', 'null' => true, 'required' => true, 'percent' => 45, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Language\Codes::optionsActive', 'onchange' => 'this.form.submit();'],
+                'um_usrmention_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ],
+            self::HIDDEN => [
+                'um_usrmention_id' => ['label_name' => 'Mention #', 'domain' => 'big_id_sequence', 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
         'buttons' => [
             self::BUTTONS => [
                 self::BUTTON_SUBMIT_SAVE => self::BUTTON_SUBMIT_SAVE_DATA
@@ -198,36 +241,41 @@ class Profile extends Base
         ]
     ];
     public $collection = [
-        'name' => 'Users',
+        'name' => 'UM Users',
         'model' => '\Numbers\Users\Users\Model\Users',
         'details' => [
-            '\Numbers\Users\Users\Model\User\Group\Map' => [
-                'name' => 'Groups',
-                'readonly' => true,
-                'pk' => ['um_usrgrmap_tenant_id', 'um_usrgrmap_user_id', 'um_usrgrmap_group_id'],
-                'type' => '1M',
-                'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
-            ],
             '\Numbers\Users\Users\Model\User\Roles' => [
-                'name' => 'Roles',
+                'name' => 'UM Roles',
                 'readonly' => true,
                 'pk' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id']
             ],
             '\Numbers\Users\Users\Model\User\Organizations' => [
-                'name' => 'Organizations',
+                'name' => 'UM Organizations',
                 'readonly' => true,
                 'pk' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id']
             ],
             '\Numbers\Users\Users\Model\User\Internalization' => [
-                'name' => 'Internalization',
+                'name' => 'UM Internalization',
                 'pk' => ['um_usri18n_tenant_id', 'um_usri18n_user_id'],
                 'type' => '11',
                 'map' => ['um_user_tenant_id' => 'um_usri18n_tenant_id', 'um_user_id' => 'um_usri18n_user_id']
-            ]
+            ],
+            '\Numbers\Users\Users\Model\User\Preferences' => [
+                'name' => 'UM Preferences',
+                'pk' => ['um_usrpreference_tenant_id', 'um_usrpreference_user_id'],
+                'type' => '11',
+                'map' => ['um_user_tenant_id' => 'um_usrpreference_tenant_id', 'um_user_id' => 'um_usrpreference_user_id']
+            ],
+            '\Numbers\Users\Users\Model\User\Mentions' => [
+                'name' => 'UM Mentions',
+                'pk' => ['um_usrmention_tenant_id', 'um_usrmention_user_id', 'um_usrmention_id'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrmention_tenant_id', 'um_user_id' => 'um_usrmention_user_id']
+            ],
         ]
     ];
 

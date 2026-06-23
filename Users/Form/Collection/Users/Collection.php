@@ -85,6 +85,17 @@ class Collection extends \Object\Form\Wrapper\Collection
                             ],
                             'order' => 3
                         ],
+                        'wg_batches' => [
+                            'model' => '\Numbers\Tenants\Widgets\Batches\Form\List2\Batches',
+                            'submodule' => 'Numbers.Tenants.Widgets.Batches',
+                            'bypass_input' => self::BYPASS,
+                            'options' => [
+                                'label_name' => 'Batches',
+                                'bypass_hidden_from_input' => self::BYPASS,
+                                'model_table' => '\Numbers\Users\Users\Model\Users',
+                            ],
+                            'order' => 4
+                        ],
                     ]
                 ]
             ]

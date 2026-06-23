@@ -26,5 +26,6 @@ class Types extends Data
     ];
     public $data = [
         100 => ['um_notetempltype_name' => 'Comments'],
+        200 => ['um_notetempltype_name' => 'C/0 Secure Notes'],
     ];
 }

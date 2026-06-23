@@ -31,6 +31,9 @@ class EntryTypes extends Data
         'TEA' => ['um_enttype_name' => 'Team', 'um_enttype_order' => 3000],
         'GRP' => ['um_enttype_name' => 'Group', 'um_enttype_order' => 4000],
         'IVT' => ['um_enttype_name' => 'Invite', 'um_enttype_order' => 4010],
+        'REA' => ['um_enttype_name' => 'Realm', 'um_enttype_order' => 4020],
+        'DOM' => ['um_enttype_name' => 'Domain', 'um_enttype_order' => 4030],
+        'CLS' => ['um_enttype_name' => 'Classification', 'um_enttype_order' => 4040],
         // channels
         'CHL' => ['um_enttype_name' => 'Channel', 'um_enttype_order' => 5000],
         'CHG' => ['um_enttype_name' => 'Channel Group', 'um_enttype_order' => 6000],

@@ -27,7 +27,7 @@ class Providers extends Import
                     'oa_provider_code' => 'FACEBOOK',
                     'oa_provider_name' => 'Facebook',
                     'oa_provider_model' => '\Numbers\Users\OAuth\Model\Provider\Facebook',
-                    'oa_provider_icon' => 'fab fa-facebook',
+                    'oa_provider_icon' => 'fa-brands fa-facebook',
                     'oa_provider_order' => 1000,
                     'oa_provider_inactive' => 0,
                 ],
@@ -35,7 +35,7 @@ class Providers extends Import
                     'oa_provider_code' => 'GOOGLE',
                     'oa_provider_name' => 'Google',
                     'oa_provider_model' => '\Numbers\Users\OAuth\Model\Provider\Google',
-                    'oa_provider_icon' => 'fab fa-google',
+                    'oa_provider_icon' => 'fa-brands fa-google',
                     'oa_provider_order' => 2000,
                     'oa_provider_inactive' => 0,
                 ]

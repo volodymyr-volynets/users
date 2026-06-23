@@ -6,9 +6,11 @@
     "DTDocumentManagement": "D/T Document Management",
     "DTDocuments": "D/T Documents",
     "DTFileTypes": "D/T File Types",
+    "DTFilesOpenAccess": "D/T Files Open Access",
     "DocumentManagement": "Document Management",
     "FileTypes": "File Types",
     "Global": "Global",
+    "Miscellaneous": "Miscellaneous",
     "Operations": "Operations",
     "SystemManagement": "System Management"
 }

@@ -22,6 +22,8 @@ use Object\Form\Wrapper\Base;
 use Object\Validator\Phone;
 use Numbers\Tenants\Tenants\Helper\Sequence;
 use Numbers\Users\Users\Helper\Assignment\UserToChannels;
+use Numbers\Users\Users\Task\UMUserPIIComputedFields;
+use Numbers\Frontend\HTML\Renderers\Common\Helper\Colors;
 
 class Users extends Base
 {
@@ -50,7 +52,7 @@ class Users extends Base
         'login_container' => ['default_row_type' => 'grid', 'order' => 32105, 'acl_subresource_edit' => ['UM::USER_LOGIN']],
         'operating_container' => ['default_row_type' => 'grid', 'order' => 32105, 'acl_subresource_edit' => ['UM::USER_OPERATING']],
         'photo_container' => ['default_row_type' => 'grid', 'order' => 32000],
-        'other_container' => ['default_row_type' => 'grid', 'order' => 32000],
+        'optin_container' => ['default_row_type' => 'grid', 'order' => 32000],
         'roles_container' => [
             'type' => 'details',
             'details_rendering_type' => 'table',
@@ -78,6 +80,22 @@ class Users extends Base
             'details_key' => '\Numbers\Users\Users\Model\User\Internalization',
             'details_pk' => ['um_usri18n_user_id'],
             'order' => 35001
+        ],
+        'preferences_container' => [
+            'type' => 'details',
+            'details_11' => true,
+            'details_rendering_type' => 'grid_with_label',
+            'details_key' => '\Numbers\Users\Users\Model\User\Preferences',
+            'details_pk' => ['um_usrpreference_user_id'],
+            'order' => 35002
+        ],
+        'mentions_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_key' => '\Numbers\Users\Users\Model\User\Mentions',
+            'details_pk' => ['um_usrmention_id'],
+            'order' => 35000,
         ],
         'notifications_container' => [
             'type' => 'details',
@@ -136,6 +154,27 @@ class Users extends Base
             'details_key' => '\Numbers\Users\Users\Model\User\Permission\Subresources',
             'details_pk' => ['um_usrsubres_rsrsubres_id', 'um_usrsubres_action_id'],
             'order' => 2000,
+            'required' => false,
+            'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
+        ],
+        'permission_modules_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_key' => '\Numbers\Users\Users\Model\User\Permission\Modules',
+            'details_pk' => ['um_usrprmmod_module_id', 'um_usrprmmod_action_id'],
+            'order' => 35000,
+            'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
+        ],
+        'permission_access_settings_container' => [
+            'type' => 'subdetails',
+            'label_name' => 'Access Settings',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_parent_key' => '\Numbers\Users\Users\Model\User\Permissions',
+            'details_key' => '\Numbers\Users\Users\Model\User\Permission\AccessSettings',
+            'details_pk' => ['um_usracsetting_sm_rsacsertype_code', 'um_usracsetting_sm_rsacserowner_code'],
+            'order' => 2001,
             'required' => false,
             'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
         ],
@@ -203,6 +242,94 @@ class Users extends Base
             'details_pk' => ['um_usrpolgrp_sm_polgroup_tenant_id', 'um_usrpolgrp_sm_polgroup_id'],
             'order' => 35000,
         ],
+        'demographics_container' => [
+            'type' => 'details',
+            'details_11' => true,
+            'details_rendering_type' => 'grid_with_label',
+            'details_key' => '\Numbers\Users\Users\Model\User\PIIs',
+            'details_pk' => ['um_usrpii_user_id'],
+            'order' => 35001
+        ],
+        'languages_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_key' => '\Numbers\Users\Users\Model\User\Languages',
+            'details_pk' => ['um_usrsplang_language_code'],
+            'details_new_rows' => 1,
+            'order' => 35001
+        ],
+        'skills_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_key' => '\Numbers\Users\Users\Model\User\Skills',
+            'details_pk' => ['um_usrskill_name'],
+            'details_new_rows' => 1,
+            'order' => 35001
+        ],
+        'realms_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_key' => '\Numbers\Users\Users\Model\Realm\Map',
+            'details_pk' => ['um_usrreamap_um_realm_id'],
+            'details_new_rows' => 1,
+            'order' => 35001
+        ],
+        'domains_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_key' => '\Numbers\Users\Users\Model\Domain\Map',
+            'details_pk' => ['um_usrdommap_um_domain_id'],
+            'details_new_rows' => 1,
+            'order' => 35001
+        ],
+        'external_permissions_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_key' => '\Numbers\Users\Users\Model\User\ExternalPermissions',
+            'details_pk' => ['um_usrextperm_um_extmdids_id', 'um_usrextperm_um_extresrc_id'],
+            'order' => 35000
+        ],
+        'external_permission_actions_container' => [
+            'type' => 'subdetails',
+            'label_name' => 'Actions',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_parent_key' => '\Numbers\Users\Users\Model\User\ExternalPermissions',
+            'details_key' => '\Numbers\Users\Users\Model\User\ExternalPermission\Actions',
+            'details_pk' => ['um_usrextpractn_method_code', 'um_usrextpractn_um_extactn_id'],
+            'order' => 1000,
+            'required' => true
+        ],
+        'external_permission_subresources_container' => [
+            'type' => 'subdetails',
+            'label_name' => 'Subresources',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_parent_key' => '\Numbers\Users\Users\Model\User\ExternalPermissions',
+            'details_key' => '\Numbers\Users\Users\Model\User\ExternalPermission\Subresources',
+            'details_pk' => ['um_usrextprsub_um_extsursrc_id', 'um_usrextprsub_um_extactn_id'],
+            'order' => 2000,
+            'required' => false
+        ],
+        'external_permission_modules_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_key' => '\Numbers\Users\Users\Model\User\ExternalPermission\Modules',
+            'details_pk' => ['um_usrextprmmod_um_extmdids_id', 'um_usrextprmmod_um_extactn_id'],
+            'order' => 35000,
+            'acl_subresource_edit' => ['UM::USER_PERMISSIONS']
+        ],
+        'classifications_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_key' => '\Numbers\Users\Users\Model\Classification\Map',
+            'details_pk' => ['um_usrclsmap_um_classification_id'],
+            'order' => 35000,
+            'acl_subresource_edit' => ['UM::USER_CLASSIFICATIONS']
+        ],
     ];
     public $rows = [
         'top' => [
@@ -215,9 +342,11 @@ class Users extends Base
             'photo' => ['order' => 300, 'label_name' => 'About'],
             'operating' => ['order' => 350, 'label_name' => 'Operations', 'acl_subresource_hide' => ['UM::USER_OPERATING']],
             'internalization' => ['order' => 400, 'label_name' => 'Internalization'],
+            'preferences' => ['order' => 450, 'label_name' => 'Preferences'],
             'integration' => ['order' => 500, 'label_name' => 'Integration'],
-            'other' => ['order' => 600, 'label_name' => 'Other'],
+            'optin' => ['order' => 600, 'label_name' => 'Opt In'],
             'channels' => ['order' => 700, 'label_name' => 'Channels'],
+            'demographics' => ['order' => 800, 'label_name' => 'Demographics'],
             \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES => \Numbers\Countries\Widgets\Addresses\Base::ADDRESSES_DATA + ['acl_subresource_hide' => ['UM::USER_ADDRESSES']],
             \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES => \Numbers\Tenants\Widgets\Attributes\Base::ATTRIBUTES_DATA + ['acl_subresource_hide' => ['UM::USER_ATTRIBUTES']],
         ],
@@ -225,7 +354,11 @@ class Users extends Base
             'organizations' => ['order' => 100, 'label_name' => 'Organizations', 'acl_subresource_hide' => ['UM::USER_ORGANIZATIONS']],
             'roles' => ['order' => 200, 'label_name' => 'Roles', 'acl_subresource_hide' => ['UM::USER_ROLES']],
             'teams' => ['order' => 300, 'label_name' => 'Teams', 'acl_subresource_hide' => ['UM::USER_TEAMS']],
-            'permissions' => ['order' => 400, 'label_name' => 'Permissions', 'acl_subresource_hide' => ['UM::USER_PERMISSIONS']],
+            'realms' => ['order' => 350, 'label_name' => 'Realms', 'acl_subresource_hide' => ['UM::USER_REALMS']],
+            'domains' => ['order' => 360, 'label_name' => 'Domains', 'acl_subresource_hide' => ['UM::USER_DOMAINS']],
+            'classifications' => ['order' => 375, 'label_name' => 'Classifications', 'acl_subresource_hide' => ['UM::USER_CLASSIFICATIONS']],
+            'permissions' => ['order' => 400, 'label_name' => 'Int. Perm.', 'acl_subresource_hide' => ['UM::USER_PERMISSIONS']],
+            'external_permissions' => ['order' => 410, 'label_name' => 'Ext. Perm.', 'acl_subresource_hide' => ['UM::USER_PERMISSIONS']],
             'apis' => ['order' => 450, 'label_name' => 'API(s)', 'acl_subresource_hide' => ['UM::USER_APIS']],
             'notifications' => ['order' => 500, 'label_name' => 'Notifications', 'acl_subresource_hide' => ['UM::USER_NOTIFICATIONS']],
             'features' => ['order' => 600, 'label_name' => 'Features', 'acl_subresource_hide' => ['UM::USER_FEATURES']],
@@ -245,7 +378,8 @@ class Users extends Base
                 'um_user_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => 'c', 'navigation' => true]
             ],
             'um_user_name' => [
-                'um_user_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => 'c', 'autocomplete' => 'off'],
+                'um_user_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 95, 'required' => 'c', 'autocomplete' => 'off'],
+                '__avatar' => ['order' => 2, 'label_name' => 'Avatar', 'type' => 'text', 'percent' => 5, 'custom_renderer' => 'self::renderAvatar'],
             ]
         ],
         'tabs' => [
@@ -255,6 +389,7 @@ class Users extends Base
             ],
             'login' => [
                 'login' => ['container' => 'login_container', 'order' => 100],
+                'separator_login_security' => ['container' => 'separator_login_security_container', 'order' => 150],
                 'security_answers' => ['container' => 'security_answers_container', 'order' => 200],
             ],
             'photo' => [
@@ -263,17 +398,29 @@ class Users extends Base
             'internalization' => [
                 'internalization' => ['container' => 'internalization_container', 'order' => 100],
             ],
+            'preferences' => [
+                'preferences' => ['container' => 'preferences_container', 'order' => 100],
+                'separator_3_pol' => ['container' => 'separator_3_pol', 'order' => 150],
+                'mentions' => ['container' => 'mentions_container', 'order' => 200],
+            ],
             'operating' => [
                 'operating' => ['container' => 'operating_container', 'order' => 100],
             ],
             'integration' => [
                 'integration' => ['container' => 'integration_mappings_container', 'order' => 100],
             ],
-            'other' => [
-                'other' => ['container' => 'other_container', 'order' => 100],
+            'optin' => [
+                'optin' => ['container' => 'optin_container', 'order' => 100],
             ],
             'channels' => [
                 'channels' => ['container' => 'channels_container', 'order' => 100],
+            ],
+            'demographics' => [
+                'demographics' => ['container' => 'demographics_container', 'order' => 100],
+                'languages_separator' => ['container' => 'languages_separator', 'order' => 200],
+                'languages' => ['container' => 'languages_container', 'order' => 300],
+                'skills_separator' => ['container' => 'skills_separator', 'order' => 400],
+                'skills' => ['container' => 'skills_container', 'order' => 500],
             ]
         ],
         'tabs2' => [
@@ -286,11 +433,27 @@ class Users extends Base
             'teams' => [
                 'teams' => ['container' => 'teams_container', 'order' => 100],
             ],
+            'realms' => [
+                'realms' => ['container' => 'realms_container', 'order' => 100],
+            ],
+            'domains' => [
+                'domains' => ['container' => 'domains_container', 'order' => 100],
+            ],
+            'classifications' => [
+                'classifications' => ['container' => 'classifications_container', 'order' => 100],
+            ],
             'assignments' => [
                 'assignments' => ['container' => 'assignment_tabs', 'order' => 100],
             ],
             'permissions' => [
                 'permissions' => ['container' => 'permissions_container', 'order' => 100],
+                '__permission_separator' => ['container' => 'permission_modules_separator_container', 'order' => 200],
+                'permission_modules' => ['container' => 'permission_modules_container', 'order' => 300],
+            ],
+            'external_permissions' => [
+                'external_permissions' => ['container' => 'external_permissions_container', 'order' => 100],
+                '__external_permission_separator' => ['container' => 'external_permission_modules_separator_container', 'order' => 200],
+                'external_permission_modules_container' => ['container' => 'external_permission_modules_container', 'order' => 300],
             ],
             'apis' => [
                 'apis' => ['container' => 'apis_container', 'order' => 100],
@@ -334,15 +497,16 @@ class Users extends Base
                 'um_user_company' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Company', 'domain' => 'name', 'null' => true, 'percent' => 100, 'required' => 'c'],
             ],
             'separator_2' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'far fa-envelope', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'fa-regular fa-envelope', 'percent' => 100],
             ],
             'um_user_email' => [
-                'um_user_email' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
-                'um_user_email2' => ['order' => 2, 'label_name' => 'Secondary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
+                'um_user_email' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false, 'validator_method' => '\Object\Validator\EmailPublic::validate'],
+                'um_user_email2' => ['order' => 2, 'label_name' => 'Secondary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false, 'validator_method' => '\Object\Validator\EmailPublic::validate'],
             ],
             'um_user_phone' => [
                 'um_user_phone' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Primary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
-                'um_user_phone2' => ['order' => 2, 'label_name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
+                'um_user_phone2' => ['order' => 2, 'label_name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true, 'percent' => 25, 'required' => false],
+                'um_user_whatsapp' => ['order' => 3, 'label_name' => 'WhatsApp', 'domain' => 'whatsapp', 'null' => true, 'percent' => 25, 'required' => false],
             ],
             'um_user_cell' => [
                 'um_user_cell' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Cell Phone', 'domain' => 'phone', 'null' => true, 'percent' => 50, 'required' => false],
@@ -363,6 +527,9 @@ class Users extends Base
             'um_user_operating_currency_code' => [
                 'um_user_operating_currency_code' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Operating Currency Code', 'domain' => 'currency_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Currencies\Model\Currencies::optionsActive', 'options_options' => ['skip_acl' => true]],
                 'um_user_operating_currency_type' => ['order' => 2, 'label_name' => 'Operating Currency Type', 'domain' => 'currency_type', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Currencies\Model\Types::optionsActive', 'options_options' => ['skip_acl' => true]],
+            ],
+            'um_user_ip' => [
+                'um_user_ip' => ['order' => 1, 'row_order' => 300, 'label_name' => 'IP', 'domain' => 'ip', 'null' => true, 'percent' => 50],
             ]
         ],
         'login_container' => [
@@ -373,12 +540,28 @@ class Users extends Base
             ],
             'um_user_login_last_set' => [
                 'um_user_login_last_set' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password Last Changed', 'type' => 'date', 'persistent' => true, 'method' => 'calendar', 'calendar_icon' => 'right', 'percent' => 50, 'readonly' => true, 'skip_during_export' => true],
-                'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Reset Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false, 'empty_value' => true, 'skip_during_export' => true]
+                'um_user_login_password_new' => ['order' => 2, 'label_name' => 'Reset Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => false, 'empty_value' => true, 'skip_during_export' => true, 'method_renderer' => 'self::renderNewPasswordMethodRenderer']
+            ],
+            'um_user_weight' => [
+                'um_user_weight' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Weight', 'domain' => 'weight', 'null' => true, 'percent' => 25],
+            ],
+            'sep2' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 400, 'label_name' => 'Multi Factor Authentication', 'icon' => 'fa-solid fa-sign-in-alt', 'percent' => 100],
+            ],
+            'um_user_um_mfasettyp_code' => [
+                'um_user_um_mfasettyp_code' => ['order' => 1, 'row_order' => 500, 'label_name' => 'MFA Setting Type', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 25, 'method' => 'select', 'no_choose' => true, 'options_model' => '\Numbers\Users\Users\Model\MFA\SettingTypes', 'options_options' => ['i18n' => 'skip_sorting']],
+                'um_user_um_mfatype_code' => ['order' => 2, 'label_name' => 'MFA Default Type', 'domain' => 'group_code', 'null' => true, 'required' => 'c', 'percent' => 25, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\MFA\Types', 'options_options' => ['i18n' => 'skip_sorting']],
+                'um_user_last_mfa_code' => ['order' => 3, 'label_name' => 'Last MFA Code', 'domain' => 'mfa_code', 'null' => true, 'percent' => 50, 'maxlength' => 6, 'method' => 'password', 'method_renderer' => 'self::renderMFAMethodRenderer'],
+            ]
+        ],
+        'separator_login_security_container' => [
+            'sep' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 100, 'label_name' => 'Security Questions', 'icon' => 'fa-solid fa-shield-alt', 'percent' => 100],
             ]
         ],
         'security_answers_container' => [
             'row1' => [
-                'um_usrsecanswer_question_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Question', 'domain' => 'group_id', 'null' => true, 'details_unique_select' => true, 'percent' => 75, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Security\Questions::optionsActive'],
+                'um_usrsecanswer_question_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Question', 'domain' => 'group_id', 'null' => true, 'details_unique_select' => true, 'percent' => 75, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Security\Questions::optionsActive', 'placeholder' => 'Select Question'],
                 'um_usrsecanswer_answer' => ['order' => 2, 'label_name' => 'Answer', 'type' => 'text', 'null' => true, 'percent' => 25, 'required' => true],
             ]
         ],
@@ -395,7 +578,7 @@ class Users extends Base
                 'um_usri18n_organization_id' => ['order' => 2, 'label_name' => 'Organization', 'domain' => 'organization_id', 'null' => true, 'percent' => 50, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Organizations\Model\Organizations::optionsGroupedActive'],
             ],
             'format' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 500, 'label_name' => 'Format', 'icon' => 'far fa-hourglass', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 500, 'label_name' => 'Format', 'icon' => 'fa-regular fa-hourglass', 'percent' => 100],
             ],
             'um_usri18n_format_date' => [
                 'um_usri18n_format_date' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Date Format', 'domain' => 'code', 'null' => true, 'percent' => 25, 'placeholder' => 'Y-m-d', 'description' => 'Y - year, m - month, d - day'],
@@ -411,11 +594,26 @@ class Users extends Base
                 'um_usri18n_format_amount_fs' => ['order' => 2, 'label_name' => 'Amounts In Financial Statement', 'domain' => 'type_id', 'null' => true, 'method' => 'select', 'options_model' => '\Object\Format\Amounts']
             ],
             'print' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'Print', 'icon' => 'fas fa-print', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'Print', 'icon' => 'fa-solid fa-print', 'percent' => 100],
             ],
             'um_usri18n_print_format' => [
                 'um_usri18n_print_format' => ['order' => 1, 'row_order' => 900, 'label_name' => 'Print Format', 'domain' => 'code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Formats::options'],
                 'um_usri18n_print_font' => ['order' => 2, 'label_name' => 'Print Font', 'domain' => 'code', 'null' => true, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Print2\Fonts::options'],
+            ]
+        ],
+        'preferences_container' => [
+            'um_usrpreference_dynamic_menu' => [
+                'um_usrpreference_dynamic_menu' => ['order' => 4, 'label_name' => 'Dynamic Menu', 'type' => 'boolean', 'percent' => 25]
+            ]
+        ],
+        'mentions_container' => [
+            'row1' => [
+                'um_usrmention_mention' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Mention', 'domain' => 'mention', 'null' => true, 'required' => true, 'percent' => 50],
+                'um_usrmention_language_code' => ['order' => 2, 'label_name' => 'Language Code', 'domain' => 'language_code', 'null' => true, 'required' => true, 'percent' => 45, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Language\Codes::optionsActive', 'onchange' => 'this.form.submit();'],
+                'um_usrmention_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ],
+            self::HIDDEN => [
+                'um_usrmention_id' => ['label_name' => 'Mention #', 'domain' => 'big_id_sequence', 'null' => true, 'method' => 'hidden'],
             ]
         ],
         'roles_container' => [
@@ -499,6 +697,68 @@ class Users extends Base
                 'um_usrsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
             ],
         ],
+        'permission_modules_separator_container' => [
+            'permission_modules_separator_container' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Internal Modules', 'icon' => 'fa-solid fa-dice-d6', 'percent' => 100],
+            ],
+        ],
+        'permission_modules_container' => [
+            'row1' => [
+                'um_usrprmmod_module_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Module #', 'domain' => 'module_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Modules', 'onchange' => 'this.form.submit();'],
+                'um_usrprmmod_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 45, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Backend\System\Modules\Model\Resource\Actions::optionsGrouped', 'searchable' => true, 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+                'um_usrprmmod_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ],
+            self::HIDDEN => [
+                'um_usrprmmod_module_code' => ['order' => 1, 'label_name' => 'Module Code', 'domain' => 'module_code', 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
+        'permission_access_settings_container' => [
+            'row1' => [
+                'um_usracsetting_sm_rsacsertype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\Model\Resource\AccessSetting\AccessSettingTypes', 'onchange' => 'this.form.submit();'],
+                'um_usracsetting_sm_rsacserowner_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 45, 'method' => 'select', 'options_model' => null, 'placeholder' => 'Please choose', 'onchange' => 'this.form.submit();'],
+                'um_usracsetting_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ]
+        ],
+        'external_permissions_container' => [
+            'row1' => [
+                'um_usrextperm_um_extresrc_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Resource\ExternalResources::optionsJson', 'options_params' => ['um_extresrc_acl_permission' => 1, 'um_extresrc_type' => 100], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrextperm_um_extmdids_id', 'resource_id' => 'um_usrextperm_um_extresrc_id']],
+                'um_usrextperm_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ],
+            self::HIDDEN => [
+                'um_usrextperm_um_extmdids_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
+        'external_permission_actions_container' => [
+            'row1' => [
+                'um_usrextpractn_um_extactn_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 85, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Resource\ExternalResourceMap::optionsJson', 'options_depends' => ['um_extresmap_um_extresrc_id' => 'detail::um_usrextperm_um_extresrc_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['action_id' => 'um_usrextpractn_um_extactn_id', 'method_code' => 'um_usrextpractn_method_code']],
+                'um_usrextpractn_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+            ],
+            self::HIDDEN => [
+                'um_usrextpractn_method_code' => ['order' => 1, 'label_name' => 'Method', 'domain' => 'code', 'required' => true, 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
+        'external_permission_subresources_container' => [
+            'row1' => [
+                'um_usrextprsub_um_extsursrc_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Resource\ExternalSubresources::optionsGrouped', 'options_depends' => ['um_extresrc_id' => 'detail::um_usrextperm_um_extresrc_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+                'um_usrextprsub_um_extactn_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Resource\ExternalSubresourceActions::optionsGrouped', 'options_depends' => ['um_extsursrc_id' => 'um_usrextprsub_um_extsursrc_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+                'um_usrextprsub_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+            ],
+        ],
+        'external_permission_modules_separator_container' => [
+            'external_permission_modules_separator_container' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'External Modules', 'icon' => 'fa-solid fa-dice-d6', 'percent' => 100],
+            ],
+        ],
+        'external_permission_modules_container' => [
+            'row1' => [
+                'um_usrextprmmod_um_extmdids_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Module #', 'domain' => 'module_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Resource\ExternalModuleIDs', 'onchange' => 'this.form.submit();'],
+                'um_usrextprmmod_um_extactn_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 45, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Users\Model\Resource\ExternalActions::optionsGrouped', 'searchable' => true, 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+                'um_usrextprmmod_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ],
+            self::HIDDEN => [
+                'um_usrextprmmod_um_extmdl_code' => ['order' => 1, 'label_name' => 'Module Code', 'domain' => 'module_code', 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
         'apis_container' => [
             'row1' => [
                 'um_usrapi_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'sm_resource_type' => 150], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_usrapi_module_id', 'resource_id' => 'um_usrapi_resource_id']],
@@ -520,6 +780,27 @@ class Users extends Base
                 'um_usrtmmap_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
             ]
         ],
+        'realms_container' => [
+            'row1' => [
+                'um_usrreamap_um_realm_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Realm', 'domain' => 'realm_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\Model\Realms::optionsActive', 'onchange' => 'this.form.submit();'],
+                'um_usrreamap_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
+                'um_usrreamap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+            ]
+        ],
+        'domains_container' => [
+            'row1' => [
+                'um_usrdommap_um_domain_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Domain', 'domain' => 'domain_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 80, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\Model\Realms::optionsActive', 'onchange' => 'this.form.submit();'],
+                'um_usrdommap_primary' => ['order' => 2, 'label_name' => 'Primary', 'type' => 'boolean', 'percent' => 15],
+                'um_usrdommap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5],
+            ]
+        ],
+        'classifications_container' => [
+            'row1' => [
+                'um_usrclsmap_um_classtype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Type', 'domain' => 'group_code','null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\Model\Classification\Types::optionsActive', 'onchange' => 'this.form.submit();'],
+                'um_usrclsmap_um_classification_id' => ['order' => 2, 'label_name' => 'Classification', 'domain' => 'classification_id', 'null' => true, 'required' => true, 'details_unique_select' => true, 'percent' => 45, 'method' => 'select', 'searchable' => true, 'options_model' => '\Numbers\Users\Users\Model\Classifications::optionsActive', 'options_depends' => ['um_classification_um_classtype_code' => 'detail::um_usrclsmap_um_classtype_code'], 'onchange' => 'this.form.submit();'],
+                'um_usrclsmap_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ]
+        ],
         'integration_mappings_container' => [
             'row1' => [
                 'um_usrintegmap_integtype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Integration Type', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Integration\Types::optionsActive', 'onchange' => 'this.form.submit();'],
@@ -531,18 +812,21 @@ class Users extends Base
                 'um_usrintegmap_default' => ['order' => 2, 'label_name' => 'Default', 'type' => 'boolean', 'percent' => 5],
             ]
         ],
-        'other_container' => [
+        'optin_container' => [
             'um_user_channel' => [
                 'um_user_channel' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Channel', 'domain' => 'name', 'null' => true, 'percent' => 100],
             ],
             'um_user_send_emails' => [
                 'um_user_send_emails' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Send Emails', 'type' => 'boolean', 'default' => 1, 'percent' => 25],
                 'um_user_send_sms' => ['order' => 2, 'label_name' => 'Send SMS', 'type' => 'boolean', 'percent' => 25],
-                'um_user_send_postal' => ['order' => 3, 'label_name' => 'Send Postal Mail', 'type' => 'boolean', 'percent' => 25],
+                'um_user_send_whatsapp' => ['order' => 3, 'label_name' => 'Send WhatsApp', 'type' => 'boolean', 'percent' => 25],
+                'um_user_send_postal' => ['order' => 4, 'label_name' => 'Send Postal Mail', 'type' => 'boolean', 'percent' => 25],
             ],
             'um_user_email_confirmed' => [
                 'um_user_email_confirmed' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Email Confirmed', 'type' => 'boolean', 'percent' => 25],
                 'um_user_phone_confirmed' => ['order' => 2, 'label_name' => 'Phone Confirmed', 'type' => 'boolean', 'percent' => 25],
+                'um_user_whatsapp_confirmed' => ['order' => 3, 'label_name' => 'WhatsApp Confirmed', 'type' => 'boolean', 'percent' => 25],
+                'um_user_postal_confirmed' => ['order' => 4, 'label_name' => 'Postal Confirmed', 'type' => 'boolean', 'percent' => 25],
             ]
         ],
         'policy_container' => [
@@ -556,7 +840,12 @@ class Users extends Base
         ],
         'separator_2_pol' => [
             'separator_2_pol' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Policy Groups', 'icon' => 'far fa-object-group', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Policy Groups', 'icon' => 'fa-regular fa-object-group', 'percent' => 100],
+            ],
+        ],
+        'separator_3_pol' => [
+            'separator_3_pol' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Mentions', 'icon' => 'fa-brands fa-twitch', 'percent' => 100],
             ],
         ],
         'policy_group_container' => [
@@ -568,96 +857,216 @@ class Users extends Base
                 'um_usrpolgrp_sm_polgroup_tenant_id' => ['label_name' => 'Policy Group Tenant #', 'domain' => 'tenant_id', 'null' => true, 'method' => 'hidden'],
             ]
         ],
+        'demographics_container' => [
+            'separator_demographics_1' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 50, 'label_name' => 'Dates And Ages', 'icon' => 'fa-regular fa-calendar-alt', 'percent' => 100],
+            ],
+            'um_usrpii_date_of_birth' => [
+                'um_usrpii_date_of_birth' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Date Of Birth', 'type' => 'date', 'null' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+                'um_usrpii_age_in_years' => ['order' => 2, 'label_name' => 'Age In Years', 'domain' => 'age_counter', 'default' => null, 'null' => true, 'computed' => true, 'percent' => 25],
+                'um_usrpii_date_of_seniority' => ['order' => 3, 'label_name' => 'Date Of Seniority', 'type' => 'date', 'null' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+                'um_usrpii_seniority_in_years' => ['order' => 4, 'label_name' => 'Seniority In Years', 'domain' => 'age_counter', 'default' => null, 'null' => true, 'computed' => true, 'percent' => 25],
+            ],
+            'um_usrpii_date_of_joining' => [
+                'um_usrpii_datetime_of_joining' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Date Of Joining', 'type' => 'datetime', 'null' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+                'um_usrpii_joining_in_days' => ['order' => 2, 'label_name' => 'Joining In Days', 'domain' => 'age_counter', 'default' => null, 'null' => true, 'computed' => true, 'percent' => 25],
+                'um_usrpii_datetime_of_last_purchase' => ['order' => 3, 'label_name' => 'Datetime Of Last Purchase', 'type' => 'datetime', 'null' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+                'um_usrpii_last_purchase_in_days' => ['order' => 4, 'label_name' => 'Days Since Last Purchase', 'domain' => 'age_counter', 'default' => null, 'null' => true, 'computed' => true, 'percent' => 25],
+            ],
+            'um_usrpii_datetime_of_last_login' => [
+                'um_usrpii_datetime_of_last_login' => ['order' => 1, 'row_order' => 250, 'label_name' => 'Datetime Of Last Login', 'type' => 'datetime', 'null' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+                'um_usrpii_last_login_in_days' => ['order' => 2, 'label_name' => 'Days Since Last Login', 'domain' => 'age_counter', 'null' => true, 'computed' => true, 'percent' => 25],
+            ],
+            'separator_demographics_2' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 300, 'label_name' => 'Race / Gender / Veteran', 'icon' => 'fa-regular fa-user-circle', 'percent' => 100],
+            ],
+            'um_usrpii_um_usrpiigender_code' => [
+                'um_usrpii_um_usrpiigender_code' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Gender', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIIGenders', 'options_options' => ['i18n' => 'skip_sorting']],
+                'um_usrpii_um_usrpiirace_code' => ['order' => 2, 'label_name' => 'Race', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIIRaces', 'options_options' => ['i18n' => 'skip_sorting']],
+            ],
+            'um_usrpii_um_usrpiidisability_code' => [
+                'um_usrpii_um_usrpiidisability_code' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Disability', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIIDisability', 'options_options' => ['i18n' => 'skip_sorting']],
+                'um_usrpii_um_um_usrpiiveteran_code' => ['order' => 2, 'label_name' => 'Veteran Status', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIIVeteranStatuses', 'options_options' => ['i18n' => 'skip_sorting']],
+            ],
+            'um_usrpii_um_usrpiisexorient_code' => [
+                'um_usrpii_um_usrpiisexorient_code' => ['order' => 1, 'row_order' => 600, 'label_name' => 'Sexual Orientation', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIISexualOrientations', 'options_options' => ['i18n' => 'skip_sorting']],
+                'um_usrpii_um_usrpiihighedu_code' => ['order' => 2, 'label_name' => 'Highest Education', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIIHighestEducations', 'options_options' => ['i18n' => 'skip_sorting']],
+            ],
+            'um_usrpii_birth_cm_country_code' => [
+                'um_usrpii_birth_cm_country_code' => ['order' => 1, 'row_order' => 700, 'label_name' => 'Birth Country', 'domain' => 'country_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries'],
+                'um_usrpii_living_cm_country_code' => ['order' => 2, 'label_name' => 'Living Country', 'domain' => 'country_code', 'null' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries'],
+            ],
+            'separator_demographics_3' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'SIN And Visa', 'icon' => 'fa-regular fa-surprise', 'percent' => 100],
+            ],
+            'um_usrpii_sin_number' => [
+                'um_usrpii_sin_number' => ['order' => 1, 'row_order' => 900, 'label_name' => 'Social Insurance Number (SIN)', 'domain' => 'sin', 'null' => true, 'percent' => 25],
+                'um_usrpii_sin_expires' => ['order' => 2, 'label_name' => 'SIN Expires', 'type' => 'date', 'null' => true, 'percent' => 25, 'method' => 'calendar', 'calendar_icon' => 'right'],
+                'um_usrpii_on_visa' => ['order' => 3, 'label_name' => 'On Visa', 'type' => 'boolean', 'percent' => 25],
+                'um_usrpii_vulnerable_person' => ['order' => 4, 'label_name' => 'Vulnerable Person', 'type' => 'boolean', 'percent' => 25],
+            ]
+        ],
+        'languages_separator' => [
+            'languages_separator_1' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'Languages', 'icon' => 'fa-regular fa-flag', 'percent' => 100],
+            ],
+        ],
+        'languages_container' => [
+            'row1' => [
+                'um_usrsplang_language_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Language Code', 'domain' => 'language_code', 'null' => true, 'required' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Internalization\Internalization\Model\Language\Codes', 'onchange' => 'this.form.submit();'],
+                'um_usrsplang_inactive' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ],
+            'row2' => [
+                'um_usrsplang_listening_um_usrpiiprof_code' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Listening Proficiencies', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 30, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIIProficiencies', 'options_options' => ['i18n' => 'skip_sorting']],
+                'um_usrsplang_speaking_um_usrpiiprof_code' => ['order' => 2, 'label_name' => 'Speaking Proficiencies', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 30, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIIProficiencies', 'options_options' => ['i18n' => 'skip_sorting']],
+                'um_usrsplang_writing_um_usrpiiprof_code' => ['order' => 3, 'label_name' => 'Writing Proficiencies', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 40, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIIProficiencies', 'options_options' => ['i18n' => 'skip_sorting']],
+            ]
+        ],
+        'skills_separator' => [
+            'skills_separator_1' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 800, 'label_name' => 'Skills', 'icon' => 'fa-regular fa-hand-spock', 'percent' => 100],
+            ],
+        ],
+        'skills_container' => [
+            'row1' => [
+                'um_usrskill_name' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Name', 'domain' => 'name', 'null' => true, 'required' => true, 'percent' => 65],
+                'um_usrskill_um_usrskillprof_code' => ['order' => 2, 'label_name' => 'Proficiency', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 15, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\User\PII\UserPIISkillProficiencies', 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+                'um_usrskill_years_in_practice' => ['order' => 3, 'label_name' => 'Years In Practice', 'domain' => 'age_counter', 'null' => true, 'percent' => 15],
+                'um_usrskill_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ]
+        ],
         'buttons' => [
             self::BUTTONS => self::BUTTONS_DATA_GROUP
         ]
     ];
     public $collection = [
-        'name' => 'Users',
+        'name' => 'UM Users',
         'model' => '\Numbers\Users\Users\Model\Users',
         'details' => [
             '\Numbers\Users\Users\Model\User\Group\Map' => [
-                'name' => 'Groups',
+                'name' => 'UM User Groups',
                 'pk' => ['um_usrgrmap_tenant_id', 'um_usrgrmap_user_id', 'um_usrgrmap_group_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrgrmap_tenant_id', 'um_user_id' => 'um_usrgrmap_user_id']
             ],
             '\Numbers\Users\Users\Model\Team\Map' => [
-                'name' => 'Teams',
+                'name' => 'UM User Teams',
                 'pk' => ['um_usrtmmap_tenant_id', 'um_usrtmmap_user_id', 'um_usrtmmap_team_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrtmmap_tenant_id', 'um_user_id' => 'um_usrtmmap_user_id'],
             ],
             '\Numbers\Users\Users\Model\User\Roles' => [
-                'name' => 'Roles',
+                'name' => 'UM User Roles',
                 'pk' => ['um_usrrol_tenant_id', 'um_usrrol_user_id', 'um_usrrol_role_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrrol_tenant_id', 'um_user_id' => 'um_usrrol_user_id'],
             ],
             '\Numbers\Users\Users\Model\User\Organizations' => [
-                'name' => 'Organizations',
+                'name' => 'UM User Organizations',
                 'pk' => ['um_usrorg_tenant_id', 'um_usrorg_user_id', 'um_usrorg_organization_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrorg_tenant_id', 'um_user_id' => 'um_usrorg_user_id'],
             ],
             '\Numbers\Users\Users\Model\User\Internalization' => [
-                'name' => 'Internalization',
+                'name' => 'UM User Internalization',
                 'pk' => ['um_usri18n_tenant_id', 'um_usri18n_user_id'],
                 'type' => '11',
                 'map' => ['um_user_tenant_id' => 'um_usri18n_tenant_id', 'um_user_id' => 'um_usri18n_user_id']
             ],
+            '\Numbers\Users\Users\Model\User\PIIs' => [
+                'name' => 'UM User Demographics',
+                'pk' => ['um_usrpii_tenant_id', 'um_usrpii_user_id'],
+                'type' => '11',
+                'map' => ['um_user_tenant_id' => 'um_usrpii_tenant_id', 'um_user_id' => 'um_usrpii_user_id']
+            ],
+            '\Numbers\Users\Users\Model\User\Languages' => [
+                'name' => 'UM User Languages',
+                'pk' => ['um_usrsplang_tenant_id', 'um_usrsplang_user_id', 'um_usrsplang_language_code'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrsplang_tenant_id', 'um_user_id' => 'um_usrsplang_user_id']
+            ],
+            '\Numbers\Users\Users\Model\User\Skills' => [
+                'name' => 'UM User Skills',
+                'pk' => ['um_usrskill_tenant_id', 'um_usrskill_user_id', 'um_usrskill_name'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrskill_tenant_id', 'um_user_id' => 'um_usrskill_user_id']
+            ],
+            '\Numbers\Users\Users\Model\User\Preferences' => [
+                'name' => 'UM User Preferences',
+                'pk' => ['um_usrpreference_tenant_id', 'um_usrpreference_user_id'],
+                'type' => '11',
+                'map' => ['um_user_tenant_id' => 'um_usrpreference_tenant_id', 'um_user_id' => 'um_usrpreference_user_id']
+            ],
+            '\Numbers\Users\Users\Model\User\Mentions' => [
+                'name' => 'UM User Mentions',
+                'pk' => ['um_usrmention_tenant_id', 'um_usrmention_user_id', 'um_usrmention_id'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrmention_tenant_id', 'um_user_id' => 'um_usrmention_user_id']
+            ],
             '\Numbers\Users\Users\Model\User\Notifications' => [
-                'name' => 'Notifications',
+                'name' => 'UM User Notifications',
                 'pk' => ['um_usrnoti_tenant_id', 'um_usrnoti_user_id', 'um_usrnoti_module_id', 'um_usrnoti_feature_code'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrnoti_tenant_id', 'um_user_id' => 'um_usrnoti_user_id']
             ],
             '\Numbers\Users\Users\Model\User\Features' => [
-                'name' => 'Features',
+                'name' => 'UM User Features',
                 'pk' => ['um_usrfeature_tenant_id', 'um_usrfeature_user_id', 'um_usrfeature_module_id', 'um_usrfeature_feature_code'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrfeature_tenant_id', 'um_user_id' => 'um_usrfeature_user_id']
             ],
             '\Numbers\Users\Users\Model\User\Flags' => [
-                'name' => 'Flags',
+                'name' => 'UM User Flags',
                 'pk' => ['um_usrsysflag_tenant_id', 'um_usrsysflag_user_id', 'um_usrsysflag_module_id', 'um_usrsysflag_sysflag_id', 'um_usrsysflag_action_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrsysflag_tenant_id', 'um_user_id' => 'um_usrsysflag_user_id']
             ],
             '\Numbers\Users\Users\Model\User\Permissions' => [
-                'name' => 'Permissions',
+                'name' => 'UM User Permissions',
                 'pk' => ['um_usrperm_tenant_id', 'um_usrperm_user_id', 'um_usrperm_module_id', 'um_usrperm_resource_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrperm_tenant_id', 'um_user_id' => 'um_usrperm_user_id'],
                 'details' => [
                     '\Numbers\Users\Users\Model\User\Permission\Actions' => [
-                        'name' => 'Permission Actions',
+                        'name' => 'UM User Permission Actions',
                         'pk' => ['um_usrperaction_tenant_id', 'um_usrperaction_user_id', 'um_usrperaction_module_id', 'um_usrperaction_resource_id', 'um_usrperaction_method_code', 'um_usrperaction_action_id'],
                         'type' => '1M',
                         'map' => ['um_usrperm_tenant_id' => 'um_usrperaction_tenant_id', 'um_usrperm_user_id' => 'um_usrperaction_user_id', 'um_usrperm_module_id' => 'um_usrperaction_module_id', 'um_usrperm_resource_id' => 'um_usrperaction_resource_id'],
                     ],
                     '\Numbers\Users\Users\Model\User\Permission\Subresources' => [
-                        'name' => 'Permission Subresources',
+                        'name' => 'UM User Permission Subresources',
                         'pk' => ['um_usrsubres_tenant_id', 'um_usrsubres_user_id', 'um_usrsubres_module_id', 'um_usrsubres_resource_id', 'um_usrsubres_rsrsubres_id', 'um_usrsubres_action_id'],
                         'type' => '1M',
                         'map' => ['um_usrperm_tenant_id' => 'um_usrsubres_tenant_id', 'um_usrperm_user_id' => 'um_usrsubres_user_id', 'um_usrperm_module_id' => 'um_usrsubres_module_id', 'um_usrperm_resource_id' => 'um_usrsubres_resource_id'],
+                    ],
+                    '\Numbers\Users\Users\Model\User\Permission\AccessSettings' => [
+                        'name' => 'UM User Permission Access Settings',
+                        'pk' => ['um_usracsetting_tenant_id', 'um_usracsetting_user_id', 'um_usracsetting_module_id', 'um_usracsetting_resource_id', 'um_usracsetting_sm_rsacsertype_code', 'um_usracsetting_sm_rsacserowner_code'],
+                        'type' => '1M',
+                        'map' => ['um_usrperm_tenant_id' => 'um_usracsetting_tenant_id', 'um_usrperm_user_id' => 'um_usracsetting_user_id', 'um_usrperm_module_id' => 'um_usracsetting_module_id', 'um_usrperm_resource_id' => 'um_usracsetting_resource_id'],
                     ]
                 ]
             ],
+            '\Numbers\Users\Users\Model\User\Permission\Modules' => [
+                'name' => 'UM User Permission Modules',
+                'pk' => ['um_usrprmmod_tenant_id', 'um_usrprmmod_user_id', 'um_usrprmmod_module_id', 'um_usrprmmod_action_id'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrprmmod_tenant_id', 'um_user_id' => 'um_usrprmmod_user_id'],
+            ],
             '\Numbers\Users\Users\Model\User\Security\Answers' => [
-                'name' => 'Security Answers',
+                'name' => 'UM User Security Answers',
                 'pk' => ['um_usrsecanswer_tenant_id', 'um_usrsecanswer_user_id', 'um_usrsecanswer_question_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrsecanswer_tenant_id', 'um_user_id' => 'um_usrsecanswer_user_id'],
             ],
             '\Numbers\Users\Users\Model\User\APIs' => [
-                'name' => 'APIs',
+                'name' => 'UM User APIs',
                 'pk' => ['um_usrapi_tenant_id', 'um_usrapi_user_id', 'um_usrapi_module_id', 'um_usrapi_resource_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrapi_tenant_id', 'um_user_id' => 'um_usrapi_user_id'],
                 'details' => [
                     '\Numbers\Users\Users\Model\User\API\Methods' => [
-                        'name' => 'API Methods',
+                        'name' => 'UM User API Methods',
                         'pk' => ['um_usrapmethod_tenant_id', 'um_usrapmethod_user_id', 'um_usrapmethod_module_id', 'um_usrapmethod_resource_id', 'um_usrapmethod_method_code'],
                         'type' => '1M',
                         'map' => ['um_usrapi_tenant_id' => 'um_usrapmethod_tenant_id', 'um_usrapi_user_id' => 'um_usrapmethod_user_id', 'um_usrapi_module_id' => 'um_usrapmethod_module_id', 'um_usrapi_resource_id' => 'um_usrapmethod_resource_id'],
@@ -665,30 +1074,86 @@ class Users extends Base
                 ]
             ],
             '\Numbers\Users\Users\Model\User\IntegrationMappings' => [
-                'name' => 'Integration Mappings',
+                'name' => 'UM User Integration Mappings',
                 'pk' => ['um_usrintegmap_tenant_id', 'um_usrintegmap_user_id', 'um_usrintegmap_integtype_code', 'um_usrintegmap_code'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrintegmap_tenant_id', 'um_user_id' => 'um_usrintegmap_user_id']
             ],
             '\Numbers\Users\Users\Model\User\Policy\Policies' => [
-                'name' => 'UM Role Policies',
+                'name' => 'UM User Policies',
                 'pk' => ['um_usrpolicy_tenant_id', 'um_usrpolicy_user_id', 'um_usrpolicy_sm_policy_tenant_id', 'um_usrpolicy_sm_policy_code'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrpolicy_tenant_id', 'um_user_id' => 'um_usrpolicy_user_id']
             ],
             '\Numbers\Users\Users\Model\User\Policy\Groups' => [
-                'name' => 'UM Role Policy Groups',
+                'name' => 'UM User Policy Groups',
                 'pk' => ['um_usrpolgrp_tenant_id', 'um_usrpolgrp_user_id', 'um_usrpolgrp_sm_polgroup_tenant_id', 'um_usrpolgrp_sm_polgroup_id'],
                 'type' => '1M',
                 'map' => ['um_user_tenant_id' => 'um_usrpolgrp_tenant_id', 'um_user_id' => 'um_usrpolgrp_user_id']
+            ],
+            '\Numbers\Users\Users\Model\Realm\Map' => [
+                'name' => 'UM User Realms',
+                'pk' => ['um_usrreamap_tenant_id', 'um_usrreamap_user_id', 'um_usrreamap_um_realm_id'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrreamap_tenant_id', 'um_user_id' => 'um_usrreamap_user_id']
+            ],
+            '\Numbers\Users\Users\Model\Domain\Map' => [
+                'name' => 'UM User Domains',
+                'pk' => ['um_usrdommap_tenant_id', 'um_usrdommap_user_id', 'um_usrdommap_um_domain_id'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrdommap_tenant_id', 'um_user_id' => 'um_usrdommap_user_id']
+            ],
+            '\Numbers\Users\Users\Model\Classification\Map' => [
+                'name' => 'UM User Classifications',
+                'pk' => ['um_usrclsmap_tenant_id', 'um_usrclsmap_user_id', 'um_usrclsmap_um_classification_id'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrclsmap_tenant_id', 'um_user_id' => 'um_usrclsmap_user_id']
+            ],
+            '\Numbers\Users\Users\Model\User\ExternalPermissions' => [
+                'name' => 'UM User External Permissions',
+                'pk' => ['um_usrextperm_tenant_id', 'um_usrextperm_user_id', 'um_usrextperm_um_extmdids_id', 'um_usrextperm_um_extresrc_id'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrextperm_tenant_id', 'um_user_id' => 'um_usrextperm_user_id'],
+                'details' => [
+                    '\Numbers\Users\Users\Model\User\ExternalPermission\Actions' => [
+                        'name' => 'UM User External Permission Actions',
+                        'pk' => ['um_usrextpractn_tenant_id', 'um_usrextpractn_user_id', 'um_usrextpractn_um_extmdids_id', 'um_usrextpractn_um_extresrc_id', 'um_usrextpractn_method_code', 'um_usrextpractn_um_extactn_id'],
+                        'type' => '1M',
+                        'map' => ['um_usrextperm_tenant_id' => 'um_usrextpractn_tenant_id', 'um_usrextperm_user_id' => 'um_usrextpractn_user_id', 'um_usrextperm_um_extmdids_id' => 'um_usrextpractn_um_extmdids_id', 'um_usrextperm_um_extresrc_id' => 'um_usrextpractn_um_extresrc_id'],
+                    ],
+                    '\Numbers\Users\Users\Model\User\ExternalPermission\Subresources' => [
+                        'name' => 'UM User External Permission Subresources',
+                        'pk' => ['um_usrextprsub_tenant_id', 'um_usrextprsub_user_id', 'um_usrextprsub_um_extmdids_id', 'um_usrextprsub_um_extresrc_id', 'um_usrextprsub_um_extsursrc_id', 'um_usrextprsub_um_extactn_id'],
+                        'type' => '1M',
+                        'map' => ['um_usrextperm_tenant_id' => 'um_usrextprsub_tenant_id', 'um_usrextperm_user_id' => 'um_usrextprsub_user_id', 'um_usrextperm_um_extmdids_id' => 'um_usrextprsub_um_extmdids_id', 'um_usrextperm_um_extresrc_id' => 'um_usrextprsub_um_extresrc_id'],
+                    ]
+                ]
+            ],
+            '\Numbers\Users\Users\Model\User\ExternalPermission\Modules' => [
+                'name' => 'UM User External Permission Modules',
+                'pk' => ['um_usrextprmmod_tenant_id', 'um_usrextprmmod_user_id', 'um_usrextprmmod_um_extmdids_id', 'um_usrextprmmod_um_extactn_id'],
+                'type' => '1M',
+                'map' => ['um_user_tenant_id' => 'um_usrextprmmod_tenant_id', 'um_user_id' => 'um_usrextprmmod_user_id'],
             ],
         ]
     ];
     public $notification = [
         'feature_code' => 'UM::EMAIL_USERS_CHANGED'
     ];
+    public $preload_models = [
+        'access_setting_types' => [
+            'model' => '\Numbers\Backend\System\Modules\Model\Resource\AccessSetting\AccessSettingTypes',
+            'partial' => false,
+        ],
+        'resources' => [
+            'model' => '\Numbers\Backend\System\Modules\Model\Resources',
+            'partial' => true,
+            'ids_from_collection' => ['\Numbers\Users\Users\Model\User\Permissions', '$key', 'um_usrperm_resource_id'],
+            'pk' => ['sm_resource_id']
+        ]
+    ];
 
-    public function validate(& $form)
+    public function validate(\Object\Form\Base & $form)
     {
         $users_model = new \Numbers\Users\Users\Model\Users();
         // personal type
@@ -724,11 +1189,25 @@ class Users extends Base
             }
         }
         // primary organizations
-        $primary_organization_id = $form->validateDetailsPrimaryColumn(
+        $form->validateDetailsPrimaryColumn(
             '\Numbers\Users\Users\Model\User\Organizations',
             'um_usrorg_primary',
             'um_usrorg_inactive',
             'um_usrorg_organization_id'
+        );
+        // primary realms
+        $form->validateDetailsPrimaryColumn(
+            '\Numbers\Users\Users\Model\Realm\Map',
+            'um_usrreamap_primary',
+            'um_usrreamap_inactive',
+            'um_usrreamap_um_realm_id'
+        );
+        // primary domains
+        $form->validateDetailsPrimaryColumn(
+            '\Numbers\Users\Users\Model\Domain\Map',
+            'um_usrdommap_primary',
+            'um_usrdommap_inactive',
+            'um_usrdommap_um_domain_id'
         );
         // password
         if (!empty($form->values['um_user_login_password_new'])) {
@@ -784,6 +1263,13 @@ class Users extends Base
         } else {
             $form->values['um_user_numeric_phone'] = null;
         }
+        // permissions
+        foreach ($form->values['\Numbers\Users\Users\Model\User\Permissions'] ?? [] as $k => $v) {
+            $acl_access_settings = $form->getPreloadModel('resources', [$v['um_usrperm_resource_id']], 'sm_resource_acl_access_settings');
+            if (!empty($acl_access_settings) && empty($v['\Numbers\Users\Users\Model\User\Permission\AccessSettings'])) {
+                $form->validateQuickRequired(['\Numbers\Users\Users\Model\User\Permissions', $k, '\Numbers\Users\Users\Model\User\Permission\AccessSettings', 1, 'um_usracsetting_sm_rsacsertype_code']);
+            }
+        }
         // generate new sequence
         if (empty($form->values['um_user_code'])) {
             $form->values['um_user_code'] = Sequence::nextval('DEFAULT', 'USR', 'UM', \Tenant::id(), true);
@@ -796,6 +1282,12 @@ class Users extends Base
         if (!empty($form->values['um_user_login_password_new'])) {
             Notifications::sendPasswordChangeEmail($form->values['um_user_id']);
         }
+        // computed fields
+        $computed_fields_model = new UMUserPIIComputedFields();
+        $computed_fields_model->execute([
+            'um_usrpii_tenant_id' => \Tenant::id(),
+            'um_usrpii_user_id' => $form->values['um_user_id'],
+        ]);
     }
 
     public function processOptionsModels(& $form, $field_name, $details_key, $details_parent_key, & $where, $neighbouring_values, $details_value)
@@ -815,6 +1307,15 @@ class Users extends Base
         if ($options['options']['field_name'] == 'um_usrassign_child_user_id' || $options['options']['field_name'] == 'um_usrassign_parent_user_id') {
             if (empty($neighbouring_values['um_usrassign_multiple'])) {
                 $options['options']['method'] = 'select';
+            }
+        }
+    }
+
+    public function overrideDetailValue(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        if ($options['options']['field_name'] == 'um_usracsetting_sm_rsacserowner_code') {
+            if (!empty($neighbouring_values['um_usracsetting_sm_rsacsertype_code'])) {
+                $options['options']['options_model'] = $form->getPreloadModel('access_setting_types', [$neighbouring_values['um_usracsetting_sm_rsacsertype_code']], 'sm_rsacsertype_model');
             }
         }
     }
@@ -864,5 +1365,41 @@ class Users extends Base
         } else {
             return '';
         }
+    }
+
+    public function renderAvatar(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        // check if we have permissions
+        if (!empty($form->values['um_user_name'])) {
+            return Colors::renderAvatar($form->values['um_user_name'], 'user', false) . ' ' . Colors::renderAvatar($form->values['um_user_name'], 'user', true);
+        } else {
+            return '';
+        }
+    }
+
+    public function renderNewPasswordMethodRenderer(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        $id = $options['options']['id'];
+        $result = [
+            'left' => loc('NF.Form.Password', 'Password'),
+            'value' => $value,
+            'right' => [],
+        ];
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.View', 'View'), 'onclick' => "$('#" . $id . "').attr('type', 'input');"]);
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.Copy', 'Copy'), 'onclick' => "Numbers.Form.copyToClipboard($('#" . $id . "').val());"]);
+        return \HTML::inputGroup($result);
+    }
+
+    public function renderMFAMethodRenderer(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        $id = $options['options']['id'];
+        $result = [
+            'left' => loc('NF.Form.MFA', 'MFA'),
+            'value' => $value,
+            'right' => [],
+        ];
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.View', 'View'), 'onclick' => "$('#" . $id . "').attr('type', 'input');"]);
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.Copy', 'Copy'), 'onclick' => "Numbers.Form.copyToClipboard($('#" . $id . "').val());"]);
+        return \HTML::inputGroup($result);
     }
 }

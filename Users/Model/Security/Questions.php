@@ -38,8 +38,13 @@ class Questions extends Table
     ];
     public $history = false;
     public $audit = false;
-    public $options_map = [];
-    public $options_active = [];
+    public $options_map = [
+        'um_secquestion_name' => 'name',
+        'um_secquestion_inactive' => 'inactive',
+    ];
+    public $options_active = [
+        'um_secquestion_inactive' => 0,
+    ];
     public $engine = [
         'MySQLi' => 'InnoDB'
     ];

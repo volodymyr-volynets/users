@@ -17,7 +17,7 @@ use Object\Controller;
 class Quick extends Controller
 {
     public $title = 'Quick Logout';
-    public $icon = 'fas fa-sign-out-alt';
+    public $icon = 'fa-solid fa-sign-out-alt';
     public function actionIndex()
     {
         Authorize::signOut();

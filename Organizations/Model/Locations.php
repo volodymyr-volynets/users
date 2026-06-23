@@ -13,9 +13,12 @@ namespace Numbers\Users\Organizations\Model;
 
 use Helper\Tree;
 use Object\Table;
+use Object\Traits\BatchesURLHelper;
 
 class Locations extends Table
 {
+    use BatchesURLHelper;
+
     public $db_link;
     public $db_link_flag;
     public $module_code = 'ON';
@@ -174,10 +177,44 @@ class Locations extends Table
         ]
     ];
 
+    public $batches = [
+        'map' => [
+            'on_location_tenant_id' => 'tm_batchrecord_tenant_id',
+            'on_location_id' => 'tm_batchrecord_field_value_id'
+        ],
+        'where' => [
+            'tm_batchrecord_sm_model_code' => '\Numbers\Users\Organizations\Model\Locations',
+            'tm_batchrecord_field_code' => 'on_location_id',
+        ],
+        'edit' => [
+            'batch_value' => 'tm_batchrecord_field_value_id',
+            'batch_name' => 'O/N Location #',
+            'edit_endpoint' => '/Numbers/Users/Organizations/Controller/Locations/_Edit',
+            'edit_key' => 'on_location_id',
+            'list_endpoint' => '/Numbers/Users/Organizations/Controller/Locations/_Index',
+            'list_key' => ['on_location_id1', 'on_location_id2'],
+        ],
+    ];
+
     public $data_asset = [
         'classification' => 'client_confidential',
         'protection' => 2,
         'scope' => 'enterprise'
+    ];
+
+    public $scoped_attributes = [
+        'column_key' => 'on_location_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'O/N Location #',
+    ];
+
+    public $scoped_records = [
+        'column_key' => 'on_location_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'O/N Location #',
+        'access_settings' => [
+            'default' => 'Owner-*-Write,Access-*-Admin'
+        ]
     ];
 
     /**

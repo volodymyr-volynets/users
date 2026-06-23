@@ -1,0 +1,8 @@
+apps:
+  - name: nf_c5_chats_assistantd
+    script: nf_c5_chats_assistantd.php
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - --no-pcntl_fork

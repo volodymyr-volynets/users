@@ -31,7 +31,7 @@ class Map extends Table
         'um_usrtmmap_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
         'um_usrtmmap_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
         'um_usrtmmap_user_id' => ['name' => 'User #', 'domain' => 'user_id'],
-        'um_usrtmmap_team_id' => ['name' => 'Group #', 'domain' => 'team_id'],
+        'um_usrtmmap_team_id' => ['name' => 'Team #', 'domain' => 'team_id'],
         'um_usrtmmap_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
     ];
     public $constraints = [

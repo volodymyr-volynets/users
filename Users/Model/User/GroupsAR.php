@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User;
-class GroupsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class GroupsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Groups::class;
+    public string $object_table_class = Groups::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_usrgrp_tenant_id','um_usrgrp_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class GroupsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usrgrp_tenant_id = NULL {
-                        get => $this->um_usrgrp_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrgrp_tenant_id', $value);
-                            $this->um_usrgrp_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usrgrp_tenant_id = null {
+        get => $this->um_usrgrp_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrgrp_tenant_id', $value);
+            $this->um_usrgrp_tenant_id = $value;
+        }
+    }
 
     /**
      * Group #
@@ -41,12 +52,12 @@ class GroupsAR extends \Object\ActiveRecord {
      * @var int|null Domain: group_id_sequence Type: serial
      */
     public int|null $um_usrgrp_id = null {
-                        get => $this->um_usrgrp_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrgrp_id', $value);
-                            $this->um_usrgrp_id = $value;
-                        }
-                    }
+        get => $this->um_usrgrp_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrgrp_id', $value);
+            $this->um_usrgrp_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -58,12 +69,12 @@ class GroupsAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_usrgrp_code = null {
-                        get => $this->um_usrgrp_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrgrp_code', $value);
-                            $this->um_usrgrp_code = $value;
-                        }
-                    }
+        get => $this->um_usrgrp_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrgrp_code', $value);
+            $this->um_usrgrp_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -75,12 +86,12 @@ class GroupsAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_usrgrp_name = null {
-                        get => $this->um_usrgrp_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrgrp_name', $value);
-                            $this->um_usrgrp_name = $value;
-                        }
-                    }
+        get => $this->um_usrgrp_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrgrp_name', $value);
+            $this->um_usrgrp_name = $value;
+        }
+    }
 
     /**
      * Organization #
@@ -91,13 +102,13 @@ class GroupsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: organization_id Type: integer
      */
-    public int|null $um_usrgrp_organization_id = NULL {
-                        get => $this->um_usrgrp_organization_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrgrp_organization_id', $value);
-                            $this->um_usrgrp_organization_id = $value;
-                        }
-                    }
+    public int|null $um_usrgrp_organization_id = null {
+        get => $this->um_usrgrp_organization_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrgrp_organization_id', $value);
+            $this->um_usrgrp_organization_id = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -109,12 +120,12 @@ class GroupsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrgrp_inactive = 0 {
-                        get => $this->um_usrgrp_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrgrp_inactive', $value);
-                            $this->um_usrgrp_inactive = $value;
-                        }
-                    }
+        get => $this->um_usrgrp_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrgrp_inactive', $value);
+            $this->um_usrgrp_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -126,10 +137,10 @@ class GroupsAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $um_usrgrp_optimistic_lock = 'now()' {
-                        get => $this->um_usrgrp_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrgrp_optimistic_lock', $value);
-                            $this->um_usrgrp_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->um_usrgrp_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrgrp_optimistic_lock', $value);
+            $this->um_usrgrp_optimistic_lock = $value;
+        }
+    }
 }

@@ -16,16 +16,15 @@ use Object\Controller\Public2;
 class Confirmed extends Public2
 {
     public $title = 'Sign Out';
-    public $icon = 'fas fa-sign-out-alt';
+    public $icon = 'fa-solid fa-sign-out-alt';
     public function actionIndex()
     {
+        header('HTTP/1.0 401 Unauthorized');
         $options = [
             'options' => [
-                i18n(null, 'Congratulations! You have successfully signed out.'),
-                i18n(null, 'You can now sign in into your account. [signin].', [
-                    'replace' => [
-                        '[signin]' => \HTML::a(['href' => \Request::host(['mvc' => '/Default/Numbers/Users/Users/Controller/Login']), 'value' => i18n(null, 'Sign In')])
-                    ]
+                loc('NF.Message.CongratulationsYouHaveSignOut', 'Congratulations! You have successfully signed out.'),
+                loc('NF.Message.YouCanNowSignInIntoYourAccount', 'You can now sign in into your account. {signin}.', [
+                    'signin' => \HTML::a(['href' => \Request::host(['mvc' => '/Default/Numbers/Users/Users/Controller/Login']), 'value' => loc('NF.Form.SignIn', 'Sign In')])
                 ])
             ]
         ];
@@ -33,7 +32,7 @@ class Confirmed extends Public2
             'type' => 'success',
             'header' => [
                 'icon' => ['type' => 'sign-out'],
-                'title' => i18n(null, 'Sign Out:')
+                'title' => loc('NF.Form.SignOutColon', 'Sign Out:')
             ],
             'value' => \HTML::ul($options)
         ]);

@@ -1,0 +1,10 @@
+{
+    "Account": "Счет",
+    "ActivityLog": "Журнал активности",
+    "Miscellaneous": "Разнообразный",
+    "Operations": "Операции",
+    "Reports": "Отчеты",
+    "SMAccountActivityLog": "Журнал активности учетной записи S/M",
+    "SMActivityLog": "Журнал активности S/M",
+    "SystemManagement": "Управление системой"
+}

@@ -1,0 +1,17 @@
+{
+    "A3BearerTokens": "Tokens al portador A/3",
+    "DatetimeExpires": "Fecha y hora expiran",
+    "DatetimeStarted": "Fecha y hora de inicio",
+    "FormatColonColongetDatePlaceholder": "Formato::obtenerFechaMarcador de posición",
+    "Format__getDatePlaceholder": "Formato::obtenerFechaMarcador de posición",
+    "FormatgetDatePlaceholder": "Formato::obtenerFechaMarcador de posición",
+    "IP": "Propiedad intelectual",
+    "Inactive": "Inactivo",
+    "SessionID": "Sesión #",
+    "TenantID": "Arrendatario #",
+    "TokenID": "Token #",
+    "User": "Usuario",
+    "UserID": "Usuario #",
+    "UserIP": "IP del usuario",
+    "YesNo": "Sí / No"
+}

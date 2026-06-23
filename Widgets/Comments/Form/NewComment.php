@@ -22,6 +22,9 @@ class NewComment extends Base
     public $module_code = 'UM';
     public $title = 'U/M New Comment Form';
     public $options = [
+        'actions' => [
+            'refresh' => true,
+        ],
         'on_success_refresh_parent' => true
     ];
     public $containers = [

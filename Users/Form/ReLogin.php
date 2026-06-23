@@ -24,7 +24,7 @@ class ReLogin extends Base
         'segment' => [
             'type' => 'danger',
             'header' => [
-                'icon' => ['type' => 'fas fa-sign-in-alt'],
+                'icon' => ['type' => 'fa-solid fa-sign-in-alt'],
                 'title' => 'Re-Authorization Required:'
             ]
         ],

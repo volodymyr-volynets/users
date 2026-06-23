@@ -1,11 +1,16 @@
 {
+    "": "",
+    "Comment": "Comment",
     "Inactive": "Inactive",
     "Name": "Name",
     "OptimisticLock": "Optimistic Lock",
+    "Organization": "Organization",
     "OrganizationID": "Organization #",
+    "Sequence": "Sequence",
     "Template": "Template",
     "TemplateID": "Template #",
     "TenantID": "Tenant #",
     "Type": "Type",
-    "UMNoteTemplates": "U/M Note Templates"
+    "UMNoteTemplates": "U/M Note Templates",
+    "YesNo": "Yes / No"
 }

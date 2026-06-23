@@ -71,7 +71,7 @@ class Organizations extends Table
             'name' => 'Invite Organizations',
             'pk' => ['um_usrinorg_tenant_id', 'um_usrinorg_usrinv_id', 'um_usrinorg_organization_id'],
             'type' => '1M',
-            'map' => ['um_usrinv_tenant_id' => 'um_usrorg_tenant_id', 'um_usrinv_id' => 'um_usrorg_user_id'],
+            'map' => ['um_usrinv_tenant_id' => 'um_usrinorg_tenant_id', 'um_usrinv_id' => 'um_usrinorg_usrinv_id'],
         ],
     ];
 

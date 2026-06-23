@@ -1,0 +1,14 @@
+{
+    "": "",
+    "BigID": "Grande #",
+    "BodyID": "Cuerpo #",
+    "Link": "Enlace",
+    "Message": "Mensaje",
+    "Sequence": "Secuencia",
+    "TenantID": "Arrendatario #",
+    "Text": "Texto",
+    "Timestamp": "Marca de tiempo",
+    "UID": "UID",
+    "WGEmailIngestionBodies": "Cuerpos de ingesta de correo electrónico de W/G",
+    "WGEmailIngestionLocks": "Bloqueos de ingestión de correo electrónico de W/G"
+}

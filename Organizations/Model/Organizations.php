@@ -12,9 +12,12 @@
 namespace Numbers\Users\Organizations\Model;
 
 use Object\Table;
+use Object\Traits\BatchesURLHelper;
 
 class Organizations extends Table
 {
+    use BatchesURLHelper;
+
     public $db_link;
     public $db_link_flag;
     public $module_code = 'ON';
@@ -77,11 +80,13 @@ class Organizations extends Table
     public $optimistic_lock = true;
     public $options_map = [
         'on_organization_name' => 'name',
-        'on_organization_icon' => 'icon_class',
-        'on_organization_logo_file_id' => 'photo_id',
+        'on_organization_name*' => 'avatar_organization_small',
         'on_organization_parent_organization_id' => 'parent_id',
         'on_organization_operating_country_code' => 'country_code',
-        'on_organization_inactive' => 'inactive'
+        'on_organization_inactive' => 'inactive',
+        // deprecated
+        //'on_organization_logo_file_id' => 'photo_id',
+        //'on_organization_icon' => 'icon_class',
     ];
     public $options_active = [
         'on_organization_inactive' => 0
@@ -134,9 +139,43 @@ class Organizations extends Table
         ]
     ];
 
+    public $batches = [
+        'map' => [
+            'on_organization_tenant_id' => 'tm_batchrecord_tenant_id',
+            'on_organization_id' => 'tm_batchrecord_field_value_id'
+        ],
+        'where' => [
+            'tm_batchrecord_sm_model_code' => '\Numbers\Users\Organizations\Model\Organizations',
+            'tm_batchrecord_field_code' => 'on_organization_id',
+        ],
+        'edit' => [
+            'batch_value' => 'tm_batchrecord_field_value_id',
+            'batch_name' => 'O/N Organization #',
+            'edit_endpoint' => '/Numbers/Users/Organizations/Controller/Organizations/_Edit',
+            'edit_key' => 'on_organization_id',
+            'list_endpoint' => '/Numbers/Users/Organizations/Controller/Organizations/_Index',
+            'list_key' => ['on_organization_id1', 'on_organization_id2'],
+        ],
+    ];
+
     public $data_asset = [
         'classification' => 'client_confidential',
         'protection' => 2,
         'scope' => 'enterprise'
+    ];
+
+    public $scoped_attributes = [
+        'column_key' => 'on_organization_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'O/N Organization #',
+    ];
+
+    public $scoped_records = [
+        'column_key' => 'on_organization_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'O/N Organization #',
+        'access_settings' => [
+            'default' => 'Owner-*-Write,Access-*-Admin'
+        ]
     ];
 }

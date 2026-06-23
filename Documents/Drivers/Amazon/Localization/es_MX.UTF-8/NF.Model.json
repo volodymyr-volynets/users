@@ -1,0 +1,15 @@
+{
+    "": "",
+    "AccessKey": "Tecla de acceso",
+    "Bucket": "Balde",
+    "DTAmazonProfiles": "Perfiles de Amazon D/T",
+    "Inactive": "Inactivo",
+    "Name": "Nombre",
+    "OptimisticLock": "Bloqueo optimista",
+    "ProfileID": "Perfil #",
+    "Region": "Región",
+    "SecretAccessKey": "Clave de acceso secreta",
+    "Sequence": "Secuencia",
+    "TenantID": "Arrendatario #",
+    "YesNo": "Sí / No"
+}

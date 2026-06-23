@@ -1,0 +1,14 @@
+{
+    "": "",
+    "BigID": "Grand #",
+    "BodyID": "Corps #",
+    "Link": "Lien",
+    "Message": "Message",
+    "Sequence": "Séquence",
+    "TenantID": "Locataire #",
+    "Text": "Texte",
+    "Timestamp": "Horodatage",
+    "UID": "UID",
+    "WGEmailIngestionBodies": "Corps d&#39;ingestion de courrier électronique W/G",
+    "WGEmailIngestionLocks": "Verrous d&#39;ingestion d&#39;e-mails W/G"
+}

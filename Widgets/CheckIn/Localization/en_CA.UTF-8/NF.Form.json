@@ -1,0 +1,23 @@
+{
+    "Blank": "Blank",
+    "CheckInID": "Check In #",
+    "CheckInLatitude": "Check In Latitude",
+    "CheckInLongitude": "Check In Longitude",
+    "CheckInMap": "Check In Map",
+    "CheckInTimestamp": "Check In Timestamp",
+    "CheckOut": "Check Out",
+    "CheckOutLatitude": "Check Out Latitude",
+    "CheckOutLongitude": "Check Out Longitude",
+    "CheckOutMap": "Check Out Map",
+    "CheckOutTimestamp": "Check Out Timestamp",
+    "Duration": "Duration",
+    "Format": "Format",
+    "Map": "Map",
+    "New": "New",
+    "Order": "Order",
+    "Reset": "Reset",
+    "Save": "Save",
+    "Sort": "Sort",
+    "Submit": "Submit",
+    "User": "User"
+}

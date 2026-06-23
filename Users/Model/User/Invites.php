@@ -38,6 +38,7 @@ class Invites extends Table
         'um_usrinv_last_name' => ['name' => 'Last Name', 'domain' => 'personal_name', 'null' => true],
         'um_usrinv_email' => ['name' => 'Primary Email', 'domain' => 'email', 'null' => true],
         'um_usrinv_phone' => ['name' => 'Primary Phone', 'domain' => 'phone', 'null' => true],
+        'um_usrinv_username' => ['name' => 'Username', 'domain' => 'username', 'null' => true],
         'um_usrinv_invite_message' => ['name' => 'Invite Message', 'domain' => 'message', 'null' => true],
         'um_usrinv_created_user_id' => ['name' => 'Created User #', 'domain' => 'user_id', 'null' => true],
         'um_usrinv_referral_user_id' => ['name' => 'Referral User #', 'domain' => 'user_id', 'null' => true],
@@ -45,6 +46,10 @@ class Invites extends Table
         'um_usrinv_other_json_params' => ['name' => 'Other Params', 'type' => 'json', 'null' => true],
         'um_usrinv_require_address' => ['name' => 'Require Address', 'type' => 'boolean'],
         'um_usrinv_require_assignment' => ['name' => 'Require Assignment', 'type' => 'boolean'],
+        // links to other areas
+        'um_usrinv_reference_table' => ['name' => 'Reference Table', 'domain' => 'table', 'null' => true],
+        'um_usrinv_reference_id' => ['name' => 'Reference #', 'domain' => 'big_id', 'null' => true, 'default' => null],
+        // other
         'um_usrinv_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
     ];
     public $column_settings = [];

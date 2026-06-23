@@ -1,0 +1,23 @@
+{
+    "Blank": "Пустий",
+    "CheckInID": "Номер реєстрації",
+    "CheckInLatitude": "Реєстрація в Latitude",
+    "CheckInLongitude": "Довгота реєстрації",
+    "CheckInMap": "Карта реєстрації",
+    "CheckInTimestamp": "Мітка часу реєстрації",
+    "CheckOut": "Оформити замовлення",
+    "CheckOutLatitude": "Перегляньте Latitude",
+    "CheckOutLongitude": "Перевірити довготу",
+    "CheckOutMap": "Переглянути карту",
+    "CheckOutTimestamp": "Позначка часу оформлення замовлення",
+    "Duration": "Тривалість",
+    "Format": "Формат",
+    "Map": "Карта",
+    "New": "Новий",
+    "Order": "Замовлення",
+    "Reset": "Скинути",
+    "Save": "Зберегти",
+    "Sort": "Сортувати",
+    "Submit": "Надіслати",
+    "User": "Користувач"
+}

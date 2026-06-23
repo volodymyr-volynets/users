@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Monitoring\Model\Usage;
-class ActionsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class ActionsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Monitoring\Model\Usage\Actions::class;
+    public string $object_table_class = Actions::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['sm_monusgact_tenant_id','sm_monusgact_usage_id','sm_monusgact_action_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class ActionsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $sm_monusgact_tenant_id = NULL {
-                        get => $this->sm_monusgact_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_tenant_id', $value);
-                            $this->sm_monusgact_tenant_id = $value;
-                        }
-                    }
+    public int|null $sm_monusgact_tenant_id = null {
+        get => $this->sm_monusgact_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_tenant_id', $value);
+            $this->sm_monusgact_tenant_id = $value;
+        }
+    }
 
     /**
      * Usage #
@@ -41,12 +52,12 @@ class ActionsAR extends \Object\ActiveRecord {
      * @var int|null Type: bigint
      */
     public int|null $sm_monusgact_usage_id = 0 {
-                        get => $this->sm_monusgact_usage_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_usage_id', $value);
-                            $this->sm_monusgact_usage_id = $value;
-                        }
-                    }
+        get => $this->sm_monusgact_usage_id;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_usage_id', $value);
+            $this->sm_monusgact_usage_id = $value;
+        }
+    }
 
     /**
      * Action #
@@ -58,12 +69,12 @@ class ActionsAR extends \Object\ActiveRecord {
      * @var int|null Type: smallint
      */
     public int|null $sm_monusgact_action_id = 0 {
-                        get => $this->sm_monusgact_action_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_action_id', $value);
-                            $this->sm_monusgact_action_id = $value;
-                        }
-                    }
+        get => $this->sm_monusgact_action_id;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_action_id', $value);
+            $this->sm_monusgact_action_id = $value;
+        }
+    }
 
     /**
      * Usage Code
@@ -75,12 +86,12 @@ class ActionsAR extends \Object\ActiveRecord {
      * @var string|null Type: varchar
      */
     public string|null $sm_monusgact_usage_code = null {
-                        get => $this->sm_monusgact_usage_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_usage_code', $value);
-                            $this->sm_monusgact_usage_code = $value;
-                        }
-                    }
+        get => $this->sm_monusgact_usage_code;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_usage_code', $value);
+            $this->sm_monusgact_usage_code = $value;
+        }
+    }
 
     /**
      * Message
@@ -92,12 +103,12 @@ class ActionsAR extends \Object\ActiveRecord {
      * @var string|null Type: text
      */
     public string|null $sm_monusgact_message = null {
-                        get => $this->sm_monusgact_message;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_message', $value);
-                            $this->sm_monusgact_message = $value;
-                        }
-                    }
+        get => $this->sm_monusgact_message;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_message', $value);
+            $this->sm_monusgact_message = $value;
+        }
+    }
 
     /**
      * Replace
@@ -109,12 +120,12 @@ class ActionsAR extends \Object\ActiveRecord {
      * @var mixed Type: json
      */
     public mixed $sm_monusgact_replace = null {
-                        get => $this->sm_monusgact_replace;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_replace', $value);
-                            $this->sm_monusgact_replace = $value;
-                        }
-                    }
+        get => $this->sm_monusgact_replace;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_replace', $value);
+            $this->sm_monusgact_replace = $value;
+        }
+    }
 
     /**
      * Affected rows
@@ -126,12 +137,12 @@ class ActionsAR extends \Object\ActiveRecord {
      * @var int|null Domain: counter Type: integer
      */
     public int|null $sm_monusgact_affected_rows = 0 {
-                        get => $this->sm_monusgact_affected_rows;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_affected_rows', $value);
-                            $this->sm_monusgact_affected_rows = $value;
-                        }
-                    }
+        get => $this->sm_monusgact_affected_rows;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_affected_rows', $value);
+            $this->sm_monusgact_affected_rows = $value;
+        }
+    }
 
     /**
      * Error rows
@@ -143,12 +154,12 @@ class ActionsAR extends \Object\ActiveRecord {
      * @var int|null Domain: counter Type: integer
      */
     public int|null $sm_monusgact_error_rows = 0 {
-                        get => $this->sm_monusgact_error_rows;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_error_rows', $value);
-                            $this->sm_monusgact_error_rows = $value;
-                        }
-                    }
+        get => $this->sm_monusgact_error_rows;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_error_rows', $value);
+            $this->sm_monusgact_error_rows = $value;
+        }
+    }
 
     /**
      * URL
@@ -160,12 +171,12 @@ class ActionsAR extends \Object\ActiveRecord {
      * @var string|null Type: text
      */
     public string|null $sm_monusgact_url = null {
-                        get => $this->sm_monusgact_url;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_url', $value);
-                            $this->sm_monusgact_url = $value;
-                        }
-                    }
+        get => $this->sm_monusgact_url;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_url', $value);
+            $this->sm_monusgact_url = $value;
+        }
+    }
 
     /**
      * History
@@ -177,10 +188,10 @@ class ActionsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $sm_monusgact_history = 0 {
-                        get => $this->sm_monusgact_history;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusgact_history', $value);
-                            $this->sm_monusgact_history = $value;
-                        }
-                    }
+        get => $this->sm_monusgact_history;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusgact_history', $value);
+            $this->sm_monusgact_history = $value;
+        }
+    }
 }

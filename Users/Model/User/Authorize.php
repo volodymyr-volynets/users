@@ -44,6 +44,8 @@ class Authorize
             'data' => [],
             'session_id' => null,
             'bearer_token' => null,
+            'hold' => false,
+            'mfa' => false,
         ];
         do {
             $authorization_type = 'Username / Password';
@@ -86,6 +88,12 @@ class Authorize
                             'user_ip' => \Request::ip(),
                             'authorization_type' => $authorization_type,
                         ]);
+            // on hold
+            if (!empty($user['hold'])) {
+                $result['hold'] = true;
+                $result['error'][] = loc('NF.Message.UserAccountIsOnHoldCallSupportOrTryAgainLater', 'User account in on hold, please contact support or try logging again later!');
+                return $result;
+            }
             // process password reset based on login_last_set date
             $login_last_set_date = new \DateTime($user['login_last_set']);
             $today = new \DateTime();
@@ -138,6 +146,12 @@ class Authorize
             $result['data'] = $user;
             // success
             $result['success'] = true;
+            // MFA check
+            if ($user['um_setting_um_mfasettyp_code'] == 'ENABLED' && ($user['um_user_um_mfasettyp_code'] == 'ENABLED' || $user['um_user_um_mfasettyp_code'] == 'ENFORCED')) {
+                $result['mfa'] = true;
+            } elseif ($user['um_setting_um_mfasettyp_code'] == 'ENFORCED') {
+                $result['mfa'] = true;
+            }
         } while (0);
         return $result;
     }

@@ -1,0 +1,23 @@
+{
+    "Blank": "Пустой",
+    "CheckInID": "Регистрироваться #",
+    "CheckInLatitude": "Регистрация в Локаторе",
+    "CheckInLongitude": "Проверка долготы",
+    "CheckInMap": "Карта регистрации",
+    "CheckInTimestamp": "Отметка времени регистрации",
+    "CheckOut": "Проверить",
+    "CheckOutLatitude": "Проверьте Latitude",
+    "CheckOutLongitude": "Проверьте долготу",
+    "CheckOutMap": "Проверить карту",
+    "CheckOutTimestamp": "Отметка времени выезда",
+    "Duration": "Продолжительность",
+    "Format": "Формат",
+    "Map": "Карта",
+    "New": "Новый",
+    "Order": "Заказ",
+    "Reset": "Перезагрузить",
+    "Save": "Сохранять",
+    "Sort": "Сортировать",
+    "Submit": "Представлять на рассмотрение",
+    "User": "Пользователь"
+}

@@ -32,6 +32,8 @@ class UsersRegisterSimple extends Email
         'top_container' => ['default_row_type' => 'table', 'order' => 200, 'column_name_width_percent' => 25],
         'credentials_panel' => ['order' => 300, 'type' => 'panels'],
         'credentials_container' => ['default_row_type' => 'table', 'order' => 300, 'column_name_width_percent' => 25],
+        'email_confirmation_panel' => ['order' => 400, 'type' => 'panels'],
+        'email_confirmation_container' => ['default_row_type' => 'table', 'order' => 400, 'column_name_width_percent' => 25],
         self::PANEL_FOOTER => ['order' => PHP_INT_MAX]
     ];
     public $rows = [
@@ -40,6 +42,9 @@ class UsersRegisterSimple extends Email
         ],
         'credentials_panel' => [
             'center' => ['order' => 100, 'label_name' => 'Credential Information', 'loc' => 'NF.Form.CredentialInformation', 'panel_type' => 'warning', 'percent' => 100]
+        ],
+        'email_confirmation_panel' => [
+            'center' => ['order' => 100, 'label_name' => 'Email Confirmation Information', 'loc' => 'NF.Form.EmailConfirmationInformation', 'panel_type' => 'danger', 'percent' => 100]
         ],
     ];
     public $elements = [
@@ -51,6 +56,11 @@ class UsersRegisterSimple extends Email
         'credentials_panel' => [
             'center' => [
                 'credentials' => ['container' => 'credentials_container', 'order' => 100],
+            ],
+        ],
+        'email_confirmation_panel' => [
+            'center' => [
+                'email_confirmation' => ['container' => 'email_confirmation_container', 'order' => 100],
             ],
         ],
         'top_container' => [
@@ -83,6 +93,11 @@ class UsersRegisterSimple extends Email
             '__um_user_login_password' => [
                 '__um_user_login_password' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password', 'loc' => 'NF.Form.Password', 'domain' => 'password', 'percent' => 100, 'custom_renderer' => 'self::renderPassword'],
             ]
+        ],
+        'email_confirmation_container' => [
+            '__success_url' => [
+                '__success_url' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Email Confirmation Link', 'loc' => 'NF.Form.EmailConfirmationLink', 'type' => 'text', 'percent' => 100, 'custom_renderer' => 'self::renderEmailConfirmation'],
+            ]
         ]
     ];
     public $collection = [
@@ -106,6 +121,8 @@ class UsersRegisterSimple extends Email
     ];
 
     public $loc = [
+        'NF.Form.ClickHere' => 'Click Here',
+        'NF.Form.OrCopyInBrowser' => 'Or copy in browser:',
         'NF.Form.ResetPassword' => 'Reset Password',
         'NF.Message.WelcomeToBrand' => 'Welcome to {config://brand.name.welcome}!',
         'NF.Message.UsersRegisterSimple' => 'You are receiving this Registration Email because you registered in {config://brand.name.welcome} system.'
@@ -122,6 +139,19 @@ class UsersRegisterSimple extends Email
             ]),
             'value' => loc('NF.Form.ResetPassword', 'Reset Password'),
         ]);
+        return $result;
+    }
+
+    public function renderEmailConfirmation(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        $result = \HTML::a([
+            'href' => $form->values['__success_url'],
+            'value' => loc('NF.Form.ClickHere', 'Click Here'),
+        ]);
+        $result .= '<hr/>';
+        $result .= loc('NF.Form.OrCopyInBrowser', 'Or copy in browser:');
+        $result .= '<br/>';
+        $result .= $form->values['__success_url'];
         return $result;
     }
 }

@@ -1,0 +1,15 @@
+{
+    "": "",
+    "AccessKey": "Ключ доступу",
+    "Bucket": "Відро",
+    "DTAmazonProfiles": "Профілі D/T Amazon",
+    "Inactive": "Неактивний",
+    "Name": "Ім&#39;я",
+    "OptimisticLock": "Оптимістичний замок",
+    "ProfileID": "№ профілю",
+    "Region": "Регіон",
+    "SecretAccessKey": "Секретний ключ доступу",
+    "Sequence": "Послідовність",
+    "TenantID": "№ орендаря",
+    "YesNo": "Так / Ні"
+}

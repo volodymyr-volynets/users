@@ -22,6 +22,9 @@ class NewDocument extends Base
     public $module_code = 'UM';
     public $title = 'U/M New Document Form';
     public $options = [
+        'actions' => [
+            'refresh' => true,
+        ],
         'on_success_refresh_parent' => true
     ];
     public $containers = [

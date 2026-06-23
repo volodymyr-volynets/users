@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model;
-class DistrictsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class DistrictsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Organizations\Model\Districts::class;
+    public string $object_table_class = Districts::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['on_district_tenant_id','on_district_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class DistrictsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $on_district_tenant_id = NULL {
-                        get => $this->on_district_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_district_tenant_id', $value);
-                            $this->on_district_tenant_id = $value;
-                        }
-                    }
+    public int|null $on_district_tenant_id = null {
+        get => $this->on_district_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_district_tenant_id', $value);
+            $this->on_district_tenant_id = $value;
+        }
+    }
 
     /**
      * District #
@@ -41,12 +52,12 @@ class DistrictsAR extends \Object\ActiveRecord {
      * @var int|null Domain: district_id_sequence Type: serial
      */
     public int|null $on_district_id = null {
-                        get => $this->on_district_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_district_id', $value);
-                            $this->on_district_id = $value;
-                        }
-                    }
+        get => $this->on_district_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_district_id', $value);
+            $this->on_district_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -58,12 +69,12 @@ class DistrictsAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $on_district_code = null {
-                        get => $this->on_district_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_district_code', $value);
-                            $this->on_district_code = $value;
-                        }
-                    }
+        get => $this->on_district_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_district_code', $value);
+            $this->on_district_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -75,12 +86,12 @@ class DistrictsAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $on_district_name = null {
-                        get => $this->on_district_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_district_name', $value);
-                            $this->on_district_name = $value;
-                        }
-                    }
+        get => $this->on_district_name;
+        set {
+            $this->setFullPkAndFilledColumn('on_district_name', $value);
+            $this->on_district_name = $value;
+        }
+    }
 
     /**
      * Organization #
@@ -91,13 +102,13 @@ class DistrictsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: organization_id Type: integer
      */
-    public int|null $on_district_organization_id = NULL {
-                        get => $this->on_district_organization_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_district_organization_id', $value);
-                            $this->on_district_organization_id = $value;
-                        }
-                    }
+    public int|null $on_district_organization_id = null {
+        get => $this->on_district_organization_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_district_organization_id', $value);
+            $this->on_district_organization_id = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -109,12 +120,12 @@ class DistrictsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $on_district_inactive = 0 {
-                        get => $this->on_district_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_district_inactive', $value);
-                            $this->on_district_inactive = $value;
-                        }
-                    }
+        get => $this->on_district_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('on_district_inactive', $value);
+            $this->on_district_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -126,10 +137,10 @@ class DistrictsAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $on_district_optimistic_lock = 'now()' {
-                        get => $this->on_district_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_district_optimistic_lock', $value);
-                            $this->on_district_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->on_district_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('on_district_optimistic_lock', $value);
+            $this->on_district_optimistic_lock = $value;
+        }
+    }
 }

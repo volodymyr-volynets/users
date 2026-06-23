@@ -106,28 +106,10 @@ class MyPasswords extends Base
         }
     }
 
-    public function loadOriginalValues(& $form)
-    {
-        $crypt = new \Crypt();
-        foreach ($form->original_values['\Numbers\Users\Users\Model\Credential\MyPassword\Values'] as $k => $v) {
-            $form->original_values['\Numbers\Users\Users\Model\Credential\MyPassword\Values'][$k]['um_mypasswval_encrypted_password'] = $crypt->decrypt($v['um_mypasswval_encrypted_password']);
-        }
-    }
-
-    public function loadValues(& $form)
-    {
-        $crypt = new \Crypt();
-        foreach ($form->values['\Numbers\Users\Users\Model\Credential\MyPassword\Values'] as $k => $v) {
-            $form->values['\Numbers\Users\Users\Model\Credential\MyPassword\Values'][$k]['um_mypasswval_encrypted_password'] = $crypt->decrypt($v['um_mypasswval_encrypted_password']);
-        }
-    }
-
     public function validate(& $form)
     {
         if (!$form->hasErrors()) {
-            $crypt = new \Crypt();
             foreach ($form->values['\Numbers\Users\Users\Model\Credential\MyPassword\Values'] as $k => $v) {
-                $form->values['\Numbers\Users\Users\Model\Credential\MyPassword\Values'][$k]['um_mypasswval_encrypted_password'] = $crypt->encrypt($v['um_mypasswval_encrypted_password']);
                 // timestamp
                 if (empty($v['um_passtpval_timestamp'])) {
                     $form->values['\Numbers\Users\Users\Model\Credential\MyPassword\Values'][$k]['um_mypasswval_timestamp'] = \Format::now('timestamp');

@@ -29,7 +29,7 @@ class Types extends Data
         'on_terrtype_icon' => 'icon_class',
     ];
     public $data = [ // keys are mirrored to service assignment type
-        13 => ['on_terrtype_name' => 'Postal Codes', 'on_terrtype_icon' => 'far fa-compass'],
-        17 => ['on_terrtype_name' => 'Counties', 'on_terrtype_icon' => 'fab fa-chrome'],
+        13 => ['on_terrtype_name' => 'Postal Codes', 'on_terrtype_icon' => 'fa-regular fa-compass'],
+        17 => ['on_terrtype_name' => 'Counties', 'on_terrtype_icon' => 'fa-brands fa-chrome'],
     ];
 }

@@ -2,10 +2,16 @@
     "A3BearerTokens": "A/3 Bearer Tokens",
     "DatetimeExpires": "Datetime Expires",
     "DatetimeStarted": "Datetime Started",
+    "FormatColonColongetDatePlaceholder": "Format::getDatePlaceholder",
+    "Format__getDatePlaceholder": "Format::getDatePlaceholder",
+    "FormatgetDatePlaceholder": "Format::getDatePlaceholder",
+    "IP": "IP",
     "Inactive": "Inactive",
     "SessionID": "Session #",
     "TenantID": "Tenant #",
     "TokenID": "Token #",
+    "User": "User",
     "UserID": "User #",
-    "UserIP": "User IP"
+    "UserIP": "User IP",
+    "YesNo": "Yes / No"
 }

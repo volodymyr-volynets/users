@@ -104,6 +104,7 @@ class SMSSender extends Sender
             'user_id' => $user_id,
             'email' => null,
             'phone' => $phone,
+            'sms' => true,
             'subject' => $subject,
             'body' => $body,
             'bytea' => $bytea,

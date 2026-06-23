@@ -51,5 +51,20 @@ class Tasks extends Import
                 ],
             ],
         ],
+        'computed_field_tasks' => [
+            'options' => [
+                'pk' => ['ts_compfldtsk_code'],
+                'model' => '\Numbers\Users\TaskScheduler\Model\ComputedFieldTasks',
+                'method' => 'save'
+            ],
+            'data' => [
+                [
+                    'ts_compfldtsk_code' => 'UM::USERS::PIIS::ALL_COMPUTED',
+                    'ts_compfldtsk_name' => 'U/M Users All Computed',
+                    'ts_compfldtsk_model' => '\Numbers\Users\Users\Task\UMUserPIIComputedFields',
+                    'ts_compfldtsk_inactive' => 0
+                ],
+            ],
+        ],
     ];
 }

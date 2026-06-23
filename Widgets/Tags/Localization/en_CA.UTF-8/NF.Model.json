@@ -1,7 +1,9 @@
 {
     "Inactive": "Inactive",
     "Name": "Name",
+    "Sequence": "Sequence",
     "TagID": "Tag #",
     "TenantID": "Tenant #",
-    "UMTagGlobals": "U/M Tag Globals"
+    "UMTagGlobals": "U/M Tag Globals",
+    "YesNo": "Yes / No"
 }

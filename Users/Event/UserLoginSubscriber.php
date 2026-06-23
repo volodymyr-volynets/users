@@ -15,6 +15,8 @@ use Object\Event\EventSubscriberBase;
 use Helper\IPDecoder;
 use Numbers\Users\Users\Helper\User\Notifications;
 use Numbers\Users\Users\Model\User\Logins;
+use Numbers\Users\Users\Model\User\PIIs;
+use Numbers\Users\Users\Model\Users;
 
 class UserLoginSubscriber extends EventSubscriberBase
 {
@@ -60,6 +62,30 @@ class UserLoginSubscriber extends EventSubscriberBase
             'um_usrlogin_ip_new' => $new,
             'um_usrlogin_inactive' => 0
         ]);
+        if (!$result['success']) {
+            return $result;
+        }
+        // update users record
+        $users_result = Users::collectionStatic()->merge([
+            'um_user_tenant_id' => $data['tenant_id'],
+            'um_user_id' => $data['user_id'],
+            'um_user_ip' => $data['user_ip'],
+        ], [
+            'skip_optimistic_lock' => true,
+        ]);
+        if (!$users_result['success']) {
+            return $users_result;
+        }
+        // update pii record
+        $pii_result = PIIs::collectionStatic()->merge([
+            'um_usrpii_tenant_id' => $data['tenant_id'],
+            'um_usrpii_user_id' => $data['user_id'],
+            'um_usrpii_datetime_of_last_login' => \Format::now('timestamp'),
+            'um_usrpii_last_login_in_days' => 0,
+        ]);
+        if (!$pii_result['success']) {
+            return $pii_result;
+        }
         // send notification if new IP
         if ($new) {
             Notifications::sendNewIPLoginEmail($result['new_serials']['um_usrlogin_id']);

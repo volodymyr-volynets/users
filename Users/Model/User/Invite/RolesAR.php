@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User\Invite;
-class RolesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class RolesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Invite\Roles::class;
+    public string $object_table_class = Roles::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_usrinrol_tenant_id','um_usrinrol_usrinv_id','um_usrinrol_role_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class RolesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usrinrol_tenant_id = NULL {
-                        get => $this->um_usrinrol_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinrol_tenant_id', $value);
-                            $this->um_usrinrol_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usrinrol_tenant_id = null {
+        get => $this->um_usrinrol_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinrol_tenant_id', $value);
+            $this->um_usrinrol_tenant_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -41,12 +52,12 @@ class RolesAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $um_usrinrol_timestamp = 'now()' {
-                        get => $this->um_usrinrol_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinrol_timestamp', $value);
-                            $this->um_usrinrol_timestamp = $value;
-                        }
-                    }
+        get => $this->um_usrinrol_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinrol_timestamp', $value);
+            $this->um_usrinrol_timestamp = $value;
+        }
+    }
 
     /**
      * Invite #
@@ -57,13 +68,13 @@ class RolesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: invite_id Type: bigint
      */
-    public int|null $um_usrinrol_usrinv_id = NULL {
-                        get => $this->um_usrinrol_usrinv_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinrol_usrinv_id', $value);
-                            $this->um_usrinrol_usrinv_id = $value;
-                        }
-                    }
+    public int|null $um_usrinrol_usrinv_id = null {
+        get => $this->um_usrinrol_usrinv_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinrol_usrinv_id', $value);
+            $this->um_usrinrol_usrinv_id = $value;
+        }
+    }
 
     /**
      * Role #
@@ -74,13 +85,13 @@ class RolesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: role_id Type: integer
      */
-    public int|null $um_usrinrol_role_id = NULL {
-                        get => $this->um_usrinrol_role_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinrol_role_id', $value);
-                            $this->um_usrinrol_role_id = $value;
-                        }
-                    }
+    public int|null $um_usrinrol_role_id = null {
+        get => $this->um_usrinrol_role_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinrol_role_id', $value);
+            $this->um_usrinrol_role_id = $value;
+        }
+    }
 
     /**
      * Unique
@@ -91,13 +102,13 @@ class RolesAR extends \Object\ActiveRecord {
      *
      * @var int|null Type: smallint
      */
-    public int|null $um_usrinrol_unique = NULL {
-                        get => $this->um_usrinrol_unique;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinrol_unique', $value);
-                            $this->um_usrinrol_unique = $value;
-                        }
-                    }
+    public int|null $um_usrinrol_unique = null {
+        get => $this->um_usrinrol_unique;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinrol_unique', $value);
+            $this->um_usrinrol_unique = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -109,10 +120,10 @@ class RolesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrinrol_inactive = 0 {
-                        get => $this->um_usrinrol_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinrol_inactive', $value);
-                            $this->um_usrinrol_inactive = $value;
-                        }
-                    }
+        get => $this->um_usrinrol_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinrol_inactive', $value);
+            $this->um_usrinrol_inactive = $value;
+        }
+    }
 }

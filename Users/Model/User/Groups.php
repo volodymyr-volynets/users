@@ -50,6 +50,7 @@ class Groups extends Table
     public $optimistic_lock = true;
     public $options_map = [
         'um_usrgrp_name' => 'name',
+        'um_usrgrp_name*' => 'avatar_circle_small',
         'um_usrgrp_inactive' => 'inactive',
     ];
     public $options_active = [
@@ -67,5 +68,11 @@ class Groups extends Table
         'classification' => 'client_confidential',
         'protection' => 2,
         'scope' => 'enterprise'
+    ];
+
+    public $scoped_attributes = [
+        'column_key' => 'um_usrgrp_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'U/M Group #',
     ];
 }

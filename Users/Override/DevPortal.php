@@ -19,12 +19,12 @@ class DevPortal
                 'Tenant Registration' => [
                     'url' => '/Numbers/Users/Users/Controller/Registration/Tenant',
                     'name' => 'Tenant Registration',
-                    'icon' => 'fas fa-pencil-alt'
+                    'icon' => 'fa-solid fa-pencil-alt'
                 ],
                 'Email Templates' => [
                     'url' => '/Numbers/Users/Users/Controller/DevPortal/EmailTemplates',
                     'name' => 'Email Templates',
-                    'icon' => 'fas fa-mail-bulk'
+                    'icon' => 'fa-solid fa-mail-bulk'
                 ]
             ]
         ]

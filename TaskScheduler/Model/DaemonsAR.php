@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\TaskScheduler\Model;
-class DaemonsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class DaemonsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\TaskScheduler\Model\Daemons::class;
+    public string $object_table_class = Daemons::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['ts_daemon_code'];
+
     /**
      * Code
      *
@@ -24,12 +35,12 @@ class DaemonsAR extends \Object\ActiveRecord {
      * @var string|null Domain: type_code Type: varchar
      */
     public string|null $ts_daemon_code = null {
-                        get => $this->ts_daemon_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_daemon_code', $value);
-                            $this->ts_daemon_code = $value;
-                        }
-                    }
+        get => $this->ts_daemon_code;
+        set {
+            $this->setFullPkAndFilledColumn('ts_daemon_code', $value);
+            $this->ts_daemon_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -41,12 +52,12 @@ class DaemonsAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $ts_daemon_name = null {
-                        get => $this->ts_daemon_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_daemon_name', $value);
-                            $this->ts_daemon_name = $value;
-                        }
-                    }
+        get => $this->ts_daemon_name;
+        set {
+            $this->setFullPkAndFilledColumn('ts_daemon_name', $value);
+            $this->ts_daemon_name = $value;
+        }
+    }
 
     /**
      * Token
@@ -58,12 +69,12 @@ class DaemonsAR extends \Object\ActiveRecord {
      * @var string|null Domain: token Type: varchar
      */
     public string|null $ts_daemon_token = null {
-                        get => $this->ts_daemon_token;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_daemon_token', $value);
-                            $this->ts_daemon_token = $value;
-                        }
-                    }
+        get => $this->ts_daemon_token;
+        set {
+            $this->setFullPkAndFilledColumn('ts_daemon_token', $value);
+            $this->ts_daemon_token = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -75,12 +86,12 @@ class DaemonsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $ts_daemon_inactive = 0 {
-                        get => $this->ts_daemon_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_daemon_inactive', $value);
-                            $this->ts_daemon_inactive = $value;
-                        }
-                    }
+        get => $this->ts_daemon_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('ts_daemon_inactive', $value);
+            $this->ts_daemon_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -92,10 +103,10 @@ class DaemonsAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $ts_daemon_optimistic_lock = 'now()' {
-                        get => $this->ts_daemon_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_daemon_optimistic_lock', $value);
-                            $this->ts_daemon_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->ts_daemon_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('ts_daemon_optimistic_lock', $value);
+            $this->ts_daemon_optimistic_lock = $value;
+        }
+    }
 }

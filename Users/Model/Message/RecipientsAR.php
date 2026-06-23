@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\Message;
-class RecipientsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class RecipientsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Message\Recipients::class;
+    public string $object_table_class = Recipients::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_mesrecip_tenant_id','um_mesrecip_message_id','um_mesrecip_type_id','um_mesrecip_user_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class RecipientsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_mesrecip_tenant_id = NULL {
-                        get => $this->um_mesrecip_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesrecip_tenant_id', $value);
-                            $this->um_mesrecip_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_mesrecip_tenant_id = null {
+        get => $this->um_mesrecip_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesrecip_tenant_id', $value);
+            $this->um_mesrecip_tenant_id = $value;
+        }
+    }
 
     /**
      * Message #
@@ -40,13 +51,13 @@ class RecipientsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: message_id Type: bigint
      */
-    public int|null $um_mesrecip_message_id = NULL {
-                        get => $this->um_mesrecip_message_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesrecip_message_id', $value);
-                            $this->um_mesrecip_message_id = $value;
-                        }
-                    }
+    public int|null $um_mesrecip_message_id = null {
+        get => $this->um_mesrecip_message_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesrecip_message_id', $value);
+            $this->um_mesrecip_message_id = $value;
+        }
+    }
 
     /**
      * Type
@@ -57,13 +68,13 @@ class RecipientsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $um_mesrecip_type_id = NULL {
-                        get => $this->um_mesrecip_type_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesrecip_type_id', $value);
-                            $this->um_mesrecip_type_id = $value;
-                        }
-                    }
+    public int|null $um_mesrecip_type_id = null {
+        get => $this->um_mesrecip_type_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesrecip_type_id', $value);
+            $this->um_mesrecip_type_id = $value;
+        }
+    }
 
     /**
      * User #
@@ -74,13 +85,13 @@ class RecipientsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_mesrecip_user_id = NULL {
-                        get => $this->um_mesrecip_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesrecip_user_id', $value);
-                            $this->um_mesrecip_user_id = $value;
-                        }
-                    }
+    public int|null $um_mesrecip_user_id = null {
+        get => $this->um_mesrecip_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesrecip_user_id', $value);
+            $this->um_mesrecip_user_id = $value;
+        }
+    }
 
     /**
      * User Email
@@ -92,12 +103,12 @@ class RecipientsAR extends \Object\ActiveRecord {
      * @var string|null Domain: email Type: varchar
      */
     public string|null $um_mesrecip_user_email = null {
-                        get => $this->um_mesrecip_user_email;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesrecip_user_email', $value);
-                            $this->um_mesrecip_user_email = $value;
-                        }
-                    }
+        get => $this->um_mesrecip_user_email;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesrecip_user_email', $value);
+            $this->um_mesrecip_user_email = $value;
+        }
+    }
 
     /**
      * User Phone
@@ -109,12 +120,12 @@ class RecipientsAR extends \Object\ActiveRecord {
      * @var string|null Domain: phone Type: varchar
      */
     public string|null $um_mesrecip_user_phone = null {
-                        get => $this->um_mesrecip_user_phone;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesrecip_user_phone', $value);
-                            $this->um_mesrecip_user_phone = $value;
-                        }
-                    }
+        get => $this->um_mesrecip_user_phone;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesrecip_user_phone', $value);
+            $this->um_mesrecip_user_phone = $value;
+        }
+    }
 
     /**
      * Read
@@ -126,12 +137,12 @@ class RecipientsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_mesrecip_read = 0 {
-                        get => $this->um_mesrecip_read;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesrecip_read', $value);
-                            $this->um_mesrecip_read = $value;
-                        }
-                    }
+        get => $this->um_mesrecip_read;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesrecip_read', $value);
+            $this->um_mesrecip_read = $value;
+        }
+    }
 
     /**
      * Chat Group #
@@ -142,11 +153,11 @@ class RecipientsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: group_id Type: integer
      */
-    public int|null $um_mesrecip_chat_group_id = NULL {
-                        get => $this->um_mesrecip_chat_group_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesrecip_chat_group_id', $value);
-                            $this->um_mesrecip_chat_group_id = $value;
-                        }
-                    }
+    public int|null $um_mesrecip_chat_group_id = null {
+        get => $this->um_mesrecip_chat_group_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesrecip_chat_group_id', $value);
+            $this->um_mesrecip_chat_group_id = $value;
+        }
+    }
 }

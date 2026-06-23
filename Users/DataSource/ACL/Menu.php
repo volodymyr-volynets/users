@@ -63,16 +63,21 @@ class Menu extends DataSource
             'order' => 'a.sm_resource_menu_order',
             'separator' => 'a.sm_resource_menu_separator',
             'name_generator' => 'a.sm_resource_menu_name_generator',
+            'options_generator' => 'a.sm_resource_menu_options_generator',
             'class' => 'a.sm_resource_menu_class',
             'template' => 'a.sm_resource_template_name',
-            'badge' => 'a.sm_resource_badge'
+            'badge' => 'a.sm_resource_badge',
+            'root' => 'a.sm_resource_root_node',
+            'menu_group_name' => 'sm_resource_menu_group_name',
         ]);
         // where
         $this->query->where('AND', ['a.sm_resource_type', '>=', 200]);
         $this->query->where('AND', ['a.sm_resource_type', '<', 300]);
         $this->query->where('AND', ['a.sm_resource_inactive', '=', 0]);
         // template
-        $this->query->where('AND', ['a.sm_resource_template_name', '=', \Application::get('application.template.name') ?? 'default']);
+        $template = \Application::get('application.template.name');
+        $template_menu = \Application::get("application.layouts.{$template}.menu");
+        $this->query->where('AND', ['a.sm_resource_template_name', '=', $template_menu ?? $template ?? 'default']);
         // orderby
         $this->query->orderby(['a.sm_resource_type' => SORT_DESC, 'a.sm_resource_menu_order' => SORT_ASC]);
     }

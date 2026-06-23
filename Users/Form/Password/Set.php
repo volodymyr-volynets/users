@@ -24,7 +24,7 @@ class Set extends Base
         'segment' => [
             'type' => 'primary',
             'header' => [
-                'icon' => ['type' => 'fas fa-asterisk'],
+                'icon' => ['type' => 'fa-solid fa-asterisk'],
                 'title' => 'Set Password:'
             ]
         ]
@@ -36,10 +36,10 @@ class Set extends Base
     public $elements = [
         'default' => [
             'password' => [
-                'password' => ['order' => 1, 'row_order' => 100, 'label_name' => 'New Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => true, 'autofocus' => true, 'empty_value' => true],
+                'password' => ['order' => 1, 'row_order' => 100, 'label_name' => 'New Password', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => true, 'autofocus' => true, 'empty_value' => true, 'method_renderer' => 'self::renderNewPasswordMethodRenderer'],
             ],
             'password2' => [
-                'password2' => ['order' => 1, 'row_order' => 200, 'label_name' => 'New Password (Repeat)', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => true, 'empty_value' => true],
+                'password2' => ['order' => 1, 'row_order' => 200, 'label_name' => 'New Password (Repeat)', 'domain' => 'password', 'method' => 'password', 'percent' => 50, 'required' => true, 'empty_value' => true, 'method_renderer' => 'self::renderNewPasswordMethodRenderer'],
             ],
             self::BUTTONS => [
                 self::BUTTON_SUBMIT => self::BUTTON_SUBMIT_DATA,
@@ -102,5 +102,18 @@ class Set extends Base
             $form->error(DANGER, 'Could not update password!');
         }
         return true;
+    }
+
+    public function renderNewPasswordMethodRenderer(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        $id = $options['options']['id'];
+        $result = [
+            'left' => '',
+            'value' => $value,
+            'right' => [],
+        ];
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.View', 'View'), 'onclick' => "$('#" . $id . "').attr('type', 'input');"]);
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.Paste', 'Paste'), 'onclick' => "Numbers.Form.pasteFromClipboard('#" . $id . "');"]);
+        return \HTML::inputGroup($result);
     }
 }

@@ -29,7 +29,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::ORG_ADDRESSES',
                     'sm_rsrsubres_name' => 'O/N Organization Addresses',
-                    'sm_rsrsubres_icon' => 'fas fa-globe',
+                    'sm_rsrsubres_icon' => 'fa-solid fa-globe',
                     'sm_rsrsubres_module_code' => 'CM',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -71,7 +71,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::ORG_OPERATING',
                     'sm_rsrsubres_name' => 'O/N Organization Operating Settings',
-                    'sm_rsrsubres_icon' => 'far fa-flag',
+                    'sm_rsrsubres_icon' => 'fa-regular fa-flag',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -109,7 +109,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::ORG_ATTRIBUTES',
                     'sm_rsrsubres_name' => 'O/N Organization Attributes',
-                    'sm_rsrsubres_icon' => 'far fa-clone',
+                    'sm_rsrsubres_icon' => 'fa-regular fa-clone',
                     'sm_rsrsubres_module_code' => 'TM',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -147,7 +147,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::ORG_BUSINESS_HOURS',
                     'sm_rsrsubres_name' => 'O/N Organization Business Hours',
-                    'sm_rsrsubres_icon' => 'far fa-clock',
+                    'sm_rsrsubres_icon' => 'fa-regular fa-clock',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -189,7 +189,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::LOC_ADDRESSES',
                     'sm_rsrsubres_name' => 'O/N Location Addresses',
-                    'sm_rsrsubres_icon' => 'fas fa-globe',
+                    'sm_rsrsubres_icon' => 'fa-solid fa-globe',
                     'sm_rsrsubres_module_code' => 'CM',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -231,7 +231,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::LOC_ATTRIBUTES',
                     'sm_rsrsubres_name' => 'O/N Location Attributes',
-                    'sm_rsrsubres_icon' => 'far fa-clone',
+                    'sm_rsrsubres_icon' => 'fa-regular fa-clone',
                     'sm_rsrsubres_module_code' => 'TM',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -269,7 +269,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::ORG_COMMENTS',
                     'sm_rsrsubres_name' => 'O/N Organization Comments',
-                    'sm_rsrsubres_icon' => 'fab fa-forumbee',
+                    'sm_rsrsubres_icon' => 'fa-brands fa-forumbee',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -299,7 +299,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::LOC_COMMENTS',
                     'sm_rsrsubres_name' => 'O/N Location Comments',
-                    'sm_rsrsubres_icon' => 'fab fa-forumbee',
+                    'sm_rsrsubres_icon' => 'fa-brands fa-forumbee',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -329,7 +329,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::ORG_DOCUMENTS',
                     'sm_rsrsubres_name' => 'O/N Organization Documents',
-                    'sm_rsrsubres_icon' => 'fas fa-file',
+                    'sm_rsrsubres_icon' => 'fa-solid fa-file',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -372,7 +372,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::ORG_TAGS',
                     'sm_rsrsubres_name' => 'O/N Organization Tags',
-                    'sm_rsrsubres_icon' => 'fas fa-tags',
+                    'sm_rsrsubres_icon' => 'fa-solid fa-tags',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -411,7 +411,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::LOC_DOCUMENTS',
                     'sm_rsrsubres_name' => 'O/N Location Documents',
-                    'sm_rsrsubres_icon' => 'fas fa-file',
+                    'sm_rsrsubres_icon' => 'fa-solid fa-file',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -454,7 +454,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::LOC_TAGS',
                     'sm_rsrsubres_name' => 'O/N Location Tags',
-                    'sm_rsrsubres_icon' => 'fas fa-tags',
+                    'sm_rsrsubres_icon' => 'fa-solid fa-tags',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -493,7 +493,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::CUS_ADDRESSES',
                     'sm_rsrsubres_name' => 'O/N Organization Addresses',
-                    'sm_rsrsubres_icon' => 'fas fa-globe',
+                    'sm_rsrsubres_icon' => 'fa-solid fa-globe',
                     'sm_rsrsubres_module_code' => 'CM',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -535,7 +535,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::CUS_OPERATING',
                     'sm_rsrsubres_name' => 'O/N Organization Operating Settings',
-                    'sm_rsrsubres_icon' => 'far fa-flag',
+                    'sm_rsrsubres_icon' => 'fa-regular fa-flag',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -573,7 +573,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::CUS_ATTRIBUTES',
                     'sm_rsrsubres_name' => 'O/N Organization Attributes',
-                    'sm_rsrsubres_icon' => 'far fa-clone',
+                    'sm_rsrsubres_icon' => 'fa-regular fa-clone',
                     'sm_rsrsubres_module_code' => 'TM',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -611,7 +611,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::CUS_COMMENTS',
                     'sm_rsrsubres_name' => 'O/N Organization Comments',
-                    'sm_rsrsubres_icon' => 'fab fa-forumbee',
+                    'sm_rsrsubres_icon' => 'fa-brands fa-forumbee',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -641,7 +641,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::CUS_DOCUMENTS',
                     'sm_rsrsubres_name' => 'O/N Organization Documents',
-                    'sm_rsrsubres_icon' => 'fas fa-file',
+                    'sm_rsrsubres_icon' => 'fa-solid fa-file',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [
@@ -684,7 +684,7 @@ class System2 extends Import
                     'sm_rsrsubres_parent_rsrsubres_id' => null,
                     'sm_rsrsubres_code' => 'ON::CUS_TAGS',
                     'sm_rsrsubres_name' => 'O/N Organization Tags',
-                    'sm_rsrsubres_icon' => 'fas fa-tags',
+                    'sm_rsrsubres_icon' => 'fa-solid fa-tags',
                     'sm_rsrsubres_module_code' => 'ON',
                     'sm_rsrsubres_inactive' => 0,
                     '\Numbers\Backend\System\Modules\Model\Resource\Subresource\Features' => [

@@ -45,7 +45,8 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
             'success' => false,
             'error' => [],
             'path' => null,
-            'thumbnail_path' => null
+            'thumbnail_path' => null,
+            'hash' => null,
         ];
         $dir = '';
         $application_structure = \Application::get('application.structure');
@@ -53,6 +54,12 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
             $dir .= $application_structure['settings']['db']['default']['dbname'] . '/';
         }
         $dir .= \Tenant::id() . '/' . strtolower($catalog['dt_catalog_code']) . '/';
+        // upload file to local folder
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $salt = \Application::get('crypt.default.salt') ?? random_int(1000, 9999);
+        $filename = $file['file_id'] . '_' . sha1($dir . $file['file_id'] . '.' . $extension . '_' . $salt);
+        $result['hash'] = $filename;
+        $destination = $dir . $filename . '.' . $extension;
         // create directory is does not exists
         if (!file_exists($this->options['dir'] . $dir)) {
             if (!File::mkdir($this->options['dir'] . $dir)) {
@@ -72,18 +79,13 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
             $transparent = imagecolorallocatealpha($new_image, 255, 255, 255, 127);
             imagefilledrectangle($new_image, 0, 0, (int) $thumbnail_dimansions[0], (int) $thumbnail_dimansions[1], $transparent);
             imagecopyresampled($new_image, $thumbnail_image, 0, 0, 0, 0, (int) $thumbnail_dimansions[0], (int) $thumbnail_dimansions[1], imagesx($thumbnail_image), imagesy($thumbnail_image));
-            $thumbnail_destination = $dir . $file['file_id'] . '.thumbnail.png';
+            $thumbnail_destination = $dir . $filename . '.thumbnail.png';
             if (!imagepng($new_image, $this->options['dir'] . $thumbnail_destination)) {
                 $result['error'][] = 'Could not create thumbnail!';
                 return $result;
             }
-            imagedestroy($thumbnail_image);
-            imagedestroy($new_image);
             $result['thumbnail_path'] = $thumbnail_destination;
         }
-        // move uploaded file
-        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $destination = $dir . $file['file_id'] . '.' . $extension;
         // uploaded file we move
         if (empty($file['flag_system_generated'])) {
             if (!move_uploaded_file($file['tmp_name'], $this->options['dir'] . $destination)) {
@@ -143,6 +145,13 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
         } else {
             $body = file_get_contents($this->options['dir'] . $file['dt_file_thumbnail_path']);
             $mime = 'image/png';
+        }
+        // return with file
+        if (!empty($options['return_with_settings'])) {
+            return [
+                'file' => $file,
+                'contents' => $body,
+            ];
         }
         // return
         if (!empty($options['return'])) {

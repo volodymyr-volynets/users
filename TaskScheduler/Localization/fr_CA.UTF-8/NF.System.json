@@ -1,0 +1,11 @@
+{
+    "Daemons": "Démons",
+    "Global": "Mondial",
+    "Jobs": "Emplois",
+    "Operations": "Opérations",
+    "SystemManagement": "Gestion du système",
+    "TSDaemons": "Démons T/S",
+    "TSJobs": "Emplois T/S",
+    "TSTaskScheduler": "Planificateur de tâches T/S",
+    "TaskScheduler": "Planificateur de tâches"
+}

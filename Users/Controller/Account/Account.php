@@ -23,7 +23,7 @@ class Account extends Controller
             if (\User::get('photo_file_id')) {
                 $avatar = \HTML::img(['src' => Base::generateURL(\User::get('photo_file_id'), true), 'class' => 'navbar-menu-item-avatar-img', 'alt' => 'Avatar', 'width' => 25, 'height' => 25]);
             } else {
-                $avatar = \HTML::icon(['type' => 'fas fa-address-card']);
+                $avatar = \HTML::icon(['type' => 'fa-solid fa-address-card']);
             }
             $short_name = \User::get('name');
             if (strlen($short_name) > 20) {

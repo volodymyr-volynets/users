@@ -1,0 +1,20 @@
+{
+    "": "",
+    "AIToolCode": "A/I Tool Code",
+    "Code": "Code",
+    "Group": "Group",
+    "Inactive": "Inactive",
+    "IsForm": "Is Form",
+    "Model": "Model",
+    "ModelID": "Model #",
+    "Name": "Name",
+    "OptimisticLock": "Optimistic Lock",
+    "Order": "Order",
+    "PhaseCode": "Phase Code",
+    "SettingsJSON": "Settings (JSON)",
+    "TenantID": "Tenant #",
+    "Type": "Type",
+    "TypeID": "Type #",
+    "WGPhaseSteps": "W/G Phase Steps",
+    "YesNo": "Yes / No"
+}

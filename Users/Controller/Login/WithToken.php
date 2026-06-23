@@ -17,7 +17,7 @@ use Object\Controller;
 class WithToken extends Controller
 {
     public $title = 'Single Sign On';
-    public $icon = 'fas fa-sign-in-alt';
+    public $icon = 'fa-solid fa-sign-in-alt';
     public function actionIndex()
     {
         $crypt = new \Crypt();

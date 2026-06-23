@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model\Queue;
-class TypesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class TypesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Organizations\Model\Queue\Types::class;
+    public string $object_table_class = Types::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['on_quetype_tenant_id','on_quetype_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class TypesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $on_quetype_tenant_id = NULL {
-                        get => $this->on_quetype_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_quetype_tenant_id', $value);
-                            $this->on_quetype_tenant_id = $value;
-                        }
-                    }
+    public int|null $on_quetype_tenant_id = null {
+        get => $this->on_quetype_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_quetype_tenant_id', $value);
+            $this->on_quetype_tenant_id = $value;
+        }
+    }
 
     /**
      * Type #
@@ -41,12 +52,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Domain: type_id_sequence Type: smallserial
      */
     public int|null $on_quetype_id = null {
-                        get => $this->on_quetype_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_quetype_id', $value);
-                            $this->on_quetype_id = $value;
-                        }
-                    }
+        get => $this->on_quetype_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_quetype_id', $value);
+            $this->on_quetype_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -58,12 +69,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $on_quetype_code = null {
-                        get => $this->on_quetype_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_quetype_code', $value);
-                            $this->on_quetype_code = $value;
-                        }
-                    }
+        get => $this->on_quetype_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_quetype_code', $value);
+            $this->on_quetype_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -75,12 +86,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $on_quetype_name = null {
-                        get => $this->on_quetype_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_quetype_name', $value);
-                            $this->on_quetype_name = $value;
-                        }
-                    }
+        get => $this->on_quetype_name;
+        set {
+            $this->setFullPkAndFilledColumn('on_quetype_name', $value);
+            $this->on_quetype_name = $value;
+        }
+    }
 
     /**
      * Icon
@@ -92,12 +103,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: icon Type: varchar
      */
     public string|null $on_quetype_icon = null {
-                        get => $this->on_quetype_icon;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_quetype_icon', $value);
-                            $this->on_quetype_icon = $value;
-                        }
-                    }
+        get => $this->on_quetype_icon;
+        set {
+            $this->setFullPkAndFilledColumn('on_quetype_icon', $value);
+            $this->on_quetype_icon = $value;
+        }
+    }
 
     /**
      * Method
@@ -108,13 +119,13 @@ class TypesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $on_quetype_method_id = NULL {
-                        get => $this->on_quetype_method_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_quetype_method_id', $value);
-                            $this->on_quetype_method_id = $value;
-                        }
-                    }
+    public int|null $on_quetype_method_id = null {
+        get => $this->on_quetype_method_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_quetype_method_id', $value);
+            $this->on_quetype_method_id = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -126,12 +137,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $on_quetype_inactive = 0 {
-                        get => $this->on_quetype_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_quetype_inactive', $value);
-                            $this->on_quetype_inactive = $value;
-                        }
-                    }
+        get => $this->on_quetype_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('on_quetype_inactive', $value);
+            $this->on_quetype_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -143,10 +154,10 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $on_quetype_optimistic_lock = 'now()' {
-                        get => $this->on_quetype_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_quetype_optimistic_lock', $value);
-                            $this->on_quetype_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->on_quetype_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('on_quetype_optimistic_lock', $value);
+            $this->on_quetype_optimistic_lock = $value;
+        }
+    }
 }

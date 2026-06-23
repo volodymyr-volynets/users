@@ -1,0 +1,16 @@
+{
+    "": "",
+    "Comment": "Comentario",
+    "Inactive": "Inactivo",
+    "Name": "Nombre",
+    "OptimisticLock": "Bloqueo optimista",
+    "Organization": "Organización",
+    "OrganizationID": "Organización #",
+    "Sequence": "Secuencia",
+    "Template": "Plantilla",
+    "TemplateID": "Plantilla #",
+    "TenantID": "Arrendatario #",
+    "Type": "Tipo",
+    "UMNoteTemplates": "Plantillas de notas U/M",
+    "YesNo": "Sí / No"
+}

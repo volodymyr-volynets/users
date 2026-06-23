@@ -207,7 +207,7 @@ class Documents extends List2
                 $temp_bypass_hidden_input['wg_document_id'] = $neighbouring_values['wg_document_id'];
                 $temp_bypass_hidden_input = json_encode($temp_bypass_hidden_input);
                 $new_link = "Numbers.Form.openSubformWindow('{$temp_collection_link}', '{$temp_collection_screen_link}', '{$this->form_link}', 'wg_approve_document', {$temp_bypass_hidden_input}, {});";
-                $toolbar[] = \HTML::a(['href' => 'javascript:void(0);', 'onclick' => $new_link, 'value' => \HTML::icon(['type' => 'far fa-handshake']) . ' ' . i18n(null, 'Approve / Reject')]);
+                $toolbar[] = \HTML::a(['href' => 'javascript:void(0);', 'onclick' => $new_link, 'value' => \HTML::icon(['type' => 'fa-regular fa-handshake']) . ' ' . i18n(null, 'Approve / Reject')]);
             }
         }
         return implode(' ', $toolbar);
@@ -242,11 +242,11 @@ class Documents extends List2
                     }
                 }
                 if (!empty($neighbouring_values['wg_document_needs_transfer'])) {
-                    $result .= \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name'];
+                    $result .= \HTML::icon(['type' => 'fa-solid fa-link']) . ' ' . $v['dt_file_name'];
                 } elseif ($v['dt_file_url']) {
-                    $result .= \HTML::a(['href' => $v['dt_file_url'], 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name'], 'target' => '_blank']);
+                    $result .= \HTML::a(['href' => $v['dt_file_url'], 'value' => \HTML::icon(['type' => 'fa-solid fa-link']) . ' ' . $v['dt_file_name'], 'target' => '_blank']);
                 } else {
-                    $result .= \HTML::a(['href' => Base::generateURL($k, false, $v['dt_file_name']), 'value' => \HTML::icon(['type' => 'fas fa-link']) . ' ' . $v['dt_file_name'], 'target' => '_blank']);
+                    $result .= \HTML::a(['href' => Base::generateURL($k, false, $v['dt_file_name']), 'value' => \HTML::icon(['type' => 'fa-solid fa-link']) . ' ' . $v['dt_file_name'], 'target' => '_blank']);
                 }
                 $result .= '<br/>';
             }
