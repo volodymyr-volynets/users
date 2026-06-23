@@ -26,7 +26,7 @@ class Import extends \Object\Import
                     'sm_module_type' => 20,
                     'sm_module_name' => 'U/M User Management',
                     'sm_module_abbreviation' => 'U/M',
-                    'sm_module_icon' => 'far fa-user',
+                    'sm_module_icon' => 'fa-regular fa-user',
                     'sm_module_transactions' => 0,
                     'sm_module_multiple' => 0,
                     'sm_module_activation_model' => null,
@@ -63,7 +63,19 @@ class Import extends \Object\Import
                     'um_usrtype_id' => 40,
                     'um_usrtype_name' => 'Gamer',
                     'um_usrtype_inactive' => 0,
-                ]
+                ],
+                // AI
+                [
+                    'um_usrtype_id' => 50,
+                    'um_usrtype_name' => 'A/I Assistant',
+                    'um_usrtype_inactive' => 0,
+                ],
+                // audiences / contacts
+                [
+                    'um_usrtype_id' => 200,
+                    'um_usrtype_name' => 'Audiences / Contacts',
+                    'um_usrtype_inactive' => 0,
+                ],
             ]
         ],
         'role_types' => [
@@ -161,7 +173,7 @@ class Import extends \Object\Import
                     'sm_feature_code' => 'UM::RBAC',
                     'sm_feature_type' => 10,
                     'sm_feature_name' => 'U/M RBAC',
-                    'sm_feature_icon' => 'far fa-user-circle',
+                    'sm_feature_icon' => 'fa-regular fa-user-circle',
                     'sm_feature_activation_model' => null,
                     'sm_feature_activated_by_default' => 1,
                     'sm_feature_inactive' => 0,
@@ -177,7 +189,7 @@ class Import extends \Object\Import
                     'sm_feature_code' => 'UM::USERS',
                     'sm_feature_type' => 10,
                     'sm_feature_name' => 'U/M Users',
-                    'sm_feature_icon' => 'fas fa-users',
+                    'sm_feature_icon' => 'fa-solid fa-users',
                     'sm_feature_activated_by_default' => 1,
                     'sm_feature_activation_model' => null,
                     'sm_feature_inactive' => 0,
@@ -197,7 +209,55 @@ class Import extends \Object\Import
                     'sm_feature_code' => 'UM::TEAMS',
                     'sm_feature_type' => 10,
                     'sm_feature_name' => 'U/M Teams',
-                    'sm_feature_icon' => 'fas fa-sitemap',
+                    'sm_feature_icon' => 'fa-solid fa-sitemap',
+                    'sm_feature_activation_model' => null,
+                    'sm_feature_activated_by_default' => 1,
+                    'sm_feature_inactive' => 0,
+                    '\Numbers\Backend\System\Modules\Model\Module\Dependencies' => [
+                        [
+                            'sm_mdldep_child_module_code' => 'UM',
+                            'sm_mdldep_child_feature_code' => 'UM::USERS'
+                        ]
+                    ]
+                ],
+                [
+                    'sm_feature_module_code' => 'UM',
+                    'sm_feature_code' => 'UM::REALMS',
+                    'sm_feature_type' => 10,
+                    'sm_feature_name' => 'U/M Realms',
+                    'sm_feature_icon' => 'fa-solid fa-user-circle',
+                    'sm_feature_activation_model' => null,
+                    'sm_feature_activated_by_default' => 1,
+                    'sm_feature_inactive' => 0,
+                    '\Numbers\Backend\System\Modules\Model\Module\Dependencies' => [
+                        [
+                            'sm_mdldep_child_module_code' => 'UM',
+                            'sm_mdldep_child_feature_code' => 'UM::USERS'
+                        ]
+                    ]
+                ],
+                [
+                    'sm_feature_module_code' => 'UM',
+                    'sm_feature_code' => 'UM::DOMAINS',
+                    'sm_feature_type' => 10,
+                    'sm_feature_name' => 'U/M Domains',
+                    'sm_feature_icon' => 'fa-solid fa-user-lock',
+                    'sm_feature_activation_model' => null,
+                    'sm_feature_activated_by_default' => 1,
+                    'sm_feature_inactive' => 0,
+                    '\Numbers\Backend\System\Modules\Model\Module\Dependencies' => [
+                        [
+                            'sm_mdldep_child_module_code' => 'UM',
+                            'sm_mdldep_child_feature_code' => 'UM::USERS'
+                        ]
+                    ]
+                ],
+                [
+                    'sm_feature_module_code' => 'UM',
+                    'sm_feature_code' => 'UM::RESOURCES',
+                    'sm_feature_type' => 10,
+                    'sm_feature_name' => 'U/M Resources',
+                    'sm_feature_icon' => 'fa-solid fa-cubes',
                     'sm_feature_activation_model' => null,
                     'sm_feature_activated_by_default' => 1,
                     'sm_feature_inactive' => 0,
@@ -213,7 +273,7 @@ class Import extends \Object\Import
                     'sm_feature_code' => 'UM::USER_BECOME',
                     'sm_feature_type' => 40,
                     'sm_feature_name' => 'U/M User Become',
-                    'sm_feature_icon' => 'fas fa-eye',
+                    'sm_feature_icon' => 'fa-solid fa-eye',
                     'sm_feature_activation_model' => null,
                     'sm_feature_activated_by_default' => 1,
                     'sm_feature_inactive' => 0,
@@ -229,7 +289,7 @@ class Import extends \Object\Import
                     'sm_feature_code' => 'UM::MY_PASSWORDS',
                     'sm_feature_type' => 10,
                     'sm_feature_name' => 'U/M My Password Storage',
-                    'sm_feature_icon' => 'fas fa-star-of-life',
+                    'sm_feature_icon' => 'fa-solid fa-star-of-life',
                     'sm_feature_activated_by_default' => 1,
                     'sm_feature_activation_model' => null,
                     'sm_feature_inactive' => 0,
@@ -245,7 +305,7 @@ class Import extends \Object\Import
                     'sm_feature_code' => 'UM::CHANNELS',
                     'sm_feature_type' => 10,
                     'sm_feature_name' => 'U/M Channels',
-                    'sm_feature_icon' => 'fab fa-stack-exchange',
+                    'sm_feature_icon' => 'fa-brands fa-stack-exchange',
                     'sm_feature_activated_by_default' => 1,
                     'sm_feature_activation_model' => null,
                     'sm_feature_inactive' => 0,
@@ -255,6 +315,27 @@ class Import extends \Object\Import
                             'sm_mdldep_child_feature_code' => 'UM::USERS'
                         ]
                     ]
+                ],
+            ]
+        ],
+        'roles' => [
+            'options' => [
+                'pk' => ['um_role_tenant_id', 'um_role_id'],
+                'model' => '\Numbers\Users\Users\Model\Roles',
+                'method' => 'save'
+            ],
+            'data' => [
+                [
+                    'um_role_tenant_id' => 2, // to default tenant
+                    'um_role_id' => '::id::DEFAULT',
+                    'um_role_code' => 'DEFAULT',
+                    'um_role_type_id' => 20,
+                    'um_role_name' => 'Default Role',
+                    'um_role_global' => 0,
+                    'um_role_super_admin' => 0,
+                    'um_role_icon' => 'fa-brands fa-adn',
+                    'um_role_weight' => 1,
+                    'um_role_inactive' => 0
                 ],
             ]
         ]

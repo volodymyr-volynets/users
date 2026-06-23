@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Monitoring\Model;
-class UsagesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class UsagesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Monitoring\Model\Usages::class;
+    public string $object_table_class = Usages::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['sm_monusage_tenant_id','sm_monusage_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class UsagesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $sm_monusage_tenant_id = NULL {
-                        get => $this->sm_monusage_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_tenant_id', $value);
-                            $this->sm_monusage_tenant_id = $value;
-                        }
-                    }
+    public int|null $sm_monusage_tenant_id = null {
+        get => $this->sm_monusage_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_tenant_id', $value);
+            $this->sm_monusage_tenant_id = $value;
+        }
+    }
 
     /**
      * Usage #
@@ -41,12 +52,12 @@ class UsagesAR extends \Object\ActiveRecord {
      * @var int|null Type: bigserial
      */
     public int|null $sm_monusage_id = null {
-                        get => $this->sm_monusage_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_id', $value);
-                            $this->sm_monusage_id = $value;
-                        }
-                    }
+        get => $this->sm_monusage_id;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_id', $value);
+            $this->sm_monusage_id = $value;
+        }
+    }
 
     /**
      * Session #
@@ -57,13 +68,13 @@ class UsagesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: big_id Type: bigint
      */
-    public int|null $sm_monusage_session_id = NULL {
-                        get => $this->sm_monusage_session_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_session_id', $value);
-                            $this->sm_monusage_session_id = $value;
-                        }
-                    }
+    public int|null $sm_monusage_session_id = null {
+        get => $this->sm_monusage_session_id;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_session_id', $value);
+            $this->sm_monusage_session_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -75,12 +86,12 @@ class UsagesAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $sm_monusage_timestamp = null {
-                        get => $this->sm_monusage_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_timestamp', $value);
-                            $this->sm_monusage_timestamp = $value;
-                        }
-                    }
+        get => $this->sm_monusage_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_timestamp', $value);
+            $this->sm_monusage_timestamp = $value;
+        }
+    }
 
     /**
      * User #
@@ -91,13 +102,13 @@ class UsagesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $sm_monusage_user_id = NULL {
-                        get => $this->sm_monusage_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_user_id', $value);
-                            $this->sm_monusage_user_id = $value;
-                        }
-                    }
+    public int|null $sm_monusage_user_id = null {
+        get => $this->sm_monusage_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_user_id', $value);
+            $this->sm_monusage_user_id = $value;
+        }
+    }
 
     /**
      * User IP
@@ -109,12 +120,12 @@ class UsagesAR extends \Object\ActiveRecord {
      * @var string|null Domain: ip Type: varchar
      */
     public string|null $sm_monusage_user_ip = null {
-                        get => $this->sm_monusage_user_ip;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_user_ip', $value);
-                            $this->sm_monusage_user_ip = $value;
-                        }
-                    }
+        get => $this->sm_monusage_user_ip;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_user_ip', $value);
+            $this->sm_monusage_user_ip = $value;
+        }
+    }
 
     /**
      * Resource #
@@ -126,12 +137,12 @@ class UsagesAR extends \Object\ActiveRecord {
      * @var int|null Domain: resource_id Type: integer
      */
     public int|null $sm_monusage_resource_id = 0 {
-                        get => $this->sm_monusage_resource_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_resource_id', $value);
-                            $this->sm_monusage_resource_id = $value;
-                        }
-                    }
+        get => $this->sm_monusage_resource_id;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_resource_id', $value);
+            $this->sm_monusage_resource_id = $value;
+        }
+    }
 
     /**
      * Resource Name
@@ -143,12 +154,12 @@ class UsagesAR extends \Object\ActiveRecord {
      * @var string|null Type: text
      */
     public string|null $sm_monusage_resource_name = null {
-                        get => $this->sm_monusage_resource_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_resource_name', $value);
-                            $this->sm_monusage_resource_name = $value;
-                        }
-                    }
+        get => $this->sm_monusage_resource_name;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_resource_name', $value);
+            $this->sm_monusage_resource_name = $value;
+        }
+    }
 
     /**
      * Method
@@ -160,12 +171,12 @@ class UsagesAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $sm_monusage_method = null {
-                        get => $this->sm_monusage_method;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_method', $value);
-                            $this->sm_monusage_method = $value;
-                        }
-                    }
+        get => $this->sm_monusage_method;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_method', $value);
+            $this->sm_monusage_method = $value;
+        }
+    }
 
     /**
      * Duration (Seconds)
@@ -177,12 +188,12 @@ class UsagesAR extends \Object\ActiveRecord {
      * @var mixed Domain: quantity Type: bcnumeric
      */
     public mixed $sm_monusage_duration = '0.0000' {
-                        get => $this->sm_monusage_duration;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_duration', $value);
-                            $this->sm_monusage_duration = $value;
-                        }
-                    }
+        get => $this->sm_monusage_duration;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_duration', $value);
+            $this->sm_monusage_duration = $value;
+        }
+    }
 
     /**
      * Country Code
@@ -194,10 +205,10 @@ class UsagesAR extends \Object\ActiveRecord {
      * @var string|null Domain: country_code Type: char
      */
     public string|null $sm_monusage_country_code = null {
-                        get => $this->sm_monusage_country_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('sm_monusage_country_code', $value);
-                            $this->sm_monusage_country_code = $value;
-                        }
-                    }
+        get => $this->sm_monusage_country_code;
+        set {
+            $this->setFullPkAndFilledColumn('sm_monusage_country_code', $value);
+            $this->sm_monusage_country_code = $value;
+        }
+    }
 }

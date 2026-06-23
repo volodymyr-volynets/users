@@ -15,7 +15,7 @@ use Object\Form\Wrapper\Base;
 
 class Profiles extends Base
 {
-    public $form_link = 'pp_amazon_profiles';
+    public $form_link = 'dt_amazon_profiles';
     public $module_code = 'DT';
     public $title = 'D/T Amazon Profiles Form';
     public $options = [
@@ -46,8 +46,8 @@ class Profiles extends Base
                 'dt_amzprofile_region' => ['order' => 2, 'label_name' => 'Region', 'domain' => 'name', 'null' => true, 'required' => true, 'percent' => 50],
             ],
             'dt_amzprofile_aws_access_key_id' => [
-                'dt_amzprofile_aws_access_key_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Access Key', 'domain' => 'encrypted_password', 'null' => true, 'required' => true, 'percent' => 50],
-                'dt_amzprofile_aws_secret_access_key' => ['order' => 2, 'label_name' => 'Secret Access Key', 'domain' => 'encrypted_password', 'null' => true, 'required' => true, 'percent' => 50],
+                'dt_amzprofile_aws_access_key_id' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Access Key', 'domain' => 'encrypted_password', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'password', 'method_renderer' => 'self::renderFieldValueMethodRenderer'],
+                'dt_amzprofile_aws_secret_access_key' => ['order' => 2, 'label_name' => 'Secret Access Key', 'domain' => 'encrypted_password', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'password', 'method_renderer' => 'self::renderFieldValueMethodRenderer'],
             ],
         ],
         'buttons' => [
@@ -58,4 +58,17 @@ class Profiles extends Base
         'name' => 'DT Amazon Profiles',
         'model' => \Numbers\Users\Documents\Drivers\Amazon\Model\Profiles::class,
     ];
+
+    public function renderFieldValueMethodRenderer(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        $id = $options['options']['id'];
+        $result = [
+            'left' => loc('NF.Form.Key', 'Key'),
+            'value' => $value,
+            'right' => [],
+        ];
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.View', 'View'), 'onclick' => "$('#" . $id . "').attr('type', 'input');"]);
+        $result['right'][] = \HTML::a(['href' => 'javascript:void(0);', 'value' => loc('NF.Form.Copy', 'Copy'), 'onclick' => "Numbers.Form.copyToClipboard($('#" . $id . "').val());"]);
+        return \HTML::inputGroup($result);
+    }
 }

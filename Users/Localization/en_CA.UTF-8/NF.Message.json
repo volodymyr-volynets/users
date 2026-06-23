@@ -1,7 +1,8 @@
 {
     "BearerTokenSessionExpired": "Bearer token/session expired!",
+    "CongratulationsYouHaveSignOut": "Congratulations! You have successfully signed out.",
     "CredentialsDoNotMatch": "Provided credentials do not match our records!",
-    "DoNotWantToReceiveEmails": "If you would no longer like to receive emails like this one from Monster please click here to {unsubscribe}.",
+    "DoNotWantToReceiveEmails": "If you would no longer like to receive emails like this one please click here to {unsubscribe}.",
     "DuplicateRecord": "Duplicate record with selected values already exists!",
     "GoogleMapOf": "Google map of {location}",
     "LinkValidForHours": "Link is valid for {hours} hours",
@@ -15,12 +16,17 @@
     "RegisteredWithWebsite": "Registered with website form!",
     "SuccessfullyInvited": "Successfully invited!",
     "SuccessfullyInvitedAsName": "Successfully invited {name}",
+    "SuccessfullyLoggedIn": "Successfully logged in!",
+    "SuccessfullyRegistered": "You have successfully registered, please check your email/sms for email validation!",
     "SuccessfullyRegisteredAsName": "Successfully registered as {name}",
+    "SuccessfullyRegisteredSMSValidatePhone": "You have successfully registered, please click on {url} to validate you phone number!",
     "SuccessfullySignedIn": "You have successfully signed in!",
     "Unauthorized": "Unauthorized!",
     "Unsubscribe": "unsubscribe",
+    "UserAccountIsOnHoldCallSupportOrTryAgainLater": "User account in on hold, please contact support or try logging again later!",
     "UserNotFound": "User not found!",
     "UsersRegisterSimple": "You are receiving this Registration Email because you registered in {config://brand.name.welcome} system.",
     "WelcomeToBrand": "Welcome to {config://brand.name.welcome}!",
+    "YouCanNowSignInIntoYourAccount": "You can now sign in into your account. {signin}.",
     "YouCannotInviteYourself": "You cannot invite yourself!"
 }

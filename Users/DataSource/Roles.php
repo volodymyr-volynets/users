@@ -27,7 +27,7 @@ class Roles extends DataSource
     public $single_value;
     public $options_map = [
         'um_role_name' => 'name',
-        'um_role_icon' => 'icon_class',
+        'um_role_name*' => 'avatar_role_small',
         'um_role_inactive' => 'inactive'
     ];
     public $options_active = [

@@ -65,6 +65,7 @@ class Documents extends Table
         $this->columns['wg_document_approval_status_id'] = ['name' => 'Approval Status', 'domain' => 'type_id', 'options_model' => '\Numbers\Users\Widgets\Documents\Model\Statuses'];
         $this->columns['wg_document_have_types'] = ['name' => 'Have Types', 'type' => 'boolean'];
         $this->columns['wg_document_needs_transfer'] = ['name' => 'Needs Transfer', 'type' => 'boolean'];
+        // file ids
         $this->columns['wg_document_file_id_1'] = ['name' => 'File 1', 'domain' => 'file_id'];
         $this->columns['wg_document_file_id_2'] = ['name' => 'File 2', 'domain' => 'file_id', 'null' => true];
         $this->columns['wg_document_file_id_3'] = ['name' => 'File 3', 'domain' => 'file_id', 'null' => true];
@@ -95,6 +96,7 @@ class Documents extends Table
         $this->columns['wg_document_file_id_28'] = ['name' => 'File 28', 'domain' => 'file_id', 'null' => true];
         $this->columns['wg_document_file_id_29'] = ['name' => 'File 29', 'domain' => 'file_id', 'null' => true];
         $this->columns['wg_document_file_id_30'] = ['name' => 'File 30', 'domain' => 'file_id', 'null' => true];
+        // file types
         $this->columns['wg_document_filetype_id_1'] = ['name' => 'Type 1', 'domain' => 'type_id', 'null' => true];
         $this->columns['wg_document_filetype_id_2'] = ['name' => 'Type 2', 'domain' => 'type_id', 'null' => true];
         $this->columns['wg_document_filetype_id_3'] = ['name' => 'Type 3', 'domain' => 'type_id', 'null' => true];
@@ -130,6 +132,39 @@ class Documents extends Table
         $this->columns['wg_document_inserted_user_name'] = ['name' => 'Inserted User Name', 'type' => 'text', 'null' => true];
         $this->columns['wg_document_external_integtype_code'] = ['name' => 'External Integration Type Code', 'domain' => 'group_code', 'null' => true];
         $this->columns['wg_document_external_id'] = ['name' => 'External #', 'domain' => 'big_id', 'default' => null, 'null' => true];
+        // file names
+        $this->columns['wg_document_filename_1'] = ['name' => 'Filename 1', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_2'] = ['name' => 'Filename 2', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_3'] = ['name' => 'Filename 3', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_4'] = ['name' => 'Filename 4', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_5'] = ['name' => 'Filename 5', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_6'] = ['name' => 'Filename 6', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_7'] = ['name' => 'Filename 7', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_8'] = ['name' => 'Filename 8', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_9'] = ['name' => 'Filename 9', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_10'] = ['name' => 'Filename 10', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_11'] = ['name' => 'Filename 11', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_12'] = ['name' => 'Filename 12', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_13'] = ['name' => 'Filename 13', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_14'] = ['name' => 'Filename 14', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_15'] = ['name' => 'Filename 15', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_16'] = ['name' => 'Filename 16', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_17'] = ['name' => 'Filename 17', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_18'] = ['name' => 'Filename 18', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_19'] = ['name' => 'Filename 19', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_20'] = ['name' => 'Filename 20', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_21'] = ['name' => 'Filename 21', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_22'] = ['name' => 'Filename 22', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_23'] = ['name' => 'Filename 23', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_24'] = ['name' => 'Filename 24', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_25'] = ['name' => 'Filename 25', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_26'] = ['name' => 'Filename 26', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_27'] = ['name' => 'Filename 27', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_28'] = ['name' => 'Filename 28', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_29'] = ['name' => 'Filename 29', 'domain' => 'file_name', 'null' => true];
+        $this->columns['wg_document_filename_30'] = ['name' => 'Filename 30', 'domain' => 'file_name', 'null' => true];
+        // metadata
+        $this->columns['wg_document_metadata_json'] = ['name' => 'Metadata (JSON)', 'type' => 'json', 'null' => true];
         // add constraints
         $this->constraints[$this->name . '_pk'] = [
             'type' => 'pk',

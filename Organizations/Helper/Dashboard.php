@@ -24,7 +24,7 @@ class Dashboard extends Builder
         1 => [
             1 => [
                 'name' => 'Organizations',
-                'icon' => 'far fa-building',
+                'icon' => 'fa-regular fa-building',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Organizations',
                     'method_code' => 'Index',
@@ -34,7 +34,7 @@ class Dashboard extends Builder
             ],
             2 => [
                 'name' => 'Locations',
-                'icon' => 'fas fa-code-branch',
+                'icon' => 'fa-solid fa-code-branch',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Locations',
                     'method_code' => 'Index',
@@ -47,7 +47,7 @@ class Dashboard extends Builder
             ],
             4 => [
                 'name' => 'Strategic Business Units',
-                'icon' => 'fas fa-hospital',
+                'icon' => 'fa-solid fa-hospital',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\StrategicBusinessUnits',
                     'method_code' => 'Index',
@@ -57,7 +57,7 @@ class Dashboard extends Builder
             ],
             5 => [
                 'name' => 'Trademarks',
-                'icon' => 'fas fa-trademark',
+                'icon' => 'fa-solid fa-trademark',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Trademarks',
                     'method_code' => 'Index',
@@ -67,7 +67,7 @@ class Dashboard extends Builder
             ],
             6 => [
                 'name' => 'Organization Types',
-                'icon' => 'far fa-clone',
+                'icon' => 'fa-regular fa-clone',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Organization\Types',
                     'method_code' => 'Index',
@@ -88,7 +88,7 @@ class Dashboard extends Builder
             ],
             4 => [
                 'name' => 'Legal Authorities',
-                'icon' => 'far fa-money-bill-alt',
+                'icon' => 'fa-regular fa-money-bill-alt',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\LegalAuthorities',
                     'method_code' => 'Index',
@@ -98,7 +98,7 @@ class Dashboard extends Builder
             ],
             5 => [
                 'name' => 'Markets',
-                'icon' => 'fas fa-sticky-note',
+                'icon' => 'fa-solid fa-sticky-note',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Markets',
                     'method_code' => 'Index',
@@ -108,7 +108,7 @@ class Dashboard extends Builder
             ],
             6 => [
                 'name' => 'Regions',
-                'icon' => 'fas fa-tag',
+                'icon' => 'fa-solid fa-tag',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Regions',
                     'method_code' => 'Index',
@@ -120,7 +120,7 @@ class Dashboard extends Builder
         3 => [
             1 => [
                 'name' => 'Brands',
-                'icon' => 'fas fa-thumbs-up',
+                'icon' => 'fa-solid fa-thumbs-up',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Brands',
                     'method_code' => 'Index',
@@ -130,7 +130,7 @@ class Dashboard extends Builder
             ],
             2 => [
                 'name' => 'Cost Centers',
-                'icon' => 'fas fa-rupee-sign',
+                'icon' => 'fa-solid fa-rupee-sign',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\CostCenters',
                     'method_code' => 'Index',
@@ -140,7 +140,7 @@ class Dashboard extends Builder
             ],
             3 => [
                 'name' => 'Departments',
-                'icon' => 'fas fa-address-book',
+                'icon' => 'fa-solid fa-address-book',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Departments',
                     'method_code' => 'Index',
@@ -150,7 +150,7 @@ class Dashboard extends Builder
             ],
             4 => [
                 'name' => 'Districts',
-                'icon' => 'far fa-sticky-note',
+                'icon' => 'fa-regular fa-sticky-note',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Districts',
                     'method_code' => 'Index',
@@ -160,7 +160,7 @@ class Dashboard extends Builder
             ],
             5 => [
                 'name' => 'Divisions',
-                'icon' => 'fas fa-star-half',
+                'icon' => 'fa-solid fa-star-half',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Divisions',
                     'method_code' => 'Index',
@@ -170,7 +170,7 @@ class Dashboard extends Builder
             ],
             6 => [
                 'name' => 'Jurisdictions',
-                'icon' => 'fas fa-flag',
+                'icon' => 'fa-solid fa-flag',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Organizations\Controller\Jurisdictions',
                     'method_code' => 'Index',

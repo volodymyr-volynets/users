@@ -32,6 +32,7 @@ class Teams extends Table
         'um_team_name' => ['name' => 'Name', 'domain' => 'name'],
         'um_team_icon' => ['name' => 'Icon', 'domain' => 'icon', 'null' => true],
         'um_team_weight' => ['name' => 'Weight', 'domain' => 'weight', 'null' => true], // based on this field priorities would be set
+        'um_team_global' => ['name' => 'Global', 'type' => 'boolean'],
         'um_team_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
     ];
     public $constraints = [
@@ -50,8 +51,10 @@ class Teams extends Table
     ];
     public $options_map = [
         'um_team_name' => 'name',
-        'um_team_icon' => 'icon_class',
+        'um_team_name*' => 'avatar_team_small',
         'um_team_inactive' => 'inactive',
+        // deprecated
+        //'um_team_icon' => 'icon_class',
     ];
     public $options_active = [
         'um_team_inactive' => 0
@@ -68,5 +71,11 @@ class Teams extends Table
         'classification' => 'client_confidential',
         'protection' => 2,
         'scope' => 'enterprise'
+    ];
+
+    public $scoped_attributes = [
+        'column_key' => 'um_team_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'U/M Team #',
     ];
 }

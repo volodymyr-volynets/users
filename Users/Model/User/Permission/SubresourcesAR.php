@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User\Permission;
-class SubresourcesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class SubresourcesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Permission\Subresources::class;
+    public string $object_table_class = Subresources::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_usrsubres_tenant_id','um_usrsubres_user_id','um_usrsubres_module_id','um_usrsubres_resource_id','um_usrsubres_rsrsubres_id','um_usrsubres_action_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class SubresourcesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usrsubres_tenant_id = NULL {
-                        get => $this->um_usrsubres_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsubres_tenant_id', $value);
-                            $this->um_usrsubres_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usrsubres_tenant_id = null {
+        get => $this->um_usrsubres_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsubres_tenant_id', $value);
+            $this->um_usrsubres_tenant_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -41,12 +52,12 @@ class SubresourcesAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $um_usrsubres_timestamp = 'now()' {
-                        get => $this->um_usrsubres_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsubres_timestamp', $value);
-                            $this->um_usrsubres_timestamp = $value;
-                        }
-                    }
+        get => $this->um_usrsubres_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsubres_timestamp', $value);
+            $this->um_usrsubres_timestamp = $value;
+        }
+    }
 
     /**
      * User #
@@ -57,13 +68,13 @@ class SubresourcesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_usrsubres_user_id = NULL {
-                        get => $this->um_usrsubres_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsubres_user_id', $value);
-                            $this->um_usrsubres_user_id = $value;
-                        }
-                    }
+    public int|null $um_usrsubres_user_id = null {
+        get => $this->um_usrsubres_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsubres_user_id', $value);
+            $this->um_usrsubres_user_id = $value;
+        }
+    }
 
     /**
      * Module #
@@ -74,13 +85,13 @@ class SubresourcesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: module_id Type: integer
      */
-    public int|null $um_usrsubres_module_id = NULL {
-                        get => $this->um_usrsubres_module_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsubres_module_id', $value);
-                            $this->um_usrsubres_module_id = $value;
-                        }
-                    }
+    public int|null $um_usrsubres_module_id = null {
+        get => $this->um_usrsubres_module_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsubres_module_id', $value);
+            $this->um_usrsubres_module_id = $value;
+        }
+    }
 
     /**
      * Resource #
@@ -92,12 +103,12 @@ class SubresourcesAR extends \Object\ActiveRecord {
      * @var int|null Domain: resource_id Type: integer
      */
     public int|null $um_usrsubres_resource_id = 0 {
-                        get => $this->um_usrsubres_resource_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsubres_resource_id', $value);
-                            $this->um_usrsubres_resource_id = $value;
-                        }
-                    }
+        get => $this->um_usrsubres_resource_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsubres_resource_id', $value);
+            $this->um_usrsubres_resource_id = $value;
+        }
+    }
 
     /**
      * Subresource #
@@ -109,12 +120,12 @@ class SubresourcesAR extends \Object\ActiveRecord {
      * @var int|null Domain: resource_id Type: integer
      */
     public int|null $um_usrsubres_rsrsubres_id = 0 {
-                        get => $this->um_usrsubres_rsrsubres_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsubres_rsrsubres_id', $value);
-                            $this->um_usrsubres_rsrsubres_id = $value;
-                        }
-                    }
+        get => $this->um_usrsubres_rsrsubres_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsubres_rsrsubres_id', $value);
+            $this->um_usrsubres_rsrsubres_id = $value;
+        }
+    }
 
     /**
      * Action #
@@ -126,12 +137,12 @@ class SubresourcesAR extends \Object\ActiveRecord {
      * @var int|null Domain: action_id Type: smallint
      */
     public int|null $um_usrsubres_action_id = 0 {
-                        get => $this->um_usrsubres_action_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsubres_action_id', $value);
-                            $this->um_usrsubres_action_id = $value;
-                        }
-                    }
+        get => $this->um_usrsubres_action_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsubres_action_id', $value);
+            $this->um_usrsubres_action_id = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -143,10 +154,10 @@ class SubresourcesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrsubres_inactive = 0 {
-                        get => $this->um_usrsubres_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsubres_inactive', $value);
-                            $this->um_usrsubres_inactive = $value;
-                        }
-                    }
+        get => $this->um_usrsubres_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsubres_inactive', $value);
+            $this->um_usrsubres_inactive = $value;
+        }
+    }
 }

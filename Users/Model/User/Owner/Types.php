@@ -12,6 +12,7 @@
 namespace Numbers\Users\Users\Model\User\Owner;
 
 use Object\Table;
+use Numbers\Users\Users\Helper\OwnerTypes;
 
 class Types extends Table
 {
@@ -32,6 +33,7 @@ class Types extends Table
         'um_ownertype_name' => ['name' => 'Name', 'domain' => 'name'],
         'um_ownertype_multiple' => ['name' => 'Multiple', 'type' => 'boolean'],
         'um_ownertype_readonly' => ['name' => 'Readonly', 'type' => 'boolean'],
+        'um_ownertype_weight' => ['name' => 'Weight', 'domain' => 'weight', 'null' => true], // based on this field priorities would be set
         'um_ownertype_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
     ];
     public $constraints = [
@@ -65,9 +67,44 @@ class Types extends Table
     public $cache_tags = [];
     public $cache_memory = true;
 
+    public $batches = [
+        'map' => [
+            'um_ownertype_tenant_id' => 'tm_batchrecord_tenant_id',
+            'um_ownertype_id' => 'tm_batchrecord_field_value_id'
+        ],
+        'where' => [
+            'tm_batchrecord_sm_model_code' => '\Numbers\Users\Users\Model\User\Owner\Types',
+            'tm_batchrecord_field_code' => 'um_ownertype_id',
+        ],
+        'edit' => [
+            'batch_value' => 'tm_batchrecord_field_value_id',
+            'batch_name' => 'U/M Owner Type #',
+            'batch_record_name' => 'um_ownertype_name',
+            'edit_endpoint' => '/Numbers/Users/Users/Controller/Owner/Types/_Edit',
+            'edit_key' => 'um_ownertype_id',
+            'list_endpoint' => '/Numbers/Users/Users/Controller/Owner/Types/_Index',
+            'list_key' => ['um_ownertype_id1', 'um_ownertype_id2'],
+        ],
+        'chat' => [
+            'context' => true,
+        ]
+    ];
+
     public $data_asset = [
         'classification' => 'client_confidential',
         'protection' => 2,
         'scope' => 'enterprise'
     ];
+
+    /**
+     * @return array{inactive: int, name: string}
+     */
+    public function optionsGroupedByMyOwners($options)
+    {
+        $result = [];
+        foreach (OwnerTypes::getAllOwnerTypes() as $k => $v) {
+            $result[$v['um_ownertype_id']] = ['name' => $v['um_ownertype_name'], 'inactive' => $v['um_ownertype_inactive']];
+        }
+        return $result;
+    }
 }

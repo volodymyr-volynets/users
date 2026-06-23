@@ -22,7 +22,7 @@ class Dashboard extends Builder
         1 => [
             1 => [
                 'name' => 'Users',
-                'icon' => 'fas fa-users',
+                'icon' => 'fa-solid fa-users',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Users',
                     'method_code' => 'Index',
@@ -31,11 +31,11 @@ class Dashboard extends Builder
                 'url' => '/Default/Numbers/Users/Users/Controller/Users'
             ],
             2 => [
-                'icon' => 'fas fa-arrow-right'
+                'icon' => 'fa-solid fa-arrow-right'
             ],
             3 => [
                 'name' => 'New User',
-                'icon' => 'fas fa-user',
+                'icon' => 'fa-solid fa-user',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Users',
                     'method_code' => 'Edit',
@@ -48,7 +48,7 @@ class Dashboard extends Builder
             ],
             5 => [
                 'name' => 'Settings',
-                'icon' => 'fas fa-cogs',
+                'icon' => 'fa-solid fa-cogs',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Settings',
                     'method_code' => 'Edit',
@@ -61,7 +61,7 @@ class Dashboard extends Builder
             ],
             7 => [
                 'name' => 'Groups',
-                'icon' => 'far fa-object-group',
+                'icon' => 'fa-regular fa-object-group',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Groups',
                     'method_code' => 'Index',
@@ -71,7 +71,7 @@ class Dashboard extends Builder
             ],
             8 => [
                 'name' => 'Roles',
-                'icon' => 'far fa-user-circle',
+                'icon' => 'fa-regular fa-user-circle',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Roles',
                     'method_code' => 'Index',
@@ -81,7 +81,7 @@ class Dashboard extends Builder
             ],
             9 => [
                 'name' => 'Titles',
-                'icon' => 'fas fa-blind',
+                'icon' => 'fa-solid fa-blind',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Titles',
                     'method_code' => 'Index',
@@ -91,7 +91,7 @@ class Dashboard extends Builder
             ],
             10 => [
                 'name' => 'Teams',
-                'icon' => 'fas fa-sitemap',
+                'icon' => 'fa-solid fa-sitemap',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Teams',
                     'method_code' => 'Index',
@@ -101,7 +101,7 @@ class Dashboard extends Builder
             ],
             11 => [
                 'name' => 'Assignment Types',
-                'icon' => 'fas fa-link',
+                'icon' => 'fa-solid fa-link',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Assignment\Types',
                     'method_code' => 'Index',
@@ -111,7 +111,7 @@ class Dashboard extends Builder
             ],
             12 => [
                 'name' => 'Owner Types',
-                'icon' => 'fab fa-gg',
+                'icon' => 'fa-brands fa-gg',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Owner\Types',
                     'method_code' => 'Index',
@@ -131,7 +131,7 @@ class Dashboard extends Builder
             ],
             2 => [
                 'name' => 'Organization Access Report',
-                'icon' => 'far fa-building',
+                'icon' => 'fa-regular fa-building',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\OrganizationAccessReport',
                     'method_code' => 'Index',
@@ -141,7 +141,7 @@ class Dashboard extends Builder
             ],
             3 => [
                 'name' => 'Resource Setup Report',
-                'icon' => 'fas fa-tasks',
+                'icon' => 'fa-solid fa-tasks',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\ResourceSetupReport',
                     'method_code' => 'Index',
@@ -151,7 +151,7 @@ class Dashboard extends Builder
             ],
             4 => [
                 'name' => 'Role Setup Report',
-                'icon' => 'far fa-user-circle',
+                'icon' => 'fa-regular fa-user-circle',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\RoleSetupReport',
                     'method_code' => 'Index',
@@ -161,7 +161,7 @@ class Dashboard extends Builder
             ],
             5 => [
                 'name' => 'Team Setup Report',
-                'icon' => 'fas fa-sitemap',
+                'icon' => 'fa-solid fa-sitemap',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\TeamSetupReport',
                     'method_code' => 'Index',
@@ -171,7 +171,7 @@ class Dashboard extends Builder
             ],
             6 => [
                 'name' => 'User Setup Report',
-                'icon' => 'fas fa-user-friends',
+                'icon' => 'fa-solid fa-user-friends',
                 'acl' => [
                     'resource_id' => '\Numbers\Users\Users\Controller\Report\Security\UserSetupReport',
                     'method_code' => 'Index',

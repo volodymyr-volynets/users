@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model;
-class RolesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class RolesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Roles::class;
+    public string $object_table_class = Roles::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_role_tenant_id','um_role_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class RolesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_role_tenant_id = NULL {
-                        get => $this->um_role_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_tenant_id', $value);
-                            $this->um_role_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_role_tenant_id = null {
+        get => $this->um_role_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_tenant_id', $value);
+            $this->um_role_tenant_id = $value;
+        }
+    }
 
     /**
      * Role #
@@ -41,12 +52,12 @@ class RolesAR extends \Object\ActiveRecord {
      * @var int|null Domain: role_id_sequence Type: serial
      */
     public int|null $um_role_id = null {
-                        get => $this->um_role_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_id', $value);
-                            $this->um_role_id = $value;
-                        }
-                    }
+        get => $this->um_role_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_id', $value);
+            $this->um_role_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -58,12 +69,12 @@ class RolesAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_role_code = null {
-                        get => $this->um_role_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_code', $value);
-                            $this->um_role_code = $value;
-                        }
-                    }
+        get => $this->um_role_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_code', $value);
+            $this->um_role_code = $value;
+        }
+    }
 
     /**
      * Type
@@ -74,13 +85,13 @@ class RolesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $um_role_type_id = NULL {
-                        get => $this->um_role_type_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_type_id', $value);
-                            $this->um_role_type_id = $value;
-                        }
-                    }
+    public int|null $um_role_type_id = null {
+        get => $this->um_role_type_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_type_id', $value);
+            $this->um_role_type_id = $value;
+        }
+    }
 
     /**
      * Department #
@@ -91,13 +102,13 @@ class RolesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: department_id Type: integer
      */
-    public int|null $um_role_department_id = NULL {
-                        get => $this->um_role_department_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_department_id', $value);
-                            $this->um_role_department_id = $value;
-                        }
-                    }
+    public int|null $um_role_department_id = null {
+        get => $this->um_role_department_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_department_id', $value);
+            $this->um_role_department_id = $value;
+        }
+    }
 
     /**
      * Name
@@ -109,12 +120,12 @@ class RolesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_role_name = null {
-                        get => $this->um_role_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_name', $value);
-                            $this->um_role_name = $value;
-                        }
-                    }
+        get => $this->um_role_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_name', $value);
+            $this->um_role_name = $value;
+        }
+    }
 
     /**
      * Icon
@@ -126,12 +137,12 @@ class RolesAR extends \Object\ActiveRecord {
      * @var string|null Domain: icon Type: varchar
      */
     public string|null $um_role_icon = null {
-                        get => $this->um_role_icon;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_icon', $value);
-                            $this->um_role_icon = $value;
-                        }
-                    }
+        get => $this->um_role_icon;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_icon', $value);
+            $this->um_role_icon = $value;
+        }
+    }
 
     /**
      * Global
@@ -143,12 +154,12 @@ class RolesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_role_global = 0 {
-                        get => $this->um_role_global;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_global', $value);
-                            $this->um_role_global = $value;
-                        }
-                    }
+        get => $this->um_role_global;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_global', $value);
+            $this->um_role_global = $value;
+        }
+    }
 
     /**
      * Super Admin
@@ -160,12 +171,12 @@ class RolesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_role_super_admin = 0 {
-                        get => $this->um_role_super_admin;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_super_admin', $value);
-                            $this->um_role_super_admin = $value;
-                        }
-                    }
+        get => $this->um_role_super_admin;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_super_admin', $value);
+            $this->um_role_super_admin = $value;
+        }
+    }
 
     /**
      * Weight
@@ -176,13 +187,13 @@ class RolesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: weight Type: integer
      */
-    public int|null $um_role_weight = NULL {
-                        get => $this->um_role_weight;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_weight', $value);
-                            $this->um_role_weight = $value;
-                        }
-                    }
+    public int|null $um_role_weight = null {
+        get => $this->um_role_weight;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_weight', $value);
+            $this->um_role_weight = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -194,12 +205,12 @@ class RolesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_role_inactive = 0 {
-                        get => $this->um_role_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_inactive', $value);
-                            $this->um_role_inactive = $value;
-                        }
-                    }
+        get => $this->um_role_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_inactive', $value);
+            $this->um_role_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -211,10 +222,10 @@ class RolesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $um_role_optimistic_lock = 'now()' {
-                        get => $this->um_role_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_role_optimistic_lock', $value);
-                            $this->um_role_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->um_role_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('um_role_optimistic_lock', $value);
+            $this->um_role_optimistic_lock = $value;
+        }
+    }
 }

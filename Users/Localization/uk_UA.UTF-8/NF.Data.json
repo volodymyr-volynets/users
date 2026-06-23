@@ -1,0 +1,7 @@
+{
+    "ChatChannel": "Чат-канал",
+    "ChatMessage": "Повідомлення чату",
+    "ChatThread": "Тема чату",
+    "EmailNotification": "Сповіщення електронною поштою",
+    "SMSNotification": "SMS-сповіщення"
+}

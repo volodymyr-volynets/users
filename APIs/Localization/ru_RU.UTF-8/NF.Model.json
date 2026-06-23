@@ -1,0 +1,17 @@
+{
+    "A3BearerTokens": "Жетоны на предъявителя A/3",
+    "DatetimeExpires": "Дата и время истекают",
+    "DatetimeStarted": "Дата и время начала",
+    "FormatColonColongetDatePlaceholder": "Формат::getDatePlaceholder",
+    "Format__getDatePlaceholder": "Формат::getDatePlaceholder",
+    "FormatgetDatePlaceholder": "Формат::getDatePlaceholder",
+    "IP": "ИС",
+    "Inactive": "Неактивный",
+    "SessionID": "Номер сеанса",
+    "TenantID": "Жилец #",
+    "TokenID": "Номер токена",
+    "User": "Пользователь",
+    "UserID": "Пользователь #",
+    "UserIP": "IP-адрес пользователя",
+    "YesNo": "Да / Нет"
+}

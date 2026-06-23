@@ -104,20 +104,23 @@ class Controllers2 extends Controllers
     public function determineClassificationIcon(string $classification): string
     {
         if ($classification == 'Settings') {
-            return 'fas fa-cogs';
+            return 'fa-solid fa-cogs';
         }
         if ($classification == 'Account') {
-            return 'far fa-user';
+            return 'fa-regular fa-user';
         }
         if ($classification == 'Reports') {
-            return 'fas fa-table';
+            return 'fa-solid fa-table';
         }
         if ($classification == 'Tasks') {
-            return 'far fa-sun';
+            return 'fa-regular fa-sun';
         }
         if ($classification == 'Miscellaneous') {
-            return 'fas fa-cubes';
+            return 'fa-solid fa-cubes';
         }
-        return 'fas fa-cubes';
+        if ($classification == 'Tools') {
+            return 'fa-solid fa-toolbox';
+        }
+        return 'fa-solid fa-cubes';
     }
 }

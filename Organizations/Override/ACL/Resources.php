@@ -25,7 +25,7 @@ class Resources
         'postlogin_dashboard' => [
             'numbers_organizations' => [
                 'name' => 'Organization Management',
-                'icon' => 'fas fa-building',
+                'icon' => 'fa-solid fa-building',
                 'model' => '\Numbers\Users\Organizations\Helper\Dashboard',
                 'order' => 33000
             ]

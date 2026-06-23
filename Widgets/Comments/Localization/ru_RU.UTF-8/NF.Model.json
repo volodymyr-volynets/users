@@ -1,0 +1,16 @@
+{
+    "": "",
+    "Comment": "Комментарий",
+    "Inactive": "Неактивный",
+    "Name": "Имя",
+    "OptimisticLock": "Оптимистический замок",
+    "Organization": "Организация",
+    "OrganizationID": "Организация №",
+    "Sequence": "Последовательность",
+    "Template": "Шаблон",
+    "TemplateID": "Шаблон #",
+    "TenantID": "Жилец #",
+    "Type": "Тип",
+    "UMNoteTemplates": "Шаблоны заметок U/M",
+    "YesNo": "Да / Нет"
+}

@@ -1,0 +1,23 @@
+{
+    "Blank": "Vide",
+    "CheckInID": "Enregistrement #",
+    "CheckInLatitude": "Enregistrement à Latitude",
+    "CheckInLongitude": "Enregistrement de la longitude",
+    "CheckInMap": "Carte d&#39;enregistrement",
+    "CheckInTimestamp": "Horodatage d&#39;enregistrement",
+    "CheckOut": "Vérifier",
+    "CheckOutLatitude": "Découvrez Latitude",
+    "CheckOutLongitude": "Consultez Longitude",
+    "CheckOutMap": "Consultez la carte",
+    "CheckOutTimestamp": "Horodatage de la vérification",
+    "Duration": "Durée",
+    "Format": "Format",
+    "Map": "Carte",
+    "New": "Nouveau",
+    "Order": "Commande",
+    "Reset": "Réinitialiser",
+    "Save": "Sauvegarder",
+    "Sort": "Trier",
+    "Submit": "Soumettre",
+    "User": "Utilisateur"
+}

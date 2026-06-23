@@ -79,16 +79,18 @@ class Notifications
      *
      * @param int $um_user_id
      * @param string string $um_user_login_password
+     * @param string $success_url
      */
-    public static function sendRegistrationSimpleEmail(int $um_user_id, string $um_user_login_password): array
+    public static function sendRegistrationSimpleEmail(int $um_user_id, string $um_user_login_password, string $success_url = ''): array
     {
         return Sender::notifySingleUser('UM::EMAIL_REGISTRATION_SIMPLE', $um_user_id, '', [
             'form' => [
                 'input' => [
                     'um_user_id' => $um_user_id,
                     '__um_user_login_password' => $um_user_login_password,
+                    '__success_url' => $success_url,
                 ]
-            ]
+            ],
         ]);
     }
 
@@ -196,6 +198,78 @@ class Notifications
             'replace' => [
                 'subject' => [
                     '[message_type]' => loc('NF.Form.NewInvite', 'New Invite'),
+                    '[occasion]' => $occasion,
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Send register to SMS
+     *
+     * @param string $phone
+     * @param string $message
+     * @param string $success_url
+     * @return array
+     */
+    public static function sendRegistrationToSMS(string $phone, string $message, string $success_url): array
+    {
+        return SMSSender::SMSSingleUser('UM::SMS_REGISTRATION_SIMPLE', 0, $phone, [
+            'form' => [
+                'input' => [
+                    'message' => $message,
+                    'success_url' => $success_url,
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Send MFA (simple) email
+     *
+     * @param int $um_user_id
+     * @param string $message
+     * @param string $email
+     * @param string $occasion
+     * @return array
+     */
+    public static function sendMFASimpleEmail(int $um_user_id, string $email, string $message, string $occasion): array
+    {
+        return Sender::notifySingleUser('UM::EMAIL_MFA_SIMPLE', 0, $email, [
+            'form' => [
+                'input' => [
+                    'um_user_id' => $um_user_id,
+                    'message' => $message,
+                ],
+            ],
+            'replace' => [
+                'subject' => [
+                    '[message_type]' => loc('NF.Form.2StepVerification', '2 - Step Verification'),
+                    '[occasion]' => $occasion,
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Send MFA to SMS
+     *
+     * @param string $phone
+     * @param string $message
+     * @param string $occasion
+     * @return array
+     */
+    public static function sendMFAToSMS(string $phone, string $message, string $occasion): array
+    {
+        return SMSSender::SMSSingleUser('UM::SMS_MFA_SIMPLE', 0, $phone, [
+            'form' => [
+                'input' => [
+                    'message' => $message,
+                ],
+            ],
+            'replace' => [
+                'subject' => [
+                    '[message_type]' => loc('NF.Form.2StepVerification', '2 - Step Verification'),
                     '[occasion]' => $occasion,
                 ],
             ],

@@ -14,6 +14,7 @@ namespace Numbers\Users\Documents\Base\Controller;
 use Numbers\Frontend\HTML\Renderers\Common\Colors;
 use Numbers\Users\Documents\Base\Base;
 use Object\Controller;
+use Numbers\Users\Documents\Base\Model\Files;
 
 class GetFile extends Controller
 {
@@ -23,10 +24,54 @@ class GetFile extends Controller
     {
         $input = \Request::input();
         $crypt = new \Crypt();
-        $token_data = $crypt->tokenVerify($input['token'], ['file.view', 'thumbnail.view']);
+        $token_data = $crypt->tokenVerify($input['token'], ['file.view', 'thumbnail.view'], ['skip_time_validation' => true]);
         // proceed with logic
         $model = new Base();
-        echo $model->download($token_data['id'], ['thumbnail' => $token_data['token'] == 'thumbnail.view']);
+        echo $model->download($token_data['id'], [
+            'thumbnail' => $token_data['token'] == 'thumbnail.view',
+            'key_id' => $token_data['data']['key_id'] ?? null,
+        ]);
+    }
+    public function actionView()
+    {
+        $input = \Request::input();
+        $crypt = new \Crypt();
+        $token_data = $crypt->tokenVerify($input['token'], ['file.view', 'thumbnail.view'], ['skip_time_validation' => true]);
+        // proceed with logic
+        $model = new Base();
+        echo $model->download($token_data['id'], [
+            'saved_content_type' => true,
+            'thumbnail' => $token_data['token'] == 'thumbnail.view',
+            'key_id' => $token_data['data']['key_id'] ?? null,
+        ]);
+    }
+    public function actionOpenAccess()
+    {
+        $mvc = \Application::get('mvc');
+        if (empty($mvc['post_action'][0])) {
+            throw new \Exception('You must supply file name.');
+        }
+        $hash = (string) explode('.', $mvc['post_action'][0])[0];
+        $file = Files::getSingleStatic([
+            'where' => [
+                'dt_file_tenant_id' => \Tenant::id(),
+                'dt_file_hash' => $hash,
+            ]
+        ]);
+        if (empty($file)) {
+            throw new \Exception('File not found!');
+        }
+        // we allow caching
+        $seconds = 3600;
+        header("Cache-Control: public, max-age=$seconds, immutable");
+        header("Expires: " . gmdate("D, d M Y H:i:s", time() + $seconds) . " GMT");
+        // fetch and echo
+        $model = new Base();
+        echo $model->download($file['dt_file_id'], [
+            'saved_content_type' => true,
+            'thumbnail' => strpos($mvc['post_action'][0], '.thumbnail.') !== false,
+            'file_data' => $file,
+        ]);
     }
     public function actionIcon()
     {
@@ -50,7 +95,6 @@ class GetFile extends Controller
         // image
         header('Content-Type: image/png');
         imagepng($image);
-        imagedestroy($image);
         exit;
     }
 }

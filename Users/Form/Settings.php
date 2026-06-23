@@ -58,12 +58,17 @@ class Settings extends Base
     ];
     public $rows = [
         'tabs' => [
+            'general' => ['order' => 50, 'label_name' => 'General'],
             'sequences' => ['order' => 100, 'label_name' => 'Sequences'],
             'policies' => ['order' => 200, 'label_name' => 'Policies'],
+            'mfa' => ['order' => 300, 'label_name' => 'MFA'],
         ],
     ];
     public $elements = [
         'tabs' => [
+            'general' => [
+                'general' => ['container' => 'general_container', 'order' => 100]
+            ],
             'sequences' => [
                 'sequences' => ['container' => 'sequences_container', 'order' => 100]
             ],
@@ -71,6 +76,14 @@ class Settings extends Base
                 'policies' => ['container' => 'policy_container', 'order' => 100],
                 'separator_2' => ['container' => 'separator_2', 'order' => 150],
                 'policy_groups' => ['container' => 'policy_group_container', 'order' => 200],
+            ],
+            'mfa' => [
+                'mfa' => ['container' => 'mfa_container', 'order' => 100],
+            ]
+        ],
+        'general_container' => [
+            'um_setting_default_dt_catalog_code' => [
+                'um_setting_default_dt_catalog_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Default File Catalog', 'domain' => 'group_code', 'null' => true, 'required' => true, 'method' => 'select', 'options_model' => '\Numbers\Users\Documents\Base\Model\Catalogs::optionsActive'],
             ]
         ],
         'sequences_container' => [
@@ -93,7 +106,7 @@ class Settings extends Base
         ],
         'separator_2' => [
             'separator_2' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Policy Groups', 'icon' => 'far fa-object-group', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Policy Groups', 'icon' => 'fa-regular fa-object-group', 'percent' => 100],
             ],
         ],
         'policy_group_container' => [
@@ -103,6 +116,15 @@ class Settings extends Base
             ],
             self::HIDDEN => [
                 'um_setpolgrp_sm_polgroup_tenant_id' => ['label_name' => 'Policy Group Tenant #', 'domain' => 'tenant_id', 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
+        'mfa_container' => [
+            'um_setting_um_mfasettyp_code' => [
+                'um_setting_um_mfasettyp_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'MFA Setting Type', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'no_choose' => true, 'options_model' => '\Numbers\Users\Users\Model\MFA\SettingTypes', 'options_options' => ['i18n' => 'skip_sorting']],
+                'um_setting_um_mfatype_code' => ['order' => 2, 'label_name' => 'MFA Default Type', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\MFA\Types', 'options_options' => ['i18n' => 'skip_sorting']],
+            ],
+            'um_setting_totp_issuer' => [
+                'um_setting_totp_issuer' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Issuer (TOTP)', 'domain' => 'name', 'null' => true, 'required' => true, 'percent' => 50],
             ]
         ],
         'buttons' => [
@@ -185,6 +207,27 @@ class Settings extends Base
             [
                 'tm_mdlseq_type_code' => 'IVT',
                 'tm_mdlseq_prefix' => 'IVT',
+                'tm_mdlseq_length' => 12,
+                'tm_mdlseq_suffix' => null,
+                'tm_mdlseq_counter' => 0,
+            ],
+            [
+                'tm_mdlseq_type_code' => 'REA',
+                'tm_mdlseq_prefix' => 'REA',
+                'tm_mdlseq_length' => 12,
+                'tm_mdlseq_suffix' => null,
+                'tm_mdlseq_counter' => 0,
+            ],
+            [
+                'tm_mdlseq_type_code' => 'DOM',
+                'tm_mdlseq_prefix' => 'DOM',
+                'tm_mdlseq_length' => 12,
+                'tm_mdlseq_suffix' => null,
+                'tm_mdlseq_counter' => 0,
+            ],
+            [
+                'tm_mdlseq_type_code' => 'CLS',
+                'tm_mdlseq_prefix' => 'CLS',
                 'tm_mdlseq_length' => 12,
                 'tm_mdlseq_suffix' => null,
                 'tm_mdlseq_counter' => 0,

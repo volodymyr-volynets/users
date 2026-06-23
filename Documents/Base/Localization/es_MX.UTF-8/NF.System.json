@@ -1,0 +1,14 @@
+{
+    "CatalogCode": "Código de catálogo",
+    "CatalogOrganizationID": "Organización del catálogo n.°",
+    "Catalogs": "Catálogos",
+    "DTCatalogs": "Catálogos D/T",
+    "DTDocumentManagement": "Gestión de documentos D/T",
+    "DTDocuments": "Documentos D/T",
+    "DTFileTypes": "Tipos de archivos D/T",
+    "DocumentManagement": "Gestión de documentos",
+    "FileTypes": "Tipos de archivos",
+    "Global": "Global",
+    "Operations": "Operaciones",
+    "SystemManagement": "Gestión del sistema"
+}

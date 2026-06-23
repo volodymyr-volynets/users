@@ -15,7 +15,7 @@ use Object\Controller;
 
 class Unsubscribe extends Controller
 {
-    public $icon = 'far fa-window-close';
+    public $icon = 'fa-regular fa-window-close';
     public $title = 'U/M Unsubscribe';
 
     public function actionIndex(\Request $request, \Crypt $crypt)

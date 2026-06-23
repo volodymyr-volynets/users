@@ -51,6 +51,7 @@ class Controllers extends DataSource
             'name' => 'a.sm_resource_name',
             'description' => 'a.sm_resource_description',
             'classification' => 'a.sm_resource_classification',
+            'route_alias' => 'a.sm_resource_route_alias',
             'icon' => 'a.sm_resource_icon',
             'module_code' => 'a.sm_resource_module_code',
             'module_codes' => 'a.sm_resource_extra_module_code',

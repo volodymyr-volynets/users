@@ -1,0 +1,17 @@
+{
+    "A3BearerTokens": "Токени на пред&#39;явника A/3",
+    "DatetimeExpires": "Дата та час закінчення терміну дії",
+    "DatetimeStarted": "Дата й час початку",
+    "FormatColonColongetDatePlaceholder": "Формат::getDatePlaceholder",
+    "Format__getDatePlaceholder": "Формат::getDatePlaceholder",
+    "FormatgetDatePlaceholder": "Формат::getDatePlaceholder",
+    "IP": "ІП",
+    "Inactive": "Неактивний",
+    "SessionID": "Номер сеансу",
+    "TenantID": "№ орендаря",
+    "TokenID": "Номер токена",
+    "User": "Користувач",
+    "UserID": "Користувач №",
+    "UserIP": "IP-адреса користувача",
+    "YesNo": "Так / Ні"
+}

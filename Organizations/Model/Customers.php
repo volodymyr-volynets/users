@@ -14,9 +14,12 @@ namespace Numbers\Users\Organizations\Model;
 use Helper\Tree;
 use Object\Table;
 use Object\Table\Options;
+use Object\Traits\BatchesURLHelper;
 
 class Customers extends Table
 {
+    use BatchesURLHelper;
+
     public $db_link;
     public $db_link_flag;
     public $module_code = 'ON';
@@ -136,10 +139,44 @@ class Customers extends Table
         ]
     ];
 
+    public $batches = [
+        'map' => [
+            'on_customer_tenant_id' => 'tm_batchrecord_tenant_id',
+            'on_customer_id' => 'tm_batchrecord_field_value_id'
+        ],
+        'where' => [
+            'tm_batchrecord_sm_model_code' => '\Numbers\Users\Organizations\Model\Customers',
+            'tm_batchrecord_field_code' => 'on_customer_id',
+        ],
+        'edit' => [
+            'batch_value' => 'tm_batchrecord_field_value_id',
+            'batch_name' => 'O/N Customer #',
+            'edit_endpoint' => '/Numbers/Users/Organizations/Controller/Customers/_Edit',
+            'edit_key' => 'on_customer_id',
+            'list_endpoint' => '/Numbers/Users/Organizations/Controller/Customers/_Index',
+            'list_key' => ['on_customer_id1', 'on_customer_id2'],
+        ],
+    ];
+
     public $data_asset = [
         'classification' => 'client_confidential',
         'protection' => 2,
         'scope' => 'enterprise'
+    ];
+
+    public $scoped_attributes = [
+        'column_key' => 'on_customer_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'O/N Customer #',
+    ];
+
+    public $scoped_records = [
+        'column_key' => 'on_customer_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'O/N Customer #',
+        'access_settings' => [
+            'default' => 'Owner-*-Write,Access-*-Admin'
+        ]
     ];
 
     /**

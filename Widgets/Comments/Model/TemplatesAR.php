@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Widgets\Comments\Model;
-class TemplatesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class TemplatesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Widgets\Comments\Model\Templates::class;
+    public string $object_table_class = Templates::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_notetemplate_tenant_id','um_notetemplate_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class TemplatesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_notetemplate_tenant_id = NULL {
-                        get => $this->um_notetemplate_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_notetemplate_tenant_id', $value);
-                            $this->um_notetemplate_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_notetemplate_tenant_id = null {
+        get => $this->um_notetemplate_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_notetemplate_tenant_id', $value);
+            $this->um_notetemplate_tenant_id = $value;
+        }
+    }
 
     /**
      * Template #
@@ -41,12 +52,12 @@ class TemplatesAR extends \Object\ActiveRecord {
      * @var int|null Domain: group_id_sequence Type: serial
      */
     public int|null $um_notetemplate_id = null {
-                        get => $this->um_notetemplate_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_notetemplate_id', $value);
-                            $this->um_notetemplate_id = $value;
-                        }
-                    }
+        get => $this->um_notetemplate_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_notetemplate_id', $value);
+            $this->um_notetemplate_id = $value;
+        }
+    }
 
     /**
      * Organization #
@@ -57,13 +68,13 @@ class TemplatesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: organization_id Type: integer
      */
-    public int|null $um_notetemplate_organization_id = NULL {
-                        get => $this->um_notetemplate_organization_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_notetemplate_organization_id', $value);
-                            $this->um_notetemplate_organization_id = $value;
-                        }
-                    }
+    public int|null $um_notetemplate_organization_id = null {
+        get => $this->um_notetemplate_organization_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_notetemplate_organization_id', $value);
+            $this->um_notetemplate_organization_id = $value;
+        }
+    }
 
     /**
      * Type
@@ -75,12 +86,12 @@ class TemplatesAR extends \Object\ActiveRecord {
      * @var int|null Domain: type_id Type: smallint
      */
     public int|null $um_notetemplate_type_id = 100 {
-                        get => $this->um_notetemplate_type_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_notetemplate_type_id', $value);
-                            $this->um_notetemplate_type_id = $value;
-                        }
-                    }
+        get => $this->um_notetemplate_type_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_notetemplate_type_id', $value);
+            $this->um_notetemplate_type_id = $value;
+        }
+    }
 
     /**
      * Name
@@ -92,12 +103,12 @@ class TemplatesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_notetemplate_name = null {
-                        get => $this->um_notetemplate_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_notetemplate_name', $value);
-                            $this->um_notetemplate_name = $value;
-                        }
-                    }
+        get => $this->um_notetemplate_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_notetemplate_name', $value);
+            $this->um_notetemplate_name = $value;
+        }
+    }
 
     /**
      * Template
@@ -109,12 +120,12 @@ class TemplatesAR extends \Object\ActiveRecord {
      * @var string|null Domain: comment Type: text
      */
     public string|null $um_notetemplate_template = null {
-                        get => $this->um_notetemplate_template;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_notetemplate_template', $value);
-                            $this->um_notetemplate_template = $value;
-                        }
-                    }
+        get => $this->um_notetemplate_template;
+        set {
+            $this->setFullPkAndFilledColumn('um_notetemplate_template', $value);
+            $this->um_notetemplate_template = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -126,12 +137,12 @@ class TemplatesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_notetemplate_inactive = 0 {
-                        get => $this->um_notetemplate_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_notetemplate_inactive', $value);
-                            $this->um_notetemplate_inactive = $value;
-                        }
-                    }
+        get => $this->um_notetemplate_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_notetemplate_inactive', $value);
+            $this->um_notetemplate_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -143,10 +154,10 @@ class TemplatesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $um_notetemplate_optimistic_lock = 'now()' {
-                        get => $this->um_notetemplate_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_notetemplate_optimistic_lock', $value);
-                            $this->um_notetemplate_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->um_notetemplate_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('um_notetemplate_optimistic_lock', $value);
+            $this->um_notetemplate_optimistic_lock = $value;
+        }
+    }
 }

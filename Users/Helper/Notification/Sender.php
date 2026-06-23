@@ -23,6 +23,7 @@ use Numbers\Users\Users\Model\Message\Sender\Organizations;
 use Numbers\Users\Users\Model\Users;
 use Object\Keywords\Extractor;
 use Numbers\Users\Users\Model\UsersAR;
+use Numbers\Users\Users\Helper\Alerts as UserAlerts;
 
 class Sender
 {
@@ -298,11 +299,12 @@ class Sender
      *		body
      * @return array
      */
-    private function storeSingleNotification(array $data): array
+    public function storeSingleNotification(array $data): array
     {
         $result = [
             'success' => false,
-            'error' => []
+            'error' => [],
+            'um_mesbody_id' => null,
         ];
         // header
         $header = [
@@ -320,7 +322,7 @@ class Sender
         if (!empty($data['body'])) {
             $body_hash = sha1($data['body']);
             if (!empty(self::$cached_notification_bodies[$body_hash])) {
-                $header['um_mesheader_body_id'] = self::$cached_notification_bodies[$body_hash];
+                $result['um_mesbody_id'] = $header['um_mesheader_body_id'] = self::$cached_notification_bodies[$body_hash];
             } else {
                 if (!empty($data['bytea'])) {
                     $crypt = new \Crypt();
@@ -339,7 +341,7 @@ class Sender
                     $result['error'][] = 'Could not store message body!';
                     return $result;
                 }
-                $header['um_mesheader_body_id'] = self::$cached_notification_bodies[$body_hash] = $body_result['new_serials']['um_mesbody_id'];
+                $result['um_mesbody_id'] = $header['um_mesheader_body_id'] = self::$cached_notification_bodies[$body_hash] = $body_result['new_serials']['um_mesbody_id'];
             }
             $keywords .= ' ' . strip_tags2($data['body']);
         }
@@ -355,6 +357,10 @@ class Sender
             return $result;
         }
         // store recipient
+        if (empty($data['user_id']) && !empty($data['phone'])) {
+            $phone = trim($data['phone'], '+ ');
+            $data['user_id'] = Users::getByColumnStatic('um_user_numeric_phone', $phone, 'um_user_id');
+        }
         $recipient_result = Recipients::collectionStatic()->merge([
             'um_mesrecip_message_id' => $header_result['new_serials']['um_mesheader_id'],
             'um_mesrecip_type_id' => 10,
@@ -365,6 +371,42 @@ class Sender
         if (!$recipient_result['success']) {
             $result['error'][] = 'Could not store message recipient!';
             return $result;
+        }
+        // save to alerts
+        if ($data['user_id'] > 0) {
+            if (!empty($data['sms'])) {
+                $type = 'SMS_NOTIFICATION';
+                $description = loc('NF.Form.NewSMSNotificationNumber', '{number} new SMS message from system', [
+                    'number' => 1,
+                ]);
+                $loc_json = loc('NF.Form.NewSMSNotificationNumber', '{number} new SMS message from system', [
+                    'number' => 1,
+                    '__as_json' => true,
+                ]);
+            } else {
+                $type = 'EMAIL_NOTIFICATION';
+                $description = loc('NF.Form.NewEmailNotificationNumber', '{number} new email message from system', [
+                    'number' => 1,
+                ]);
+                $loc_json = loc('NF.Form.NewEmailNotificationNumber', '{number} new email message from system', [
+                    'number' => 1,
+                    '__as_json' => true,
+                ]);
+            }
+            $alerts_result = UserAlerts::create([
+                'um_usralert_um_user_id' => $data['user_id'],
+                'um_usralert_um_usralrttype_code' => $type,
+                'um_usralert_record_id' => $header_result['new_serials']['um_mesheader_id'],
+                'um_usralert_record_code' => null,
+                'um_usralert_description' => $description,
+                'um_usralert_loc_json' => $loc_json,
+                'um_usralert_body' => 'Subject: ' . $data['subject'],
+                'um_usralert_url' => '/Numbers/Users/Users/Controller/Account/Messages/_Edit?message_id=' . $header_result['new_serials']['um_mesheader_id'],
+                'um_usralert_inactive' => 0,
+            ]);
+            if (!$alerts_result['success']) {
+                return $alerts_result;
+            }
         }
         $result['success'] = true;
         return $result;

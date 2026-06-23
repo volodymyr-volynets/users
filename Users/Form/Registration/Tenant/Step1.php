@@ -47,14 +47,14 @@ class Step1 extends Base
                 'um_regten_tenant_phone' => ['order' => 2, 'label_name' => 'Phone', 'domain' => 'phone', 'percent' => 50]
             ],
             'separator_1' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization', 'icon' => 'fas fa-sitemap', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 300, 'label_name' => 'Organization', 'icon' => 'fa-solid fa-sitemap', 'percent' => 100],
             ],
             'on_organization_name' => [
                 'um_regten_organization_name' => ['order' => 1, 'row_order' => 400, 'label_name' => 'Organization Name', 'domain' => 'name', 'percent' => 50, 'required' => true],
                 'um_regten_organization_code' => ['order' => 2, 'label_name' => 'Organization Code', 'domain' => 'group_code', 'default' => 'DEFAULT', 'percent' => 50, 'required' => true, 'readonly' => true],
             ],
             'separator_2' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 500, 'label_name' => 'Administrator', 'icon' => 'fas fa-user', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 500, 'label_name' => 'Administrator', 'icon' => 'fa-solid fa-user', 'percent' => 100],
             ],
             'um_regten_user_first_name' => [
                 'um_regten_user_first_name' => ['order' => 1, 'row_order' => 600, 'label_name' => 'First Name', 'domain' => 'personal_name', 'percent' => 50, 'required' => true],

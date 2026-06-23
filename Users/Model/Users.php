@@ -16,9 +16,12 @@ use Numbers\Users\Users\Model\User\Types;
 use Object\Content\Messages;
 use Object\Query\Builder;
 use Object\Table;
+use Object\Traits\BatchesURLHelper;
 
 class Users extends Table
 {
+    use BatchesURLHelper;
+
     public $db_link;
     public $db_link_flag;
     public $module_code = 'UM';
@@ -49,12 +52,14 @@ class Users extends Table
         'um_user_phone2' => ['name' => 'Secondary Phone', 'domain' => 'phone', 'null' => true],
         'um_user_cell' => ['name' => 'Cell Phone', 'domain' => 'phone', 'null' => true],
         'um_user_fax' => ['name' => 'Fax', 'domain' => 'phone', 'null' => true],
+        'um_user_whatsapp' => ['name' => 'WhatsApp', 'domain' => 'whatsapp', 'null' => true],
         'um_user_alternative_contact' => ['name' => 'Alternative Contact', 'domain' => 'description', 'null' => true],
         // login
         'um_user_login_enabled' => ['name' => 'Login Enabled', 'type' => 'boolean'],
         'um_user_login_username' => ['name' => 'Username', 'domain' => 'login', 'null' => true],
         'um_user_login_password' => ['name' => 'Password', 'domain' => 'password', 'null' => true],
         'um_user_login_last_set' => ['name' => 'Last Set', 'type' => 'date', 'null' => true],
+        'um_user_weight' => ['name' => 'Weight', 'domain' => 'weight', 'null' => true],
         // photo
         'um_user_photo_file_id' => ['name' => 'Photo File #', 'domain' => 'file_id', 'null' => true],
         'um_user_about_nickname' => ['name' => 'About Nickname', 'domain' => 'name', 'null' => true],
@@ -69,8 +74,17 @@ class Users extends Table
         'um_user_send_emails' => ['name' => 'Send Emails', 'type' => 'boolean', 'default' => 1],
         'um_user_send_sms' => ['name' => 'Send SMS', 'type' => 'boolean'],
         'um_user_send_postal' => ['name' => 'Send Postal Mail', 'type' => 'boolean'],
+        'um_user_send_whatsapp' => ['name' => 'Send WhatsApp', 'type' => 'boolean'],
         'um_user_email_confirmed' => ['name' => 'Email Confirmed', 'type' => 'boolean'],
         'um_user_phone_confirmed' => ['name' => 'Phone Confirmed', 'type' => 'boolean'],
+        'um_user_whatsapp_confirmed' => ['name' => 'WhatsApp Confirmed', 'type' => 'boolean'],
+        'um_user_postal_confirmed' => ['name' => 'Postal Confirmed', 'type' => 'boolean'],
+        // other
+        'um_user_ip' => ['name' => 'IP', 'domain' => 'ip', 'null' => true],
+        'um_user_um_mfasettyp_code' => ['name' => 'MFA Setting Type', 'domain' => 'group_code', 'default' => 'NONE', 'options_model' => '\Numbers\Users\Users\Model\MFA\SettingTypes'],
+        'um_user_um_mfatype_code' => ['name' => 'MFA Default Type', 'domain' => 'group_code', 'null' => true],
+        'um_user_last_mfa_code' => ['name' => 'Last MFA Code', 'domain' => 'mfa_code', 'null' => true],
+        'um_user_totp_encrypted' => ['name' => 'TOTP Secret', 'domain' => 'encrypted_password', 'null' => true],
         // inactive & hold
         'um_user_hold' => ['name' => 'Hold', 'type' => 'boolean'],
         'um_user_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
@@ -118,9 +132,12 @@ class Users extends Table
     public $optimistic_lock = true;
     public $options_map = [
         'um_user_name' => 'name',
+        'um_user_name*' => 'avatar_user_small',
         'um_user_company' => 'name',
-        'um_user_photo_file_id' => 'photo_id',
         'um_user_inactive' => 'inactive',
+        'um_user_id' => 'id_suffixed',
+        // deprecated
+        //'um_user_photo_file_id' => 'photo_id',
     ];
     public $options_active = [
         'um_user_inactive' => 0
@@ -175,6 +192,29 @@ class Users extends Table
         ]
     ];
 
+    public $batches = [
+        'map' => [
+            'um_user_tenant_id' => 'tm_batchrecord_tenant_id',
+            'um_user_id' => 'tm_batchrecord_field_value_id'
+        ],
+        'where' => [
+            'tm_batchrecord_sm_model_code' => '\Numbers\Users\Users\Model\Users',
+            'tm_batchrecord_field_code' => 'um_user_id',
+        ],
+        'edit' => [
+            'batch_value' => 'tm_batchrecord_field_value_id',
+            'batch_name' => 'U/M User #',
+            'batch_record_name' => 'um_user_name',
+            'edit_endpoint' => '/Numbers/Users/Users/Controller/Users/_Edit',
+            'edit_key' => 'um_user_id',
+            'list_endpoint' => '/Numbers/Users/Users/Controller/Users/_Index',
+            'list_key' => ['um_user_id1', 'um_user_id2'],
+        ],
+        'chat' => [
+            'context' => true,
+        ]
+    ];
+
     public $unique = [
         'um_user_numeric_phone' => 'um_user_numeric_phone_un',
         'um_user_email' => 'um_user_email_un'
@@ -184,6 +224,21 @@ class Users extends Table
         'classification' => 'client_confidential',
         'protection' => 2,
         'scope' => 'enterprise'
+    ];
+
+    public $scoped_attributes = [
+        'column_key' => 'um_user_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'U/M User #',
+    ];
+
+    public $scoped_records = [
+        'column_key' => 'um_user_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'U/M User #',
+        'access_settings' => [
+            'default' => 'Owner-*-Write,Owner-Not_Self-None,Access-*-Admin'
+        ]
     ];
 
     public $triggers = [];

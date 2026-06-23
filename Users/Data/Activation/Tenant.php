@@ -29,7 +29,7 @@ class Tenant extends Import
                     'um_role_name' => 'Super Administrator',
                     'um_role_global' => 0,
                     'um_role_super_admin' => 1,
-                    'um_role_icon' => 'fas fa-user-secret',
+                    'um_role_icon' => 'fa-solid fa-user-secret',
                     'um_role_weight' => 1000000,
                     'um_role_inactive' => 0
                 ],
@@ -40,7 +40,7 @@ class Tenant extends Import
                     'um_role_name' => 'Customer',
                     'um_role_global' => 1,
                     'um_role_super_admin' => 0,
-                    'um_role_icon' => 'fas fa-female',
+                    'um_role_icon' => 'fa-solid fa-female',
                     'um_role_weight' => 1000,
                     'um_role_inactive' => 0
                 ],
@@ -50,7 +50,7 @@ class Tenant extends Import
                     'um_role_name' => 'Vendor',
                     'um_role_global' => 1,
                     'um_role_super_admin' => 0,
-                    'um_role_icon' => 'fas fa-male',
+                    'um_role_icon' => 'fa-solid fa-male',
                     'um_role_weight' => 1000,
                     'um_role_inactive' => 0
                 ]

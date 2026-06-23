@@ -27,8 +27,10 @@ class MassUpload
      * @param array $validator_params
      * @param string $catalog_code
      * @param array $options
-     *	boolen return_files
-     *	string file_upload_field_name
+     *	    boolean return_files
+     *	    string file_upload_field_name
+     *      boolean encrypt
+     *      string encryption_key
      * @return array|false
      */
     public static function uploadFewFilesInForm(& $form, int $max_files = 10, array $files = [], string $prefix = '', array $validator_params = [], string $catalog_code = '', array $options = [])
@@ -57,7 +59,7 @@ class MassUpload
         $final_result = [];
         foreach ($files as $k => $v) {
             $v['__image_properties'] = $validator_params;
-            $result = $upload_model->upload($v, $catalog);
+            $result = $upload_model->upload($v, $catalog, $options);
             if (!$result['success']) {
                 $form->error(DANGER, $result['error']);
                 return false;

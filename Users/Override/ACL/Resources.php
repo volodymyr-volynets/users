@@ -24,6 +24,10 @@ class Resources
             'login' => [
                 'url' => '/Default/Numbers/Users/Users/Controller/Login'
             ],
+            'mfa' => [
+                'url' => '/Default/Numbers/Users/Users/Controller/MFA',
+                'class' => '\Numbers\Users\Users\Controller\MFA'
+            ],
             'logout' => [
                 'url' => '/Default/Numbers/Users/Users/Controller/Logout/Quick'
             ]
@@ -66,7 +70,16 @@ class Resources
             ],
             'usage' => [
                 'datasource' => '\Numbers\Users\Users\DataSource\ACL\Menu'
-            ]
+            ],
+            'visited' => [
+                'method' => '\Numbers\Users\Users\Helper\Resource\Visited::merge',
+            ],
+            'visited_stats' => [
+                'datasource' => '\Numbers\Users\Users\DataSource\ACL\Menu\Visited',
+            ],
+            'favorites_stats' => [
+                'datasource' => '\Numbers\Users\Users\DataSource\ACL\Menu\Favorites'
+            ],
         ],
         'user_roles' => [
             'anonymous' => [
@@ -89,6 +102,16 @@ class Resources
         'form_overrides' => [
             'primary' => [
                 'model' => '\Numbers\Users\Users\DataSource\ACL\Form\Overrides'
+            ]
+        ],
+        'weighted_modules' => [
+            'primary' => [
+                'datasource' => '\Numbers\Users\Users\DataSource\Resource\WeightedModuleIDs',
+            ]
+        ],
+        'weighted_resources' => [
+            'primary' => [
+                'datasource' => '\Numbers\Users\Users\DataSource\Resource\WeightedResources',
             ]
         ],
     ];

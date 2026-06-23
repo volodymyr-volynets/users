@@ -1,0 +1,23 @@
+{
+    "Blank": "Blanco",
+    "CheckInID": "Registrarse #",
+    "CheckInLatitude": "Registrarse en Latitude",
+    "CheckInLongitude": "Comprobar longitud",
+    "CheckInMap": "Mapa de check-in",
+    "CheckInTimestamp": "Marca de tiempo de registro de entrada",
+    "CheckOut": "Verificar",
+    "CheckOutLatitude": "Echa un vistazo a Latitude",
+    "CheckOutLongitude": "Consulta la Longitud",
+    "CheckOutMap": "Consulta el mapa",
+    "CheckOutTimestamp": "Consultar la marca de tiempo",
+    "Duration": "Duración",
+    "Format": "Formato",
+    "Map": "Mapa",
+    "New": "Nuevo",
+    "Order": "Orden",
+    "Reset": "Reiniciar",
+    "Save": "Ahorrar",
+    "Sort": "Clasificar",
+    "Submit": "Entregar",
+    "User": "Usuario"
+}

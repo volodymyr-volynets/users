@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User\Policy;
-class PoliciesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class PoliciesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Policy\Policies::class;
+    public string $object_table_class = Policies::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_usrpolicy_tenant_id','um_usrpolicy_user_id','um_usrpolicy_sm_policy_tenant_id','um_usrpolicy_sm_policy_code'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class PoliciesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usrpolicy_tenant_id = NULL {
-                        get => $this->um_usrpolicy_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrpolicy_tenant_id', $value);
-                            $this->um_usrpolicy_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usrpolicy_tenant_id = null {
+        get => $this->um_usrpolicy_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrpolicy_tenant_id', $value);
+            $this->um_usrpolicy_tenant_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -41,12 +52,12 @@ class PoliciesAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $um_usrpolicy_timestamp = 'now()' {
-                        get => $this->um_usrpolicy_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrpolicy_timestamp', $value);
-                            $this->um_usrpolicy_timestamp = $value;
-                        }
-                    }
+        get => $this->um_usrpolicy_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrpolicy_timestamp', $value);
+            $this->um_usrpolicy_timestamp = $value;
+        }
+    }
 
     /**
      * User #
@@ -57,13 +68,13 @@ class PoliciesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_usrpolicy_user_id = NULL {
-                        get => $this->um_usrpolicy_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrpolicy_user_id', $value);
-                            $this->um_usrpolicy_user_id = $value;
-                        }
-                    }
+    public int|null $um_usrpolicy_user_id = null {
+        get => $this->um_usrpolicy_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrpolicy_user_id', $value);
+            $this->um_usrpolicy_user_id = $value;
+        }
+    }
 
     /**
      * Tenant #
@@ -74,13 +85,13 @@ class PoliciesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usrpolicy_sm_policy_tenant_id = NULL {
-                        get => $this->um_usrpolicy_sm_policy_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrpolicy_sm_policy_tenant_id', $value);
-                            $this->um_usrpolicy_sm_policy_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usrpolicy_sm_policy_tenant_id = null {
+        get => $this->um_usrpolicy_sm_policy_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrpolicy_sm_policy_tenant_id', $value);
+            $this->um_usrpolicy_sm_policy_tenant_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -92,12 +103,12 @@ class PoliciesAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_usrpolicy_sm_policy_code = null {
-                        get => $this->um_usrpolicy_sm_policy_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrpolicy_sm_policy_code', $value);
-                            $this->um_usrpolicy_sm_policy_code = $value;
-                        }
-                    }
+        get => $this->um_usrpolicy_sm_policy_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrpolicy_sm_policy_code', $value);
+            $this->um_usrpolicy_sm_policy_code = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -109,10 +120,10 @@ class PoliciesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrpolicy_inactive = 0 {
-                        get => $this->um_usrpolicy_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrpolicy_inactive', $value);
-                            $this->um_usrpolicy_inactive = $value;
-                        }
-                    }
+        get => $this->um_usrpolicy_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrpolicy_inactive', $value);
+            $this->um_usrpolicy_inactive = $value;
+        }
+    }
 }

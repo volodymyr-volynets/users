@@ -1,0 +1,17 @@
+{
+    "A3BearerTokens": "Jetons au porteur A/3",
+    "DatetimeExpires": "Date et heure d&#39;expiration",
+    "DatetimeStarted": "Date et heure de début",
+    "FormatColonColongetDatePlaceholder": "Format::getDatePlaceholder",
+    "Format__getDatePlaceholder": "Format::getDatePlaceholder",
+    "FormatgetDatePlaceholder": "Format::getDatePlaceholder",
+    "IP": "propriété intellectuelle",
+    "Inactive": "Inactif",
+    "SessionID": "Session #",
+    "TenantID": "Locataire #",
+    "TokenID": "Jeton #",
+    "User": "Utilisateur",
+    "UserID": "Utilisateur #",
+    "UserIP": "IP de l&#39;utilisateur",
+    "YesNo": "Oui / Non"
+}

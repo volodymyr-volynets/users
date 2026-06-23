@@ -18,7 +18,12 @@ class Login extends Public2
     public function actionIndex()
     {
         if (\User::authorized()) {
-            $url = \Request::buildFromName('U/M Welcome Dashboard', 'Index');
+            if (isset($_SESSION['numbers']['__post_login_url'])) {
+                $url = $_SESSION['numbers']['__post_login_url'];
+                unset($_SESSION['numbers']['__post_login_url']);
+            } else {
+                $url = \Request::buildFromName('U/M Welcome Dashboard', 'Index');
+            }
             \Request::redirect($url);
         }
         // login

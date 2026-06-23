@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\Message\Sender;
-class CommonAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class CommonAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Message\Sender\Common::class;
+    public string $object_table_class = Common::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_sendercmn_tenant_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class CommonAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_sendercmn_tenant_id = NULL {
-                        get => $this->um_sendercmn_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_sendercmn_tenant_id', $value);
-                            $this->um_sendercmn_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_sendercmn_tenant_id = null {
+        get => $this->um_sendercmn_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_sendercmn_tenant_id', $value);
+            $this->um_sendercmn_tenant_id = $value;
+        }
+    }
 
     /**
      * From Email
@@ -41,12 +52,12 @@ class CommonAR extends \Object\ActiveRecord {
      * @var string|null Domain: email Type: varchar
      */
     public string|null $um_sendercmn_from_email = null {
-                        get => $this->um_sendercmn_from_email;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_sendercmn_from_email', $value);
-                            $this->um_sendercmn_from_email = $value;
-                        }
-                    }
+        get => $this->um_sendercmn_from_email;
+        set {
+            $this->setFullPkAndFilledColumn('um_sendercmn_from_email', $value);
+            $this->um_sendercmn_from_email = $value;
+        }
+    }
 
     /**
      * From Name
@@ -58,12 +69,12 @@ class CommonAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_sendercmn_from_name = null {
-                        get => $this->um_sendercmn_from_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_sendercmn_from_name', $value);
-                            $this->um_sendercmn_from_name = $value;
-                        }
-                    }
+        get => $this->um_sendercmn_from_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_sendercmn_from_name', $value);
+            $this->um_sendercmn_from_name = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -75,10 +86,10 @@ class CommonAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $um_sendercmn_optimistic_lock = 'now()' {
-                        get => $this->um_sendercmn_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_sendercmn_optimistic_lock', $value);
-                            $this->um_sendercmn_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->um_sendercmn_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('um_sendercmn_optimistic_lock', $value);
+            $this->um_sendercmn_optimistic_lock = $value;
+        }
+    }
 }

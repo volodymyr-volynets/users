@@ -33,6 +33,16 @@ class Aliases
             'no_data_alias_name' => 'Assignment Type #',
             'no_data_alias_model' => '\Numbers\Users\Users\Model\User\Assignment\Types',
             'no_data_alias_column' => 'um_assignusrtype_code'
+        ],
+        'um_imppreset_id' => [
+            'no_data_alias_name' => 'Import Preset #',
+            'no_data_alias_model' => '\Numbers\Users\Users\Model\Import\Presets',
+            'no_data_alias_column' => 'um_imppreset_code'
+        ],
+        'um_extactn_id' => [
+            'no_data_alias_name' => 'External Action #',
+            'no_data_alias_model' => '\Numbers\Users\Users\Model\Resource\ExternalActions',
+            'no_data_alias_column' => 'um_extactn_code'
         ]
     ];
 }

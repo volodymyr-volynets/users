@@ -17,7 +17,7 @@ use Object\Validator\Base;
 class Files extends Base
 {
     /**
-     * @see \Object\Validator\Base::validate()
+     * @see Base::validate()
      */
     public function validate($value, $options = [])
     {

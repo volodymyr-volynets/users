@@ -20,6 +20,7 @@ use Numbers\Users\Users\Model\User\APIs;
 use Numbers\Users\Users\Model\User\Features;
 use Numbers\Users\Users\Model\User\Flags;
 use Numbers\Users\Users\Model\User\Internalization;
+use Numbers\Users\Users\Model\User\Preferences;
 use Numbers\Users\Users\Model\User\Linked\Accounts;
 use Numbers\Users\Users\Model\User\Notifications;
 use Numbers\Users\Users\Model\User\Permission\Actions;
@@ -30,6 +31,11 @@ use Object\DataSource;
 use Object\Validator\Phone;
 use Numbers\Users\Users\Model\User\Policy\Groups;
 use Numbers\Users\Users\Model\User\Policy\Policies;
+use Numbers\Users\Users\Model\User\Groups as UserGroups;
+use Numbers\Users\Users\Model\User\Group\Map as UserGroupMap;
+use Numbers\Users\Users\Model\Domains;
+use Numbers\Users\Users\Model\Realms;
+use Numbers\Users\Users\Model\Settings;
 
 class Login extends DataSource
 {
@@ -72,7 +78,9 @@ class Login extends DataSource
             'company' => 'a.um_user_company',
             // contact
             'email' => 'a.um_user_email',
+            'email2' => 'a.um_user_email2',
             'phone' => 'a.um_user_phone',
+            'phone2' => 'a.um_user_phone2',
             'cell' => 'a.um_user_cell',
             'fax' => 'a.um_user_fax',
             // sms
@@ -99,6 +107,23 @@ class Login extends DataSource
             'teams' => 'h.teams',
             'team_codes' => 'h.team_codes',
             'team_names' => 'h.team_names',
+            'maximum_team_weight' => 'h.maximum_team_weight',
+            // realms
+            'realms' => 'r.realms',
+            'realm_codes' => 'r.realm_codes',
+            'realm_names' => 'r.realm_names',
+            'maximum_realm_weight' => 'r.maximum_realm_weight',
+            // domains
+            'domains' => 'd2.domains',
+            'domain_codes' => 'd2.domain_codes',
+            'domain_names' => 'd2.domain_names',
+            'maximum_domain_weight' => 'd2.maximum_domain_weight',
+            // groups
+            'group_ids' => 'g0.group_ids',
+            'group_codes' => 'g0.group_codes',
+            'group_names' => 'g0.group_names',
+            // max cumulative weight
+            'max_cumulative_weight' => 'GREATEST(b.maximum_role_weight, h.maximum_team_weight, r.maximum_realm_weight, d2.maximum_domain_weight)',
             // feature
             'features' => 'j.features',
             'notifications' => 'm.notifications',
@@ -123,11 +148,19 @@ class Login extends DataSource
             'i18n_format_uom' => 'd.um_usri18n_format_uom',
             'i18n_print_format' => 'd.um_usri18n_print_format',
             'i18n_print_font' => 'd.um_usri18n_print_font',
+            // preferences
+            'preference_dynamic_menu' => 'x.um_usrpreference_dynamic_menu',
             // primary organization
             'organization_id' => 'e.um_usrorg_organization_id',
             'photo_file_id' => 'a.um_user_photo_file_id',
             'operating_country_code' => 'a.um_user_operating_country_code',
-            'operating_province_code' => 'a.um_user_operating_province_code'
+            'operating_province_code' => 'a.um_user_operating_province_code',
+            // MFA from U/M Settings and U/M Users
+            'um_setting_um_mfasettyp_code' => 'um_settings.um_setting_um_mfasettyp_code',
+            'um_setting_um_mfatype_code' => 'um_settings.um_setting_um_mfatype_code',
+            'um_user_um_mfasettyp_code' => 'a.um_user_um_mfasettyp_code',
+            'um_user_um_mfatype_code' => 'a.um_user_um_mfatype_code',
+            'um_user_totp_encrypted' => 'a.um_user_totp_encrypted',
         ]);
         // joins
         $this->query->join('LEFT', function (& $query) {
@@ -170,6 +203,9 @@ class Login extends DataSource
         $this->query->join('LEFT', new Internalization(), 'd', 'ON', [
             ['AND', ['a.um_user_id', '=', 'd.um_usri18n_user_id', true], false]
         ]);
+        $this->query->join('LEFT', new Preferences(), 'x', 'ON', [
+            ['AND', ['a.um_user_id', '=', 'x.um_usrpreference_user_id', true], false]
+        ]);
         $this->query->join('LEFT', new \Numbers\Users\Users\Model\User\Organizations(), 'e', 'ON', [
             ['AND', ['a.um_user_id', '=', 'e.um_usrorg_user_id', true], false],
             ['AND', ['e.um_usrorg_primary', '=', 1, false], false]
@@ -208,6 +244,7 @@ class Login extends DataSource
                 'teams' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_h.um_usrtmmap_team_id)", 'delimiter' => ';;']),
                 'team_codes' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_h_team.um_team_code)", 'delimiter' => ';;']),
                 'team_names' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_h_team.um_team_name)", 'delimiter' => ';;']),
+                'maximum_team_weight' => 'MAX(inner_h_team.um_team_weight)',
             ]);
             // join
             $query->join('INNER', new Teams(), 'inner_h_team', 'ON', [
@@ -217,6 +254,23 @@ class Login extends DataSource
             $query->groupby(['inner_h.um_usrtmmap_user_id']);
         }, 'h', 'ON', [
             ['AND', ['a.um_user_id', '=', 'h.um_usrtmmap_user_id', true], false]
+        ]);
+        $this->query->join('LEFT', function (& $query) {
+            $query = UserGroupMap::queryBuilderStatic(['alias' => 'inner_g0'])->select();
+            $query->columns([
+                'inner_g0.um_usrgrmap_user_id',
+                'group_ids' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_g0_group.um_usrgrp_id)", 'delimiter' => ';;']),
+                'group_codes' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_g0_group.um_usrgrp_code)", 'delimiter' => ';;']),
+                'group_names' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_g0_group.um_usrgrp_name)", 'delimiter' => ';;']),
+            ]);
+            // join
+            $query->join('INNER', new UserGroups(), 'inner_g0_group', 'ON', [
+                ['AND', ['inner_g0.um_usrgrmap_group_id', '=', 'inner_g0_group.um_usrgrp_id', true], false]
+            ]);
+            $query->where('AND', ['inner_g0_group.um_usrgrp_inactive', '=', 0]);
+            $query->groupby(['inner_g0.um_usrgrmap_user_id']);
+        }, 'g0', 'ON', [
+            ['AND', ['a.um_user_id', '=', 'g0.um_usrgrmap_user_id', true], false]
         ]);
         $this->query->join('LEFT', function (& $query) {
             $query = Features::queryBuilderStatic(['alias' => 'inner_j'])->select();
@@ -301,6 +355,45 @@ class Login extends DataSource
         }, 'p', 'ON', [
             ['AND', ['a.um_user_id', '=', 'p.um_usrpolgrp_user_id', true], false]
         ]);
+        $this->query->join('LEFT', function (& $query) {
+            $query = \Numbers\Users\Users\Model\Realm\Map::queryBuilderStatic(['alias' => 'inner_r'])->select();
+            $query->columns([
+                'inner_r.um_usrreamap_user_id',
+                'realms' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_r.um_usrreamap_um_realm_id)", 'delimiter' => ';;']),
+                'realm_codes' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_r_realm.um_realm_code)", 'delimiter' => ';;']),
+                'realm_names' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_r_realm.um_realm_name)", 'delimiter' => ';;']),
+                'maximum_realm_weight' => 'MAX(inner_r_realm.um_realm_weight)',
+            ]);
+            // join
+            $query->join('INNER', new Realms(), 'inner_r_realm', 'ON', [
+                ['AND', ['inner_r.um_usrreamap_um_realm_id', '=', 'inner_r_realm.um_realm_id', true], false]
+            ]);
+            $query->where('AND', ['inner_r.um_usrreamap_inactive', '=', 0]);
+            $query->groupby(['inner_r.um_usrreamap_user_id']);
+        }, 'r', 'ON', [
+            ['AND', ['a.um_user_id', '=', 'r.um_usrreamap_user_id', true], false]
+        ]);
+        $this->query->join('LEFT', function (& $query) {
+            $query = \Numbers\Users\Users\Model\Domain\Map::queryBuilderStatic(['alias' => 'inner_d2'])->select();
+            $query->columns([
+                'inner_d2.um_usrdommap_user_id',
+                'domains' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_d2.um_usrdommap_um_domain_id)", 'delimiter' => ';;']),
+                'domain_codes' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_d2_domain.um_domain_code)", 'delimiter' => ';;']),
+                'domain_names' => $query->db_object->sqlHelper('string_agg', ['expression' => "concat_ws('::', inner_d2_domain.um_domain_name)", 'delimiter' => ';;']),
+                'maximum_domain_weight' => 'MAX(inner_d2_domain.um_domain_weight)',
+            ]);
+            // join
+            $query->join('INNER', new Domains(), 'inner_d2_domain', 'ON', [
+                ['AND', ['inner_d2.um_usrdommap_um_domain_id', '=', 'inner_d2_domain.um_domain_id', true], false]
+            ]);
+            $query->where('AND', ['inner_d2.um_usrdommap_inactive', '=', 0]);
+            $query->groupby(['inner_d2.um_usrdommap_user_id']);
+        }, 'd2', 'ON', [
+            ['AND', ['a.um_user_id', '=', 'd2.um_usrdommap_user_id', true], false]
+        ]);
+        $this->query->join('LEFT', new Settings(), 'um_settings', 'ON', [
+            ['AND', ['a.um_user_tenant_id', '=', 'um_settings.um_setting_tenant_id', true], false]
+        ]);
         // where
         if (empty($parameters['skip_login_enabled'])) {
             $this->query->where('AND', ['a.um_user_login_enabled', '=', 1]);
@@ -373,6 +466,63 @@ class Login extends DataSource
                 $data[$k]['team_codes'] = explode(';;', $v['team_codes']);
             } else {
                 $data[$k]['team_codes'] = [];
+            }
+            // realms
+            if (!empty($v['realms'])) {
+                $data[$k]['realms'] = explode(';;', $v['realms']);
+                foreach ($data[$k]['realms'] as $k2 => $v2) {
+                    $data[$k]['realms'][$k2] = (int) $v2;
+                }
+            } else {
+                $data[$k]['realms'] = [];
+            }
+            if (!empty($v['realm_names'])) {
+                $data[$k]['realm_names'] = explode(';;', $v['realm_names']);
+            } else {
+                $data[$k]['realm_names'] = [];
+            }
+            if (!empty($v['realm_codes'])) {
+                $data[$k]['realm_codes'] = explode(';;', $v['realm_codes']);
+            } else {
+                $data[$k]['realm_codes'] = [];
+            }
+            // domains
+            if (!empty($v['domains'])) {
+                $data[$k]['domains'] = explode(';;', $v['domains']);
+                foreach ($data[$k]['domains'] as $k2 => $v2) {
+                    $data[$k]['domains'][$k2] = (int) $v2;
+                }
+            } else {
+                $data[$k]['domains'] = [];
+            }
+            if (!empty($v['domain_names'])) {
+                $data[$k]['domain_names'] = explode(';;', $v['domain_names']);
+            } else {
+                $data[$k]['domain_names'] = [];
+            }
+            if (!empty($v['domain_codes'])) {
+                $data[$k]['domain_codes'] = explode(';;', $v['domain_codes']);
+            } else {
+                $data[$k]['domain_codes'] = [];
+            }
+            // groups
+            if (!empty($v['group_ids'])) {
+                $data[$k]['group_ids'] = explode(';;', $v['group_ids']);
+                foreach ($data[$k]['group_ids'] as $k2 => $v2) {
+                    $data[$k]['group_ids'][$k2] = (int) $v2;
+                }
+            } else {
+                $data[$k]['group_ids'] = [];
+            }
+            if (!empty($v['group_names'])) {
+                $data[$k]['group_names'] = explode(';;', $v['group_names']);
+            } else {
+                $data[$k]['group_names'] = [];
+            }
+            if (!empty($v['group_codes'])) {
+                $data[$k]['group_codes'] = explode(';;', $v['group_codes']);
+            } else {
+                $data[$k]['group_codes'] = [];
             }
             // organizations
             if (!empty($v['organizations'])) {

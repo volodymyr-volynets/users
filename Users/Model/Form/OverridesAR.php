@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\Form;
-class OverridesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class OverridesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Form\Overrides::class;
+    public string $object_table_class = Overrides::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_formoverride_tenant_id','um_formoverride_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class OverridesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_formoverride_tenant_id = NULL {
-                        get => $this->um_formoverride_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_tenant_id', $value);
-                            $this->um_formoverride_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_formoverride_tenant_id = null {
+        get => $this->um_formoverride_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_tenant_id', $value);
+            $this->um_formoverride_tenant_id = $value;
+        }
+    }
 
     /**
      * Override #
@@ -41,12 +52,12 @@ class OverridesAR extends \Object\ActiveRecord {
      * @var int|null Domain: group_id_sequence Type: serial
      */
     public int|null $um_formoverride_id = null {
-                        get => $this->um_formoverride_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_id', $value);
-                            $this->um_formoverride_id = $value;
-                        }
-                    }
+        get => $this->um_formoverride_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_id', $value);
+            $this->um_formoverride_id = $value;
+        }
+    }
 
     /**
      * Module #
@@ -57,13 +68,13 @@ class OverridesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: module_id Type: integer
      */
-    public int|null $um_formoverride_module_id = NULL {
-                        get => $this->um_formoverride_module_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_module_id', $value);
-                            $this->um_formoverride_module_id = $value;
-                        }
-                    }
+    public int|null $um_formoverride_module_id = null {
+        get => $this->um_formoverride_module_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_module_id', $value);
+            $this->um_formoverride_module_id = $value;
+        }
+    }
 
     /**
      * Module Code
@@ -75,12 +86,12 @@ class OverridesAR extends \Object\ActiveRecord {
      * @var string|null Domain: module_code Type: char
      */
     public string|null $um_formoverride_module_code = null {
-                        get => $this->um_formoverride_module_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_module_code', $value);
-                            $this->um_formoverride_module_code = $value;
-                        }
-                    }
+        get => $this->um_formoverride_module_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_module_code', $value);
+            $this->um_formoverride_module_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -92,12 +103,12 @@ class OverridesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_formoverride_name = null {
-                        get => $this->um_formoverride_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_name', $value);
-                            $this->um_formoverride_name = $value;
-                        }
-                    }
+        get => $this->um_formoverride_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_name', $value);
+            $this->um_formoverride_name = $value;
+        }
+    }
 
     /**
      * Role #
@@ -108,13 +119,13 @@ class OverridesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: role_id Type: integer
      */
-    public int|null $um_formoverride_role_id = NULL {
-                        get => $this->um_formoverride_role_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_role_id', $value);
-                            $this->um_formoverride_role_id = $value;
-                        }
-                    }
+    public int|null $um_formoverride_role_id = null {
+        get => $this->um_formoverride_role_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_role_id', $value);
+            $this->um_formoverride_role_id = $value;
+        }
+    }
 
     /**
      * Role Weight
@@ -125,13 +136,13 @@ class OverridesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: weight Type: integer
      */
-    public int|null $um_formoverride_role_weight = NULL {
-                        get => $this->um_formoverride_role_weight;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_role_weight', $value);
-                            $this->um_formoverride_role_weight = $value;
-                        }
-                    }
+    public int|null $um_formoverride_role_weight = null {
+        get => $this->um_formoverride_role_weight;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_role_weight', $value);
+            $this->um_formoverride_role_weight = $value;
+        }
+    }
 
     /**
      * Form Code
@@ -143,12 +154,12 @@ class OverridesAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_formoverride_form_code = null {
-                        get => $this->um_formoverride_form_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_form_code', $value);
-                            $this->um_formoverride_form_code = $value;
-                        }
-                    }
+        get => $this->um_formoverride_form_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_form_code', $value);
+            $this->um_formoverride_form_code = $value;
+        }
+    }
 
     /**
      * Form Field Code
@@ -160,12 +171,12 @@ class OverridesAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_formoverride_form_field_code = null {
-                        get => $this->um_formoverride_form_field_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_form_field_code', $value);
-                            $this->um_formoverride_form_field_code = $value;
-                        }
-                    }
+        get => $this->um_formoverride_form_field_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_form_field_code', $value);
+            $this->um_formoverride_form_field_code = $value;
+        }
+    }
 
     /**
      * Action
@@ -176,13 +187,13 @@ class OverridesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $um_formoverride_action = NULL {
-                        get => $this->um_formoverride_action;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_action', $value);
-                            $this->um_formoverride_action = $value;
-                        }
-                    }
+    public int|null $um_formoverride_action = null {
+        get => $this->um_formoverride_action;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_action', $value);
+            $this->um_formoverride_action = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -194,12 +205,12 @@ class OverridesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_formoverride_inactive = 0 {
-                        get => $this->um_formoverride_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_inactive', $value);
-                            $this->um_formoverride_inactive = $value;
-                        }
-                    }
+        get => $this->um_formoverride_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_inactive', $value);
+            $this->um_formoverride_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -211,10 +222,10 @@ class OverridesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $um_formoverride_optimistic_lock = 'now()' {
-                        get => $this->um_formoverride_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_formoverride_optimistic_lock', $value);
-                            $this->um_formoverride_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->um_formoverride_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('um_formoverride_optimistic_lock', $value);
+            $this->um_formoverride_optimistic_lock = $value;
+        }
+    }
 }

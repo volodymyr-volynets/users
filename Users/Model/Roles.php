@@ -69,8 +69,9 @@ class Roles extends Table
     public $optimistic_lock = true;
     public $options_map = [
         'um_role_name' => 'name',
+        'um_role_name*' => 'avatar_role_small',
         'um_role_icon' => 'icon_class',
-        'um_role_inactive' => 'inactive'
+        'um_role_inactive' => 'inactive',
     ];
     public $options_active = [
         'um_role_inactive' => 0
@@ -87,6 +88,12 @@ class Roles extends Table
         'classification' => 'client_confidential',
         'protection' => 2,
         'scope' => 'enterprise'
+    ];
+
+    public $scoped_attributes = [
+        'column_key' => 'um_role_id',
+        'column_pk_type' => 'int',
+        'column_name' => 'U/M Role #',
     ];
 
     /**

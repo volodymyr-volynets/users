@@ -18,7 +18,7 @@ use Object\Controller;
 class OAuthTokenSignIn extends Controller
 {
     public $title = 'OAuth Sign In';
-    public $icon = 'fas fa-cogs';
+    public $icon = 'fa-solid fa-cogs';
     public $acl = [
         'public' => true,
         'authorized' => true,
@@ -89,8 +89,9 @@ class OAuthTokenSignIn extends Controller
             $auth_tkt = $crypt->tokenCreate(0, 'bearer.token', $authorize['bearer_token']);
             $oauth = $_SESSION['oauth'];
             unset($_SESSION['oauth']);
+            unset($_SESSION['numbers']['__post_login_url']);
             \Request::redirect($oauth['decrypted']['data']['__success_url'], $oauth['decrypted']['data']['__domain'], [
-                '__message' => 'Successfully logged in!',
+                '__message' => loc('NF.Message.SuccessfullyLoggedIn', 'Successfully logged in!'),
                 '__token' => $auth_tkt,
             ]);
         } catch (\Exception $e) {

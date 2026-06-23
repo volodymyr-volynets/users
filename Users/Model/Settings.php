@@ -29,6 +29,11 @@ class Settings extends Table
     public $columns = [
         'um_setting_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
         'um_setting_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
+        // MFA
+        'um_setting_um_mfasettyp_code' => ['name' => 'MFA Setting Type', 'domain' => 'group_code', 'default' => 'NONE', 'options_model' => '\Numbers\Users\Users\Model\MFA\SettingTypes'],
+        'um_setting_um_mfatype_code' => ['name' => 'MFA Default Type', 'domain' => 'group_code', 'null' => true],
+        'um_setting_totp_issuer' => ['name' => 'Issuer (TOTP)', 'domain' => 'name', 'null' => true],
+        'um_setting_default_dt_catalog_code' => ['name' => 'Default File Catalog Code', 'domain' => 'group_code', 'null' => true],
         // other
         'um_setting_sequence' => ['name' => 'Sequence', 'type' => 'bigserial', 'null' => true],
         'um_setting_inactive' => ['name' => 'Inactive', 'type' => 'boolean']

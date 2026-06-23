@@ -32,8 +32,8 @@ class NodeTypes extends Data
         'on_terrnodetype_icon' => 'icon_class',
     ];
     public $data = [
-        10 => ['on_terrnodetype_name' => 'Root', 'on_terrnodetype_icon' => 'fas fa-tree'],
-        20 => ['on_terrnodetype_name' => 'Branch', 'on_terrnodetype_icon' => 'fab fa-pagelines'],
-        30 => ['on_terrnodetype_name' => 'Leaf', 'on_terrnodetype_icon' => 'fas fa-leaf'],
+        10 => ['on_terrnodetype_name' => 'Root', 'on_terrnodetype_icon' => 'fa-solid fa-tree'],
+        20 => ['on_terrnodetype_name' => 'Branch', 'on_terrnodetype_icon' => 'fa-brands fa-pagelines'],
+        30 => ['on_terrnodetype_name' => 'Leaf', 'on_terrnodetype_icon' => 'fa-solid fa-leaf'],
     ];
 }

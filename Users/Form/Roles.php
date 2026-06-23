@@ -14,6 +14,7 @@ namespace Numbers\Users\Users\Form;
 use Object\Content\Messages;
 use Object\Form\Wrapper\Base;
 use Numbers\Tenants\Tenants\Helper\Sequence;
+use Numbers\Frontend\HTML\Renderers\Common\Helper\Colors;
 
 class Roles extends Base
 {
@@ -72,6 +73,24 @@ class Roles extends Base
             'details_pk' => ['um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'],
             'order' => 2000,
             'required' => false
+        ],
+        'permission_modules_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_key' => '\Numbers\Users\Users\Model\Role\Permission\Modules',
+            'details_pk' => ['um_rolprmmod_module_id', 'um_rolprmmod_action_id'],
+            'order' => 35000,
+        ],
+        'permission_access_settings_container' => [
+            'type' => 'subdetails',
+            'label_name' => 'Access Settings',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_parent_key' => '\Numbers\Users\Users\Model\Role\Permissions',
+            'details_key' => '\Numbers\Users\Users\Model\Role\Permission\AccessSettings',
+            'details_pk' => ['um_rolacsetting_sm_rsacsertype_code', 'um_rolacsetting_sm_rsacserowner_code'],
+            'order' => 35000,
         ],
         'apis_container' => [
             'type' => 'details',
@@ -140,6 +159,44 @@ class Roles extends Base
             'details_pk' => ['um_rolpolgrp_sm_polgroup_tenant_id', 'um_rolpolgrp_sm_polgroup_id'],
             'order' => 35000,
         ],
+        'external_permissions_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_key' => '\Numbers\Users\Users\Model\Role\ExternalPermissions',
+            'details_pk' => ['um_rolextperm_um_extmdids_id', 'um_rolextperm_um_extresrc_id'],
+            'order' => 35000
+        ],
+        'external_permission_actions_container' => [
+            'type' => 'subdetails',
+            'label_name' => 'Actions',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_parent_key' => '\Numbers\Users\Users\Model\Role\ExternalPermissions',
+            'details_key' => '\Numbers\Users\Users\Model\Role\ExternalPermission\Actions',
+            'details_pk' => ['um_rolextpractn_method_code', 'um_rolextpractn_um_extactn_id'],
+            'order' => 1000,
+            'required' => true
+        ],
+        'external_permission_subresources_container' => [
+            'type' => 'subdetails',
+            'label_name' => 'Subresources',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_parent_key' => '\Numbers\Users\Users\Model\Role\ExternalPermissions',
+            'details_key' => '\Numbers\Users\Users\Model\Role\ExternalPermission\Subresources',
+            'details_pk' => ['um_rolextprsub_um_extsursrc_id', 'um_rolextprsub_um_extactn_id'],
+            'order' => 2000,
+            'required' => false
+        ],
+        'external_permission_modules_container' => [
+            'type' => 'details',
+            'details_rendering_type' => 'table',
+            'details_new_rows' => 1,
+            'details_key' => '\Numbers\Users\Users\Model\Role\ExternalPermission\Modules',
+            'details_pk' => ['um_rolextprmmod_um_extmdids_id', 'um_rolextprmmod_um_extactn_id'],
+            'order' => 35000,
+        ],
     ];
 
     public $rows = [
@@ -151,7 +208,8 @@ class Roles extends Base
             'general' => ['order' => 100, 'label_name' => 'General'],
             'organizations' => ['order' => 150, 'label_name' => 'Organizations'],
             'parents' => ['order' => 200, 'label_name' => 'Inherit'],
-            'permissions' => ['order' => 300, 'label_name' => 'Permisions'],
+            'permissions' => ['order' => 300, 'label_name' => 'Internal Permissions'],
+            'external_permissions' => ['order' => 310, 'label_name' => 'External Permissions'],
             'apis' => ['order' => 350, 'label_name' => 'API(s)'],
             'notifications' => ['order' => 400, 'label_name' => 'Notifications'],
             'features' => ['order' => 450, 'label_name' => 'Features'],
@@ -166,7 +224,8 @@ class Roles extends Base
                 'um_role_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 50, 'required' => 'c', 'navigation' => true]
             ],
             'um_role_name' => [
-                'um_role_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
+                'um_role_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 95, 'required' => true],
+                '__avatar' => ['order' => 2, 'label_name' => 'Avatar', 'type' => 'text', 'percent' => 5, 'custom_renderer' => 'self::renderAvatar'],
             ]
         ],
         'tabs' => [
@@ -181,6 +240,13 @@ class Roles extends Base
             ],
             'permissions' => [
                 'permissions' => ['container' => 'permissions_container', 'order' => 100],
+                '__permission_separator' => ['container' => 'permission_modules_separator_container', 'order' => 200],
+                'permission_modules' => ['container' => 'permission_modules_container', 'order' => 300],
+            ],
+            'external_permissions' => [
+                'external_permissions' => ['container' => 'external_permissions_container', 'order' => 100],
+                '__external_permission_separator' => ['container' => 'external_permission_modules_separator_container', 'order' => 200],
+                'external_permission_modules_container' => ['container' => 'external_permission_modules_container', 'order' => 300],
             ],
             'apis' => [
                 'apis' => ['container' => 'apis_container', 'order' => 100],
@@ -252,6 +318,68 @@ class Roles extends Base
                 'um_rolsubres_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
             ],
         ],
+        'permission_modules_separator_container' => [
+            'permission_modules_separator_container' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Internal Modules', 'icon' => 'fa-solid fa-dice-d6', 'percent' => 100],
+            ],
+        ],
+        'permission_modules_container' => [
+            'row1' => [
+                'um_rolprmmod_module_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Module #', 'domain' => 'module_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Tenants\Tenants\Model\Modules', 'onchange' => 'this.form.submit();'],
+                'um_rolprmmod_action_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 45, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Backend\System\Modules\Model\Resource\Actions::optionsGrouped', 'searchable' => true, 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+                'um_rolprmmod_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ],
+            self::HIDDEN => [
+                'um_rolprmmod_module_code' => ['order' => 1, 'label_name' => 'Module Code', 'domain' => 'module_code', 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
+        'permission_access_settings_container' => [
+            'row1' => [
+                'um_rolacsetting_sm_rsacsertype_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Backend\System\Modules\Model\Resource\AccessSetting\AccessSettingTypes', 'onchange' => 'this.form.submit();'],
+                'um_rolacsetting_sm_rsacserowner_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'required' => true, 'percent' => 45, 'method' => 'select', 'options_model' => null, 'placeholder' => 'Please choose', 'onchange' => 'this.form.submit();'],
+                'um_rolacsetting_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ]
+        ],
+        'external_permissions_container' => [
+            'row1' => [
+                'um_rolextperm_um_extresrc_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Resource\ExternalResources::optionsJson', 'options_params' => ['um_extresrc_acl_permission' => 1, 'um_extresrc_type' => 100], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolextperm_um_extmdids_id', 'resource_id' => 'um_rolextperm_um_extresrc_id']],
+                'um_rolextperm_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ],
+            self::HIDDEN => [
+                'um_rolextperm_um_extmdids_id' => ['order' => 2, 'label_name' => 'Module #', 'domain' => 'module_id', 'required' => true, 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
+        'external_permission_actions_container' => [
+            'row1' => [
+                'um_rolextpractn_um_extactn_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 85, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Resource\ExternalResourceMap::optionsJson', 'options_depends' => ['um_extresmap_um_extresrc_id' => 'detail::um_rolextperm_um_extresrc_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['action_id' => 'um_rolextpractn_um_extactn_id', 'method_code' => 'um_rolextpractn_method_code']],
+                'um_rolextpractn_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+            ],
+            self::HIDDEN => [
+                'um_rolextpractn_method_code' => ['order' => 1, 'label_name' => 'Method', 'domain' => 'code', 'required' => true, 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
+        'external_permission_subresources_container' => [
+            'row1' => [
+                'um_rolextprsub_um_extsursrc_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Subresource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Resource\ExternalSubresources::optionsGrouped', 'options_depends' => ['um_extresrc_id' => 'detail::um_rolextperm_um_extresrc_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+                'um_rolextprsub_um_extactn_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 35, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\Resource\ExternalSubresourceActions::optionsGrouped', 'options_depends' => ['um_extsursrc_id' => 'um_rolextprsub_um_extsursrc_id'], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();'],
+                'um_rolextprsub_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 15]
+            ],
+        ],
+        'external_permission_modules_separator_container' => [
+            'external_permission_modules_separator_container' => [
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'External Modules', 'icon' => 'fa-solid fa-dice-d6', 'percent' => 100],
+            ],
+        ],
+        'external_permission_modules_container' => [
+            'row1' => [
+                'um_rolextprmmod_um_extmdids_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Module #', 'domain' => 'module_id', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\Model\Resource\ExternalModuleIDs', 'onchange' => 'this.form.submit();'],
+                'um_rolextprmmod_um_extactn_id' => ['order' => 2, 'label_name' => 'Action', 'domain' => 'action_id', 'required' => true, 'null' => true, 'percent' => 45, 'method' => 'select', 'tree' => true, 'options_model' => '\Numbers\Users\Users\Model\Resource\ExternalActions::optionsGrouped', 'searchable' => true, 'options_options' => ['i18n' => 'skip_sorting'], 'onchange' => 'this.form.submit();'],
+                'um_rolextprmmod_inactive' => ['order' => 3, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+            ],
+            self::HIDDEN => [
+                'um_rolextprmmod_um_extmdl_code' => ['order' => 1, 'label_name' => 'Module Code', 'domain' => 'module_code', 'null' => true, 'method' => 'hidden'],
+            ]
+        ],
         'apis_container' => [
             'row1' => [
                 'um_rolapi_resource_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Resource', 'domain' => 'resource_id', 'required' => true, 'null' => true, 'details_unique_select' => true, 'percent' => 95, 'method' => 'select', 'options_model' => '\Numbers\Users\Users\DataSource\ACL\Controllers2::optionsJson', 'options_params' => ['sm_resource_acl_permission' => 1, 'sm_resource_type' => 150], 'tree' => true, 'searchable' => true, 'onchange' => 'this.form.submit();', 'json_contains' => ['module_id' => 'um_rolapi_module_id', 'resource_id' => 'um_rolapi_resource_id']],
@@ -306,7 +434,7 @@ class Roles extends Base
         ],
         'separator_2' => [
             'separator_2' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Policy Groups', 'icon' => 'far fa-object-group', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 100, 'label_name' => 'Policy Groups', 'icon' => 'fa-regular fa-object-group', 'percent' => 100],
             ],
         ],
         'policy_group_container' => [
@@ -323,43 +451,55 @@ class Roles extends Base
         ]
     ];
     public $collection = [
-        'name' => 'Roles',
+        'name' => 'UM Roles',
         'model' => '\Numbers\Users\Users\Model\Roles',
         'details' => [
             '\Numbers\Users\Users\Model\Role\Children' => [
-                'name' => 'Children',
+                'name' => 'UM Role Children',
                 'pk' => ['um_rolrol_tenant_id', 'um_rolrol_parent_role_id', 'um_rolrol_child_role_id'],
                 'type' => '1M',
                 'map' => ['um_role_tenant_id' => 'um_rolrol_tenant_id', 'um_role_id' => 'um_rolrol_child_role_id']
             ],
             '\Numbers\Users\Users\Model\Role\Permissions' => [
-                'name' => 'Permissions',
+                'name' => 'UM Role Permissions',
                 'pk' => ['um_rolperm_tenant_id', 'um_rolperm_role_id', 'um_rolperm_module_id', 'um_rolperm_resource_id'],
                 'type' => '1M',
                 'map' => ['um_role_tenant_id' => 'um_rolperm_tenant_id', 'um_role_id' => 'um_rolperm_role_id'],
                 'details' => [
                     '\Numbers\Users\Users\Model\Role\Permission\Actions' => [
-                        'name' => 'Permission Actions',
+                        'name' => 'UM Role Permission Actions',
                         'pk' => ['um_rolperaction_tenant_id', 'um_rolperaction_role_id', 'um_rolperaction_module_id', 'um_rolperaction_resource_id', 'um_rolperaction_method_code', 'um_rolperaction_action_id'],
                         'type' => '1M',
                         'map' => ['um_rolperm_tenant_id' => 'um_rolperaction_tenant_id', 'um_rolperm_role_id' => 'um_rolperaction_role_id', 'um_rolperm_module_id' => 'um_rolperaction_module_id', 'um_rolperm_resource_id' => 'um_rolperaction_resource_id'],
                     ],
                     '\Numbers\Users\Users\Model\Role\Permission\Subresources' => [
-                        'name' => 'Permission Subresources',
+                        'name' => 'UM Role Permission Subresources',
                         'pk' => ['um_rolsubres_tenant_id', 'um_rolsubres_role_id', 'um_rolsubres_module_id', 'um_rolsubres_resource_id', 'um_rolsubres_rsrsubres_id', 'um_rolsubres_action_id'],
                         'type' => '1M',
                         'map' => ['um_rolperm_tenant_id' => 'um_rolsubres_tenant_id', 'um_rolperm_role_id' => 'um_rolsubres_role_id', 'um_rolperm_module_id' => 'um_rolsubres_module_id', 'um_rolperm_resource_id' => 'um_rolsubres_resource_id'],
+                    ],
+                    '\Numbers\Users\Users\Model\Role\Permission\AccessSettings' => [
+                        'name' => 'UM Role Permission Access Settings',
+                        'pk' => ['um_rolacsetting_tenant_id', 'um_rolacsetting_role_id', 'um_rolacsetting_module_id', 'um_rolacsetting_resource_id', 'um_rolacsetting_sm_rsacsertype_code', 'um_rolacsetting_sm_rsacserowner_code'],
+                        'type' => '1M',
+                        'map' => ['um_rolperm_tenant_id' => 'um_rolacsetting_tenant_id', 'um_rolperm_role_id' => 'um_rolacsetting_role_id', 'um_rolperm_module_id' => 'um_rolacsetting_module_id', 'um_rolperm_resource_id' => 'um_rolacsetting_resource_id'],
                     ]
                 ]
             ],
+            '\Numbers\Users\Users\Model\Role\Permission\Modules' => [
+                'name' => 'UM Role Permission Modules',
+                'pk' => ['um_rolprmmod_tenant_id', 'um_rolprmmod_role_id', 'um_rolprmmod_module_id', 'um_rolprmmod_action_id'],
+                'type' => '1M',
+                'map' => ['um_role_tenant_id' => 'um_rolprmmod_tenant_id', 'um_role_id' => 'um_rolprmmod_role_id'],
+            ],
             '\Numbers\Users\Users\Model\Role\APIs' => [
-                'name' => 'APIs',
+                'name' => 'UM Role APIs',
                 'pk' => ['um_rolapi_tenant_id', 'um_rolapi_role_id', 'um_rolapi_module_id', 'um_rolapi_resource_id'],
                 'type' => '1M',
                 'map' => ['um_role_tenant_id' => 'um_rolapi_tenant_id', 'um_role_id' => 'um_rolapi_role_id'],
                 'details' => [
                     '\Numbers\Users\Users\Model\Role\API\Methods' => [
-                        'name' => 'API Methods',
+                        'name' => 'UM Role API Methods',
                         'pk' => ['um_rolapmethod_tenant_id', 'um_rolapmethod_role_id', 'um_rolapmethod_module_id', 'um_rolapmethod_resource_id', 'um_rolapmethod_method_code'],
                         'type' => '1M',
                         'map' => ['um_rolapi_tenant_id' => 'um_rolapmethod_tenant_id', 'um_rolapi_role_id' => 'um_rolapmethod_role_id', 'um_rolapi_module_id' => 'um_rolapmethod_module_id', 'um_rolapi_resource_id' => 'um_rolapmethod_resource_id'],
@@ -367,25 +507,25 @@ class Roles extends Base
                 ]
             ],
             '\Numbers\Users\Users\Model\Role\Notifications' => [
-                'name' => 'Notifications',
+                'name' => 'UM Role Notifications',
                 'pk' => ['um_rolnoti_tenant_id', 'um_rolnoti_role_id', 'um_rolnoti_module_id', 'um_rolnoti_feature_code'],
                 'type' => '1M',
                 'map' => ['um_role_tenant_id' => 'um_rolnoti_tenant_id', 'um_role_id' => 'um_rolnoti_role_id']
             ],
             '\Numbers\Users\Users\Model\Role\Features' => [
-                'name' => 'Features',
+                'name' => 'UM Role Features',
                 'pk' => ['um_rolfeature_tenant_id', 'um_rolfeature_role_id', 'um_rolfeature_module_id', 'um_rolfeature_feature_code'],
                 'type' => '1M',
                 'map' => ['um_role_tenant_id' => 'um_rolfeature_tenant_id', 'um_role_id' => 'um_rolfeature_role_id']
             ],
             '\Numbers\Users\Users\Model\Role\Organizations' => [
-                'name' => 'Organizations',
+                'name' => 'UM Role Organizations',
                 'pk' => ['um_rolorg_tenant_id', 'um_rolorg_role_id', 'um_rolorg_organization_id'],
                 'type' => '1M',
                 'map' => ['um_role_tenant_id' => 'um_rolorg_tenant_id', 'um_role_id' => 'um_rolorg_role_id']
             ],
             '\Numbers\Users\Users\Model\Role\Flags' => [
-                'name' => 'Flags',
+                'name' => 'UM Role Flags',
                 'pk' => ['um_rolsysflag_tenant_id', 'um_rolsysflag_role_id', 'um_rolsysflag_module_id', 'um_rolsysflag_sysflag_id', 'um_rolsysflag_action_id'],
                 'type' => '1M',
                 'map' => ['um_role_tenant_id' => 'um_rolsysflag_tenant_id', 'um_role_id' => 'um_rolsysflag_role_id']
@@ -402,6 +542,45 @@ class Roles extends Base
                 'type' => '1M',
                 'map' => ['um_role_tenant_id' => 'um_rolpolgrp_tenant_id', 'um_role_id' => 'um_rolpolgrp_role_id']
             ],
+            '\Numbers\Users\Users\Model\Role\ExternalPermissions' => [
+                'name' => 'UM Role External Permissions',
+                'pk' => ['um_rolextperm_tenant_id', 'um_rolextperm_role_id', 'um_rolextperm_um_extmdids_id', 'um_rolextperm_um_extresrc_id'],
+                'type' => '1M',
+                'map' => ['um_role_tenant_id' => 'um_rolextperm_tenant_id', 'um_role_id' => 'um_rolextperm_role_id'],
+                'details' => [
+                    '\Numbers\Users\Users\Model\Role\ExternalPermission\Actions' => [
+                        'name' => 'UM Role External Permission Actions',
+                        'pk' => ['um_rolextpractn_tenant_id', 'um_rolextpractn_role_id', 'um_rolextpractn_um_extmdids_id', 'um_rolextpractn_um_extresrc_id', 'um_rolextpractn_method_code', 'um_rolextpractn_um_extactn_id'],
+                        'type' => '1M',
+                        'map' => ['um_rolextperm_tenant_id' => 'um_rolextpractn_tenant_id', 'um_rolextperm_role_id' => 'um_rolextpractn_role_id', 'um_rolextperm_um_extmdids_id' => 'um_rolextpractn_um_extmdids_id', 'um_rolextperm_um_extresrc_id' => 'um_rolextpractn_um_extresrc_id'],
+                    ],
+                    '\Numbers\Users\Users\Model\Role\ExternalPermission\Subresources' => [
+                        'name' => 'UM Role External Permission Subresources',
+                        'pk' => ['um_rolextprsub_tenant_id', 'um_rolextprsub_role_id', 'um_rolextprsub_um_extmdids_id', 'um_rolextprsub_um_extresrc_id', 'um_rolextprsub_um_extsursrc_id', 'um_rolextprsub_um_extactn_id'],
+                        'type' => '1M',
+                        'map' => ['um_rolextperm_tenant_id' => 'um_rolextprsub_tenant_id', 'um_rolextperm_role_id' => 'um_rolextprsub_role_id', 'um_rolextperm_um_extmdids_id' => 'um_rolextprsub_um_extmdids_id', 'um_rolextperm_um_extresrc_id' => 'um_rolextprsub_um_extresrc_id'],
+                    ]
+                ]
+            ],
+            '\Numbers\Users\Users\Model\Role\ExternalPermission\Modules' => [
+                'name' => 'UM Role External Permission Modules',
+                'pk' => ['um_rolextprmmod_tenant_id', 'um_rolextprmmod_role_id', 'um_rolextprmmod_um_extmdids_id', 'um_rolextprmmod_um_extactn_id'],
+                'type' => '1M',
+                'map' => ['um_role_tenant_id' => 'um_rolextprmmod_tenant_id', 'um_role_id' => 'um_rolextprmmod_role_id'],
+            ],
+        ]
+    ];
+
+    public $preload_models = [
+        'access_setting_types' => [
+            'model' => '\Numbers\Backend\System\Modules\Model\Resource\AccessSetting\AccessSettingTypes',
+            'partial' => false,
+        ],
+        'resources' => [
+            'model' => '\Numbers\Backend\System\Modules\Model\Resources',
+            'partial' => true,
+            'ids_from_collection' => ['\Numbers\Users\Users\Model\Role\Permissions', '$key', 'um_rolperm_resource_id'],
+            'pk' => ['sm_resource_id']
         ]
     ];
 
@@ -421,6 +600,13 @@ class Roles extends Base
                 $form->error(DANGER, Messages::REQUIRED_FIELD, '\Numbers\Users\Users\Model\Role\Organizations[1][um_rolorg_organization_id]');
             }
         }
+        // permissions
+        foreach ($form->values['\Numbers\Users\Users\Model\Role\Permissions'] ?? [] as $k => $v) {
+            $acl_access_settings = $form->getPreloadModel('resources', [$v['um_rolperm_resource_id']], 'sm_resource_acl_access_settings');
+            if (!empty($acl_access_settings) && empty($v['\Numbers\Users\Users\Model\Role\Permission\AccessSettings'])) {
+                $form->validateQuickRequired(['\Numbers\Users\Users\Model\Role\Permissions', $k, '\Numbers\Users\Users\Model\Role\Permission\AccessSettings', 1, 'um_rolacsetting_sm_rsacsertype_code']);
+            }
+        }
         // generate new sequence
         if (empty($form->values['um_role_code'])) {
             $form->values['um_role_code'] = Sequence::nextval('DEFAULT', 'ROL', 'UM', \Tenant::id(), true);
@@ -434,6 +620,15 @@ class Roles extends Base
         }
     }
 
+    public function overrideDetailValue(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        if ($options['options']['field_name'] == 'um_rolacsetting_sm_rsacserowner_code') {
+            if (!empty($neighbouring_values['um_rolacsetting_sm_rsacsertype_code'])) {
+                $options['options']['options_model'] = $form->getPreloadModel('access_setting_types', [$neighbouring_values['um_rolacsetting_sm_rsacsertype_code']], 'sm_rsacsertype_model');
+            }
+        }
+    }
+
     public function overrideTabs(& $form, & $tab_options, & $tab_name, & $neighbouring_values = [])
     {
         // we hide all tabs if global
@@ -441,6 +636,16 @@ class Roles extends Base
             if (in_array($tab_name, ['organizations', 'parents', 'assigments'])) {
                 return ['hidden' => true];
             }
+        }
+    }
+
+    public function renderAvatar(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        // check if we have permissions
+        if (!empty($form->values['um_role_name'])) {
+            return Colors::renderAvatar($form->values['um_role_name'], 'role', false) . ' ' . Colors::renderAvatar($form->values['um_role_name'], 'role', true);
+        } else {
+            return '';
         }
     }
 }

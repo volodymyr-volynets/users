@@ -40,7 +40,7 @@ class ResourceTree extends Base
     public $elements = [
         'top' => [
             'separator' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 100, 'label_name' => 'Table of Contents', 'icon' => 'far fa-list-alt', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 1, 'row_order' => 100, 'label_name' => 'Table of Contents', 'icon' => 'fa-regular fa-list-alt', 'percent' => 100],
             ],
             self::HIDDEN => [
                 'sm_module_code' => ['order' => 1, 'label_name' => 'Module', 'domain' => 'module_code', 'null' => true, 'method' => 'hidden', 'preserved' => true],

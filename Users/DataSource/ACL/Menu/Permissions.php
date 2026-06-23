@@ -25,10 +25,32 @@ class Permissions
     {
         $datasource = new Menu();
         $data = $datasource->get();
-        $result = [];
+        $result = [
+            'all_items' => [],
+            'quick_actions' => [],
+            'footer_items' => [],
+        ];
+        $roots = [];
         $always_show = \Application::get('flag.numbers.frontend.menu.always_show');
         $menu_id = 1;
+        // first loop to get all menu group name items
+        $menu_group_names = [];
         foreach ($data as $k => $v) {
+            if ($v['type'] === 295) {
+                $name_loc = 'NF.System.' . (new \String2($v['name'])->englishOnly()->toString());
+                $menu_group_names[$v['name']] = [
+                    'name' => htmlspecialchars($v['name']),
+                    'name_loc' => htmlspecialchars(loc($name_loc, $v['name'])),
+                    'icon' => $v['icon'],
+                ];
+            }
+        }
+        // second loop
+        foreach ($data as $k => $v) {
+            // for menu group items
+            if ($v['type'] == 295) {
+                continue;
+            }
             // handle permission
             if ($v['type'] !== 299) {
                 // see if module has been activated
@@ -37,7 +59,7 @@ class Permissions
                 }
                 // if we have permission
                 if (!empty($v['acl_permission'])) {
-                    if (!\Application::$controller->canExtended($v['acl_resource_id'], $v['acl_method_code'], $v['acl_action_id'])) {
+                    if (!\Application::$controller->canExtended($v['acl_resource_id'], $v['acl_method_code'], $v['acl_action_id'], null, ['skip_authorized_and_public_checks' => true])) {
                         if (!$always_show) {
                             continue;
                         } else {
@@ -48,7 +70,7 @@ class Permissions
                     if (\User::authorized()) {
                         // menu items with resources
                         if (!empty($v['acl_resource_id'])) {
-                            if (!\Application::$controller->canExtended($v['acl_resource_id'], $v['acl_method_code'], $v['acl_action_id'])) {
+                            if (!\Application::$controller->canExtended($v['acl_resource_id'], $v['acl_method_code'], $v['acl_action_id'], null, ['skip_authorized_and_public_checks' => true])) {
                                 continue;
                             }
                         }
@@ -61,6 +83,10 @@ class Permissions
                         }
                     }
                 }
+            }
+            $menu_group_name = [];
+            if ($v['root'] && !empty($v['menu_group_name']) && isset($menu_group_names[$v['menu_group_name']])) {
+                $menu_group_name[$v['menu_group_name']] = $menu_group_names[$v['menu_group_name']];
             }
             // add item to the list
             $key = [$v['type']];
@@ -84,24 +110,37 @@ class Permissions
                         }
                     }
                     if (empty($group)) {
+                        $name_loc = 'NF.System.' . (new \String2($v['group' . $i])->englishOnly()->toString());
+                        $fixed_url = $v['url'];
+                        if (!empty($v['url']) && $v['url'][0] == '/' && !empty($v['template'])) {
+                            $fixed_url = \Request::fixUrl($v['url'], $v['template']);
+                        }
                         $group = [
-                            'name' => $v['group' . $i],
+                            'name' => htmlspecialchars($v['group' . $i]),
+                            'name_loc' => htmlspecialchars(loc($name_loc, $v['group' . $i])),
                             'title' => null,
+                            'title_loc' => null,
                             'icon' => null,
-                            'icon_react' => null,
-                            'url' => $v['url'],
+                            'icon_frontend' => null,
+                            'url' => $fixed_url,
                             'child_ordered' => $v['child_ordered'],
                             'order' => $v['order'],
                             'separator' => $v['separator'],
                             'name_generator' => $v['name_generator'],
+                            'options_generator' => $v['options_generator'],
                             'options' => [],
                             'menu_id' => $menu_id,
                             'class' => $v['class'] ?? null,
                             'template' => $v['template'] ?? null,
+                            'root' => $v['root'],
                         ];
                         $menu_id++;
                     }
                     array_key_set($result, $key, $group);
+                    // process roots
+                    if (!empty($group['root']) && in_array($key[0], [200, 210])) {
+                        $roots[] = $key;
+                    }
                 }
                 $key[] = 'options';
             }
@@ -112,24 +151,37 @@ class Permissions
                 $v['badge'] = explode(';', $v['badge']);
                 $badge = ['type' => $v['badge'][0], 'value' => $v['badge'][1]];
             }
-            $icon_react = explode(' ', $v['icon']);
-            $icon_react[1] = str_replace('fa-', '', $icon_react[1]);
+            $name_loc = 'NF.System.' . (new \String2($v['name'])->englishOnly()->toString());
+            $title_loc = 'NF.System.' . (new \String2($v['description'])->englishOnly()->toString());
+            $fixed_url = $v['url'];
+            if (!empty($v['url']) && $v['url'][0] == '/' && !empty($v['template'])) {
+                $fixed_url = \Request::fixUrl($v['url'], $v['template']);
+            }
             $item = [
-                'name' => $v['name'],
-                'title' => $v['description'],
+                'name' => htmlspecialchars($v['name']),
+                'name_loc' => htmlspecialchars(loc($name_loc, $v['name'])),
+                'title' => $v['description'] ? htmlspecialchars($v['description']) : null,
+                'title_loc' => $v['description'] ? htmlspecialchars(loc($title_loc, $v['description'])) : null,
+                'module_code' => $v['module_code'],
+                'module_abbreviation' => $v['module_code'][0] . '/' . $v['module_code'][1],
                 'icon' => $v['icon'],
-                'icon_react' => $icon_react,
-                'url' => $v['url'],
+                'icon_frontend' => $v['icon'] ? \HTML::icon(['type' => $v['icon']]) : null,
+                'url' => $fixed_url,
                 'child_ordered' => $v['child_ordered'],
                 'order' => $v['order'],
                 'separator' => $v['separator'],
                 'name_generator' => $v['name_generator'],
+                'options_generator' => $v['options_generator'],
                 'menu_id' => $menu_id,
                 '__menu_id' => $v['id'],
                 'class' => $v['class'] ?? null,
                 'template' => $v['template'] ?? null,
-                'badge' => $badge
+                'badge' => $badge,
+                'root' => $v['root'],
             ];
+            if (!empty($menu_group_name)) {
+                $item['menu_group_names'] = $menu_group_name;
+            }
             $menu_id++;
             $existing = array_key_get($result, $key);
             if (!empty($existing)) {
@@ -140,6 +192,19 @@ class Permissions
             }
             array_key_set($result, $key, $existing);
         }
+        // generate data from new menus
+        foreach ($roots as $v) {
+            $last_key = array_key_last($v);
+            $result['all_items'][$v[$last_key]] = array_key_get($result, $v);
+            // quick actions
+            $v[0] = 215;
+            $temp = array_key_get($result, $v);
+            if (!empty($temp)) {
+                $result['quick_actions'][$v[$last_key]] = $temp;
+            }
+        }
+        // footer items
+        $result['footer_items'] = $result[230] ?? [];
         return $result;
     }
 }

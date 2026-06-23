@@ -84,9 +84,10 @@ class Monitor
                 \Layout::addAction(
                     'monitoring_back',
                     [
-                        'value' => 'Back',
-                        'title' => i18n(null, 'Back to [title].', ['replace' => ['[title]' => i18n(null, $last['title'])]]),
-                        'icon' => 'fas fa-backward', 'href' => $last['url'],
+                        'value' => loc('NF.Form.Back', 'Back'),
+                        'title' => loc('NF.Form.BackToTitle', 'Back to {title}.', ['title' => $last['title']]),
+                        'icon' => 'fa-solid fa-backward',
+                        'href' => $last['url'],
                         'order' => -100002
                     ]
                 );
@@ -105,9 +106,10 @@ class Monitor
                 \Layout::addAction(
                     'monitoring_forward',
                     [
-                        'value' => 'Forward',
-                        'title' => i18n(null, 'Forward to [title].', ['replace' => ['[title]' => i18n(null, $last['title'])]]),
-                        'icon' => 'fas fa-forward', 'href' => $last['url'],
+                        'value' => loc('NF.Form.Forward', 'Forward'),
+                        'title' => loc('NF.Form.ForwardToTitle', 'Forward to {title}.', ['title' => $last['title']]),
+                        'icon' => 'fa-solid fa-forward',
+                        'href' => $last['url'],
                         'order' => -100001
                     ]
                 );
@@ -171,12 +173,15 @@ class Monitor
         if (isset(self::$__history_id)) {
             return;
         }
+        // preset if no monitoring steps
         if (empty($_SESSION['numbers']['flag_monitoring_steps'])) {
-            return;
+            $_SESSION['numbers']['flag_monitoring_steps'] = [];
+            $key = 1;
+        } else {
+            end($_SESSION['numbers']['flag_monitoring_steps']);
+            $key = key($_SESSION['numbers']['flag_monitoring_steps']);
+            $key += 1;
         }
-        end($_SESSION['numbers']['flag_monitoring_steps']);
-        $key = key($_SESSION['numbers']['flag_monitoring_steps']);
-        $key += 1;
         $_SESSION['numbers']['flag_monitoring_steps'][$key] = [
             'url' => $url,
             'title' => $title,

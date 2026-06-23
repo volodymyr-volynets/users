@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User\Security;
-class AnswersAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class AnswersAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Security\Answers::class;
+    public string $object_table_class = Answers::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_usrsecanswer_tenant_id','um_usrsecanswer_user_id','um_usrsecanswer_question_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class AnswersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usrsecanswer_tenant_id = NULL {
-                        get => $this->um_usrsecanswer_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsecanswer_tenant_id', $value);
-                            $this->um_usrsecanswer_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usrsecanswer_tenant_id = null {
+        get => $this->um_usrsecanswer_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsecanswer_tenant_id', $value);
+            $this->um_usrsecanswer_tenant_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -41,12 +52,12 @@ class AnswersAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $um_usrsecanswer_timestamp = 'now()' {
-                        get => $this->um_usrsecanswer_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsecanswer_timestamp', $value);
-                            $this->um_usrsecanswer_timestamp = $value;
-                        }
-                    }
+        get => $this->um_usrsecanswer_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsecanswer_timestamp', $value);
+            $this->um_usrsecanswer_timestamp = $value;
+        }
+    }
 
     /**
      * User #
@@ -57,13 +68,13 @@ class AnswersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_usrsecanswer_user_id = NULL {
-                        get => $this->um_usrsecanswer_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsecanswer_user_id', $value);
-                            $this->um_usrsecanswer_user_id = $value;
-                        }
-                    }
+    public int|null $um_usrsecanswer_user_id = null {
+        get => $this->um_usrsecanswer_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsecanswer_user_id', $value);
+            $this->um_usrsecanswer_user_id = $value;
+        }
+    }
 
     /**
      * Question #
@@ -74,13 +85,13 @@ class AnswersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: group_id Type: integer
      */
-    public int|null $um_usrsecanswer_question_id = NULL {
-                        get => $this->um_usrsecanswer_question_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsecanswer_question_id', $value);
-                            $this->um_usrsecanswer_question_id = $value;
-                        }
-                    }
+    public int|null $um_usrsecanswer_question_id = null {
+        get => $this->um_usrsecanswer_question_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsecanswer_question_id', $value);
+            $this->um_usrsecanswer_question_id = $value;
+        }
+    }
 
     /**
      * Answer
@@ -92,10 +103,10 @@ class AnswersAR extends \Object\ActiveRecord {
      * @var string|null Type: text
      */
     public string|null $um_usrsecanswer_answer = null {
-                        get => $this->um_usrsecanswer_answer;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrsecanswer_answer', $value);
-                            $this->um_usrsecanswer_answer = $value;
-                        }
-                    }
+        get => $this->um_usrsecanswer_answer;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrsecanswer_answer', $value);
+            $this->um_usrsecanswer_answer = $value;
+        }
+    }
 }

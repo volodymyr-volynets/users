@@ -14,6 +14,7 @@ namespace Numbers\Users\Organizations\Form;
 use Numbers\Users\Documents\Base\Helper\MassUpload;
 use Numbers\Users\Documents\Base\Helper\Validate;
 use Object\Form\Wrapper\Base;
+use Numbers\Frontend\HTML\Renderers\Common\Helper\Colors;
 
 class Organizations extends Base
 {
@@ -27,7 +28,7 @@ class Organizations extends Base
             'new' => true,
             'back' => true,
             'import' => true
-        ]
+        ],
     ];
     public $containers = [
         'top' => ['default_row_type' => 'grid', 'order' => 100],
@@ -78,7 +79,8 @@ class Organizations extends Base
                 'on_organization_code' => ['order' => 2, 'label_name' => 'Code', 'domain' => 'group_code', 'null' => true, 'percent' => 50, 'required' => true, 'navigation' => true]
             ],
             'on_organization_name' => [
-                'on_organization_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 100, 'required' => true],
+                'on_organization_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 95, 'required' => true],
+                '__avatar' => ['order' => 2, 'label_name' => 'Avatar', 'type' => 'text', 'percent' => 5, 'custom_renderer' => 'self::renderAvatar'],
             ]
         ],
         'tabs' => [
@@ -112,7 +114,7 @@ class Organizations extends Base
                 'on_organization_icon' => ['order' => 1, 'row_order' => 250, 'label_name', 'label_name' => 'Icon', 'domain' => 'icon', 'null' => true, 'percent' => 100, 'method' => 'select', 'options_model' => '\Numbers\Frontend\HTML\FontAwesome\Model\Icons::options', 'searchable' => true],
             ],
             'separator_2' => [
-                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'far fa-envelope', 'percent' => 100],
+                self::SEPARATOR_HORIZONTAL => ['order' => 100, 'row_order' => 400, 'label_name' => 'Contact Information', 'icon' => 'fa-regular fa-envelope', 'percent' => 100],
             ],
             'on_organization_email' => [
                 'on_organization_email' => ['order' => 1, 'row_order' => 500, 'label_name' => 'Primary Email', 'domain' => 'email', 'null' => true, 'percent' => 50, 'required' => false],
@@ -132,8 +134,8 @@ class Organizations extends Base
         ],
         'operating_container' => [
             'on_organization_operating_country_code' => [
-                'on_organization_operating_country_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Operating Country', 'domain' => 'country_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
-                'on_organization_operating_province_code' => ['order' => 2, 'label_name' => 'Operating Province', 'domain' => 'province_code', 'null' => true, 'required' => true, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'on_organization_operating_country_code']],
+                'on_organization_operating_country_code' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Operating Country', 'domain' => 'country_code', 'null' => true, 'required' => false, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Countries::optionsActive', 'onchange' => 'this.form.submit();'],
+                'on_organization_operating_province_code' => ['order' => 2, 'label_name' => 'Operating Province', 'domain' => 'province_code', 'null' => true, 'required' => false, 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Countries\Model\Provinces::optionsActive', 'options_depends' => ['cm_province_country_code' => 'on_organization_operating_country_code']],
             ],
             'on_organization_operating_currency_code' => [
                 'on_organization_operating_currency_code' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Operating Currency Code', 'domain' => 'currency_code', 'null' => true, 'required' => 'c', 'percent' => 50, 'method' => 'select', 'options_model' => '\Numbers\Countries\Currencies\Model\Currencies::optionsActive'],
@@ -246,5 +248,15 @@ class Organizations extends Base
             $result['hidden'] = true;
         }
         return $result;
+    }
+
+    public function renderAvatar(& $form, & $options, & $value, & $neighbouring_values)
+    {
+        // check if we have permissions
+        if (!empty($form->values['on_organization_name'])) {
+            return Colors::renderAvatar($form->values['on_organization_name'], 'organization', false) . ' ' . Colors::renderAvatar($form->values['on_organization_name'], 'organization', true);
+        } else {
+            return '';
+        }
     }
 }

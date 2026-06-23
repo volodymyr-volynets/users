@@ -65,8 +65,9 @@ class Types extends Base
             ],
             'um_ownertype_name' => [
                 'um_ownertype_name' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 70, 'required' => true],
-                'um_ownertype_multiple' => ['order' => 2, 'label_name' => 'Multiple', 'type' => 'boolean', 'percent' => 15],
-                'um_ownertype_readonly' => ['order' => 3, 'label_name' => 'Readonly', 'type' => 'boolean', 'percent' => 15],
+                'um_ownertype_weight' => ['order' => 2, 'label_name' => 'Weight', 'domain' => 'weight', 'null' => true, 'required' => true, 'percent' => 20],
+                'um_ownertype_multiple' => ['order' => 3, 'label_name' => 'Multiple', 'type' => 'boolean', 'percent' => 5],
+                'um_ownertype_readonly' => ['order' => 4, 'label_name' => 'Readonly', 'type' => 'boolean', 'percent' => 5],
             ],
         ],
         'tabs' => [

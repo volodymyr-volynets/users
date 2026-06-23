@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User\Assignment;
-class TypesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class TypesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Assignment\Types::class;
+    public string $object_table_class = Types::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_assignusrtype_tenant_id','um_assignusrtype_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class TypesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_assignusrtype_tenant_id = NULL {
-                        get => $this->um_assignusrtype_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assignusrtype_tenant_id', $value);
-                            $this->um_assignusrtype_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_assignusrtype_tenant_id = null {
+        get => $this->um_assignusrtype_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_assignusrtype_tenant_id', $value);
+            $this->um_assignusrtype_tenant_id = $value;
+        }
+    }
 
     /**
      * Assignment Type #
@@ -41,12 +52,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Domain: assignment_id_sequence Type: serial
      */
     public int|null $um_assignusrtype_id = null {
-                        get => $this->um_assignusrtype_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assignusrtype_id', $value);
-                            $this->um_assignusrtype_id = $value;
-                        }
-                    }
+        get => $this->um_assignusrtype_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_assignusrtype_id', $value);
+            $this->um_assignusrtype_id = $value;
+        }
+    }
 
     /**
      * Type Code
@@ -58,12 +69,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: type_code Type: varchar
      */
     public string|null $um_assignusrtype_code = null {
-                        get => $this->um_assignusrtype_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assignusrtype_code', $value);
-                            $this->um_assignusrtype_code = $value;
-                        }
-                    }
+        get => $this->um_assignusrtype_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_assignusrtype_code', $value);
+            $this->um_assignusrtype_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -75,12 +86,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_assignusrtype_name = null {
-                        get => $this->um_assignusrtype_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assignusrtype_name', $value);
-                            $this->um_assignusrtype_name = $value;
-                        }
-                    }
+        get => $this->um_assignusrtype_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_assignusrtype_name', $value);
+            $this->um_assignusrtype_name = $value;
+        }
+    }
 
     /**
      * Parent Role #
@@ -91,13 +102,13 @@ class TypesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: role_id Type: integer
      */
-    public int|null $um_assignusrtype_parent_role_id = NULL {
-                        get => $this->um_assignusrtype_parent_role_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assignusrtype_parent_role_id', $value);
-                            $this->um_assignusrtype_parent_role_id = $value;
-                        }
-                    }
+    public int|null $um_assignusrtype_parent_role_id = null {
+        get => $this->um_assignusrtype_parent_role_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_assignusrtype_parent_role_id', $value);
+            $this->um_assignusrtype_parent_role_id = $value;
+        }
+    }
 
     /**
      * Child Role #
@@ -108,13 +119,13 @@ class TypesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: role_id Type: integer
      */
-    public int|null $um_assignusrtype_child_role_id = NULL {
-                        get => $this->um_assignusrtype_child_role_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assignusrtype_child_role_id', $value);
-                            $this->um_assignusrtype_child_role_id = $value;
-                        }
-                    }
+    public int|null $um_assignusrtype_child_role_id = null {
+        get => $this->um_assignusrtype_child_role_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_assignusrtype_child_role_id', $value);
+            $this->um_assignusrtype_child_role_id = $value;
+        }
+    }
 
     /**
      * Multiple
@@ -126,12 +137,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_assignusrtype_multiple = 0 {
-                        get => $this->um_assignusrtype_multiple;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assignusrtype_multiple', $value);
-                            $this->um_assignusrtype_multiple = $value;
-                        }
-                    }
+        get => $this->um_assignusrtype_multiple;
+        set {
+            $this->setFullPkAndFilledColumn('um_assignusrtype_multiple', $value);
+            $this->um_assignusrtype_multiple = $value;
+        }
+    }
 
     /**
      * Mandatory
@@ -143,12 +154,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_assignusrtype_mandatory = 0 {
-                        get => $this->um_assignusrtype_mandatory;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assignusrtype_mandatory', $value);
-                            $this->um_assignusrtype_mandatory = $value;
-                        }
-                    }
+        get => $this->um_assignusrtype_mandatory;
+        set {
+            $this->setFullPkAndFilledColumn('um_assignusrtype_mandatory', $value);
+            $this->um_assignusrtype_mandatory = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -160,10 +171,10 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_assignusrtype_inactive = 0 {
-                        get => $this->um_assignusrtype_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assignusrtype_inactive', $value);
-                            $this->um_assignusrtype_inactive = $value;
-                        }
-                    }
+        get => $this->um_assignusrtype_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_assignusrtype_inactive', $value);
+            $this->um_assignusrtype_inactive = $value;
+        }
+    }
 }

@@ -1,7 +1,10 @@
 {
+    "": "",
+    "BigID": "Big #",
     "BodyID": "Body #",
     "Link": "Link",
     "Message": "Message",
+    "Sequence": "Sequence",
     "TenantID": "Tenant #",
     "Text": "Text",
     "Timestamp": "Timestamp",

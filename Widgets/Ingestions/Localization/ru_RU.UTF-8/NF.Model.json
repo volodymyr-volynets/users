@@ -1,0 +1,14 @@
+{
+    "": "",
+    "BigID": "Большой #",
+    "BodyID": "Тело #",
+    "Link": "Связь",
+    "Message": "Сообщение",
+    "Sequence": "Последовательность",
+    "TenantID": "Жилец #",
+    "Text": "Текст",
+    "Timestamp": "Метка времени",
+    "UID": "UID",
+    "WGEmailIngestionBodies": "Органы приема электронной почты W/G",
+    "WGEmailIngestionLocks": "Блокировки приема электронной почты W/G"
+}

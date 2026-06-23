@@ -23,7 +23,7 @@ class Teams extends List2
         'actions' => [
             'refresh' => true,
             'new' => ['onclick' => null],
-            'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fas fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
+            'filter_sort' => ['value' => 'Filter/Sort', 'sort' => 32000, 'icon' => 'fa-solid fa-filter', 'onclick' => 'Numbers.Form.listFilterSortToggle(this);']
         ]
     ];
     public $containers = [
@@ -54,7 +54,7 @@ class Teams extends List2
                 'um_team_inactive1' => ['order' => 2, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 50, 'method' => 'multiselect', 'multiple_column' => 1, 'options_model' => '\Object\Data\Model\Inactive', 'query_builder' => 'a.um_team_inactive;=']
             ],
             'full_text_search' => [
-                'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_team_name'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
+                'full_text_search' => ['order' => 1, 'row_order' => 300, 'label_name' => 'Text Search', 'full_text_search_columns' => ['a.um_team_name', 'a.um_team_code'], 'placeholder' => true, 'domain' => 'name', 'percent' => 100, 'null' => true],
             ]
         ],
         'sort' => [
@@ -67,9 +67,10 @@ class Teams extends List2
         self::LIST_CONTAINER => [
             'row1' => [
                 'um_team_id' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Team #', 'domain' => 'team_id', 'percent' => 10, 'url_edit' => true],
-                'um_team_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 65],
+                'um_team_name' => ['order' => 2, 'label_name' => 'Name', 'domain' => 'name', 'percent' => 60],
                 'um_team_code' => ['order' => 3, 'label_name' => 'Code', 'domain' => 'group_code', 'percent' => 20],
-                'um_team_inactive' => ['order' => 4, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
+                'um_team_weight' => ['order' => 4, 'label_name' => 'Weight', 'type' => 'integer', 'percent' => 5],
+                'um_team_inactive' => ['order' => 5, 'label_name' => 'Inactive', 'type' => 'boolean', 'percent' => 5]
             ]
         ]
     ];

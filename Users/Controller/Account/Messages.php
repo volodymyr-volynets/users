@@ -98,7 +98,7 @@ class Messages extends Authorized
                 'Links Row' => [
                     'Header' => [
                         'Header' => [
-                            'value' => \HTML::a(['href' => '/Numbers/Users/Users/Controller/Account/Messages', 'value' => \HTML::icon(['type' => 'fas fa-arrow-left']) . ' ' . i18n(null, 'Back')]),
+                            'value' => \HTML::a(['href' => '/Numbers/Users/Users/Controller/Account/Messages', 'value' => \HTML::icon(['type' => 'fa-solid fa-arrow-left']) . ' ' . i18n(null, 'Back')]),
                             'options' => [
                                 'percent' => 100,
                                 'style' => 'text-align: right;'
@@ -153,7 +153,7 @@ class Messages extends Authorized
             'type' => 'primary',
             'value' => $grid,
             'header' => [
-                'icon' => ['type' => 'fas fa-pen-square'],
+                'icon' => ['type' => 'fa-solid fa-pen-square'],
                 'title' => i18n(null, 'View Message:')
             ]
         ]);
@@ -174,7 +174,7 @@ class Messages extends Authorized
         $query->where('AND', ['a.um_mesrecip_user_id', '=', \User::id()]);
         $data = $query->query();
         // generate message
-        $label = '<table width="100%"><tr><td width="99%">' . \HTML::icon(['type' => 'far fa-envelope']) . ' ' . i18n(null, 'Messages') . '</td><td width="1%">' . \HTML::label2(['type' => 'primary', 'value' => \Format::id($data['rows'][0]['count'])]) . '</td></tr></table>';
+        $label = '<table width="100%"><tr><td width="99%">' . \HTML::icon(['type' => 'fa-regular fa-envelope']) . ' ' . i18n(null, 'Messages') . '</td><td width="1%">' . \HTML::label2(['type' => 'primary', 'value' => \Format::id($data['rows'][0]['count'])]) . '</td></tr></table>';
         \Layout::renderAs([
             'success' => true,
             'error' => [],

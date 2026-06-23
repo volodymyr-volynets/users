@@ -26,12 +26,12 @@ Route::uri('U/M Users: Logout (Confirmed)', '/Logout/Confirmed', 'Index', ['GET'
     ->acl('Public');
 
 Route::group('Footer: User Management', null, function () {
-    Route::footer('Users', 'fas fa-users', ['UM', 'User Management'], '/Numbers/Users/Users/Controller/Users', 'Index', [
+    Route::footer('Users', 'fa-solid fa-users', ['UM', 'User Management'], '/Numbers/Users/Users/Controller/Users', 'Index', [
         Users::class,
         'Index',
         'List_View'
     ]);
-    Route::footer('New User', 'fas fa-users', ['UM', 'User Management'], '/Numbers/Users/Users/Controller/Users', 'Edit', [
+    Route::footer('New User', 'fa-solid fa-users', ['UM', 'User Management'], '/Numbers/Users/Users/Controller/Users', 'Edit', [
         Users::class,
         'Edit',
         'Record_New'

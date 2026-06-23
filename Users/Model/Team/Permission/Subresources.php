@@ -30,7 +30,7 @@ class Subresources extends Table
     public $columns = [
         'um_temsubres_tenant_id' => ['name' => 'Tenant #', 'domain' => 'tenant_id'],
         'um_temsubres_timestamp' => ['name' => 'Timestamp', 'domain' => 'timestamp_now'],
-        'um_temsubres_team_id' => ['name' => 'Role #', 'domain' => 'role_id'],
+        'um_temsubres_team_id' => ['name' => 'Team #', 'domain' => 'team_id'],
         'um_temsubres_module_id' => ['name' => 'Module #', 'domain' => 'module_id'],
         'um_temsubres_resource_id' => ['name' => 'Resource #', 'domain' => 'resource_id'],
         'um_temsubres_rsrsubres_id' => ['name' => 'Subresource #', 'domain' => 'resource_id'],

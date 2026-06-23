@@ -1,0 +1,17 @@
+{
+    "Blank": "Blank",
+    "Body": "Body",
+    "BodyID": "Body #",
+    "Datetime": "Datetime",
+    "Format": "Format",
+    "From": "From",
+    "IngestionID": "Ingestion #",
+    "Number": "#",
+    "Order": "Order",
+    "Reset": "Reset",
+    "Sender": "Sender",
+    "Sort": "Sort",
+    "Subject": "Subject",
+    "Submit": "Submit",
+    "To": "To"
+}

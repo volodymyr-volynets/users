@@ -1,0 +1,15 @@
+{
+    "": "",
+    "AccessKey": "Clé d&#39;accès",
+    "Bucket": "Seau",
+    "DTAmazonProfiles": "Profils D/T Amazon",
+    "Inactive": "Inactif",
+    "Name": "Nom",
+    "OptimisticLock": "Verrouillage optimiste",
+    "ProfileID": "Profil #",
+    "Region": "Région",
+    "SecretAccessKey": "Clé d&#39;accès secrète",
+    "Sequence": "Séquence",
+    "TenantID": "Locataire #",
+    "YesNo": "Oui / Non"
+}

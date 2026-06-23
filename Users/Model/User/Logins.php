@@ -37,6 +37,7 @@ class Logins extends Table
         'um_usrlogin_ip_provider' => ['name' => 'IP Provider', 'domain' => 'name', 'null' => true],
         'um_usrlogin_authorization_type' => ['name' => 'Authorization Type', 'domain' => 'name', 'null' => true],
         'um_usrlogin_ip_new' => ['name' => 'IP New', 'type' => 'boolean'],
+        'um_usrlogin_mfa_triggered' => ['name' => 'MFA Triggered', 'type' => 'boolean'],
         'um_usrlogin_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
     ];
     public $constraints = [

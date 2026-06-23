@@ -1,19 +1,30 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\Message;
-class BodiesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class BodiesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Message\Bodies::class;
+    public string $object_table_class = Bodies::class;
 
     /**
      * @var array
      */
     public array $object_table_pk = ['um_mesbody_tenant_id','um_mesbody_id'];
+
     /**
      * Tenant #
      *
@@ -23,13 +34,13 @@ class BodiesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_mesbody_tenant_id = NULL {
-                        get => $this->um_mesbody_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesbody_tenant_id', $value);
-                            $this->um_mesbody_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_mesbody_tenant_id = null {
+        get => $this->um_mesbody_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesbody_tenant_id', $value);
+            $this->um_mesbody_tenant_id = $value;
+        }
+    }
 
     /**
      * Message #
@@ -41,12 +52,12 @@ class BodiesAR extends \Object\ActiveRecord {
      * @var int|null Domain: message_id_sequence Type: bigserial
      */
     public int|null $um_mesbody_id = null {
-                        get => $this->um_mesbody_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesbody_id', $value);
-                            $this->um_mesbody_id = $value;
-                        }
-                    }
+        get => $this->um_mesbody_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesbody_id', $value);
+            $this->um_mesbody_id = $value;
+        }
+    }
 
     /**
      * Type #
@@ -57,13 +68,13 @@ class BodiesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $um_mesbody_type_id = NULL {
-                        get => $this->um_mesbody_type_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesbody_type_id', $value);
-                            $this->um_mesbody_type_id = $value;
-                        }
-                    }
+    public int|null $um_mesbody_type_id = null {
+        get => $this->um_mesbody_type_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesbody_type_id', $value);
+            $this->um_mesbody_type_id = $value;
+        }
+    }
 
     /**
      * Body
@@ -75,12 +86,12 @@ class BodiesAR extends \Object\ActiveRecord {
      * @var string|null Type: text
      */
     public string|null $um_mesbody_body = null {
-                        get => $this->um_mesbody_body;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesbody_body', $value);
-                            $this->um_mesbody_body = $value;
-                        }
-                    }
+        get => $this->um_mesbody_body;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesbody_body', $value);
+            $this->um_mesbody_body = $value;
+        }
+    }
 
     /**
      * Body (Binary)
@@ -92,10 +103,10 @@ class BodiesAR extends \Object\ActiveRecord {
      * @var string|null Type: bytea
      */
     public string|null $um_mesbody_bytea = null {
-                        get => $this->um_mesbody_bytea;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mesbody_bytea', $value);
-                            $this->um_mesbody_bytea = $value;
-                        }
-                    }
+        get => $this->um_mesbody_bytea;
+        set {
+            $this->setFullPkAndFilledColumn('um_mesbody_bytea', $value);
+            $this->um_mesbody_bytea = $value;
+        }
+    }
 }
