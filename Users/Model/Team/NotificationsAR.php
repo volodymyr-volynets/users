@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\Team;
-class NotificationsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class NotificationsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Team\Notifications::class;
+    public string $object_table_class = Notifications::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class NotificationsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_temnoti_tenant_id = NULL {
-                        get => $this->um_temnoti_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_temnoti_tenant_id', $value);
-                            $this->um_temnoti_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_temnoti_tenant_id = null {
+        get => $this->um_temnoti_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_temnoti_tenant_id', $value);
+            $this->um_temnoti_tenant_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -41,12 +51,12 @@ class NotificationsAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $um_temnoti_timestamp = 'now()' {
-                        get => $this->um_temnoti_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_temnoti_timestamp', $value);
-                            $this->um_temnoti_timestamp = $value;
-                        }
-                    }
+        get => $this->um_temnoti_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_temnoti_timestamp', $value);
+            $this->um_temnoti_timestamp = $value;
+        }
+    }
 
     /**
      * Team #
@@ -57,13 +67,13 @@ class NotificationsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: team_id Type: integer
      */
-    public int|null $um_temnoti_team_id = NULL {
-                        get => $this->um_temnoti_team_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_temnoti_team_id', $value);
-                            $this->um_temnoti_team_id = $value;
-                        }
-                    }
+    public int|null $um_temnoti_team_id = null {
+        get => $this->um_temnoti_team_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_temnoti_team_id', $value);
+            $this->um_temnoti_team_id = $value;
+        }
+    }
 
     /**
      * Module #
@@ -74,13 +84,13 @@ class NotificationsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: module_id Type: integer
      */
-    public int|null $um_temnoti_module_id = NULL {
-                        get => $this->um_temnoti_module_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_temnoti_module_id', $value);
-                            $this->um_temnoti_module_id = $value;
-                        }
-                    }
+    public int|null $um_temnoti_module_id = null {
+        get => $this->um_temnoti_module_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_temnoti_module_id', $value);
+            $this->um_temnoti_module_id = $value;
+        }
+    }
 
     /**
      * Feature Code
@@ -92,12 +102,12 @@ class NotificationsAR extends \Object\ActiveRecord {
      * @var string|null Domain: feature_code Type: varchar
      */
     public string|null $um_temnoti_feature_code = null {
-                        get => $this->um_temnoti_feature_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_temnoti_feature_code', $value);
-                            $this->um_temnoti_feature_code = $value;
-                        }
-                    }
+        get => $this->um_temnoti_feature_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_temnoti_feature_code', $value);
+            $this->um_temnoti_feature_code = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -109,10 +119,10 @@ class NotificationsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_temnoti_inactive = 0 {
-                        get => $this->um_temnoti_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_temnoti_inactive', $value);
-                            $this->um_temnoti_inactive = $value;
-                        }
-                    }
+        get => $this->um_temnoti_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_temnoti_inactive', $value);
+            $this->um_temnoti_inactive = $value;
+        }
+    }
 }

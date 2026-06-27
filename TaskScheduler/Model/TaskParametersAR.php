@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\TaskScheduler\Model;
-class TaskParametersAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class TaskParametersAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\TaskScheduler\Model\TaskParameters::class;
+    public string $object_table_class = TaskParameters::class;
 
     /**
      * @var array
@@ -24,12 +34,12 @@ class TaskParametersAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $ts_tskparam_task_code = null {
-                        get => $this->ts_tskparam_task_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_tskparam_task_code', $value);
-                            $this->ts_tskparam_task_code = $value;
-                        }
-                    }
+        get => $this->ts_tskparam_task_code;
+        set {
+            $this->setFullPkAndFilledColumn('ts_tskparam_task_code', $value);
+            $this->ts_tskparam_task_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -41,12 +51,12 @@ class TaskParametersAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $ts_tskparam_name = null {
-                        get => $this->ts_tskparam_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_tskparam_name', $value);
-                            $this->ts_tskparam_name = $value;
-                        }
-                    }
+        get => $this->ts_tskparam_name;
+        set {
+            $this->setFullPkAndFilledColumn('ts_tskparam_name', $value);
+            $this->ts_tskparam_name = $value;
+        }
+    }
 
     /**
      * Description
@@ -58,12 +68,12 @@ class TaskParametersAR extends \Object\ActiveRecord {
      * @var string|null Type: text
      */
     public string|null $ts_tskparam_description = null {
-                        get => $this->ts_tskparam_description;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_tskparam_description', $value);
-                            $this->ts_tskparam_description = $value;
-                        }
-                    }
+        get => $this->ts_tskparam_description;
+        set {
+            $this->setFullPkAndFilledColumn('ts_tskparam_description', $value);
+            $this->ts_tskparam_description = $value;
+        }
+    }
 
     /**
      * Default
@@ -75,12 +85,12 @@ class TaskParametersAR extends \Object\ActiveRecord {
      * @var string|null Type: text
      */
     public string|null $ts_tskparam_default = null {
-                        get => $this->ts_tskparam_default;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_tskparam_default', $value);
-                            $this->ts_tskparam_default = $value;
-                        }
-                    }
+        get => $this->ts_tskparam_default;
+        set {
+            $this->setFullPkAndFilledColumn('ts_tskparam_default', $value);
+            $this->ts_tskparam_default = $value;
+        }
+    }
 
     /**
      * Mandatory
@@ -92,10 +102,10 @@ class TaskParametersAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $ts_tskparam_mandatory = 0 {
-                        get => $this->ts_tskparam_mandatory;
-                        set {
-                            $this->setFullPkAndFilledColumn('ts_tskparam_mandatory', $value);
-                            $this->ts_tskparam_mandatory = $value;
-                        }
-                    }
+        get => $this->ts_tskparam_mandatory;
+        set {
+            $this->setFullPkAndFilledColumn('ts_tskparam_mandatory', $value);
+            $this->ts_tskparam_mandatory = $value;
+        }
+    }
 }

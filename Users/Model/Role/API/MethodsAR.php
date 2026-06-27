@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\Role\API;
-class MethodsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class MethodsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Role\API\Methods::class;
+    public string $object_table_class = Methods::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class MethodsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_rolapmethod_tenant_id = NULL {
-                        get => $this->um_rolapmethod_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_rolapmethod_tenant_id', $value);
-                            $this->um_rolapmethod_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_rolapmethod_tenant_id = null {
+        get => $this->um_rolapmethod_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_rolapmethod_tenant_id', $value);
+            $this->um_rolapmethod_tenant_id = $value;
+        }
+    }
 
     /**
      * Role #
@@ -40,13 +50,13 @@ class MethodsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: role_id Type: integer
      */
-    public int|null $um_rolapmethod_role_id = NULL {
-                        get => $this->um_rolapmethod_role_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_rolapmethod_role_id', $value);
-                            $this->um_rolapmethod_role_id = $value;
-                        }
-                    }
+    public int|null $um_rolapmethod_role_id = null {
+        get => $this->um_rolapmethod_role_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_rolapmethod_role_id', $value);
+            $this->um_rolapmethod_role_id = $value;
+        }
+    }
 
     /**
      * Module #
@@ -57,13 +67,13 @@ class MethodsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: module_id Type: integer
      */
-    public int|null $um_rolapmethod_module_id = NULL {
-                        get => $this->um_rolapmethod_module_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_rolapmethod_module_id', $value);
-                            $this->um_rolapmethod_module_id = $value;
-                        }
-                    }
+    public int|null $um_rolapmethod_module_id = null {
+        get => $this->um_rolapmethod_module_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_rolapmethod_module_id', $value);
+            $this->um_rolapmethod_module_id = $value;
+        }
+    }
 
     /**
      * Resource #
@@ -75,12 +85,12 @@ class MethodsAR extends \Object\ActiveRecord {
      * @var int|null Domain: resource_id Type: integer
      */
     public int|null $um_rolapmethod_resource_id = 0 {
-                        get => $this->um_rolapmethod_resource_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_rolapmethod_resource_id', $value);
-                            $this->um_rolapmethod_resource_id = $value;
-                        }
-                    }
+        get => $this->um_rolapmethod_resource_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_rolapmethod_resource_id', $value);
+            $this->um_rolapmethod_resource_id = $value;
+        }
+    }
 
     /**
      * Method Code
@@ -92,12 +102,12 @@ class MethodsAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_rolapmethod_method_code = null {
-                        get => $this->um_rolapmethod_method_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_rolapmethod_method_code', $value);
-                            $this->um_rolapmethod_method_code = $value;
-                        }
-                    }
+        get => $this->um_rolapmethod_method_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_rolapmethod_method_code', $value);
+            $this->um_rolapmethod_method_code = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -109,10 +119,10 @@ class MethodsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_rolapmethod_inactive = 0 {
-                        get => $this->um_rolapmethod_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_rolapmethod_inactive', $value);
-                            $this->um_rolapmethod_inactive = $value;
-                        }
-                    }
+        get => $this->um_rolapmethod_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_rolapmethod_inactive', $value);
+            $this->um_rolapmethod_inactive = $value;
+        }
+    }
 }

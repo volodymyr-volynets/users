@@ -177,7 +177,9 @@ class Users extends Table
 
     public $unique = [
         'um_user_numeric_phone' => 'um_user_numeric_phone_un',
-        'um_user_email' => 'um_user_email_un'
+        'um_user_email' => 'um_user_email_un',
+        'um_user_code' => 'um_user_code_un',
+        'um_user_login_username' => 'um_user_login_username_un',
     ];
 
     public $data_asset = [

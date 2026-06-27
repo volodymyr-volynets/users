@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model;
-class JurisdictionsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class JurisdictionsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Organizations\Model\Jurisdictions::class;
+    public string $object_table_class = Jurisdictions::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $on_jurisdiction_tenant_id = NULL {
-                        get => $this->on_jurisdiction_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_jurisdiction_tenant_id', $value);
-                            $this->on_jurisdiction_tenant_id = $value;
-                        }
-                    }
+    public int|null $on_jurisdiction_tenant_id = null {
+        get => $this->on_jurisdiction_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_jurisdiction_tenant_id', $value);
+            $this->on_jurisdiction_tenant_id = $value;
+        }
+    }
 
     /**
      * Jurisdictions #
@@ -41,12 +51,12 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      * @var int|null Domain: jurisdiction_id_sequence Type: serial
      */
     public int|null $on_jurisdiction_id = null {
-                        get => $this->on_jurisdiction_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_jurisdiction_id', $value);
-                            $this->on_jurisdiction_id = $value;
-                        }
-                    }
+        get => $this->on_jurisdiction_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_jurisdiction_id', $value);
+            $this->on_jurisdiction_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -58,12 +68,12 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $on_jurisdiction_code = null {
-                        get => $this->on_jurisdiction_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_jurisdiction_code', $value);
-                            $this->on_jurisdiction_code = $value;
-                        }
-                    }
+        get => $this->on_jurisdiction_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_jurisdiction_code', $value);
+            $this->on_jurisdiction_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -75,12 +85,12 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $on_jurisdiction_name = null {
-                        get => $this->on_jurisdiction_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_jurisdiction_name', $value);
-                            $this->on_jurisdiction_name = $value;
-                        }
-                    }
+        get => $this->on_jurisdiction_name;
+        set {
+            $this->setFullPkAndFilledColumn('on_jurisdiction_name', $value);
+            $this->on_jurisdiction_name = $value;
+        }
+    }
 
     /**
      * Type
@@ -91,13 +101,13 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $on_jurisdiction_type = NULL {
-                        get => $this->on_jurisdiction_type;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_jurisdiction_type', $value);
-                            $this->on_jurisdiction_type = $value;
-                        }
-                    }
+    public int|null $on_jurisdiction_type = null {
+        get => $this->on_jurisdiction_type;
+        set {
+            $this->setFullPkAndFilledColumn('on_jurisdiction_type', $value);
+            $this->on_jurisdiction_type = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -109,12 +119,12 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $on_jurisdiction_inactive = 0 {
-                        get => $this->on_jurisdiction_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_jurisdiction_inactive', $value);
-                            $this->on_jurisdiction_inactive = $value;
-                        }
-                    }
+        get => $this->on_jurisdiction_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('on_jurisdiction_inactive', $value);
+            $this->on_jurisdiction_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -126,10 +136,10 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $on_jurisdiction_optimistic_lock = 'now()' {
-                        get => $this->on_jurisdiction_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_jurisdiction_optimistic_lock', $value);
-                            $this->on_jurisdiction_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->on_jurisdiction_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('on_jurisdiction_optimistic_lock', $value);
+            $this->on_jurisdiction_optimistic_lock = $value;
+        }
+    }
 }

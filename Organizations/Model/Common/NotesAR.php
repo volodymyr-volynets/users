@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model\Common;
-class NotesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class NotesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Organizations\Model\Common\Notes::class;
+    public string $object_table_class = Notes::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class NotesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $on_comnote_tenant_id = NULL {
-                        get => $this->on_comnote_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_comnote_tenant_id', $value);
-                            $this->on_comnote_tenant_id = $value;
-                        }
-                    }
+    public int|null $on_comnote_tenant_id = null {
+        get => $this->on_comnote_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_comnote_tenant_id', $value);
+            $this->on_comnote_tenant_id = $value;
+        }
+    }
 
     /**
      * Note #
@@ -41,12 +51,12 @@ class NotesAR extends \Object\ActiveRecord {
      * @var int|null Domain: group_id_sequence Type: serial
      */
     public int|null $on_comnote_id = null {
-                        get => $this->on_comnote_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_comnote_id', $value);
-                            $this->on_comnote_id = $value;
-                        }
-                    }
+        get => $this->on_comnote_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_comnote_id', $value);
+            $this->on_comnote_id = $value;
+        }
+    }
 
     /**
      * Type
@@ -58,12 +68,12 @@ class NotesAR extends \Object\ActiveRecord {
      * @var string|null Domain: type_code Type: varchar
      */
     public string|null $on_comnote_type_code = null {
-                        get => $this->on_comnote_type_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_comnote_type_code', $value);
-                            $this->on_comnote_type_code = $value;
-                        }
-                    }
+        get => $this->on_comnote_type_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_comnote_type_code', $value);
+            $this->on_comnote_type_code = $value;
+        }
+    }
 
     /**
      * Comment
@@ -75,12 +85,12 @@ class NotesAR extends \Object\ActiveRecord {
      * @var string|null Domain: comment Type: text
      */
     public string|null $on_comnote_comment = null {
-                        get => $this->on_comnote_comment;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_comnote_comment', $value);
-                            $this->on_comnote_comment = $value;
-                        }
-                    }
+        get => $this->on_comnote_comment;
+        set {
+            $this->setFullPkAndFilledColumn('on_comnote_comment', $value);
+            $this->on_comnote_comment = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -92,12 +102,12 @@ class NotesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $on_comnote_inactive = 0 {
-                        get => $this->on_comnote_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_comnote_inactive', $value);
-                            $this->on_comnote_inactive = $value;
-                        }
-                    }
+        get => $this->on_comnote_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('on_comnote_inactive', $value);
+            $this->on_comnote_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -109,10 +119,10 @@ class NotesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $on_comnote_optimistic_lock = 'now()' {
-                        get => $this->on_comnote_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_comnote_optimistic_lock', $value);
-                            $this->on_comnote_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->on_comnote_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('on_comnote_optimistic_lock', $value);
+            $this->on_comnote_optimistic_lock = $value;
+        }
+    }
 }

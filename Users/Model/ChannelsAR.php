@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model;
-class ChannelsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class ChannelsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Channels::class;
+    public string $object_table_class = Channels::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class ChannelsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_channel_tenant_id = NULL {
-                        get => $this->um_channel_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_tenant_id', $value);
-                            $this->um_channel_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_channel_tenant_id = null {
+        get => $this->um_channel_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_tenant_id', $value);
+            $this->um_channel_tenant_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -41,12 +51,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_channel_code = null {
-                        get => $this->um_channel_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_code', $value);
-                            $this->um_channel_code = $value;
-                        }
-                    }
+        get => $this->um_channel_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_code', $value);
+            $this->um_channel_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -58,12 +68,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_channel_name = null {
-                        get => $this->um_channel_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_name', $value);
-                            $this->um_channel_name = $value;
-                        }
-                    }
+        get => $this->um_channel_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_name', $value);
+            $this->um_channel_name = $value;
+        }
+    }
 
     /**
      * Type Code
@@ -75,12 +85,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_channel_um_chantype_code = null {
-                        get => $this->um_channel_um_chantype_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_um_chantype_code', $value);
-                            $this->um_channel_um_chantype_code = $value;
-                        }
-                    }
+        get => $this->um_channel_um_chantype_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_um_chantype_code', $value);
+            $this->um_channel_um_chantype_code = $value;
+        }
+    }
 
     /**
      * Module Code
@@ -92,12 +102,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Domain: module_code Type: char
      */
     public string|null $um_channel_module_code = null {
-                        get => $this->um_channel_module_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_module_code', $value);
-                            $this->um_channel_module_code = $value;
-                        }
-                    }
+        get => $this->um_channel_module_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_module_code', $value);
+            $this->um_channel_module_code = $value;
+        }
+    }
 
     /**
      * Field #
@@ -108,13 +118,13 @@ class ChannelsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: big_id Type: bigint
      */
-    public int|null $um_channel_field_id = NULL {
-                        get => $this->um_channel_field_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_field_id', $value);
-                            $this->um_channel_field_id = $value;
-                        }
-                    }
+    public int|null $um_channel_field_id = null {
+        get => $this->um_channel_field_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_field_id', $value);
+            $this->um_channel_field_id = $value;
+        }
+    }
 
     /**
      * Field Code
@@ -126,12 +136,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_channel_field_code = null {
-                        get => $this->um_channel_field_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_field_code', $value);
-                            $this->um_channel_field_code = $value;
-                        }
-                    }
+        get => $this->um_channel_field_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_field_code', $value);
+            $this->um_channel_field_code = $value;
+        }
+    }
 
     /**
      * Options
@@ -143,12 +153,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var mixed Type: json
      */
     public mixed $um_channel_options = null {
-                        get => $this->um_channel_options;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_options', $value);
-                            $this->um_channel_options = $value;
-                        }
-                    }
+        get => $this->um_channel_options;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_options', $value);
+            $this->um_channel_options = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -160,12 +170,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_channel_inactive = 0 {
-                        get => $this->um_channel_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_inactive', $value);
-                            $this->um_channel_inactive = $value;
-                        }
-                    }
+        get => $this->um_channel_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_inactive', $value);
+            $this->um_channel_inactive = $value;
+        }
+    }
 
     /**
      * Inserted Datetime
@@ -177,12 +187,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $um_channel_inserted_timestamp = null {
-                        get => $this->um_channel_inserted_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_inserted_timestamp', $value);
-                            $this->um_channel_inserted_timestamp = $value;
-                        }
-                    }
+        get => $this->um_channel_inserted_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_inserted_timestamp', $value);
+            $this->um_channel_inserted_timestamp = $value;
+        }
+    }
 
     /**
      * Inserted User #
@@ -193,13 +203,13 @@ class ChannelsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_channel_inserted_user_id = NULL {
-                        get => $this->um_channel_inserted_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_inserted_user_id', $value);
-                            $this->um_channel_inserted_user_id = $value;
-                        }
-                    }
+    public int|null $um_channel_inserted_user_id = null {
+        get => $this->um_channel_inserted_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_inserted_user_id', $value);
+            $this->um_channel_inserted_user_id = $value;
+        }
+    }
 
     /**
      * Updated Datetime
@@ -211,12 +221,12 @@ class ChannelsAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $um_channel_updated_timestamp = null {
-                        get => $this->um_channel_updated_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_updated_timestamp', $value);
-                            $this->um_channel_updated_timestamp = $value;
-                        }
-                    }
+        get => $this->um_channel_updated_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_updated_timestamp', $value);
+            $this->um_channel_updated_timestamp = $value;
+        }
+    }
 
     /**
      * Updated User #
@@ -227,11 +237,11 @@ class ChannelsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_channel_updated_user_id = NULL {
-                        get => $this->um_channel_updated_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_channel_updated_user_id', $value);
-                            $this->um_channel_updated_user_id = $value;
-                        }
-                    }
+    public int|null $um_channel_updated_user_id = null {
+        get => $this->um_channel_updated_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_channel_updated_user_id', $value);
+            $this->um_channel_updated_user_id = $value;
+        }
+    }
 }

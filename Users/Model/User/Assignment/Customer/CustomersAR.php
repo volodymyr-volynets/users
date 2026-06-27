@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User\Assignment\Customer;
-class CustomersAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class CustomersAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Assignment\Customer\Customers::class;
+    public string $object_table_class = Customers::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class CustomersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_assigncustomer_tenant_id = NULL {
-                        get => $this->um_assigncustomer_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assigncustomer_tenant_id', $value);
-                            $this->um_assigncustomer_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_assigncustomer_tenant_id = null {
+        get => $this->um_assigncustomer_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_assigncustomer_tenant_id', $value);
+            $this->um_assigncustomer_tenant_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -41,12 +51,12 @@ class CustomersAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $um_assigncustomer_timestamp = 'now()' {
-                        get => $this->um_assigncustomer_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assigncustomer_timestamp', $value);
-                            $this->um_assigncustomer_timestamp = $value;
-                        }
-                    }
+        get => $this->um_assigncustomer_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_assigncustomer_timestamp', $value);
+            $this->um_assigncustomer_timestamp = $value;
+        }
+    }
 
     /**
      * User #
@@ -57,13 +67,13 @@ class CustomersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_assigncustomer_user_id = NULL {
-                        get => $this->um_assigncustomer_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assigncustomer_user_id', $value);
-                            $this->um_assigncustomer_user_id = $value;
-                        }
-                    }
+    public int|null $um_assigncustomer_user_id = null {
+        get => $this->um_assigncustomer_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_assigncustomer_user_id', $value);
+            $this->um_assigncustomer_user_id = $value;
+        }
+    }
 
     /**
      * Organization #
@@ -74,13 +84,13 @@ class CustomersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: organization_id Type: integer
      */
-    public int|null $um_assigncustomer_organization_id = NULL {
-                        get => $this->um_assigncustomer_organization_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assigncustomer_organization_id', $value);
-                            $this->um_assigncustomer_organization_id = $value;
-                        }
-                    }
+    public int|null $um_assigncustomer_organization_id = null {
+        get => $this->um_assigncustomer_organization_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_assigncustomer_organization_id', $value);
+            $this->um_assigncustomer_organization_id = $value;
+        }
+    }
 
     /**
      * Customer #
@@ -91,13 +101,13 @@ class CustomersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: customer_id Type: bigint
      */
-    public int|null $um_assigncustomer_customer_id = NULL {
-                        get => $this->um_assigncustomer_customer_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assigncustomer_customer_id', $value);
-                            $this->um_assigncustomer_customer_id = $value;
-                        }
-                    }
+    public int|null $um_assigncustomer_customer_id = null {
+        get => $this->um_assigncustomer_customer_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_assigncustomer_customer_id', $value);
+            $this->um_assigncustomer_customer_id = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -109,10 +119,10 @@ class CustomersAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_assigncustomer_inactive = 0 {
-                        get => $this->um_assigncustomer_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_assigncustomer_inactive', $value);
-                            $this->um_assigncustomer_inactive = $value;
-                        }
-                    }
+        get => $this->um_assigncustomer_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_assigncustomer_inactive', $value);
+            $this->um_assigncustomer_inactive = $value;
+        }
+    }
 }

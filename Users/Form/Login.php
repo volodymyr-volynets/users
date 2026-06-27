@@ -95,10 +95,10 @@ class Login extends Base
             // redirect to dashboard
             $url = \Request::buildFromName('U/M Welcome Dashboard', 'Index');
             \Request::redirect($url);
-            $form->error('success', 'NF.Message.SuccessfullySignedIn|->You have successfully signed in!');
+            $form->error('success', ['NF.Message.SuccessfullySignedIn' => 'You have successfully signed in!']);
             return true;
         } else {
-            $form->error('danger', 'NF.Message.CredentialsDoNotMatch|->Provided credentials do not match our records!');
+            $form->error('danger', ['NF.Message.CredentialsDoNotMatch' => 'Provided credentials do not match our records!']);
             $form->error('danger', null, 'username');
             $form->error('danger', null, 'password');
             return false;

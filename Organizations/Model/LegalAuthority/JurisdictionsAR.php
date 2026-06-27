@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model\LegalAuthority;
-class JurisdictionsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class JurisdictionsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Organizations\Model\LegalAuthority\Jurisdictions::class;
+    public string $object_table_class = Jurisdictions::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $on_authjuris_tenant_id = NULL {
-                        get => $this->on_authjuris_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_authjuris_tenant_id', $value);
-                            $this->on_authjuris_tenant_id = $value;
-                        }
-                    }
+    public int|null $on_authjuris_tenant_id = null {
+        get => $this->on_authjuris_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_authjuris_tenant_id', $value);
+            $this->on_authjuris_tenant_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -41,12 +51,12 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $on_authjuris_timestamp = 'now()' {
-                        get => $this->on_authjuris_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_authjuris_timestamp', $value);
-                            $this->on_authjuris_timestamp = $value;
-                        }
-                    }
+        get => $this->on_authjuris_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('on_authjuris_timestamp', $value);
+            $this->on_authjuris_timestamp = $value;
+        }
+    }
 
     /**
      * Authority #
@@ -57,13 +67,13 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: authority_id Type: integer
      */
-    public int|null $on_authjuris_authority_id = NULL {
-                        get => $this->on_authjuris_authority_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_authjuris_authority_id', $value);
-                            $this->on_authjuris_authority_id = $value;
-                        }
-                    }
+    public int|null $on_authjuris_authority_id = null {
+        get => $this->on_authjuris_authority_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_authjuris_authority_id', $value);
+            $this->on_authjuris_authority_id = $value;
+        }
+    }
 
     /**
      * Jurisdiction #
@@ -74,13 +84,13 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: jurisdiction_id Type: integer
      */
-    public int|null $on_authjuris_jurisdiction_id = NULL {
-                        get => $this->on_authjuris_jurisdiction_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_authjuris_jurisdiction_id', $value);
-                            $this->on_authjuris_jurisdiction_id = $value;
-                        }
-                    }
+    public int|null $on_authjuris_jurisdiction_id = null {
+        get => $this->on_authjuris_jurisdiction_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_authjuris_jurisdiction_id', $value);
+            $this->on_authjuris_jurisdiction_id = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -92,10 +102,10 @@ class JurisdictionsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $on_authjuris_inactive = 0 {
-                        get => $this->on_authjuris_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_authjuris_inactive', $value);
-                            $this->on_authjuris_inactive = $value;
-                        }
-                    }
+        get => $this->on_authjuris_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('on_authjuris_inactive', $value);
+            $this->on_authjuris_inactive = $value;
+        }
+    }
 }

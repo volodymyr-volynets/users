@@ -70,7 +70,9 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
         $dir .= \Tenant::id() . '/' . strtolower($catalog['dt_catalog_code']) . '/';
         // upload file to S3
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $destination = $dir . $file['file_id'] . '.' . $extension;
+        $salt = \Application::get('crypt.default.salt') ?? random_int(1000, 9999);
+        $filename = $file['file_id'] . '_' . sha1($dir . $file['file_id'] . '.' . $extension . '_' . $salt);
+        $destination = $dir . $filename . '.' . $extension;
         try {
             $s3_result = $this->s3->putObject([
                 'Bucket' => $this->options['bucket'],
@@ -98,7 +100,7 @@ class Base implements \Numbers\Users\Documents\Base\Interface2\Base
                 imagedestroy($thumbnail_image);
                 imagedestroy($new_image);
                 // upload
-                $thumbnail_destination = $dir . $file['file_id'] . '.thumbnail.png';
+                $thumbnail_destination = $dir . $filename . '.thumbnail.png';
                 $s3_result = $this->s3->putObject([
                     'Bucket' => $this->options['bucket'],
                     'Key' => $thumbnail_destination,

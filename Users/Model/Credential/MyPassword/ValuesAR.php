@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\Credential\MyPassword;
-class ValuesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class ValuesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Credential\MyPassword\Values::class;
+    public string $object_table_class = Values::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class ValuesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_mypasswval_tenant_id = NULL {
-                        get => $this->um_mypasswval_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mypasswval_tenant_id', $value);
-                            $this->um_mypasswval_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_mypasswval_tenant_id = null {
+        get => $this->um_mypasswval_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mypasswval_tenant_id', $value);
+            $this->um_mypasswval_tenant_id = $value;
+        }
+    }
 
     /**
      * Password #
@@ -40,13 +50,13 @@ class ValuesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: password_id Type: bigint
      */
-    public int|null $um_mypasswval_mypasswd_id = NULL {
-                        get => $this->um_mypasswval_mypasswd_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mypasswval_mypasswd_id', $value);
-                            $this->um_mypasswval_mypasswd_id = $value;
-                        }
-                    }
+    public int|null $um_mypasswval_mypasswd_id = null {
+        get => $this->um_mypasswval_mypasswd_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_mypasswval_mypasswd_id', $value);
+            $this->um_mypasswval_mypasswd_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -58,12 +68,12 @@ class ValuesAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $um_mypasswval_timestamp = 'now()' {
-                        get => $this->um_mypasswval_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mypasswval_timestamp', $value);
-                            $this->um_mypasswval_timestamp = $value;
-                        }
-                    }
+        get => $this->um_mypasswval_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_mypasswval_timestamp', $value);
+            $this->um_mypasswval_timestamp = $value;
+        }
+    }
 
     /**
      * Name
@@ -75,12 +85,12 @@ class ValuesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_mypasswval_name = null {
-                        get => $this->um_mypasswval_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mypasswval_name', $value);
-                            $this->um_mypasswval_name = $value;
-                        }
-                    }
+        get => $this->um_mypasswval_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_mypasswval_name', $value);
+            $this->um_mypasswval_name = $value;
+        }
+    }
 
     /**
      * Password (Encrypted)
@@ -92,12 +102,12 @@ class ValuesAR extends \Object\ActiveRecord {
      * @var string|null Domain: encrypted_password Type: bytea
      */
     public string|null $um_mypasswval_encrypted_password = null {
-                        get => $this->um_mypasswval_encrypted_password;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mypasswval_encrypted_password', $value);
-                            $this->um_mypasswval_encrypted_password = $value;
-                        }
-                    }
+        get => $this->um_mypasswval_encrypted_password;
+        set {
+            $this->setFullPkAndFilledColumn('um_mypasswval_encrypted_password', $value);
+            $this->um_mypasswval_encrypted_password = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -109,10 +119,10 @@ class ValuesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_mypasswval_inactive = 0 {
-                        get => $this->um_mypasswval_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_mypasswval_inactive', $value);
-                            $this->um_mypasswval_inactive = $value;
-                        }
-                    }
+        get => $this->um_mypasswval_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_mypasswval_inactive', $value);
+            $this->um_mypasswval_inactive = $value;
+        }
+    }
 }

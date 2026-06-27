@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User;
-class InvitesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class InvitesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Invites::class;
+    public string $object_table_class = Invites::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class InvitesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usrinv_tenant_id = NULL {
-                        get => $this->um_usrinv_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_tenant_id', $value);
-                            $this->um_usrinv_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usrinv_tenant_id = null {
+        get => $this->um_usrinv_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_tenant_id', $value);
+            $this->um_usrinv_tenant_id = $value;
+        }
+    }
 
     /**
      * Invite #
@@ -41,12 +51,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var int|null Domain: invite_id_sequence Type: bigserial
      */
     public int|null $um_usrinv_id = null {
-                        get => $this->um_usrinv_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_id', $value);
-                            $this->um_usrinv_id = $value;
-                        }
-                    }
+        get => $this->um_usrinv_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_id', $value);
+            $this->um_usrinv_id = $value;
+        }
+    }
 
     /**
      * User Number
@@ -58,12 +68,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_usrinv_code = null {
-                        get => $this->um_usrinv_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_code', $value);
-                            $this->um_usrinv_code = $value;
-                        }
-                    }
+        get => $this->um_usrinv_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_code', $value);
+            $this->um_usrinv_code = $value;
+        }
+    }
 
     /**
      * Type
@@ -74,13 +84,13 @@ class InvitesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $um_usrinv_type_id = NULL {
-                        get => $this->um_usrinv_type_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_type_id', $value);
-                            $this->um_usrinv_type_id = $value;
-                        }
-                    }
+    public int|null $um_usrinv_type_id = null {
+        get => $this->um_usrinv_type_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_type_id', $value);
+            $this->um_usrinv_type_id = $value;
+        }
+    }
 
     /**
      * Name
@@ -92,12 +102,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_usrinv_name = null {
-                        get => $this->um_usrinv_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_name', $value);
-                            $this->um_usrinv_name = $value;
-                        }
-                    }
+        get => $this->um_usrinv_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_name', $value);
+            $this->um_usrinv_name = $value;
+        }
+    }
 
     /**
      * Company
@@ -109,12 +119,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_usrinv_company = null {
-                        get => $this->um_usrinv_company;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_company', $value);
-                            $this->um_usrinv_company = $value;
-                        }
-                    }
+        get => $this->um_usrinv_company;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_company', $value);
+            $this->um_usrinv_company = $value;
+        }
+    }
 
     /**
      * Title
@@ -126,12 +136,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: personal_title Type: varchar
      */
     public string|null $um_usrinv_title = null {
-                        get => $this->um_usrinv_title;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_title', $value);
-                            $this->um_usrinv_title = $value;
-                        }
-                    }
+        get => $this->um_usrinv_title;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_title', $value);
+            $this->um_usrinv_title = $value;
+        }
+    }
 
     /**
      * First Name
@@ -143,12 +153,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: personal_name Type: varchar
      */
     public string|null $um_usrinv_first_name = null {
-                        get => $this->um_usrinv_first_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_first_name', $value);
-                            $this->um_usrinv_first_name = $value;
-                        }
-                    }
+        get => $this->um_usrinv_first_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_first_name', $value);
+            $this->um_usrinv_first_name = $value;
+        }
+    }
 
     /**
      * Last Name
@@ -160,12 +170,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: personal_name Type: varchar
      */
     public string|null $um_usrinv_last_name = null {
-                        get => $this->um_usrinv_last_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_last_name', $value);
-                            $this->um_usrinv_last_name = $value;
-                        }
-                    }
+        get => $this->um_usrinv_last_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_last_name', $value);
+            $this->um_usrinv_last_name = $value;
+        }
+    }
 
     /**
      * Primary Email
@@ -177,12 +187,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: email Type: varchar
      */
     public string|null $um_usrinv_email = null {
-                        get => $this->um_usrinv_email;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_email', $value);
-                            $this->um_usrinv_email = $value;
-                        }
-                    }
+        get => $this->um_usrinv_email;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_email', $value);
+            $this->um_usrinv_email = $value;
+        }
+    }
 
     /**
      * Primary Phone
@@ -194,12 +204,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: phone Type: varchar
      */
     public string|null $um_usrinv_phone = null {
-                        get => $this->um_usrinv_phone;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_phone', $value);
-                            $this->um_usrinv_phone = $value;
-                        }
-                    }
+        get => $this->um_usrinv_phone;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_phone', $value);
+            $this->um_usrinv_phone = $value;
+        }
+    }
 
     /**
      * Invite Message
@@ -211,12 +221,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: message Type: text
      */
     public string|null $um_usrinv_invite_message = null {
-                        get => $this->um_usrinv_invite_message;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_invite_message', $value);
-                            $this->um_usrinv_invite_message = $value;
-                        }
-                    }
+        get => $this->um_usrinv_invite_message;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_invite_message', $value);
+            $this->um_usrinv_invite_message = $value;
+        }
+    }
 
     /**
      * Created User #
@@ -227,13 +237,13 @@ class InvitesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_usrinv_created_user_id = NULL {
-                        get => $this->um_usrinv_created_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_created_user_id', $value);
-                            $this->um_usrinv_created_user_id = $value;
-                        }
-                    }
+    public int|null $um_usrinv_created_user_id = null {
+        get => $this->um_usrinv_created_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_created_user_id', $value);
+            $this->um_usrinv_created_user_id = $value;
+        }
+    }
 
     /**
      * Referral User #
@@ -244,13 +254,13 @@ class InvitesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_usrinv_referral_user_id = NULL {
-                        get => $this->um_usrinv_referral_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_referral_user_id', $value);
-                            $this->um_usrinv_referral_user_id = $value;
-                        }
-                    }
+    public int|null $um_usrinv_referral_user_id = null {
+        get => $this->um_usrinv_referral_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_referral_user_id', $value);
+            $this->um_usrinv_referral_user_id = $value;
+        }
+    }
 
     /**
      * Assignment Type Code
@@ -262,12 +272,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: type_code Type: varchar
      */
     public string|null $um_usrinv_assignusrtype_code = null {
-                        get => $this->um_usrinv_assignusrtype_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_assignusrtype_code', $value);
-                            $this->um_usrinv_assignusrtype_code = $value;
-                        }
-                    }
+        get => $this->um_usrinv_assignusrtype_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_assignusrtype_code', $value);
+            $this->um_usrinv_assignusrtype_code = $value;
+        }
+    }
 
     /**
      * Other Params
@@ -279,12 +289,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var mixed Type: json
      */
     public mixed $um_usrinv_other_json_params = null {
-                        get => $this->um_usrinv_other_json_params;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_other_json_params', $value);
-                            $this->um_usrinv_other_json_params = $value;
-                        }
-                    }
+        get => $this->um_usrinv_other_json_params;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_other_json_params', $value);
+            $this->um_usrinv_other_json_params = $value;
+        }
+    }
 
     /**
      * Require Address
@@ -296,12 +306,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrinv_require_address = 0 {
-                        get => $this->um_usrinv_require_address;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_require_address', $value);
-                            $this->um_usrinv_require_address = $value;
-                        }
-                    }
+        get => $this->um_usrinv_require_address;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_require_address', $value);
+            $this->um_usrinv_require_address = $value;
+        }
+    }
 
     /**
      * Require Assignment
@@ -313,12 +323,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrinv_require_assignment = 0 {
-                        get => $this->um_usrinv_require_assignment;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_require_assignment', $value);
-                            $this->um_usrinv_require_assignment = $value;
-                        }
-                    }
+        get => $this->um_usrinv_require_assignment;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_require_assignment', $value);
+            $this->um_usrinv_require_assignment = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -330,12 +340,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrinv_inactive = 0 {
-                        get => $this->um_usrinv_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_inactive', $value);
-                            $this->um_usrinv_inactive = $value;
-                        }
-                    }
+        get => $this->um_usrinv_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_inactive', $value);
+            $this->um_usrinv_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -347,12 +357,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $um_usrinv_optimistic_lock = 'now()' {
-                        get => $this->um_usrinv_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_optimistic_lock', $value);
-                            $this->um_usrinv_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->um_usrinv_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_optimistic_lock', $value);
+            $this->um_usrinv_optimistic_lock = $value;
+        }
+    }
 
     /**
      * Inserted Datetime
@@ -364,12 +374,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $um_usrinv_inserted_timestamp = null {
-                        get => $this->um_usrinv_inserted_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_inserted_timestamp', $value);
-                            $this->um_usrinv_inserted_timestamp = $value;
-                        }
-                    }
+        get => $this->um_usrinv_inserted_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_inserted_timestamp', $value);
+            $this->um_usrinv_inserted_timestamp = $value;
+        }
+    }
 
     /**
      * Inserted User #
@@ -380,13 +390,13 @@ class InvitesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_usrinv_inserted_user_id = NULL {
-                        get => $this->um_usrinv_inserted_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_inserted_user_id', $value);
-                            $this->um_usrinv_inserted_user_id = $value;
-                        }
-                    }
+    public int|null $um_usrinv_inserted_user_id = null {
+        get => $this->um_usrinv_inserted_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_inserted_user_id', $value);
+            $this->um_usrinv_inserted_user_id = $value;
+        }
+    }
 
     /**
      * Updated Datetime
@@ -398,12 +408,12 @@ class InvitesAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $um_usrinv_updated_timestamp = null {
-                        get => $this->um_usrinv_updated_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_updated_timestamp', $value);
-                            $this->um_usrinv_updated_timestamp = $value;
-                        }
-                    }
+        get => $this->um_usrinv_updated_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_updated_timestamp', $value);
+            $this->um_usrinv_updated_timestamp = $value;
+        }
+    }
 
     /**
      * Updated User #
@@ -414,11 +424,11 @@ class InvitesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_usrinv_updated_user_id = NULL {
-                        get => $this->um_usrinv_updated_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrinv_updated_user_id', $value);
-                            $this->um_usrinv_updated_user_id = $value;
-                        }
-                    }
+    public int|null $um_usrinv_updated_user_id = null {
+        get => $this->um_usrinv_updated_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrinv_updated_user_id', $value);
+            $this->um_usrinv_updated_user_id = $value;
+        }
+    }
 }

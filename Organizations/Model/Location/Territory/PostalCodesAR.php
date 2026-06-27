@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model\Location\Territory;
-class PostalCodesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class PostalCodesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Organizations\Model\Location\Territory\PostalCodes::class;
+    public string $object_table_class = PostalCodes::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class PostalCodesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $on_terrpostal_tenant_id = NULL {
-                        get => $this->on_terrpostal_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_terrpostal_tenant_id', $value);
-                            $this->on_terrpostal_tenant_id = $value;
-                        }
-                    }
+    public int|null $on_terrpostal_tenant_id = null {
+        get => $this->on_terrpostal_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_terrpostal_tenant_id', $value);
+            $this->on_terrpostal_tenant_id = $value;
+        }
+    }
 
     /**
      * Territory #
@@ -40,13 +50,13 @@ class PostalCodesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: territory_id Type: integer
      */
-    public int|null $on_terrpostal_territory_id = NULL {
-                        get => $this->on_terrpostal_territory_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_terrpostal_territory_id', $value);
-                            $this->on_terrpostal_territory_id = $value;
-                        }
-                    }
+    public int|null $on_terrpostal_territory_id = null {
+        get => $this->on_terrpostal_territory_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_terrpostal_territory_id', $value);
+            $this->on_terrpostal_territory_id = $value;
+        }
+    }
 
     /**
      * Organization #
@@ -57,13 +67,13 @@ class PostalCodesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: organization_id Type: integer
      */
-    public int|null $on_terrpostal_organization_id = NULL {
-                        get => $this->on_terrpostal_organization_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_terrpostal_organization_id', $value);
-                            $this->on_terrpostal_organization_id = $value;
-                        }
-                    }
+    public int|null $on_terrpostal_organization_id = null {
+        get => $this->on_terrpostal_organization_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_terrpostal_organization_id', $value);
+            $this->on_terrpostal_organization_id = $value;
+        }
+    }
 
     /**
      * Location #
@@ -74,13 +84,13 @@ class PostalCodesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: location_id Type: integer
      */
-    public int|null $on_terrpostal_location_id = NULL {
-                        get => $this->on_terrpostal_location_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_terrpostal_location_id', $value);
-                            $this->on_terrpostal_location_id = $value;
-                        }
-                    }
+    public int|null $on_terrpostal_location_id = null {
+        get => $this->on_terrpostal_location_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_terrpostal_location_id', $value);
+            $this->on_terrpostal_location_id = $value;
+        }
+    }
 
     /**
      * Postal Code
@@ -92,10 +102,10 @@ class PostalCodesAR extends \Object\ActiveRecord {
      * @var string|null Domain: postal_code Type: varchar
      */
     public string|null $on_terrpostal_postal_code = null {
-                        get => $this->on_terrpostal_postal_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_terrpostal_postal_code', $value);
-                            $this->on_terrpostal_postal_code = $value;
-                        }
-                    }
+        get => $this->on_terrpostal_postal_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_terrpostal_postal_code', $value);
+            $this->on_terrpostal_postal_code = $value;
+        }
+    }
 }

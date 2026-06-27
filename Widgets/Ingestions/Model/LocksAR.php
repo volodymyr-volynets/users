@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Widgets\Ingestions\Model;
-class LocksAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class LocksAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Widgets\Ingestions\Model\Locks::class;
+    public string $object_table_class = Locks::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class LocksAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $wg_emailinglock_tenant_id = NULL {
-                        get => $this->wg_emailinglock_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('wg_emailinglock_tenant_id', $value);
-                            $this->wg_emailinglock_tenant_id = $value;
-                        }
-                    }
+    public int|null $wg_emailinglock_tenant_id = null {
+        get => $this->wg_emailinglock_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('wg_emailinglock_tenant_id', $value);
+            $this->wg_emailinglock_tenant_id = $value;
+        }
+    }
 
     /**
      * Link
@@ -41,12 +51,12 @@ class LocksAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $wg_emailinglock_link = null {
-                        get => $this->wg_emailinglock_link;
-                        set {
-                            $this->setFullPkAndFilledColumn('wg_emailinglock_link', $value);
-                            $this->wg_emailinglock_link = $value;
-                        }
-                    }
+        get => $this->wg_emailinglock_link;
+        set {
+            $this->setFullPkAndFilledColumn('wg_emailinglock_link', $value);
+            $this->wg_emailinglock_link = $value;
+        }
+    }
 
     /**
      * UID
@@ -57,13 +67,13 @@ class LocksAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: big_id Type: bigint
      */
-    public int|null $wg_emailinglock_uid = NULL {
-                        get => $this->wg_emailinglock_uid;
-                        set {
-                            $this->setFullPkAndFilledColumn('wg_emailinglock_uid', $value);
-                            $this->wg_emailinglock_uid = $value;
-                        }
-                    }
+    public int|null $wg_emailinglock_uid = null {
+        get => $this->wg_emailinglock_uid;
+        set {
+            $this->setFullPkAndFilledColumn('wg_emailinglock_uid', $value);
+            $this->wg_emailinglock_uid = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -75,10 +85,10 @@ class LocksAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $wg_emailinglock_timestamp = 'now()' {
-                        get => $this->wg_emailinglock_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('wg_emailinglock_timestamp', $value);
-                            $this->wg_emailinglock_timestamp = $value;
-                        }
-                    }
+        get => $this->wg_emailinglock_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('wg_emailinglock_timestamp', $value);
+            $this->wg_emailinglock_timestamp = $value;
+        }
+    }
 }

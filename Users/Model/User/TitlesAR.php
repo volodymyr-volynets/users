@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User;
-class TitlesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class TitlesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Titles::class;
+    public string $object_table_class = Titles::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class TitlesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usrtitle_tenant_id = NULL {
-                        get => $this->um_usrtitle_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrtitle_tenant_id', $value);
-                            $this->um_usrtitle_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usrtitle_tenant_id = null {
+        get => $this->um_usrtitle_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrtitle_tenant_id', $value);
+            $this->um_usrtitle_tenant_id = $value;
+        }
+    }
 
     /**
      * Name
@@ -41,12 +51,12 @@ class TitlesAR extends \Object\ActiveRecord {
      * @var string|null Domain: personal_title Type: varchar
      */
     public string|null $um_usrtitle_name = null {
-                        get => $this->um_usrtitle_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrtitle_name', $value);
-                            $this->um_usrtitle_name = $value;
-                        }
-                    }
+        get => $this->um_usrtitle_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrtitle_name', $value);
+            $this->um_usrtitle_name = $value;
+        }
+    }
 
     /**
      * Order
@@ -58,12 +68,12 @@ class TitlesAR extends \Object\ActiveRecord {
      * @var int|null Domain: order Type: integer
      */
     public int|null $um_usrtitle_order = 0 {
-                        get => $this->um_usrtitle_order;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrtitle_order', $value);
-                            $this->um_usrtitle_order = $value;
-                        }
-                    }
+        get => $this->um_usrtitle_order;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrtitle_order', $value);
+            $this->um_usrtitle_order = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -75,12 +85,12 @@ class TitlesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrtitle_inactive = 0 {
-                        get => $this->um_usrtitle_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrtitle_inactive', $value);
-                            $this->um_usrtitle_inactive = $value;
-                        }
-                    }
+        get => $this->um_usrtitle_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrtitle_inactive', $value);
+            $this->um_usrtitle_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -92,10 +102,10 @@ class TitlesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $um_usrtitle_optimistic_lock = 'now()' {
-                        get => $this->um_usrtitle_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrtitle_optimistic_lock', $value);
-                            $this->um_usrtitle_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->um_usrtitle_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrtitle_optimistic_lock', $value);
+            $this->um_usrtitle_optimistic_lock = $value;
+        }
+    }
 }

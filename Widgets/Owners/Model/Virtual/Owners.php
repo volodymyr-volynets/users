@@ -263,7 +263,7 @@ class Owners extends Table
     public function overrideFieldName(& $form, & $options, & $value, & $neighbouring_values)
     {
         $this->preloadModelsAndFields();
-        if (isset($this->owner_all_types[$value])) {
+        if (isset($this->owner_all_types[$value ?? ''])) {
             $field = $this->owner_all_types[$value];
             if ($field['um_ownertype_readonly']) {
                 $options['options']['readonly'] = true;

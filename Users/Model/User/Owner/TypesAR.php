@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User\Owner;
-class TypesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class TypesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\Owner\Types::class;
+    public string $object_table_class = Types::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class TypesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_ownertype_tenant_id = NULL {
-                        get => $this->um_ownertype_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_ownertype_tenant_id', $value);
-                            $this->um_ownertype_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_ownertype_tenant_id = null {
+        get => $this->um_ownertype_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_ownertype_tenant_id', $value);
+            $this->um_ownertype_tenant_id = $value;
+        }
+    }
 
     /**
      * Type #
@@ -41,12 +51,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Domain: type_id_sequence Type: smallserial
      */
     public int|null $um_ownertype_id = null {
-                        get => $this->um_ownertype_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_ownertype_id', $value);
-                            $this->um_ownertype_id = $value;
-                        }
-                    }
+        get => $this->um_ownertype_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_ownertype_id', $value);
+            $this->um_ownertype_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -58,12 +68,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_ownertype_code = null {
-                        get => $this->um_ownertype_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_ownertype_code', $value);
-                            $this->um_ownertype_code = $value;
-                        }
-                    }
+        get => $this->um_ownertype_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_ownertype_code', $value);
+            $this->um_ownertype_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -75,12 +85,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_ownertype_name = null {
-                        get => $this->um_ownertype_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_ownertype_name', $value);
-                            $this->um_ownertype_name = $value;
-                        }
-                    }
+        get => $this->um_ownertype_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_ownertype_name', $value);
+            $this->um_ownertype_name = $value;
+        }
+    }
 
     /**
      * Multiple
@@ -92,12 +102,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_ownertype_multiple = 0 {
-                        get => $this->um_ownertype_multiple;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_ownertype_multiple', $value);
-                            $this->um_ownertype_multiple = $value;
-                        }
-                    }
+        get => $this->um_ownertype_multiple;
+        set {
+            $this->setFullPkAndFilledColumn('um_ownertype_multiple', $value);
+            $this->um_ownertype_multiple = $value;
+        }
+    }
 
     /**
      * Readonly
@@ -109,12 +119,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_ownertype_readonly = 0 {
-                        get => $this->um_ownertype_readonly;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_ownertype_readonly', $value);
-                            $this->um_ownertype_readonly = $value;
-                        }
-                    }
+        get => $this->um_ownertype_readonly;
+        set {
+            $this->setFullPkAndFilledColumn('um_ownertype_readonly', $value);
+            $this->um_ownertype_readonly = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -126,12 +136,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_ownertype_inactive = 0 {
-                        get => $this->um_ownertype_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_ownertype_inactive', $value);
-                            $this->um_ownertype_inactive = $value;
-                        }
-                    }
+        get => $this->um_ownertype_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_ownertype_inactive', $value);
+            $this->um_ownertype_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -143,10 +153,10 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $um_ownertype_optimistic_lock = 'now()' {
-                        get => $this->um_ownertype_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_ownertype_optimistic_lock', $value);
-                            $this->um_ownertype_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->um_ownertype_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('um_ownertype_optimistic_lock', $value);
+            $this->um_ownertype_optimistic_lock = $value;
+        }
+    }
 }

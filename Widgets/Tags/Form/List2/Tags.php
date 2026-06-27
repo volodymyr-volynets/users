@@ -107,7 +107,7 @@ class Tags extends List2
             'total' => 0,
             'rows' => []
         ];
-        $form->query = \Factory::model($form->options['model_table'] . '\0Virtual0\Widgets\Tags')->queryBuilder()->select();
+        $form->query = \Factory::model($form->options['model_table'] . '\0Virtual0\Widgets\Tags', false, [['archives' => \Request::input('__archives')]])->queryBuilder()->select();
         // join to get actual tag
         $form->query->columns([
             'a.*',

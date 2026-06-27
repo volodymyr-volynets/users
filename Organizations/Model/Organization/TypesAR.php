@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model\Organization;
-class TypesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class TypesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Organizations\Model\Organization\Types::class;
+    public string $object_table_class = Types::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class TypesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $on_orgtype_tenant_id = NULL {
-                        get => $this->on_orgtype_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_orgtype_tenant_id', $value);
-                            $this->on_orgtype_tenant_id = $value;
-                        }
-                    }
+    public int|null $on_orgtype_tenant_id = null {
+        get => $this->on_orgtype_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_orgtype_tenant_id', $value);
+            $this->on_orgtype_tenant_id = $value;
+        }
+    }
 
     /**
      * Type Code
@@ -41,12 +51,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: type_code Type: varchar
      */
     public string|null $on_orgtype_code = null {
-                        get => $this->on_orgtype_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_orgtype_code', $value);
-                            $this->on_orgtype_code = $value;
-                        }
-                    }
+        get => $this->on_orgtype_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_orgtype_code', $value);
+            $this->on_orgtype_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -58,12 +68,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $on_orgtype_name = null {
-                        get => $this->on_orgtype_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_orgtype_name', $value);
-                            $this->on_orgtype_name = $value;
-                        }
-                    }
+        get => $this->on_orgtype_name;
+        set {
+            $this->setFullPkAndFilledColumn('on_orgtype_name', $value);
+            $this->on_orgtype_name = $value;
+        }
+    }
 
     /**
      * Parent Type Code
@@ -75,12 +85,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: type_code Type: varchar
      */
     public string|null $on_orgtype_parent_type_code = null {
-                        get => $this->on_orgtype_parent_type_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_orgtype_parent_type_code', $value);
-                            $this->on_orgtype_parent_type_code = $value;
-                        }
-                    }
+        get => $this->on_orgtype_parent_type_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_orgtype_parent_type_code', $value);
+            $this->on_orgtype_parent_type_code = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -92,12 +102,12 @@ class TypesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $on_orgtype_inactive = 0 {
-                        get => $this->on_orgtype_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_orgtype_inactive', $value);
-                            $this->on_orgtype_inactive = $value;
-                        }
-                    }
+        get => $this->on_orgtype_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('on_orgtype_inactive', $value);
+            $this->on_orgtype_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -109,10 +119,10 @@ class TypesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $on_orgtype_optimistic_lock = 'now()' {
-                        get => $this->on_orgtype_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_orgtype_optimistic_lock', $value);
-                            $this->on_orgtype_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->on_orgtype_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('on_orgtype_optimistic_lock', $value);
+            $this->on_orgtype_optimistic_lock = $value;
+        }
+    }
 }

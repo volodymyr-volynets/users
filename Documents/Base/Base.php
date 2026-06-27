@@ -122,9 +122,11 @@ class Base
      * Delete
      *
      * @param int $file_id
+     * @param array $options
+     *      bool erase
      * @return array
      */
-    public function delete(int $file_id): array
+    public function delete(int $file_id, array $options = []): array
     {
         $result = [
             'success' => false,
@@ -162,9 +164,15 @@ class Base
             return $result;
         }
         // delete record
-        $delete_result = $model->collection()->merge($file_data, [
-            'flag_delete_row' => true
-        ]);
+        if (empty($options['erase'])) {
+            $delete_result = $model->collection()->merge($file_data, [
+                'flag_delete_row' => true
+            ]);
+        } else {
+            // set erased flag
+            $file_data['dt_file_erased'] = 1;
+            $delete_result = $model->collection()->merge($file_data);
+        }
         if (!$delete_result['success']) {
             $result['error'] = array_merge($result['error'], $delete_result['error']);
             return $result;

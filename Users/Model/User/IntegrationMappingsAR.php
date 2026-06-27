@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model\User;
-class IntegrationMappingsAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class IntegrationMappingsAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\User\IntegrationMappings::class;
+    public string $object_table_class = IntegrationMappings::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class IntegrationMappingsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_usrintegmap_tenant_id = NULL {
-                        get => $this->um_usrintegmap_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrintegmap_tenant_id', $value);
-                            $this->um_usrintegmap_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_usrintegmap_tenant_id = null {
+        get => $this->um_usrintegmap_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrintegmap_tenant_id', $value);
+            $this->um_usrintegmap_tenant_id = $value;
+        }
+    }
 
     /**
      * Timestamp
@@ -41,12 +51,12 @@ class IntegrationMappingsAR extends \Object\ActiveRecord {
      * @var string|null Domain: timestamp_now Type: timestamp
      */
     public string|null $um_usrintegmap_timestamp = 'now()' {
-                        get => $this->um_usrintegmap_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrintegmap_timestamp', $value);
-                            $this->um_usrintegmap_timestamp = $value;
-                        }
-                    }
+        get => $this->um_usrintegmap_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrintegmap_timestamp', $value);
+            $this->um_usrintegmap_timestamp = $value;
+        }
+    }
 
     /**
      * User #
@@ -57,13 +67,13 @@ class IntegrationMappingsAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_usrintegmap_user_id = NULL {
-                        get => $this->um_usrintegmap_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrintegmap_user_id', $value);
-                            $this->um_usrintegmap_user_id = $value;
-                        }
-                    }
+    public int|null $um_usrintegmap_user_id = null {
+        get => $this->um_usrintegmap_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrintegmap_user_id', $value);
+            $this->um_usrintegmap_user_id = $value;
+        }
+    }
 
     /**
      * Integration Type
@@ -75,12 +85,12 @@ class IntegrationMappingsAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_usrintegmap_integtype_code = null {
-                        get => $this->um_usrintegmap_integtype_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrintegmap_integtype_code', $value);
-                            $this->um_usrintegmap_integtype_code = $value;
-                        }
-                    }
+        get => $this->um_usrintegmap_integtype_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrintegmap_integtype_code', $value);
+            $this->um_usrintegmap_integtype_code = $value;
+        }
+    }
 
     /**
      * Code
@@ -92,12 +102,12 @@ class IntegrationMappingsAR extends \Object\ActiveRecord {
      * @var string|null Domain: code Type: varchar
      */
     public string|null $um_usrintegmap_code = null {
-                        get => $this->um_usrintegmap_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrintegmap_code', $value);
-                            $this->um_usrintegmap_code = $value;
-                        }
-                    }
+        get => $this->um_usrintegmap_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrintegmap_code', $value);
+            $this->um_usrintegmap_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -109,12 +119,12 @@ class IntegrationMappingsAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_usrintegmap_name = null {
-                        get => $this->um_usrintegmap_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrintegmap_name', $value);
-                            $this->um_usrintegmap_name = $value;
-                        }
-                    }
+        get => $this->um_usrintegmap_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrintegmap_name', $value);
+            $this->um_usrintegmap_name = $value;
+        }
+    }
 
     /**
      * Default
@@ -126,12 +136,12 @@ class IntegrationMappingsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrintegmap_default = 0 {
-                        get => $this->um_usrintegmap_default;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrintegmap_default', $value);
-                            $this->um_usrintegmap_default = $value;
-                        }
-                    }
+        get => $this->um_usrintegmap_default;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrintegmap_default', $value);
+            $this->um_usrintegmap_default = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -143,10 +153,10 @@ class IntegrationMappingsAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_usrintegmap_inactive = 0 {
-                        get => $this->um_usrintegmap_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_usrintegmap_inactive', $value);
-                            $this->um_usrintegmap_inactive = $value;
-                        }
-                    }
+        get => $this->um_usrintegmap_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_usrintegmap_inactive', $value);
+            $this->um_usrintegmap_inactive = $value;
+        }
+    }
 }

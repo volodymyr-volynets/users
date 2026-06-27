@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Users\Model;
-class UsersAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class UsersAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Users\Model\Users::class;
+    public string $object_table_class = Users::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class UsersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $um_user_tenant_id = NULL {
-                        get => $this->um_user_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_tenant_id', $value);
-                            $this->um_user_tenant_id = $value;
-                        }
-                    }
+    public int|null $um_user_tenant_id = null {
+        get => $this->um_user_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_tenant_id', $value);
+            $this->um_user_tenant_id = $value;
+        }
+    }
 
     /**
      * User #
@@ -41,12 +51,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var int|null Domain: user_id_sequence Type: bigserial
      */
     public int|null $um_user_id = null {
-                        get => $this->um_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_id', $value);
-                            $this->um_user_id = $value;
-                        }
-                    }
+        get => $this->um_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_id', $value);
+            $this->um_user_id = $value;
+        }
+    }
 
     /**
      * User Number
@@ -58,12 +68,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $um_user_code = null {
-                        get => $this->um_user_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_code', $value);
-                            $this->um_user_code = $value;
-                        }
-                    }
+        get => $this->um_user_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_code', $value);
+            $this->um_user_code = $value;
+        }
+    }
 
     /**
      * Type
@@ -74,13 +84,13 @@ class UsersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $um_user_type_id = NULL {
-                        get => $this->um_user_type_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_type_id', $value);
-                            $this->um_user_type_id = $value;
-                        }
-                    }
+    public int|null $um_user_type_id = null {
+        get => $this->um_user_type_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_type_id', $value);
+            $this->um_user_type_id = $value;
+        }
+    }
 
     /**
      * Name
@@ -92,12 +102,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_user_name = null {
-                        get => $this->um_user_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_name', $value);
-                            $this->um_user_name = $value;
-                        }
-                    }
+        get => $this->um_user_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_name', $value);
+            $this->um_user_name = $value;
+        }
+    }
 
     /**
      * Company
@@ -109,12 +119,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_user_company = null {
-                        get => $this->um_user_company;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_company', $value);
-                            $this->um_user_company = $value;
-                        }
-                    }
+        get => $this->um_user_company;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_company', $value);
+            $this->um_user_company = $value;
+        }
+    }
 
     /**
      * Title
@@ -126,12 +136,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: personal_title Type: varchar
      */
     public string|null $um_user_title = null {
-                        get => $this->um_user_title;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_title', $value);
-                            $this->um_user_title = $value;
-                        }
-                    }
+        get => $this->um_user_title;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_title', $value);
+            $this->um_user_title = $value;
+        }
+    }
 
     /**
      * First Name
@@ -143,12 +153,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: personal_name Type: varchar
      */
     public string|null $um_user_first_name = null {
-                        get => $this->um_user_first_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_first_name', $value);
-                            $this->um_user_first_name = $value;
-                        }
-                    }
+        get => $this->um_user_first_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_first_name', $value);
+            $this->um_user_first_name = $value;
+        }
+    }
 
     /**
      * Last Name
@@ -160,12 +170,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: personal_name Type: varchar
      */
     public string|null $um_user_last_name = null {
-                        get => $this->um_user_last_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_last_name', $value);
-                            $this->um_user_last_name = $value;
-                        }
-                    }
+        get => $this->um_user_last_name;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_last_name', $value);
+            $this->um_user_last_name = $value;
+        }
+    }
 
     /**
      * Primary Email (Generated)
@@ -177,12 +187,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: email Type: varchar
      */
     public string|null $um_user_email = null {
-                        get => $this->um_user_email;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_email', $value);
-                            $this->um_user_email = $value;
-                        }
-                    }
+        get => $this->um_user_email;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_email', $value);
+            $this->um_user_email = $value;
+        }
+    }
 
     /**
      * Secondary Email
@@ -194,12 +204,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: email Type: varchar
      */
     public string|null $um_user_email2 = null {
-                        get => $this->um_user_email2;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_email2', $value);
-                            $this->um_user_email2 = $value;
-                        }
-                    }
+        get => $this->um_user_email2;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_email2', $value);
+            $this->um_user_email2 = $value;
+        }
+    }
 
     /**
      * Primary Phone (Generated)
@@ -211,12 +221,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: phone Type: varchar
      */
     public string|null $um_user_phone = null {
-                        get => $this->um_user_phone;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_phone', $value);
-                            $this->um_user_phone = $value;
-                        }
-                    }
+        get => $this->um_user_phone;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_phone', $value);
+            $this->um_user_phone = $value;
+        }
+    }
 
     /**
      * Primary Phone (Numeric)
@@ -227,13 +237,13 @@ class UsersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: numeric_phone Type: bigint
      */
-    public int|null $um_user_numeric_phone = NULL {
-                        get => $this->um_user_numeric_phone;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_numeric_phone', $value);
-                            $this->um_user_numeric_phone = $value;
-                        }
-                    }
+    public int|null $um_user_numeric_phone = null {
+        get => $this->um_user_numeric_phone;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_numeric_phone', $value);
+            $this->um_user_numeric_phone = $value;
+        }
+    }
 
     /**
      * Secondary Phone
@@ -245,12 +255,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: phone Type: varchar
      */
     public string|null $um_user_phone2 = null {
-                        get => $this->um_user_phone2;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_phone2', $value);
-                            $this->um_user_phone2 = $value;
-                        }
-                    }
+        get => $this->um_user_phone2;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_phone2', $value);
+            $this->um_user_phone2 = $value;
+        }
+    }
 
     /**
      * Cell Phone
@@ -262,12 +272,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: phone Type: varchar
      */
     public string|null $um_user_cell = null {
-                        get => $this->um_user_cell;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_cell', $value);
-                            $this->um_user_cell = $value;
-                        }
-                    }
+        get => $this->um_user_cell;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_cell', $value);
+            $this->um_user_cell = $value;
+        }
+    }
 
     /**
      * Fax
@@ -279,12 +289,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: phone Type: varchar
      */
     public string|null $um_user_fax = null {
-                        get => $this->um_user_fax;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_fax', $value);
-                            $this->um_user_fax = $value;
-                        }
-                    }
+        get => $this->um_user_fax;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_fax', $value);
+            $this->um_user_fax = $value;
+        }
+    }
 
     /**
      * Alternative Contact
@@ -296,12 +306,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: description Type: varchar
      */
     public string|null $um_user_alternative_contact = null {
-                        get => $this->um_user_alternative_contact;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_alternative_contact', $value);
-                            $this->um_user_alternative_contact = $value;
-                        }
-                    }
+        get => $this->um_user_alternative_contact;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_alternative_contact', $value);
+            $this->um_user_alternative_contact = $value;
+        }
+    }
 
     /**
      * Login Enabled (Generated)
@@ -313,12 +323,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var int|bool|null Type: boolean
      */
     public int|bool|null $um_user_login_enabled = 0 {
-                        get => $this->um_user_login_enabled;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_login_enabled', $value);
-                            $this->um_user_login_enabled = $value;
-                        }
-                    }
+        get => $this->um_user_login_enabled;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_login_enabled', $value);
+            $this->um_user_login_enabled = $value;
+        }
+    }
 
     /**
      * Username (Generated)
@@ -330,12 +340,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: login Type: varchar
      */
     public string|null $um_user_login_username = null {
-                        get => $this->um_user_login_username;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_login_username', $value);
-                            $this->um_user_login_username = $value;
-                        }
-                    }
+        get => $this->um_user_login_username;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_login_username', $value);
+            $this->um_user_login_username = $value;
+        }
+    }
 
     /**
      * Password (Generated)
@@ -347,12 +357,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: password Type: text
      */
     public string|null $um_user_login_password = null {
-                        get => $this->um_user_login_password;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_login_password', $value);
-                            $this->um_user_login_password = $value;
-                        }
-                    }
+        get => $this->um_user_login_password;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_login_password', $value);
+            $this->um_user_login_password = $value;
+        }
+    }
 
     /**
      * Last Set (Generated)
@@ -364,12 +374,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Type: date
      */
     public string|null $um_user_login_last_set = null {
-                        get => $this->um_user_login_last_set;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_login_last_set', $value);
-                            $this->um_user_login_last_set = $value;
-                        }
-                    }
+        get => $this->um_user_login_last_set;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_login_last_set', $value);
+            $this->um_user_login_last_set = $value;
+        }
+    }
 
     /**
      * Photo File #
@@ -380,13 +390,13 @@ class UsersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: file_id Type: bigint
      */
-    public int|null $um_user_photo_file_id = NULL {
-                        get => $this->um_user_photo_file_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_photo_file_id', $value);
-                            $this->um_user_photo_file_id = $value;
-                        }
-                    }
+    public int|null $um_user_photo_file_id = null {
+        get => $this->um_user_photo_file_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_photo_file_id', $value);
+            $this->um_user_photo_file_id = $value;
+        }
+    }
 
     /**
      * About Nickname
@@ -398,12 +408,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_user_about_nickname = null {
-                        get => $this->um_user_about_nickname;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_about_nickname', $value);
-                            $this->um_user_about_nickname = $value;
-                        }
-                    }
+        get => $this->um_user_about_nickname;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_about_nickname', $value);
+            $this->um_user_about_nickname = $value;
+        }
+    }
 
     /**
      * About Description
@@ -415,12 +425,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: description Type: varchar
      */
     public string|null $um_user_about_description = null {
-                        get => $this->um_user_about_description;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_about_description', $value);
-                            $this->um_user_about_description = $value;
-                        }
-                    }
+        get => $this->um_user_about_description;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_about_description', $value);
+            $this->um_user_about_description = $value;
+        }
+    }
 
     /**
      * Operating Country Code
@@ -432,12 +442,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: country_code Type: char
      */
     public string|null $um_user_operating_country_code = null {
-                        get => $this->um_user_operating_country_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_operating_country_code', $value);
-                            $this->um_user_operating_country_code = $value;
-                        }
-                    }
+        get => $this->um_user_operating_country_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_operating_country_code', $value);
+            $this->um_user_operating_country_code = $value;
+        }
+    }
 
     /**
      * Operating Province Code
@@ -449,12 +459,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: province_code Type: varchar
      */
     public string|null $um_user_operating_province_code = null {
-                        get => $this->um_user_operating_province_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_operating_province_code', $value);
-                            $this->um_user_operating_province_code = $value;
-                        }
-                    }
+        get => $this->um_user_operating_province_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_operating_province_code', $value);
+            $this->um_user_operating_province_code = $value;
+        }
+    }
 
     /**
      * Operating Currency Code
@@ -466,12 +476,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: currency_code Type: char
      */
     public string|null $um_user_operating_currency_code = null {
-                        get => $this->um_user_operating_currency_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_operating_currency_code', $value);
-                            $this->um_user_operating_currency_code = $value;
-                        }
-                    }
+        get => $this->um_user_operating_currency_code;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_operating_currency_code', $value);
+            $this->um_user_operating_currency_code = $value;
+        }
+    }
 
     /**
      * Operating Currency Type
@@ -483,12 +493,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: currency_type Type: varchar
      */
     public string|null $um_user_operating_currency_type = null {
-                        get => $this->um_user_operating_currency_type;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_operating_currency_type', $value);
-                            $this->um_user_operating_currency_type = $value;
-                        }
-                    }
+        get => $this->um_user_operating_currency_type;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_operating_currency_type', $value);
+            $this->um_user_operating_currency_type = $value;
+        }
+    }
 
     /**
      * Channel
@@ -500,12 +510,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $um_user_channel = null {
-                        get => $this->um_user_channel;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_channel', $value);
-                            $this->um_user_channel = $value;
-                        }
-                    }
+        get => $this->um_user_channel;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_channel', $value);
+            $this->um_user_channel = $value;
+        }
+    }
 
     /**
      * Send Emails
@@ -517,12 +527,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_user_send_emails = 1 {
-                        get => $this->um_user_send_emails;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_send_emails', $value);
-                            $this->um_user_send_emails = $value;
-                        }
-                    }
+        get => $this->um_user_send_emails;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_send_emails', $value);
+            $this->um_user_send_emails = $value;
+        }
+    }
 
     /**
      * Send SMS
@@ -534,12 +544,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_user_send_sms = 0 {
-                        get => $this->um_user_send_sms;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_send_sms', $value);
-                            $this->um_user_send_sms = $value;
-                        }
-                    }
+        get => $this->um_user_send_sms;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_send_sms', $value);
+            $this->um_user_send_sms = $value;
+        }
+    }
 
     /**
      * Send Postal Mail
@@ -551,12 +561,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_user_send_postal = 0 {
-                        get => $this->um_user_send_postal;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_send_postal', $value);
-                            $this->um_user_send_postal = $value;
-                        }
-                    }
+        get => $this->um_user_send_postal;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_send_postal', $value);
+            $this->um_user_send_postal = $value;
+        }
+    }
 
     /**
      * Email Confirmed
@@ -568,12 +578,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_user_email_confirmed = 0 {
-                        get => $this->um_user_email_confirmed;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_email_confirmed', $value);
-                            $this->um_user_email_confirmed = $value;
-                        }
-                    }
+        get => $this->um_user_email_confirmed;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_email_confirmed', $value);
+            $this->um_user_email_confirmed = $value;
+        }
+    }
 
     /**
      * Phone Confirmed
@@ -585,12 +595,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $um_user_phone_confirmed = 0 {
-                        get => $this->um_user_phone_confirmed;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_phone_confirmed', $value);
-                            $this->um_user_phone_confirmed = $value;
-                        }
-                    }
+        get => $this->um_user_phone_confirmed;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_phone_confirmed', $value);
+            $this->um_user_phone_confirmed = $value;
+        }
+    }
 
     /**
      * Hold (Generated)
@@ -602,12 +612,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var int|bool|null Type: boolean
      */
     public int|bool|null $um_user_hold = 0 {
-                        get => $this->um_user_hold;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_hold', $value);
-                            $this->um_user_hold = $value;
-                        }
-                    }
+        get => $this->um_user_hold;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_hold', $value);
+            $this->um_user_hold = $value;
+        }
+    }
 
     /**
      * Inactive (Generated)
@@ -619,12 +629,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var int|bool|null Type: boolean
      */
     public int|bool|null $um_user_inactive = 0 {
-                        get => $this->um_user_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_inactive', $value);
-                            $this->um_user_inactive = $value;
-                        }
-                    }
+        get => $this->um_user_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_inactive', $value);
+            $this->um_user_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -636,12 +646,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $um_user_optimistic_lock = 'now()' {
-                        get => $this->um_user_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_optimistic_lock', $value);
-                            $this->um_user_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->um_user_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_optimistic_lock', $value);
+            $this->um_user_optimistic_lock = $value;
+        }
+    }
 
     /**
      * Inserted Datetime
@@ -653,12 +663,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $um_user_inserted_timestamp = null {
-                        get => $this->um_user_inserted_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_inserted_timestamp', $value);
-                            $this->um_user_inserted_timestamp = $value;
-                        }
-                    }
+        get => $this->um_user_inserted_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_inserted_timestamp', $value);
+            $this->um_user_inserted_timestamp = $value;
+        }
+    }
 
     /**
      * Inserted User #
@@ -669,13 +679,13 @@ class UsersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_user_inserted_user_id = NULL {
-                        get => $this->um_user_inserted_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_inserted_user_id', $value);
-                            $this->um_user_inserted_user_id = $value;
-                        }
-                    }
+    public int|null $um_user_inserted_user_id = null {
+        get => $this->um_user_inserted_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_inserted_user_id', $value);
+            $this->um_user_inserted_user_id = $value;
+        }
+    }
 
     /**
      * Updated Datetime
@@ -687,12 +697,12 @@ class UsersAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $um_user_updated_timestamp = null {
-                        get => $this->um_user_updated_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_updated_timestamp', $value);
-                            $this->um_user_updated_timestamp = $value;
-                        }
-                    }
+        get => $this->um_user_updated_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_updated_timestamp', $value);
+            $this->um_user_updated_timestamp = $value;
+        }
+    }
 
     /**
      * Updated User #
@@ -703,13 +713,13 @@ class UsersAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $um_user_updated_user_id = NULL {
-                        get => $this->um_user_updated_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('um_user_updated_user_id', $value);
-                            $this->um_user_updated_user_id = $value;
-                        }
-                    }
+    public int|null $um_user_updated_user_id = null {
+        get => $this->um_user_updated_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('um_user_updated_user_id', $value);
+            $this->um_user_updated_user_id = $value;
+        }
+    }
 
     /**
      * (Generated) (Non Database)

@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Widgets\Ingestions\Model;
-class EmailBodiesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class EmailBodiesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Widgets\Ingestions\Model\EmailBodies::class;
+    public string $object_table_class = EmailBodies::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class EmailBodiesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $wg_emailingbody_tenant_id = NULL {
-                        get => $this->wg_emailingbody_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('wg_emailingbody_tenant_id', $value);
-                            $this->wg_emailingbody_tenant_id = $value;
-                        }
-                    }
+    public int|null $wg_emailingbody_tenant_id = null {
+        get => $this->wg_emailingbody_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('wg_emailingbody_tenant_id', $value);
+            $this->wg_emailingbody_tenant_id = $value;
+        }
+    }
 
     /**
      * Body #
@@ -41,12 +51,12 @@ class EmailBodiesAR extends \Object\ActiveRecord {
      * @var int|null Domain: big_id_sequence Type: bigserial
      */
     public int|null $wg_emailingbody_id = null {
-                        get => $this->wg_emailingbody_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('wg_emailingbody_id', $value);
-                            $this->wg_emailingbody_id = $value;
-                        }
-                    }
+        get => $this->wg_emailingbody_id;
+        set {
+            $this->setFullPkAndFilledColumn('wg_emailingbody_id', $value);
+            $this->wg_emailingbody_id = $value;
+        }
+    }
 
     /**
      * Message
@@ -58,12 +68,12 @@ class EmailBodiesAR extends \Object\ActiveRecord {
      * @var string|null Type: bytea
      */
     public string|null $wg_emailingbody_message = null {
-                        get => $this->wg_emailingbody_message;
-                        set {
-                            $this->setFullPkAndFilledColumn('wg_emailingbody_message', $value);
-                            $this->wg_emailingbody_message = $value;
-                        }
-                    }
+        get => $this->wg_emailingbody_message;
+        set {
+            $this->setFullPkAndFilledColumn('wg_emailingbody_message', $value);
+            $this->wg_emailingbody_message = $value;
+        }
+    }
 
     /**
      * Text
@@ -75,10 +85,10 @@ class EmailBodiesAR extends \Object\ActiveRecord {
      * @var string|null Type: text
      */
     public string|null $wg_emailingbody_text = null {
-                        get => $this->wg_emailingbody_text;
-                        set {
-                            $this->setFullPkAndFilledColumn('wg_emailingbody_text', $value);
-                            $this->wg_emailingbody_text = $value;
-                        }
-                    }
+        get => $this->wg_emailingbody_text;
+        set {
+            $this->setFullPkAndFilledColumn('wg_emailingbody_text', $value);
+            $this->wg_emailingbody_text = $value;
+        }
+    }
 }

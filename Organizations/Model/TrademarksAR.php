@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model;
-class TrademarksAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class TrademarksAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Organizations\Model\Trademarks::class;
+    public string $object_table_class = Trademarks::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class TrademarksAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $on_trademark_tenant_id = NULL {
-                        get => $this->on_trademark_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_trademark_tenant_id', $value);
-                            $this->on_trademark_tenant_id = $value;
-                        }
-                    }
+    public int|null $on_trademark_tenant_id = null {
+        get => $this->on_trademark_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_trademark_tenant_id', $value);
+            $this->on_trademark_tenant_id = $value;
+        }
+    }
 
     /**
      * Trademark #
@@ -41,12 +51,12 @@ class TrademarksAR extends \Object\ActiveRecord {
      * @var int|null Domain: trademark_id_sequence Type: serial
      */
     public int|null $on_trademark_id = null {
-                        get => $this->on_trademark_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_trademark_id', $value);
-                            $this->on_trademark_id = $value;
-                        }
-                    }
+        get => $this->on_trademark_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_trademark_id', $value);
+            $this->on_trademark_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -58,12 +68,12 @@ class TrademarksAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $on_trademark_code = null {
-                        get => $this->on_trademark_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_trademark_code', $value);
-                            $this->on_trademark_code = $value;
-                        }
-                    }
+        get => $this->on_trademark_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_trademark_code', $value);
+            $this->on_trademark_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -75,12 +85,12 @@ class TrademarksAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $on_trademark_name = null {
-                        get => $this->on_trademark_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_trademark_name', $value);
-                            $this->on_trademark_name = $value;
-                        }
-                    }
+        get => $this->on_trademark_name;
+        set {
+            $this->setFullPkAndFilledColumn('on_trademark_name', $value);
+            $this->on_trademark_name = $value;
+        }
+    }
 
     /**
      * Organization #
@@ -91,13 +101,13 @@ class TrademarksAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: organization_id Type: integer
      */
-    public int|null $on_trademark_organization_id = NULL {
-                        get => $this->on_trademark_organization_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_trademark_organization_id', $value);
-                            $this->on_trademark_organization_id = $value;
-                        }
-                    }
+    public int|null $on_trademark_organization_id = null {
+        get => $this->on_trademark_organization_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_trademark_organization_id', $value);
+            $this->on_trademark_organization_id = $value;
+        }
+    }
 
     /**
      * Effective From
@@ -109,12 +119,12 @@ class TrademarksAR extends \Object\ActiveRecord {
      * @var string|null Type: date
      */
     public string|null $on_trademark_effective_from = null {
-                        get => $this->on_trademark_effective_from;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_trademark_effective_from', $value);
-                            $this->on_trademark_effective_from = $value;
-                        }
-                    }
+        get => $this->on_trademark_effective_from;
+        set {
+            $this->setFullPkAndFilledColumn('on_trademark_effective_from', $value);
+            $this->on_trademark_effective_from = $value;
+        }
+    }
 
     /**
      * Effective To
@@ -126,12 +136,12 @@ class TrademarksAR extends \Object\ActiveRecord {
      * @var string|null Type: date
      */
     public string|null $on_trademark_effective_to = null {
-                        get => $this->on_trademark_effective_to;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_trademark_effective_to', $value);
-                            $this->on_trademark_effective_to = $value;
-                        }
-                    }
+        get => $this->on_trademark_effective_to;
+        set {
+            $this->setFullPkAndFilledColumn('on_trademark_effective_to', $value);
+            $this->on_trademark_effective_to = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -143,12 +153,12 @@ class TrademarksAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $on_trademark_inactive = 0 {
-                        get => $this->on_trademark_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_trademark_inactive', $value);
-                            $this->on_trademark_inactive = $value;
-                        }
-                    }
+        get => $this->on_trademark_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('on_trademark_inactive', $value);
+            $this->on_trademark_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -160,10 +170,10 @@ class TrademarksAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $on_trademark_optimistic_lock = 'now()' {
-                        get => $this->on_trademark_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_trademark_optimistic_lock', $value);
-                            $this->on_trademark_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->on_trademark_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('on_trademark_optimistic_lock', $value);
+            $this->on_trademark_optimistic_lock = $value;
+        }
+    }
 }

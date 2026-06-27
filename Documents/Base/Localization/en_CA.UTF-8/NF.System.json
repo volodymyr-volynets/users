@@ -5,10 +5,12 @@
     "DTCatalogs": "D/T Catalogs",
     "DTDocumentManagement": "D/T Document Management",
     "DTDocuments": "D/T Documents",
+    "DTEraseOldFilesCommand": "D/T Erase Old Files (Command)",
     "DTFileTypes": "D/T File Types",
     "DocumentManagement": "Document Management",
     "FileTypes": "File Types",
     "Global": "Global",
     "Operations": "Operations",
-    "SystemManagement": "System Management"
+    "SystemManagement": "System Management",
+    "UseThisCommandToEraseOldFiles": "Use this command to erase old files."
 }

@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Organizations\Model\Location;
-class TerritoriesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class TerritoriesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Organizations\Model\Location\Territories::class;
+    public string $object_table_class = Territories::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class TerritoriesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $on_territory_tenant_id = NULL {
-                        get => $this->on_territory_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_tenant_id', $value);
-                            $this->on_territory_tenant_id = $value;
-                        }
-                    }
+    public int|null $on_territory_tenant_id = null {
+        get => $this->on_territory_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_tenant_id', $value);
+            $this->on_territory_tenant_id = $value;
+        }
+    }
 
     /**
      * Territory #
@@ -41,12 +51,12 @@ class TerritoriesAR extends \Object\ActiveRecord {
      * @var int|null Domain: territory_id_sequence Type: serial
      */
     public int|null $on_territory_id = null {
-                        get => $this->on_territory_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_id', $value);
-                            $this->on_territory_id = $value;
-                        }
-                    }
+        get => $this->on_territory_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_id', $value);
+            $this->on_territory_id = $value;
+        }
+    }
 
     /**
      * Code
@@ -58,12 +68,12 @@ class TerritoriesAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $on_territory_code = null {
-                        get => $this->on_territory_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_code', $value);
-                            $this->on_territory_code = $value;
-                        }
-                    }
+        get => $this->on_territory_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_code', $value);
+            $this->on_territory_code = $value;
+        }
+    }
 
     /**
      * Name
@@ -75,12 +85,12 @@ class TerritoriesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $on_territory_name = null {
-                        get => $this->on_territory_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_name', $value);
-                            $this->on_territory_name = $value;
-                        }
-                    }
+        get => $this->on_territory_name;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_name', $value);
+            $this->on_territory_name = $value;
+        }
+    }
 
     /**
      * Organization #
@@ -91,13 +101,13 @@ class TerritoriesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: organization_id Type: integer
      */
-    public int|null $on_territory_organization_id = NULL {
-                        get => $this->on_territory_organization_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_organization_id', $value);
-                            $this->on_territory_organization_id = $value;
-                        }
-                    }
+    public int|null $on_territory_organization_id = null {
+        get => $this->on_territory_organization_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_organization_id', $value);
+            $this->on_territory_organization_id = $value;
+        }
+    }
 
     /**
      * Node Type
@@ -108,13 +118,13 @@ class TerritoriesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $on_territory_node_type_id = NULL {
-                        get => $this->on_territory_node_type_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_node_type_id', $value);
-                            $this->on_territory_node_type_id = $value;
-                        }
-                    }
+    public int|null $on_territory_node_type_id = null {
+        get => $this->on_territory_node_type_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_node_type_id', $value);
+            $this->on_territory_node_type_id = $value;
+        }
+    }
 
     /**
      * Parent Territory #
@@ -125,13 +135,13 @@ class TerritoriesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: territory_id Type: integer
      */
-    public int|null $on_territory_parent_territory_id = NULL {
-                        get => $this->on_territory_parent_territory_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_parent_territory_id', $value);
-                            $this->on_territory_parent_territory_id = $value;
-                        }
-                    }
+    public int|null $on_territory_parent_territory_id = null {
+        get => $this->on_territory_parent_territory_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_parent_territory_id', $value);
+            $this->on_territory_parent_territory_id = $value;
+        }
+    }
 
     /**
      * Type
@@ -142,13 +152,13 @@ class TerritoriesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $on_territory_type_id = NULL {
-                        get => $this->on_territory_type_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_type_id', $value);
-                            $this->on_territory_type_id = $value;
-                        }
-                    }
+    public int|null $on_territory_type_id = null {
+        get => $this->on_territory_type_id;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_type_id', $value);
+            $this->on_territory_type_id = $value;
+        }
+    }
 
     /**
      * Postal Codes
@@ -160,12 +170,12 @@ class TerritoriesAR extends \Object\ActiveRecord {
      * @var string|null Domain: postal_codes Type: varchar
      */
     public string|null $on_territory_postal_codes = null {
-                        get => $this->on_territory_postal_codes;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_postal_codes', $value);
-                            $this->on_territory_postal_codes = $value;
-                        }
-                    }
+        get => $this->on_territory_postal_codes;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_postal_codes', $value);
+            $this->on_territory_postal_codes = $value;
+        }
+    }
 
     /**
      * Country Code
@@ -177,12 +187,12 @@ class TerritoriesAR extends \Object\ActiveRecord {
      * @var string|null Domain: country_code Type: char
      */
     public string|null $on_territory_country_code = null {
-                        get => $this->on_territory_country_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_country_code', $value);
-                            $this->on_territory_country_code = $value;
-                        }
-                    }
+        get => $this->on_territory_country_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_country_code', $value);
+            $this->on_territory_country_code = $value;
+        }
+    }
 
     /**
      * Province Code
@@ -194,12 +204,12 @@ class TerritoriesAR extends \Object\ActiveRecord {
      * @var string|null Domain: province_code Type: varchar
      */
     public string|null $on_territory_province_code = null {
-                        get => $this->on_territory_province_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_province_code', $value);
-                            $this->on_territory_province_code = $value;
-                        }
-                    }
+        get => $this->on_territory_province_code;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_province_code', $value);
+            $this->on_territory_province_code = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -211,12 +221,12 @@ class TerritoriesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $on_territory_inactive = 0 {
-                        get => $this->on_territory_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_inactive', $value);
-                            $this->on_territory_inactive = $value;
-                        }
-                    }
+        get => $this->on_territory_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_inactive', $value);
+            $this->on_territory_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -228,10 +238,10 @@ class TerritoriesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $on_territory_optimistic_lock = 'now()' {
-                        get => $this->on_territory_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('on_territory_optimistic_lock', $value);
-                            $this->on_territory_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->on_territory_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('on_territory_optimistic_lock', $value);
+            $this->on_territory_optimistic_lock = $value;
+        }
+    }
 }

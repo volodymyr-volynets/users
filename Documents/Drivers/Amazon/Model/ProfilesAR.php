@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Documents\Drivers\Amazon\Model;
-class ProfilesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class ProfilesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Documents\Drivers\Amazon\Model\Profiles::class;
+    public string $object_table_class = Profiles::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class ProfilesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $dt_amzprofile_tenant_id = NULL {
-                        get => $this->dt_amzprofile_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_amzprofile_tenant_id', $value);
-                            $this->dt_amzprofile_tenant_id = $value;
-                        }
-                    }
+    public int|null $dt_amzprofile_tenant_id = null {
+        get => $this->dt_amzprofile_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('dt_amzprofile_tenant_id', $value);
+            $this->dt_amzprofile_tenant_id = $value;
+        }
+    }
 
     /**
      * Profile #
@@ -41,12 +51,12 @@ class ProfilesAR extends \Object\ActiveRecord {
      * @var int|null Domain: profile_id_sequence Type: serial
      */
     public int|null $dt_amzprofile_id = null {
-                        get => $this->dt_amzprofile_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_amzprofile_id', $value);
-                            $this->dt_amzprofile_id = $value;
-                        }
-                    }
+        get => $this->dt_amzprofile_id;
+        set {
+            $this->setFullPkAndFilledColumn('dt_amzprofile_id', $value);
+            $this->dt_amzprofile_id = $value;
+        }
+    }
 
     /**
      * Name
@@ -58,12 +68,12 @@ class ProfilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $dt_amzprofile_name = null {
-                        get => $this->dt_amzprofile_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_amzprofile_name', $value);
-                            $this->dt_amzprofile_name = $value;
-                        }
-                    }
+        get => $this->dt_amzprofile_name;
+        set {
+            $this->setFullPkAndFilledColumn('dt_amzprofile_name', $value);
+            $this->dt_amzprofile_name = $value;
+        }
+    }
 
     /**
      * Bucket
@@ -75,12 +85,12 @@ class ProfilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $dt_amzprofile_bucket = null {
-                        get => $this->dt_amzprofile_bucket;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_amzprofile_bucket', $value);
-                            $this->dt_amzprofile_bucket = $value;
-                        }
-                    }
+        get => $this->dt_amzprofile_bucket;
+        set {
+            $this->setFullPkAndFilledColumn('dt_amzprofile_bucket', $value);
+            $this->dt_amzprofile_bucket = $value;
+        }
+    }
 
     /**
      * Region
@@ -92,12 +102,12 @@ class ProfilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $dt_amzprofile_region = null {
-                        get => $this->dt_amzprofile_region;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_amzprofile_region', $value);
-                            $this->dt_amzprofile_region = $value;
-                        }
-                    }
+        get => $this->dt_amzprofile_region;
+        set {
+            $this->setFullPkAndFilledColumn('dt_amzprofile_region', $value);
+            $this->dt_amzprofile_region = $value;
+        }
+    }
 
     /**
      * Access Key
@@ -109,12 +119,12 @@ class ProfilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: encrypted_password Type: bytea
      */
     public string|null $dt_amzprofile_aws_access_key_id = null {
-                        get => $this->dt_amzprofile_aws_access_key_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_amzprofile_aws_access_key_id', $value);
-                            $this->dt_amzprofile_aws_access_key_id = $value;
-                        }
-                    }
+        get => $this->dt_amzprofile_aws_access_key_id;
+        set {
+            $this->setFullPkAndFilledColumn('dt_amzprofile_aws_access_key_id', $value);
+            $this->dt_amzprofile_aws_access_key_id = $value;
+        }
+    }
 
     /**
      * Secret Access Key
@@ -126,12 +136,12 @@ class ProfilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: encrypted_password Type: bytea
      */
     public string|null $dt_amzprofile_aws_secret_access_key = null {
-                        get => $this->dt_amzprofile_aws_secret_access_key;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_amzprofile_aws_secret_access_key', $value);
-                            $this->dt_amzprofile_aws_secret_access_key = $value;
-                        }
-                    }
+        get => $this->dt_amzprofile_aws_secret_access_key;
+        set {
+            $this->setFullPkAndFilledColumn('dt_amzprofile_aws_secret_access_key', $value);
+            $this->dt_amzprofile_aws_secret_access_key = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -143,12 +153,12 @@ class ProfilesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $dt_amzprofile_inactive = 0 {
-                        get => $this->dt_amzprofile_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_amzprofile_inactive', $value);
-                            $this->dt_amzprofile_inactive = $value;
-                        }
-                    }
+        get => $this->dt_amzprofile_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('dt_amzprofile_inactive', $value);
+            $this->dt_amzprofile_inactive = $value;
+        }
+    }
 
     /**
      * Optimistic Lock
@@ -160,10 +170,10 @@ class ProfilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: optimistic_lock Type: timestamp
      */
     public string|null $dt_amzprofile_optimistic_lock = 'now()' {
-                        get => $this->dt_amzprofile_optimistic_lock;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_amzprofile_optimistic_lock', $value);
-                            $this->dt_amzprofile_optimistic_lock = $value;
-                        }
-                    }
+        get => $this->dt_amzprofile_optimistic_lock;
+        set {
+            $this->setFullPkAndFilledColumn('dt_amzprofile_optimistic_lock', $value);
+            $this->dt_amzprofile_optimistic_lock = $value;
+        }
+    }
 }

@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of Numbers Framework.
+ *
+ * (c) Volodymyr Volynets <volodymyr.volynets@gmail.com>
+ *
+ * This source file is subject to the Apache 2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Numbers\Users\Documents\Base\Model;
-class FilesAR extends \Object\ActiveRecord {
 
+use Object\ActiveRecord;
 
-
+class FilesAR extends ActiveRecord
+{
     /**
      * @var string
      */
-    public string $object_table_class = \Numbers\Users\Documents\Base\Model\Files::class;
+    public string $object_table_class = Files::class;
 
     /**
      * @var array
@@ -23,13 +33,13 @@ class FilesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: tenant_id Type: integer
      */
-    public int|null $dt_file_tenant_id = NULL {
-                        get => $this->dt_file_tenant_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_tenant_id', $value);
-                            $this->dt_file_tenant_id = $value;
-                        }
-                    }
+    public int|null $dt_file_tenant_id = null {
+        get => $this->dt_file_tenant_id;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_tenant_id', $value);
+            $this->dt_file_tenant_id = $value;
+        }
+    }
 
     /**
      * File #
@@ -41,12 +51,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var int|null Domain: file_id_sequence Type: bigserial
      */
     public int|null $dt_file_id = null {
-                        get => $this->dt_file_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_id', $value);
-                            $this->dt_file_id = $value;
-                        }
-                    }
+        get => $this->dt_file_id;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_id', $value);
+            $this->dt_file_id = $value;
+        }
+    }
 
     /**
      * Storage #
@@ -57,13 +67,13 @@ class FilesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: type_id Type: smallint
      */
-    public int|null $dt_file_storage_id = NULL {
-                        get => $this->dt_file_storage_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_storage_id', $value);
-                            $this->dt_file_storage_id = $value;
-                        }
-                    }
+    public int|null $dt_file_storage_id = null {
+        get => $this->dt_file_storage_id;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_storage_id', $value);
+            $this->dt_file_storage_id = $value;
+        }
+    }
 
     /**
      * Amazon Profile #
@@ -74,13 +84,13 @@ class FilesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: profile_id Type: integer
      */
-    public int|null $dt_file_dt_amzprofile_id = NULL {
-                        get => $this->dt_file_dt_amzprofile_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_dt_amzprofile_id', $value);
-                            $this->dt_file_dt_amzprofile_id = $value;
-                        }
-                    }
+    public int|null $dt_file_dt_amzprofile_id = null {
+        get => $this->dt_file_dt_amzprofile_id;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_dt_amzprofile_id', $value);
+            $this->dt_file_dt_amzprofile_id = $value;
+        }
+    }
 
     /**
      * Catalog Code
@@ -92,12 +102,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: group_code Type: varchar
      */
     public string|null $dt_file_catalog_code = null {
-                        get => $this->dt_file_catalog_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_catalog_code', $value);
-                            $this->dt_file_catalog_code = $value;
-                        }
-                    }
+        get => $this->dt_file_catalog_code;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_catalog_code', $value);
+            $this->dt_file_catalog_code = $value;
+        }
+    }
 
     /**
      * Organization #
@@ -108,13 +118,13 @@ class FilesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: organization_id Type: integer
      */
-    public int|null $dt_file_organization_id = NULL {
-                        get => $this->dt_file_organization_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_organization_id', $value);
-                            $this->dt_file_organization_id = $value;
-                        }
-                    }
+    public int|null $dt_file_organization_id = null {
+        get => $this->dt_file_organization_id;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_organization_id', $value);
+            $this->dt_file_organization_id = $value;
+        }
+    }
 
     /**
      * File Name
@@ -126,12 +136,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: file_name Type: varchar
      */
     public string|null $dt_file_name = null {
-                        get => $this->dt_file_name;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_name', $value);
-                            $this->dt_file_name = $value;
-                        }
-                    }
+        get => $this->dt_file_name;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_name', $value);
+            $this->dt_file_name = $value;
+        }
+    }
 
     /**
      * File Extension
@@ -143,12 +153,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: file_extension Type: varchar
      */
     public string|null $dt_file_extension = null {
-                        get => $this->dt_file_extension;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_extension', $value);
-                            $this->dt_file_extension = $value;
-                        }
-                    }
+        get => $this->dt_file_extension;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_extension', $value);
+            $this->dt_file_extension = $value;
+        }
+    }
 
     /**
      * File Mime
@@ -160,12 +170,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: name Type: varchar
      */
     public string|null $dt_file_mime = null {
-                        get => $this->dt_file_mime;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_mime', $value);
-                            $this->dt_file_mime = $value;
-                        }
-                    }
+        get => $this->dt_file_mime;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_mime', $value);
+            $this->dt_file_mime = $value;
+        }
+    }
 
     /**
      * File Size
@@ -176,13 +186,13 @@ class FilesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: file_size Type: integer
      */
-    public int|null $dt_file_size = NULL {
-                        get => $this->dt_file_size;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_size', $value);
-                            $this->dt_file_size = $value;
-                        }
-                    }
+    public int|null $dt_file_size = null {
+        get => $this->dt_file_size;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_size', $value);
+            $this->dt_file_size = $value;
+        }
+    }
 
     /**
      * File Path
@@ -194,12 +204,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: file_path Type: varchar
      */
     public string|null $dt_file_path = null {
-                        get => $this->dt_file_path;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_path', $value);
-                            $this->dt_file_path = $value;
-                        }
-                    }
+        get => $this->dt_file_path;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_path', $value);
+            $this->dt_file_path = $value;
+        }
+    }
 
     /**
      * Thumbnail Path
@@ -211,12 +221,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: file_path Type: varchar
      */
     public string|null $dt_file_thumbnail_path = null {
-                        get => $this->dt_file_thumbnail_path;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_thumbnail_path', $value);
-                            $this->dt_file_thumbnail_path = $value;
-                        }
-                    }
+        get => $this->dt_file_thumbnail_path;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_thumbnail_path', $value);
+            $this->dt_file_thumbnail_path = $value;
+        }
+    }
 
     /**
      * Language Code
@@ -228,12 +238,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var string|null Domain: language_code Type: char
      */
     public string|null $dt_file_language_code = null {
-                        get => $this->dt_file_language_code;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_language_code', $value);
-                            $this->dt_file_language_code = $value;
-                        }
-                    }
+        get => $this->dt_file_language_code;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_language_code', $value);
+            $this->dt_file_language_code = $value;
+        }
+    }
 
     /**
      * Readonly
@@ -245,12 +255,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $dt_file_readonly = 0 {
-                        get => $this->dt_file_readonly;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_readonly', $value);
-                            $this->dt_file_readonly = $value;
-                        }
-                    }
+        get => $this->dt_file_readonly;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_readonly', $value);
+            $this->dt_file_readonly = $value;
+        }
+    }
 
     /**
      * Temporary
@@ -262,12 +272,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $dt_file_temporary = 0 {
-                        get => $this->dt_file_temporary;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_temporary', $value);
-                            $this->dt_file_temporary = $value;
-                        }
-                    }
+        get => $this->dt_file_temporary;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_temporary', $value);
+            $this->dt_file_temporary = $value;
+        }
+    }
 
     /**
      * URL
@@ -279,12 +289,29 @@ class FilesAR extends \Object\ActiveRecord {
      * @var string|null Type: text
      */
     public string|null $dt_file_url = null {
-                        get => $this->dt_file_url;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_url', $value);
-                            $this->dt_file_url = $value;
-                        }
-                    }
+        get => $this->dt_file_url;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_url', $value);
+            $this->dt_file_url = $value;
+        }
+    }
+
+    /**
+     * Erased
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $dt_file_erased = 0 {
+        get => $this->dt_file_erased;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_erased', $value);
+            $this->dt_file_erased = $value;
+        }
+    }
 
     /**
      * Inactive
@@ -296,12 +323,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var int|null Type: boolean
      */
     public int|null $dt_file_inactive = 0 {
-                        get => $this->dt_file_inactive;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_inactive', $value);
-                            $this->dt_file_inactive = $value;
-                        }
-                    }
+        get => $this->dt_file_inactive;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_inactive', $value);
+            $this->dt_file_inactive = $value;
+        }
+    }
 
     /**
      * Inserted Datetime
@@ -313,12 +340,12 @@ class FilesAR extends \Object\ActiveRecord {
      * @var string|null Type: timestamp
      */
     public string|null $dt_file_inserted_timestamp = null {
-                        get => $this->dt_file_inserted_timestamp;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_inserted_timestamp', $value);
-                            $this->dt_file_inserted_timestamp = $value;
-                        }
-                    }
+        get => $this->dt_file_inserted_timestamp;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_inserted_timestamp', $value);
+            $this->dt_file_inserted_timestamp = $value;
+        }
+    }
 
     /**
      * Inserted User #
@@ -329,11 +356,11 @@ class FilesAR extends \Object\ActiveRecord {
      *
      * @var int|null Domain: user_id Type: bigint
      */
-    public int|null $dt_file_inserted_user_id = NULL {
-                        get => $this->dt_file_inserted_user_id;
-                        set {
-                            $this->setFullPkAndFilledColumn('dt_file_inserted_user_id', $value);
-                            $this->dt_file_inserted_user_id = $value;
-                        }
-                    }
+    public int|null $dt_file_inserted_user_id = null {
+        get => $this->dt_file_inserted_user_id;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_inserted_user_id', $value);
+            $this->dt_file_inserted_user_id = $value;
+        }
+    }
 }
