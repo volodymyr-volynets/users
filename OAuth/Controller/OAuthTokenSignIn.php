@@ -49,9 +49,13 @@ class OAuthTokenSignIn extends Controller
                 throw new \Exception('OAuth: Provider not found!');
             }
         } catch (\Exception $e) {
-            \Request::redirect($decrypted['data']['__fail_url'], $decrypted['data']['__domain'], [
-                '__error' => $e->getMessage()
-            ]);
+            if (isset($decrypted)) {
+                \Request::redirect($decrypted['data']['__fail_url'], $decrypted['data']['__domain'], [
+                    '__error' => $e->getMessage()
+                ]);
+            } else {
+                throw new \Exception($e->getMessage());
+            }
         }
     }
 

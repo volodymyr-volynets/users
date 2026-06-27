@@ -85,6 +85,11 @@ class Comments extends Table
             'foreign_model' => $class,
             'foreign_columns' => array_keys($this->map)
         ];
+        // add indexes
+        $temp_columns = array_values($this->map);
+        $temp_columns[] = 'wg_comment_external_integtype_code';
+        $temp_columns[] = 'wg_comment_external_id';
+        $this->indexes[$this->name . '_external_id_idx'] = ['type' => 'btree', 'columns' => $temp_columns];
         // construct table
         parent::__construct($options);
     }

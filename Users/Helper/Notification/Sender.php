@@ -349,6 +349,10 @@ class Sender
         $keywords = Extractor::extract($keywords);
         if (!empty($keywords)) {
             $header['um_mesheader_keywords'] = implode(' ', array_keys($keywords));
+            // for PostgreSQL we have index issue
+            if ((new Headers())->db_object->backend == 'PostgreSQL') {
+                $header['um_mesheader_keywords'] = substr($header['um_mesheader_keywords'], 0, 2712);
+            }
         }
         // store header
         $header_result = Headers::collectionStatic()->merge($header);

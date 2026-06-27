@@ -314,6 +314,23 @@ class FilesAR extends ActiveRecord
         }
     }
 
+    /*
+     * Erased
+     *
+     *
+     *
+     *
+     *
+     * @var int|null Type: boolean
+     */
+    public int|null $dt_file_erased = 0 {
+        get => $this->dt_file_erased;
+        set {
+            $this->setFullPkAndFilledColumn('dt_file_erased', $value);
+            $this->dt_file_erased = $value;
+        }
+    }
+
     /**
      * Inactive
      *

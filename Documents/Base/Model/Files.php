@@ -43,6 +43,7 @@ class Files extends Table
         'dt_file_temporary' => ['name' => 'Temporary', 'type' => 'boolean'],
         'dt_file_url' => ['name' => 'URL', 'type' => 'text', 'null' => true],
         'dt_file_hash' => ['name' => 'Hash', 'domain' => 'hash', 'null' => true],
+        'dt_file_erased' => ['name' => 'Erased', 'type' => 'boolean'],
         'dt_file_inactive' => ['name' => 'Inactive', 'type' => 'boolean']
     ];
     public $constraints = [

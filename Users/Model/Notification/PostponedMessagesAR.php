@@ -68,7 +68,7 @@ class PostponedMessagesAR extends ActiveRecord
      *
      * @var string|null Domain: timestamp_now Type: timestamp
      */
-    public string|null $um_notpostmess_inserted_timestamp = null {
+    public string|null $um_notpostmess_inserted_timestamp = 'now()' {
         get => $this->um_notpostmess_inserted_timestamp;
         set {
             $this->setFullPkAndFilledColumn('um_notpostmess_inserted_timestamp', $value);

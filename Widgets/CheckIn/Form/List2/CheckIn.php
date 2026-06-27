@@ -127,14 +127,14 @@ class CheckIn extends List2
             'rows' => []
         ];
         $model = new $form->options['model_table']();
-        $form->query = \Factory::model($model->checkins_model)->queryBuilder()->select();
+        $form->query = \Factory::model($model->checkins_model, false, [['archives' => \Request::input('__archives')]])->queryBuilder()->select();
         // join to get actual tag
         $form->query->columns([
             'a.*'
         ]);
         $form->processReportQueryFilter($form->query);
         // additional filter
-        $parent_model = \Factory::model($form->options['model_table']);
+        $parent_model = \Factory::model($form->options['model_table'], false, [['archives' => \Request::input('__archives')]]);
         if (!empty($parent_model->checkins['map'])) {
             foreach ($parent_model->checkins['map'] as $k => $v) {
                 if (isset($form->options['input'][$k])) {

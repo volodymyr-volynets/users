@@ -536,7 +536,7 @@ class Users extends Base
             'um_user_login_enabled' => [
                 'um_user_login_enabled' => ['order' => 1, 'row_order' => 100, 'label_name' => 'Login Enabled', 'type' => 'boolean', 'percent' => 25, 'skip_during_export' => true],
                 'um_user_login_become' => ['order' => 2, 'label_name' => 'Become', 'percent' => 25, 'skip_during_export' => true, 'custom_renderer' => 'self::renderBecome'],
-                'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c', 'skip_during_export' => true]
+                'um_user_login_username' => ['order' => 2, 'label_name' => 'Username', 'domain' => 'login', 'null' => true, 'percent' => 50, 'required' => 'c', 'skip_during_export' => true, 'autocomplete' => 'new-password'],
             ],
             'um_user_login_last_set' => [
                 'um_user_login_last_set' => ['order' => 1, 'row_order' => 200, 'label_name' => 'Password Last Changed', 'type' => 'date', 'persistent' => true, 'method' => 'calendar', 'calendar_icon' => 'right', 'percent' => 50, 'readonly' => true, 'skip_during_export' => true],
@@ -1246,6 +1246,16 @@ class Users extends Base
                 $form->error(DANGER, Messages::DUPLICATE_RECORD, 'um_user_email');
             }
         }
+        // username
+        if (!empty($form->values['um_user_login_username'])) {
+            // validate if its already exists
+            if (!$users_model->checkUniqueConstraint('um_user_login_username', $users_model->pk, [
+                'um_user_id' => $form->values['um_user_id'] ?? null,
+                'um_user_login_username' => $form->values['um_user_login_username'],
+            ])) {
+                $form->error(DANGER, Messages::DUPLICATE_RECORD, 'um_user_login_username');
+            }
+        }
         // numeric phone
         if (!empty($form->values['um_user_phone'])) {
             if (\Application::get('flag.form.um_users.unique_numeric_phone')) {
@@ -1273,6 +1283,14 @@ class Users extends Base
         // generate new sequence
         if (empty($form->values['um_user_code'])) {
             $form->values['um_user_code'] = Sequence::nextval('DEFAULT', 'USR', 'UM', \Tenant::id(), true);
+            // validate if its already exists
+            if (!$users_model->checkUniqueConstraint('um_user_code', $users_model->pk, [
+                'um_user_id' => $form->values['um_user_id'] ?? null,
+                'um_user_code' => $form->values['um_user_code'],
+            ])) {
+                $form->error(DANGER, Messages::DUPLICATE_RECORD, 'um_user_code');
+                $form->error(DANGER, 'Trying: ' . $form->values['um_user_code'], 'um_user_code');
+            }
         }
     }
 

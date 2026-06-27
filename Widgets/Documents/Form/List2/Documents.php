@@ -130,7 +130,7 @@ class Documents extends List2
             'total' => 0,
             'rows' => []
         ];
-        $form->query = \Factory::model($form->options['model_table'] . '\0Virtual0\Widgets\Documents')->queryBuilder()->select();
+        $form->query = \Factory::model($form->options['model_table'] . '\0Virtual0\Widgets\Documents', false, [['archives' => \Request::input('__archives')]])->queryBuilder()->select();
         $form->processReportQueryFilter($form->query);
         // additional filter
         $parent_model = \Factory::model($form->options['model_table']);
@@ -243,6 +243,8 @@ class Documents extends List2
                 }
                 if (!empty($neighbouring_values['wg_document_needs_transfer'])) {
                     $result .= \HTML::icon(['type' => 'fa-solid fa-link']) . ' ' . $v['dt_file_name'];
+                } elseif (!empty($v['dt_file_erased'])) {
+                    $result .= \HTML::icon(['type' => 'fa-solid fa-link']) . ' ' . $v['dt_file_name'] . ' (Erased)';
                 } elseif ($v['dt_file_url']) {
                     $result .= \HTML::a(['href' => $v['dt_file_url'], 'value' => \HTML::icon(['type' => 'fa-solid fa-link']) . ' ' . $v['dt_file_name'], 'target' => '_blank']);
                 } else {

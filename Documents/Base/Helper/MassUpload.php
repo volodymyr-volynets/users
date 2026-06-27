@@ -171,7 +171,7 @@ class MassUpload
             $id = $file_save_model->sequence('dt_file_id', 'nextval', \Tenant::id());
             $save = [
                 'dt_file_id' => $id,
-                'dt_file_storage_id' => $catalog['dt_catalog_storage_id'],
+                'dt_file_storage_id' => $catalog['dt_catalog_storage_id'] ?? 0,
                 'dt_file_catalog_code' => $catalog['dt_catalog_code'],
                 'dt_file_organization_id' => $catalog['dt_catalog_organization_id'],
                 'dt_file_name' => $k,
